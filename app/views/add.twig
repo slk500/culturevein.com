@@ -1,0 +1,179 @@
+{% extends 'templates/default.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" rel="stylesheet"/>
+{% endblock %}
+{% block result %}
+    <div class='col-xs-10 col-xs-offset-1 white_container pad'>
+        <form action='added.php' method='post'>
+
+
+            <div class='form-group'><input type='text' id='www' name='youtube_id' placeholder='YouTube link'
+                                           class='form-control'></div>
+
+            <input type='hidden' name='yt_id'>
+            <div id='artist_and_title'></div>
+            <div id='yt_video'></div>
+
+
+        </form>
+    </div>
+
+
+{% endblock %}
+
+
+{% block javascript %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>
+    <script src='http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js'></script>
+    <script>
+
+        $('form').validate({
+            rules: {
+                youtube_id: {
+                    remote: 'music_video_exist.php'
+                }
+            },
+            messages: {
+                youtube_id: {
+                    remote: "The music video has already been added."
+                }
+
+            },
+            
+            highlight: function (element) {
+                $(element).closest('.form-group').addClass('has-error');
+            },
+            unhighlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-error');
+            },
+            errorElement: 'span',
+            errorClass: 'help-block',
+            errorPlacement: function (error, element) {
+                if (element.parent('.input-group').length) {
+                    error.insertAfter(element.parent());
+                } else {
+                    error.insertAfter(element);
+                }
+            }
+        });
+
+
+        $('#nav_dodaj').addClass("active");
+        $('#input_search').prop('disabled', true);
+        $('#button_search').prop('disabled', true);
+
+        function capitalize_words(str) {
+            return str.replace(/\w\S*/g, function (txt) {
+                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+            });
+        }
+
+        function embedYouTube(youtube_id) {
+
+            document.getElementById("yt_video").innerHTML = "<div class='embed-responsive embed-responsive-16by9'><iframe class='embed-responsive-item' src=http://www.youtube.com/embed/" +
+                    youtube_id + "></iframe></div><div><br><button type='submit' id='submit_button' value='DODAJ' class='btn btn-danger'>ADD</button></div>";
+
+            $.get('https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' + youtube_id +
+                    '&key=', function (json) {
+                var title = json.items[0].snippet.title;
+                title = capitalize_words(title);
+                title = title.split(" - ");
+                var artist = title[0];
+                document.getElementById("tytul_utworu").value = title[1];
+
+
+
+              //  var option = "<option value='" + artist + "'>" + artist + "</option>";
+
+                var option = new Option(artist, artist);
+                option.selected = true;
+
+                var first_part_yt = $("#first_part_yt");
+
+                first_part_yt.prepend(option);
+                first_part_yt.trigger("change");
+
+
+                var release_date = json.items[0].snippet.publishedAt;
+                release_date = release_date.split("T");
+                release_date = release_date[0];
+                $("#datepicker").datepicker("setDate", release_date);
+
+                console.log(release_date);
+            });
+        }
+
+
+        window.onload = function () {
+
+            prevent();
+
+        };
+        function prevent() {
+            document.getElementById("form").onsubmit = function () {
+
+                if (document.getElementById("www").value == "") {
+                    return false
+                }
+            };
+        }
+
+
+        $('#www').bind('input paste', show);
+
+        function show() {
+
+            var input = document.getElementById("www").value;
+            var check = "?v=";
+            var check_mobile = "youtu.be/";
+
+            if ((input.indexOf(check) > -1)) {
+
+                var youtube_id = input.substring(input.indexOf("?v=") + 3);
+
+
+            } else if ((input.indexOf(check_mobile) > -1)) {
+
+                var youtube_id = input.substring(input.indexOf("youtu.be/") + 9);
+
+
+            }
+
+
+            if (((input.indexOf(check) > -1) || (input.indexOf(check_mobile) > -1) ) && (youtube_id.length == 11)) {
+
+                embedYouTube(youtube_id);
+
+
+                $("#artist_and_title").html("<div class='form-group'> <label for='artist_name'>Artist Name</label> " +
+                        "<select id='first_part_yt' name='artist_name' class='js-example-basic-single form-control' name='artist_name'>{{ artists_names|raw }}</select> </div>" +
+                        "<div class='form-group'><label for='tytul_utworu'>Title</label><input type='text' class='form-control' id='tytul_utworu' name='music_video_title'></div>" +
+                        "<div class='form-group'> <label for='release_date'>Release Date</label> <input type='text' id='datepicker' class='form-control' name='release_date'>");
+
+
+
+
+                $('#first_part_yt').select2({tags: true});
+                $('#www').val(youtube_id);
+
+                $(function () {
+                    $("#datepicker").datepicker({
+                        changeMonth: true,
+                        changeYear: true,
+                        dateFormat: "yy-mm-dd",
+                        minDate: "-100Y",
+                        maxDate: "0"
+                    });
+                });
+            }
+            else {
+                $('#artist_and_title').empty();
+                $('#yt_video').empty()
+            }
+        }
+
+
+    </script>
+{% endblock %}

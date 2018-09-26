@@ -1,0 +1,54 @@
+<nav class='navbar navbar-default center white_container'>
+    <a href="https://github.com/you"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
+    <div class='container-fluid'>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a routerLink="/" class='navbar-brand center'>Culture Vein</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class='nav nav-pills nav-justified'>
+                <li><a routerLink="/tags">TAGS</a></li>
+                <li><a routerLink="/videos">VIDEOS</a></li>
+                <!--<li id='nav_dodaj'><a routerLink="/add">ADD</a></li>-->
+                <li><a routerLink="/links">LINKS</a></li>
+                <li><a routerLink="/about">ABOUT</a></li>
+                <li><a href="https://www.facebook.com/CultureVein"><span class="fa fa-facebook-official" style="font-size:30px"></span></a></li>
+                <!--{% if session.valid %}-->
+                <!--<li><a href="/login/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>-->
+                <!--{% else %}-->
+                <!--<li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>-->
+                <!--{% endif %}-->
+            </ul>
+        </div>
+    </div>
+
+    <div class='container'>
+        <div class="input-group">
+			<span class="input-group-addon">
+        <i class="glyphicon glyphicon-search"></i>
+    </span>
+            <input [(ngModel)]="searchText" class="form-control input-lg" id='search_input'>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+
+        <!--<ul>-->
+            <!--<li *ngFor="let c of characters | filter : searchText">-->
+                <!--{{c.name}}-->
+            <!--</li>-->
+        <!--</ul>-->
+
+        <div id='result'><router-outlet></router-outlet></div>
+        <div id='result2'></div>
+    </div>
+    <div class='row'></div>
+</div>
+
+<footer class="container-fluid"></footer>

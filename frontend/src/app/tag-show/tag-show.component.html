@@ -1,0 +1,43 @@
+<div id="tags" class="col-md-9 col-lg-9 ">
+  <table class='table table-hover white_container'>
+    <thead>
+    <tr>
+      <th>no.</th>
+      <th>Title</th>
+      <th>Exposure Time</th>
+    </tr>
+    </thead>
+
+    <tr *ngFor="let tag of tag; let i=index">
+
+      <td class='text-center'> {{ i+1 }} </td>
+      <td>
+        <a [routerLink]="['/videos', tag.youtube_id]"> {{ tag.artist_name }} - {{ tag.video_name }} </a>
+      </td>
+      <td>{{ tag.expose }}</td>
+
+    </tr>
+
+  </table>
+
+
+  <!--<div class='col-md-3 col-lg-3 white_container'>-->
+    <!--<h1 class='text-center'>{{ db_data[0].tag_title }}</h1>-->
+
+    <!--<div class="col-xs-6 col-xs-offset-3" id="subscribe" >-->
+      <!--{% if session.valid %}-->
+      <!--{% if subscribe %}-->
+      <!--<button class="btn btn-default" id='BUTTON_unsubscribe' type="button"-->
+              <!--onclick='unsubscribe({{ session.user_id }},{{ tag_id }})'>Unsubscribe-->
+        <!--<span class="badge"> {{ subscribers_number }}</span></button>-->
+      <!--{% else %}-->
+      <!--<button class="btn btn-danger" id='BUTTON_subscribe' type="button"-->
+              <!--onclick='subscribe({{ session.user_id }},{{ tag_id }})'>Subscribe-->
+        <!--<span class="badge"> {{ subscribers_number }}</span></button>-->
+    <!--</div>-->
+    <!--{% endif %}-->
+    <!--{% else %}-->
+    <!--<a href="login/" class="btn btn-danger">Subscribe-->
+      <!--<span class="badge"> {{ subscribers_number }}</span></a>-->
+    <!--{% endif %}-->
+  <!--</div>-->

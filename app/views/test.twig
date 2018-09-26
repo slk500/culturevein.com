@@ -1,0 +1,53 @@
+{% extends 'templates/default.twig' %}
+
+{% block result %}
+<div id="video-placeholder"></div>
+<input id="current-time"></input>
+
+<button id='but' onclick="PlayFragment(1,1)">SEEK </button>
+<div id='boom'>boom</div>
+
+{%  endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+    
+    var player;
+
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player('video-placeholder', {
+        width: 600,
+        height: 400,
+        videoId: 'Xa0Q0J5tOP0',
+        playerVars: {
+            color: 'white',
+            playlist: 'taJ60kskkns,FG0fTKAqZ5g'
+        },
+     
+    });
+}
+
+  function  PlayFragment(start, stop){
+        player.seekTo(55);
+
+      checkTime();
+            //player.pauseVideo();
+    }
+
+    function checkTime() {
+        if ( player.getCurrentTime() > 60 ) {
+            player.pauseVideo();
+            console.log(player.getCurrentTime());
+        }else {
+            setInterval(checkTime, 1000 );
+            console.log(player.getCurrentTime());
+        }
+    }
+
+
+
+
+</script>   
+{% endblock %}

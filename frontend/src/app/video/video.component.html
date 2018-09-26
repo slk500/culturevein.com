@@ -1,0 +1,7 @@
+
+{{ errorMsg }}
+<ul class='list-unstyled'>
+  <li *ngFor="let video of videos" class='col-xs-12 col-sm-6 col-md-4 col-lg-4'>
+    <a [routerLink]="['/videos', video.youtube_id]"> {{ video.artist_name }} - {{ video.name }}  </a>
+  </li>
+</ul>

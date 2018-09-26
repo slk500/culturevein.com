@@ -1,0 +1,70 @@
+<div class='col-md-6 col-lg-6 '>
+    <table class='table table-hover white_container'>
+        <caption><strong>TOP TAGS</strong></caption>
+        <thead>
+        <tr>
+            <th> </th> <th>Tag</th> <th>no. of music video</th>
+        </tr>
+        </thead>
+        <tr *ngFor="let tag of tagsTop; let i=index">
+
+            <td class='text-center'> {{ i+1 }} </td>
+            <td><a [routerLink]="['/tags', tag.slug]"> {{ tag.name }} </a></td>
+            <td>{{ tag.count }}</td>
+        </tr>
+    </table>
+</div>
+
+<div class='col-md-6 col-lg-6 '>
+    <table class='table table-hover white_container'>
+        <caption><strong>VIDEOS WITH HIGHEST NUMBER OF TAGS</strong></caption>
+        <thead>
+        <tr>
+            <th> </th> <th>Title</th> <th> no. of tags</th>
+        </tr>
+        </thead>
+        <tr *ngFor="let video of videosTopTags; let i=index">
+
+            <td class='text-center'> {{ i+1 }} </td>
+            <td><a [routerLink]="['/videos', video.youtube_id]"> {{ video.artist_name }} - {{ video.name }}  </a></td>
+            <td> {{ video.count }}</td>
+
+        </tr>
+    </table>
+</div>
+
+<div class='col-md-6 col-lg-6 '>
+    <table class='table table-hover white_container'>
+        <caption><strong>NEW TAGS</strong></caption>
+        <thead>
+        <tr>
+            <th> </th> <th>Tag</th> <th>Title</th>
+        </tr>
+        </thead>
+        <tr *ngFor="let tag of tagsNew; let i=index">
+
+        <td class='text-center'> {{ i+1 }} </td>
+        <td><a [routerLink]="['/tags', tag.slug]"> {{ tag.name }} </a></td>
+        <td><a [routerLink]="['/videos', tag.youtube_id]"> {{ tag.artist_name }} - {{ tag.video_name }}  </a></td>
+
+        </tr>
+</table>
+</div>
+
+
+<div class='col-md-6 col-lg-6 '>
+    <table class='table table-hover white_container'>
+        <caption><strong>NEW VIDEOS</strong></caption>
+        <thead>
+        <tr>
+            <th> </th> <th>Title</th>
+        </tr>
+        </thead>
+        <tr *ngFor="let video of videosLastAdded; let i=index">
+
+            <td class='text-center'> {{ i+1 }} </td>
+            <td><a [routerLink]="['/videos', video.youtube_id]"> {{ video.artist_name }} - {{ video.name }}  </a></td>
+
+        </tr>
+    </table>
+</div>
