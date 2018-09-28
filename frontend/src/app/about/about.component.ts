@@ -12,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
                   Tags are divided into 4 groups/colors:
                   <li><span class="label label-default">Grey</span> tag without exposure time </li>
                   <li><span class="label label-danger">Red</span> tag with exposure time equal to duration of the video. Tag can describe whole video - like lyric video</li>
-                  <li><span class="label label-warning">Orange</span> tag with at least one exposure time added but there are more to to tag</li>
+                  <li><span class="label label-warning">Orange</span> tag with at least one exposure time added but there are more to tag</li>
                   <li><span class="label label-success">Green</span> tag with completly all exposure times added</li>
               </ul><br>
               <li>You can follow a tag and get notifications every time someone adds

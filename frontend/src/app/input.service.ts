@@ -10,8 +10,8 @@ export class InputService {
     constructor() {
     }
 
-    editUser(newUser) {
-        this.input.next(newUser);
+    editUser(input) {
+        this.input.next(input);
     }
 
 }

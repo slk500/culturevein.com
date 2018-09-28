@@ -20,7 +20,6 @@ export class TagComponent implements OnInit {
     this._tagService.getTags()
         .subscribe(data => this.tags = data,
             error => this.errorMsg = error);
-      this.inputSearch.cast.subscribe(user => this.searchText = user);
-
+      this.inputSearch.cast.subscribe(input => this.searchText = input);
   }
 }

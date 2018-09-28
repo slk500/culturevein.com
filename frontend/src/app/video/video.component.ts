@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {VideoService} from "../video.service";
+import {InputService} from "../input.service";
 
 @Component({
   selector: 'app-video',
@@ -10,14 +11,15 @@ export class VideoComponent implements OnInit {
 
     public videos = [];
     public errorMsg;
+    public searchText;
 
-    constructor(private _videoService: VideoService) {}
+    constructor(private _videoService: VideoService, private inputSearch: InputService) {}
 
     ngOnInit() {
         this._videoService.getVideos()
             .subscribe(data => this.videos = data,
                 error => this.errorMsg = error)
+        this.inputSearch.cast.subscribe(input => this.searchText = input);
     }
-
 
 }
