@@ -31,20 +31,12 @@
 			<span class="input-group-addon">
         <i class="glyphicon glyphicon-search"></i>
     </span>
-            <input [(ngModel)]="searchText" class="form-control input-lg" id='search_input'>
+            <input (input)="updateValue($event)" class="form-control input-lg" id='search_input'>
         </div>
     </div>
 </nav>
-
 <div class="container">
     <div class="row">
-
-        <!--<ul>-->
-            <!--<li *ngFor="let c of characters | filter : searchText">-->
-                <!--{{c.name}}-->
-            <!--</li>-->
-        <!--</ul>-->
-
         <div id='result'><router-outlet></router-outlet></div>
         <div id='result2'></div>
     </div>

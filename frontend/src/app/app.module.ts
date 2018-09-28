@@ -18,6 +18,7 @@ import {MinuteSecondsPipe} from "./minute-seconds.pipe";
 import {NgxY2PlayerModule} from "ngx-y2-player";
 import {Select2Module} from "ng2-select2";
 import { FilterPipe }from './filter.pipe';
+import {InputService} from "./input.service";
 
 @NgModule({
   declarations: [
@@ -31,7 +32,7 @@ import { FilterPipe }from './filter.pipe';
     TagShowComponent,
     VideoShowComponent,
     MinuteSecondsPipe,
-    FilterPipe
+    FilterPipe,
   ],
   imports: [
     BrowserModule,
@@ -41,7 +42,7 @@ import { FilterPipe }from './filter.pipe';
       Select2Module,
       FormsModule
   ],
-  providers: [TagService],
+  providers: [TagService, InputService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

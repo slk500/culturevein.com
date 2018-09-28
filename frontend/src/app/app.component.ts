@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {Router} from "@angular/router";
+import {InputService} from "./input.service";
 
 @Component({
   selector: 'app-root',
@@ -7,22 +9,20 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+    user:string;
+    editUser:string;
 
-    characters = [
-        {
-            id: 1,
-            name: 'First item'
-        },
-        {
-            id: 2,
-            name: 'Second item'
-        },
-        {
-            id: 3,
-            name: 'Third item'
-        }
-    ]
+    public href: string = "";
 
+    constructor(private router: Router, private inputService: InputService) {}
 
+    updateValue(e){
+        this.editUser = e.target.value;
+        this.editTheUser();
+    }
+
+    editTheUser(){
+        this.inputService.editUser(this.editUser);
+    }
 }
 

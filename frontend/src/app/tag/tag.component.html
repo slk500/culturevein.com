@@ -1,16 +1,9 @@
-<!--<input [(ngModel)]="searchText" class="form-control input-lg" id='search_input'>-->
-
-
-
-<ul>
-<li *ngFor="let c of tags | filter : searchText">
-{{c.name}}
-</li>
-</ul>
-
-<!--{{ errorMsg }}-->
-<!--<ul class='list-unstyled'>-->
-<!--<li *ngFor="let tag of tags |filter : searchText" class='col-xs-12 col-sm-6 col-md-4 col-lg-4'>-->
-    <!--<a [routerLink]="['/tags', tag.slug]"> {{ tag.name }} </a>-->
-<!--</li>-->
-<!--</ul>-->
+{{ errorMsg }}
+<div class='col-xs-10 col-xs-offset-1 num_of_rows'>{{ (tags |filter : searchText).length }}</div>
+<div class="col-xs-10 col-xs-offset-1 white_container">
+    <ul class='list-unstyled'>
+        <li *ngFor="let tag of tags |filter : searchText" class='col-xs-12 col-sm-6 col-md-4 col-lg-4'>
+            <a [routerLink]="['/tags', tag.slug]"> {{ tag.name }} </a>
+        </li>
+    </ul>
+</div>

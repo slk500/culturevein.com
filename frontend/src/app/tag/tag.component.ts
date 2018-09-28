@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TagService} from "../tag.service";
+import {InputService} from "../input.service";
 
 
 @Component({
@@ -9,25 +10,17 @@ import {TagService} from "../tag.service";
 })
 export class TagComponent implements OnInit {
 
-  @Input() searchText: any;
-
   public tags = [];
   public errorMsg;
+  public searchText;
 
-  constructor(private _tagService: TagService) {}
+  constructor(private _tagService: TagService, private inputSearch: InputService) {}
 
   ngOnInit() {
     this._tagService.getTags()
         .subscribe(data => this.tags = data,
-            error => this.errorMsg = error)
-  }
+            error => this.errorMsg = error);
+      this.inputSearch.cast.subscribe(user => this.searchText = user);
 
-    transform(searchText: string): any[] {
-        if(!this.tags) return [];
-        if(!searchText) return this.tags;
-        searchText = searchText.toLowerCase();
-        return this.tags.filter( it => {
-            return it.name.toLowerCase().includes(searchText);
-        });
-    }
+  }
 }
