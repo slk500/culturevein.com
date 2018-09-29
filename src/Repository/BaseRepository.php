@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Repository;
-
 
 use mysqli;
 use Symfony\Component\Dotenv\Dotenv;
