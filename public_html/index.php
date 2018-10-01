@@ -8,7 +8,7 @@ use Controller\TagController;
 use Controller\VideoController;
 
 require __DIR__ . '/../vendor/autoload.php';
-session_start();
+
 
 $uri = $_SERVER['REQUEST_URI'];
 
@@ -42,6 +42,12 @@ if (count($paths) === 4) {
 }
 
 if ($path === '/api/tags') {
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $controller = new TagController();
+        $body = file_get_contents('php://input');
+        $controller->createAction($body);
+    }
 
     if($youtubeId){
         $controller = new TagController();
@@ -82,10 +88,3 @@ if ($uri == '/api/videos-last-added') {
     $controller = new VideoController();
     $controller->lastTenAction();
 }
-
-
-//if(isset($_SESSION['msg'])) {
-//    $msg = $_SESSION['msg'];
-//    unset($_SESSION['msg']);
-//}
-//

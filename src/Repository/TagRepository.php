@@ -86,7 +86,7 @@ class TagRepository extends BaseRepository
                                         LEFT JOIN video USING (video_id)
                                         LEFT JOIN tag USING (tag_id)
                                         LEFT JOIN artist_video USING (video_id)
-                                        LEFT JOIN artist USING music_video_id
+                                        LEFT JOIN artist USING (music_video_id)
                                         WHERE tag.slug = ?
                                         GROUP BY video_name
                                         ORDER BY expose DESC

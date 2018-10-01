@@ -82,6 +82,10 @@ export class VideoShowComponent implements OnInit {
         });
     }
 
+    preciseTime(answer){
+
+    }
+
     playPart(start, stop): void {
 
         clearTimeout(this.timer);

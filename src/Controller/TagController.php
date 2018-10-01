@@ -7,6 +7,12 @@ use Normalizer\TagsForVideo;
 
 class TagController extends BaseController
 {
+    public function createAction(array $data)
+    {
+
+
+    }
+
     public function listAction(string $query = null)
     {
         if($query){

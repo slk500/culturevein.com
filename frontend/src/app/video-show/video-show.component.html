@@ -29,7 +29,11 @@
             <br><br>
             <!--<button class="btn btn-info">Edit</button><br>-->
             <select2 [data]="tags" [cssImport]=true [options]="select2Options"></select2>
+            <button type='button' class='btn btn-warning center-block' id='BUTTON_save_tag' onclick='add_tag()'>Add TAG</button>
 
+            Do you want to set exposure time?
+            <button type='button' class='btn btn-success center-block' onclick='preciseTime(true)'>Tak</button>
+            <button type='button' class='btn btn-danger center-block' onclick='preciseTime(false)'>Nie</button>
         </div>
 
         <!--<div>-->
@@ -57,7 +61,6 @@
                         <!--</div>-->
                     <!--</div>-->
                 <!--</div><br>-->
-                <!--<button type='button' class='btn btn-warning center-block' id='BUTTON_save_tag' onclick='add_tag()'>Add TAG</button>-->
             <!--</form>-->
         <!--</div>-->
 
