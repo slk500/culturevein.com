@@ -28,7 +28,7 @@ class BaseRepository
         $this->mysqli->set_charset("utf8");
     }
 
-    protected function execute(string $query) : ?array
+    protected function fetch(string $query) : ?array
     {
         $stmt = $this->mysqli->prepare($query);
         $stmt->execute();

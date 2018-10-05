@@ -4,7 +4,20 @@ namespace Repository;
 
 class TagRepository extends BaseRepository
 {
-    public function findAll()
+    public function create(object $data)
+    {
+        $stmt = $this->mysqli->prepare("SELECT tag_id FROM tag WHERE name = ?");
+        $stmt->bind_param("s", $data->name);
+        $stmt->execute();
+        $stmt->bind_result($tag_id);
+
+        return $stmt->get_result()
+            ->fetch_object()
+            ->tag_id;
+    }
+
+
+    public function findAll():?array
     {
         $query = "SELECT DISTINCT(tag.name), tag.slug, tag.tag_id as id
                   FROM tag
@@ -12,7 +25,7 @@ class TagRepository extends BaseRepository
                   JOIN video using (video_id)
                         ORDER BY name";
 
-        $data = $this->execute($query);
+        $data = $this->fetch($query);
 
 
         return $data;
@@ -52,7 +65,7 @@ class TagRepository extends BaseRepository
                 ORDER BY `count` DESC
                 LIMIT 10";
 
-        $data = $this->execute($query);
+        $data = $this->fetch($query);
 
         return $data;
     }
@@ -70,7 +83,7 @@ class TagRepository extends BaseRepository
                 LIMIT 10";
 
 
-        $data = $this->execute($query);
+        $data = $this->fetch($query);
 
         return $data;
 

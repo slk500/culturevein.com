@@ -46,15 +46,17 @@ if ($path === '/api/tags') {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $controller = new TagController();
         $body = file_get_contents('php://input');
-        $controller->createAction($body);
-    }
-
-    if($youtubeId){
-        $controller = new TagController();
-        $controller->listAction($youtubeId);
+        $data = json_decode($body);
+        $controller->createAction($data);
     }else{
-        $controller = new TagController();
-        $controller->listAction();
+
+        if($youtubeId){
+            $controller = new TagController();
+            $controller->listAction($youtubeId);
+        }else{
+            $controller = new TagController();
+            $controller->listAction();
+        }
     }
 }
 

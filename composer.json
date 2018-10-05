@@ -5,11 +5,14 @@
         }
     },
     "require": {
-        "php": ">=7.1",
+        "php": ">=7.2",
         "facebook/graph-sdk": "^5.3",
         "swiftmailer/swiftmailer": "^5.4",
         "symfony/dotenv": "^3.3",
-        "phpunit/phpunit": "^7.2"
+        "phpunit/phpunit": "^7.2",
+        "cocur/slugify": "^3.1"
+    },
+    "require-dev": {
+        "guzzlehttp/guzzle": "^6.3"
     }
-
 }

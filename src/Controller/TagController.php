@@ -2,14 +2,15 @@
 
 namespace Controller;
 
-
 use Normalizer\TagsForVideo;
 
 class TagController extends BaseController
 {
-    public function createAction(array $data)
+    public function createAction(object $data)
     {
+        $tag = $this->tagRepository->create($data);
 
+        $this->response($tag);
 
     }
 

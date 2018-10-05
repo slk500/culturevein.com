@@ -33,7 +33,7 @@ class VideoRepository extends BaseRepository
                 LEFT JOIN artist USING (music_video_id)
                 ORDER BY artist_name, name";
 
-        $data = $this->execute($query);
+        $data = $this->fetch($query);
 
         return $data;
     }
@@ -51,7 +51,7 @@ class VideoRepository extends BaseRepository
               ORDER BY `count` DESC
               LIMIT 10";
 
-        $data = $this->execute($query);
+        $data = $this->fetch($query);
 
         return $data;
     }
@@ -66,7 +66,7 @@ class VideoRepository extends BaseRepository
                 ORDER BY video.create_time DESC
                 LIMIT 10";
 
-        $data = $this->execute($query);
+        $data = $this->fetch($query);
 
         return $data;
     }
