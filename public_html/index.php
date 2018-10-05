@@ -29,7 +29,7 @@ if (count($paths) === 4) {
 
         $slug = end($paths);
         $controller = new TagController();
-        $controller->showAction($slug);
+        $controller->show($slug);
     }
 
     //api/videos/youtubeId
@@ -37,25 +37,24 @@ if (count($paths) === 4) {
 
         $slug = end($paths);
         $controller = new VideoController();
-        $controller->showAction($slug);
+        $controller->show($slug);
     }
 }
 
 if ($path === '/api/tags') {
 
+    $controller = new TagController();
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $controller = new TagController();
         $body = file_get_contents('php://input');
         $data = json_decode($body);
-        $controller->createAction($data);
+        $controller->create($data);
     }else{
 
         if($youtubeId){
-            $controller = new TagController();
-            $controller->listAction($youtubeId);
+            $controller->list($youtubeId);
         }else{
-            $controller = new TagController();
-            $controller->listAction();
+            $controller->list();
         }
     }
 }
@@ -63,20 +62,20 @@ if ($path === '/api/tags') {
 if ($uri == '/api/tags-top') {
 
     $controller = new TagController();
-    $controller->topTenAction();
+    $controller->topTen();
 }
 
 if ($uri == '/api/tags-new') {
 
     $controller = new TagController();
-    $controller->lastTenAction();
+    $controller->lastTen();
 }
 
 
 if ($uri == '/api/videos') {
 
     $controller = new VideoController();
-    $controller->listAction();
+    $controller->list();
 }
 
 if ($uri == '/api/videos-top-tags') {
@@ -88,5 +87,5 @@ if ($uri == '/api/videos-top-tags') {
 if ($uri == '/api/videos-last-added') {
 
     $controller = new VideoController();
-    $controller->lastTenAction();
+    $controller->lastTen();
 }

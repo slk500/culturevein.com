@@ -6,7 +6,7 @@ use Repository\VideoRepository;
 
 class VideoController extends BaseController
 {
-    public function listAction()
+    public function list()
     {
         $videoRepo = new VideoRepository();
         $tags = $videoRepo->findAll();
@@ -14,7 +14,7 @@ class VideoController extends BaseController
         $this->response($tags);
     }
 
-    public function showAction(string $youtubeId)
+    public function show(string $youtubeId)
     {
         $videoRepo = new VideoRepository();
         $tags = $videoRepo->find($youtubeId);
@@ -22,7 +22,7 @@ class VideoController extends BaseController
         $this->response(reset($tags));
     }
 
-    public function showTagsAction()
+    public function showTags()
     {
 
     }
@@ -35,7 +35,7 @@ class VideoController extends BaseController
         $this->response($tags);
     }
 
-    public function lastTenAction()
+    public function lastTen()
     {
         $videoRepo = new VideoRepository();
         $tags = $videoRepo->lastAdded();

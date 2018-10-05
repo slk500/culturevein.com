@@ -6,41 +6,43 @@ use Normalizer\TagsForVideo;
 
 class TagController extends BaseController
 {
-    public function createAction(object $data)
+    public function create(object $data)
     {
         $tag = $this->tagRepository->create($data);
 
         $this->response($tag);
-
     }
 
-    public function listAction(string $query = null)
+    public function list()
     {
-        if($query){
-            $tags = $this->tagRepository->findByVideo($query);
-            $tags = (new TagsForVideo())->normalize($tags);
-        }else{
-            $tags = $this->tagRepository->findAll();
-        }
+        $tags = $this->tagRepository->findAll();
 
         $this->response($tags);
     }
 
-    public function showAction(string $slug)
+    public function listQuery(string $query)
+    {
+        $tags = $this->tagRepository->findByVideo($query);
+        $tags = (new TagsForVideo())->normalize($tags);
+
+        $this->response($tags);
+    }
+
+    public function show(string $slug)
     {
         $tag = $this->tagRepository->find($slug);
 
         $this->response($tag);
     }
 
-    public function topTenAction()
+    public function topTen()
     {
         $tags = $this->tagRepository->top();
 
         $this->response($tags);
     }
 
-    public function lastTenAction()
+    public function lastTen()
     {
         $tags = $this->tagRepository->newestTen();
 
