@@ -8,9 +8,13 @@ class TagController extends BaseController
 {
     public function create(object $data)
     {
-        $tag = $this->tagRepository->create($data);
+        $tagId = $this->tagRepository->findId($data);
 
-        $this->response($tag);
+        if (!$tagId) {
+           $tagId = $this->tagRepository->create($data);
+        }
+
+        $this->response($data);
     }
 
     public function list()

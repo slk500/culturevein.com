@@ -2,9 +2,11 @@
 
 namespace Repository;
 
+use Cocur\Slugify\Slugify;
+
 class TagRepository extends BaseRepository
 {
-    public function create(object $data)
+    public function findId(object $data)
     {
         $stmt = $this->mysqli->prepare("SELECT tag_id FROM tag WHERE name = ?");
         $stmt->bind_param("s", $data->name);
@@ -108,7 +110,6 @@ class TagRepository extends BaseRepository
         $stmt->bind_param("s", $slug);
         $stmt->execute();
 
-
         $result = $stmt->get_result();
         $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
         $stmt->free_result();
@@ -128,5 +129,15 @@ class TagRepository extends BaseRepository
     public function howManyUsersSubscribe($slug)
     {
         "SELECT count(tag_id) FROM tag_user_subscribe WHERE tag_id = ?";
+    }
+
+    public function create($data)
+    {
+        $slug = (new Slugify())->slugify($data->name);
+
+        $stmt = $this->mysqli->prepare("INSERT INTO tag (name, slug) VALUES (?, ?)");
+        $stmt->bind_param("ss", $data->name, $slug);
+        $stmt->execute();
+        return $this->mysqli->insert_id;
     }
 }
