@@ -6,39 +6,37 @@ use Repository\VideoRepository;
 
 class VideoController extends BaseController
 {
+    protected $videoRepository;
+
+    public function __construct()
+    {
+        $this->videoRepository = new VideoRepository();
+    }
+
     public function list()
     {
-        $videoRepo = new VideoRepository();
-        $tags = $videoRepo->findAll();
+        $tags = $this->videoRepository->findAll();
 
         $this->response($tags);
     }
 
     public function show(string $youtubeId)
     {
-        $videoRepo = new VideoRepository();
-        $tags = $videoRepo->find($youtubeId);
+        $tags = $this->videoRepository->find($youtubeId);
 
         $this->response(reset($tags));
     }
 
-    public function showTags()
-    {
-
-    }
-
     public function listHighestNumberOfTags()
     {
-        $videoRepo = new VideoRepository();
-        $tags = $videoRepo->withHighestNumberOfTags();
+        $tags = $this->videoRepository->withHighestNumberOfTags();
 
         $this->response($tags);
     }
 
     public function lastTen()
     {
-        $videoRepo = new VideoRepository();
-        $tags = $videoRepo->lastAdded();
+        $tags = $this->videoRepository->lastAdded();
 
         $this->response($tags);
     }

@@ -3,9 +3,17 @@
 namespace Controller;
 
 use Normalizer\TagsForVideo;
+use Repository\TagRepository;
 
 class TagController extends BaseController
 {
+    private $tagRepository;
+
+    public function __construct()
+    {
+        $this->tagRepository = new TagRepository();
+    }
+
     public function create(object $data)
     {
         $tagId = $this->tagRepository->findId($data);
