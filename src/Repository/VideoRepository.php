@@ -33,15 +33,15 @@ final class VideoRepository
 
         $video_id = $this->database->mysqli->insert_id;
 
-        $this->assignToArtist();
+       // $this->assignToArtist();
 
         return $video_id;
     }
 
-    public function assignToArtist(int $music_video_id, int $video_id)
+    public function assignToArtist(int $artist_id, int $video_id)
     {
-        $stmt = $this->database->mysqli->prepare("INSERT INTO music_video_video (music_video_id,video_id) VALUES (?,?)");
-        $stmt->bind_param("ii", $music_video_id, $video_id);
+        $stmt = $this->database->mysqli->prepare("INSERT INTO artist_video (artist_id, video_id) VALUES (?,?)");
+        $stmt->bind_param("ii", $artist_id, $video_id);
         $stmt->execute();
     }
 
@@ -80,11 +80,11 @@ final class VideoRepository
 
     public function findAll()
     {
-        $query = "SELECT youtube_id, artist.name, video.name
+        $query = "SELECT youtube_id, artist.name as artist_name, video.name
                 FROM video
                 LEFT JOIN artist_video USING (video_id)
                 LEFT JOIN artist USING (artist_id)
-                ORDER BY name, name";
+                ORDER BY artist_name";
 
         $data = $this->database->fetch($query);
 
@@ -93,7 +93,7 @@ final class VideoRepository
 
     public function withHighestNumberOfTags()
     {
-        $query = "SELECT artist.name, video.name, count(DISTINCT tag.tag_id) AS count,
+        $query = "SELECT artist.name as artist_name, video.name, count(DISTINCT tag.tag_id) AS count,
               video.youtube_id
               FROM tag
               JOIN tag_video USING (tag_id)
@@ -112,7 +112,7 @@ final class VideoRepository
     public function lastAdded()
     {
         $query = "SELECT video.youtube_id,
-                artist.name, video.name
+                artist.name as artist_name, video.name
                 FROM video
                 LEFT JOIN artist_video USING (video_id)
                 LEFT JOIN artist USING (artist_id)
