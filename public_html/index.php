@@ -18,7 +18,7 @@ $path =  $parts['path'];
 
 
 parse_str($parts['query'], $query);
-$youtubeId = $query['youtubeid'];
+$youtubeId = $query['youtubeid'] ?? null;
 
 $paths = explode('/', $uri);
 
@@ -52,7 +52,7 @@ if ($path === '/api/tags') {
     }else{
 
         if($youtubeId){
-            $controller->list($youtubeId);
+            $controller->listQuery($youtubeId);
         }else{
             $controller->list();
         }
