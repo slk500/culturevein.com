@@ -44,22 +44,23 @@ class TagVideoRepositoryTest extends TestCase
     {
         $tagRepository = new TagRepository();
         $tag = new stdClass();
-        $tag->name = 'Tag';
-        $tagRepository->create($tag);
+        $tag->name = 'some tag';
+        $tagId = $tagRepository->create($tag);
 
         $videoRepository = new VideoRepository();
         $video = new stdClass();
-        $video->name = 'Video';
-        $videoRepository->create($video);
+        $video->name = 'Yes Sir, I Can Boogie';
+        $video->youtube_id = 'VSQjx79dR8s';
+        $videoId = $videoRepository->create($video);
 
-//        $data = new stdClass();
-//        $data->tag_id =
-//        $data->video_id =
-//        $data->start =
-//        $data->stop =
-//
-//        $tagId = $this->tagVideoRepository->create($data);
-//
-//        $this->assertNotNull($tagId);
+        $data = new stdClass();
+        $data->tag_id = $tagId;
+        $data->video_id = $videoId;
+        $data->start = 0;
+        $data->stop = 10;
+
+        $tagId = $this->tagVideoRepository->create($data);
+
+        $this->assertNotNull($tagId);
     }
 }

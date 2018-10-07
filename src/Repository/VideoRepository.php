@@ -2,21 +2,63 @@
 
 namespace Repository;
 
-class VideoRepository extends Database
-{
-    public function create()
-    {
-        $stmt = $this->mysqli->prepare("INSERT INTO video (youtube_id, title_pl, duration, slug, release_date, type, state) VALUES (?,?,?,?,?,3,1)");
-        $stmt->bind_param("ssiss", $youtube_id, $music_video_title, $duration, $music_video_title_slug, $release_date);
-        $stmt->execute();
-        $stmt->close();
+use DateInterval;
+use DateTime;
 
-        return $this->mysqli->insert_id;
+final class VideoRepository
+{
+    /**
+     * @var ArtistRepository
+     */
+    private $artistRepository;
+
+    /**
+     * @var Database
+     */
+    private $database;
+
+    public function __construct()
+    {
+        $this->artistRepository = new ArtistRepository();
+        $this->database = new Database();
+    }
+
+    public function create(object $data): int
+    {
+        $duration = $this->getYoutubeDuration($data->youtube_id);
+
+        $stmt = $this->database->mysqli->prepare("INSERT INTO video (youtube_id, name, release_date, duration) VALUES (?,?,?,?)");
+        $stmt->bind_param("sssi", $data->youtube_id, $data->name, $data->release_date, $duration);
+        $stmt->execute();
+
+        $video_id = $this->database->mysqli->insert_id;
+
+        return $video_id;
+    }
+
+    public function assignToArtist(int $music_video_id, int $video_id)
+    {
+        $stmt = $this->database->mysqli->prepare("INSERT INTO music_video_video (music_video_id,video_id) VALUES (?,?)");
+        $stmt->bind_param("ii", $music_video_id, $video_id);
+        $stmt->execute();
+    }
+
+    public function getYoutubeDuration(string $id)
+    {
+        $json = json_decode(
+            file_get_contents('https://www.googleapis.com/youtube/v3/videos' .
+                '?part=contentDetails&id=' . $id . '&key=' . getenv('YT_API_KEY')));
+
+        $start = new DateTime('@0');
+        $youtube = new DateTime('@0');
+        $youtube->add(new DateInterval($json->items[0]->contentDetails->duration));
+
+        return $youtube->getTimestamp() - $start->getTimestamp();
     }
 
     public function find(string $youTubeId)
     {
-        $stmt = $this->mysqli->prepare( "SELECT video.name, video.release_date,video.
+        $stmt = $this->database->mysqli->prepare( "SELECT video.name, video.release_date,video.
             youtube_id, video.duration, artist.artist_name
             FROM video
             LEFT JOIN artist_video USING (video_id)
@@ -42,7 +84,7 @@ class VideoRepository extends Database
                 LEFT JOIN artist USING (music_video_id)
                 ORDER BY artist_name, name";
 
-        $data = $this->fetch($query);
+        $data = $this->database->fetch($query);
 
         return $data;
     }
@@ -60,7 +102,7 @@ class VideoRepository extends Database
               ORDER BY `count` DESC
               LIMIT 10";
 
-        $data = $this->fetch($query);
+        $data = $this->database->fetch($query);
 
         return $data;
     }
@@ -75,7 +117,7 @@ class VideoRepository extends Database
                 ORDER BY video.create_time DESC
                 LIMIT 10";
 
-        $data = $this->fetch($query);
+        $data = $this->database->fetch($query);
 
         return $data;
     }

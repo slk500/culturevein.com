@@ -130,13 +130,14 @@ class TagRepository extends Database
         "SELECT count(tag_id) FROM tag_user_subscribe WHERE tag_id = ?";
     }
 
-    public function create($data)
+    public function create($data): int
     {
         $slug = (new Slugify())->slugify($data->name);
 
         $stmt = $this->mysqli->prepare("INSERT INTO tag (name, slug) VALUES (?, ?)");
         $stmt->bind_param("ss", $data->name, $slug);
         $stmt->execute();
+
         return $this->mysqli->insert_id;
     }
 }

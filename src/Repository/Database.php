@@ -10,7 +10,7 @@ class Database
     /**
      * @var $mysqli mysqli
      */
-    protected $mysqli;
+    public $mysqli;
 
     public function __construct()
     {
