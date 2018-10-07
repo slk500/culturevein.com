@@ -2,8 +2,18 @@
 
 namespace Repository;
 
-class VideoRepository extends BaseRepository
+class VideoRepository extends Database
 {
+    public function create()
+    {
+        $stmt = $this->mysqli->prepare("INSERT INTO video (youtube_id, title_pl, duration, slug, release_date, type, state) VALUES (?,?,?,?,?,3,1)");
+        $stmt->bind_param("ssiss", $youtube_id, $music_video_title, $duration, $music_video_title_slug, $release_date);
+        $stmt->execute();
+        $stmt->close();
+
+        return $this->mysqli->insert_id;
+    }
+
     public function find(string $youTubeId)
     {
         $stmt = $this->mysqli->prepare( "SELECT video.name, video.release_date,video.
@@ -23,8 +33,7 @@ class VideoRepository extends BaseRepository
 
         return $data;
     }
-    
-    
+
     public function findAll()
     {
         $query = "SELECT youtube_id, artist.artist_name, video.name
@@ -70,5 +79,4 @@ class VideoRepository extends BaseRepository
 
         return $data;
     }
-
 }

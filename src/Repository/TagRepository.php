@@ -4,7 +4,7 @@ namespace Repository;
 
 use Cocur\Slugify\Slugify;
 
-class TagRepository extends BaseRepository
+class TagRepository extends Database
 {
     public function findId(object $data)
     {
@@ -17,7 +17,6 @@ class TagRepository extends BaseRepository
             ->fetch_object()
             ->tag_id;
     }
-
 
     public function findAll():?array
     {

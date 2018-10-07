@@ -2,7 +2,7 @@
 
 namespace Repository;
 
-class TagVideoRepository extends BaseRepository
+class TagVideoRepository extends Database
 {
     public function create(object $data)
     {
@@ -10,5 +10,4 @@ class TagVideoRepository extends BaseRepository
         $stmt->bind_param("iiii", $data->tag_id,$data->video_id, $data->start, $data->stop);
         $stmt->execute();
     }
-
 }

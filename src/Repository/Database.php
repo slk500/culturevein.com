@@ -5,9 +5,11 @@ namespace Repository;
 use mysqli;
 use Symfony\Component\Dotenv\Dotenv;
 
-class BaseRepository
+class Database
 {
-    /**@var $mysqli mysqli**/
+    /**
+     * @var $mysqli mysqli
+     */
     protected $mysqli;
 
     public function __construct()
@@ -26,17 +28,26 @@ class BaseRepository
             echo "Failed to connect to MySQL: " . $this->mysqli->connect_error;
         }
         $this->mysqli->set_charset("utf8");
+        mysqli_report(MYSQLI_REPORT_ALL ^ MYSQLI_REPORT_INDEX);
     }
 
-    protected function fetch(string $query) : ?array
+    public function fetch(string $query) : ?array
     {
         $stmt = $this->mysqli->prepare($query);
         $stmt->execute();
         $result = $stmt->get_result();
+        $stmt->store_result();
         $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
         $stmt->free_result();
         $stmt->close();
 
         return $data;
+    }
+
+    public function execute(string $query)
+    {
+        $this->mysqli->multi_query($query);
+        while ($this->mysqli->next_result()) {;}
     }
 }
