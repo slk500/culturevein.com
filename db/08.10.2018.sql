@@ -23,10 +23,10 @@ DROP TABLE IF EXISTS `artist`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `artist` (
-  `music_video_id` int(11) NOT NULL AUTO_INCREMENT,
-  `artist_name` varchar(100) NOT NULL,
+  `artist_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
   `slug` varchar(100) NOT NULL,
-  PRIMARY KEY (`music_video_id`)
+  PRIMARY KEY (`artist_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=409 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -48,14 +48,14 @@ DROP TABLE IF EXISTS `artist_video`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `artist_video` (
-  `music_video_video_id` int(11) NOT NULL AUTO_INCREMENT,
-  `music_video_id` int(11) NOT NULL,
+  `artist_video_id` int(11) NOT NULL AUTO_INCREMENT,
+  `artist_id` int(11) NOT NULL,
   `video_id` int(11) NOT NULL,
-  PRIMARY KEY (`music_video_video_id`),
-  KEY `music_video_id` (`music_video_id`),
-  KEY `video_id` (`video_id`),
-  CONSTRAINT `artist_video_ibfk_1` FOREIGN KEY (`music_video_id`) REFERENCES `artist` (artist_id) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `artist_video_ibfk_2` FOREIGN KEY (`video_id`) REFERENCES `video` (`video_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`artist_video_id`),
+  KEY `artist_video_artist_artist_id_fk` (`artist_id`),
+  KEY `artist_video_video_video_id_fk` (`video_id`),
+  CONSTRAINT `artist_video_video_video_id_fk` FOREIGN KEY (`video_id`) REFERENCES `video` (`video_id`),
+  CONSTRAINT `artist_video_artist_artist_id_fk` FOREIGN KEY (`artist_id`) REFERENCES `artist` (`artist_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=605 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -81,7 +81,7 @@ CREATE TABLE `tag` (
   `name` varchar(100) COLLATE utf8_polish_ci DEFAULT NULL,
   `slug` varchar(100) COLLATE utf8_polish_ci NOT NULL,
   PRIMARY KEY (`tag_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=817 DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=818 DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -352,4 +352,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-09-26 22:23:56
+-- Dump completed on 2018-10-08  1:28:38
