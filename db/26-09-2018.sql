@@ -54,7 +54,7 @@ CREATE TABLE `artist_video` (
   PRIMARY KEY (`music_video_video_id`),
   KEY `music_video_id` (`music_video_id`),
   KEY `video_id` (`video_id`),
-  CONSTRAINT `artist_video_ibfk_1` FOREIGN KEY (`music_video_id`) REFERENCES `artist` (`music_video_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `artist_video_ibfk_1` FOREIGN KEY (`music_video_id`) REFERENCES `artist` (artist_id) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `artist_video_ibfk_2` FOREIGN KEY (`video_id`) REFERENCES `video` (`video_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=605 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

@@ -33,6 +33,8 @@ final class VideoRepository
 
         $video_id = $this->database->mysqli->insert_id;
 
+        $this->assignToArtist();
+
         return $video_id;
     }
 
@@ -59,10 +61,10 @@ final class VideoRepository
     public function find(string $youTubeId)
     {
         $stmt = $this->database->mysqli->prepare( "SELECT video.name, video.release_date,video.
-            youtube_id, video.duration, artist.artist_name
+            youtube_id, video.duration, artist.name
             FROM video
             LEFT JOIN artist_video USING (video_id)
-            LEFT JOIN artist USING (music_video_id)
+            LEFT JOIN artist USING (artist_id)
             WHERE video.youtube_id = ?");
 
         $stmt->bind_param("s", $youTubeId);
@@ -78,11 +80,11 @@ final class VideoRepository
 
     public function findAll()
     {
-        $query = "SELECT youtube_id, artist.artist_name, video.name
+        $query = "SELECT youtube_id, artist.name, video.name
                 FROM video
                 LEFT JOIN artist_video USING (video_id)
-                LEFT JOIN artist USING (music_video_id)
-                ORDER BY artist_name, name";
+                LEFT JOIN artist USING (artist_id)
+                ORDER BY name, name";
 
         $data = $this->database->fetch($query);
 
@@ -91,13 +93,13 @@ final class VideoRepository
 
     public function withHighestNumberOfTags()
     {
-        $query = "SELECT artist.artist_name, video.name, count(DISTINCT tag.tag_id) AS count,
+        $query = "SELECT artist.name, video.name, count(DISTINCT tag.tag_id) AS count,
               video.youtube_id
               FROM tag
               JOIN tag_video USING (tag_id)
               JOIN video USING (video_id)
               LEFT JOIN artist_video USING (video_id)
-              LEFT JOIN artist USING (music_video_id)
+              LEFT JOIN artist USING (artist_id)
               GROUP BY video.youtube_id
               ORDER BY `count` DESC
               LIMIT 10";
@@ -110,10 +112,10 @@ final class VideoRepository
     public function lastAdded()
     {
         $query = "SELECT video.youtube_id,
-                artist.artist_name, video.name
+                artist.name, video.name
                 FROM video
                 LEFT JOIN artist_video USING (video_id)
-                LEFT JOIN artist USING (music_video_id)
+                LEFT JOIN artist USING (artist_id)
                 ORDER BY video.create_time DESC
                 LIMIT 10";
 

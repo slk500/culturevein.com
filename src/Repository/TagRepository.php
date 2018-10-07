@@ -73,13 +73,13 @@ class TagRepository extends Database
 
     public function newestTen()
     {
-        $query = "SELECT video.youtube_id, tag.name, artist.artist_name, video.name AS video_name,
+        $query = "SELECT video.youtube_id, tag.name, artist.name, video.name AS video_name,
                 tag.slug, artist.slug as artist_slug, tag_video.create_time
                 FROM tag_video
                 JOIN video USING (video_id) 
                 JOIN tag USING (tag_id)
                 LEFT JOIN artist_video USING (video_id)
-                LEFT JOIN artist USING (music_video_id) 
+                LEFT JOIN artist USING (artist_id) 
                 ORDER BY tag_video.create_time DESC
                 LIMIT 10";
 
@@ -93,14 +93,14 @@ class TagRepository extends Database
     public function find(string $slug)
     {
 
-        $stmt = $this->mysqli->prepare("SELECT video.youtube_id, artist.artist_name, video.name as video_name,
+        $stmt = $this->mysqli->prepare("SELECT video.youtube_id, artist.name, video.name as video_name,
                                         clean_time(SUM(tag_video.stop)-SUM(tag_video.start)) AS expose,
                                         tag.name, tag.slug
                                         FROM tag_video 
                                         LEFT JOIN video USING (video_id)
                                         LEFT JOIN tag USING (tag_id)
                                         LEFT JOIN artist_video USING (video_id)
-                                        LEFT JOIN artist USING (music_video_id)
+                                        LEFT JOIN artist USING (artist_id)
                                         WHERE tag.slug = ?
                                         GROUP BY video_name
                                         ORDER BY expose DESC
