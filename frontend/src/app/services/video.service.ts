@@ -16,24 +16,24 @@ export class VideoService {
     constructor(private http: HttpClient ) { }
 
     getVideos() : Observable<Ivideo[]> {
-        return this.http.get<Ivideo[]>('http://localhost:8000/api/videos')
+        return this.http.get<Ivideo[]>('api/videos')
             .pipe(catchError(this.errorHandler))
 
     }
 
     getVideo(youtubeId) : Observable<Ivideo> {
-        return this.http.get<Ivideo>('http://localhost:8000/api/videos/' + youtubeId)
+        return this.http.get<Ivideo>('api/videos/' + youtubeId)
             .pipe(catchError(this.errorHandler))
     }
 
     getVideosTopTag() : Observable<IVideoTopTag[]> {
-        return this.http.get<IVideoTopTag[]>('http://localhost:8000/api/videos-top-tags')
+        return this.http.get<IVideoTopTag[]>('api/videos-top-tags')
             .pipe(catchError(this.errorHandler))
 
     }
 
     getVideosLastAdded() : Observable<IVideoLastAdded[]> {
-        return this.http.get<IVideoLastAdded[]>('http://localhost:8000/api/videos-last-added')
+        return this.http.get<IVideoLastAdded[]>('api/videos-last-added')
             .pipe(catchError(this.errorHandler))
 
     }

@@ -17,30 +17,30 @@ export class TagService {
   constructor(private http: HttpClient ) { }
 
   getTags() : Observable<Itag[]> {
-    return this.http.get<Itag[]>('http://localhost:8000/api/tags')
+    return this.http.get<Itag[]>('api/tags')
         .pipe(catchError(this.errorHandler))
 
   }
 
   getTag(tagSlug) : Observable<ITagShow[]> {
-        return this.http.get<ITagShow[]>('http://localhost:8000/api/tags/' + tagSlug)
+        return this.http.get<ITagShow[]>('api/tags/' + tagSlug)
             .pipe(catchError(this.errorHandler))
     }
 
   getTagsNew() : Observable<INewtTag[]> {
-        return this.http.get<INewtTag[]>('http://localhost:8000/api/tags-new')
+        return this.http.get<INewtTag[]>('api/tags-new')
             .pipe(catchError(this.errorHandler))
 
     }
 
    getTagsTop() : Observable<ITopTag[]> {
-        return this.http.get<ITopTag[]>('http://localhost:8000/api/tags-top')
+        return this.http.get<ITopTag[]>('api/tags-top')
             .pipe(catchError(this.errorHandler))
 
     }
 
     getTagsForVideo(youtubeId) : Observable<ITagVideo[]> {
-        return this.http.get<ITagVideo[]>('http://localhost:8000/api/tags?youtubeid=' + youtubeId)
+        return this.http.get<ITagVideo[]>('api/tags?youtubeid=' + youtubeId)
             .pipe(catchError(this.errorHandler))
 
     }

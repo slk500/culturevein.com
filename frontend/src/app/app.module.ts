@@ -5,7 +5,7 @@ import { FormsModule }   from '@angular/forms';
 import { AppComponent } from './app.component';
 import { TagComponent } from './tag/tag.component';
 import { TagService } from "./services/tag.service";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { VideoComponent } from './video/video.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -19,6 +19,7 @@ import {NgxY2PlayerModule} from "ngx-y2-player";
 import {Select2Module} from "ng2-select2";
 import { FilterPipe }from './pipes/filter.pipe';
 import {InputService} from "./services/input.service";
+import {APIInterceptor} from "./http-interceptor";
 
 @NgModule({
   declarations: [
@@ -42,7 +43,11 @@ import {InputService} from "./services/input.service";
       Select2Module,
       FormsModule
   ],
-  providers: [TagService, InputService],
+  providers: [TagService, InputService, {
+      provide: HTTP_INTERCEPTORS,
+      useClass: APIInterceptor,
+      multi: true,
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
