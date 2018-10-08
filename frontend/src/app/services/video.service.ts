@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {Ivideo} from "./video";
+import {Ivideo} from "../interfaces/video";
 import { throwError as obervableThrowError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import {IVideoTopTag} from "./video_top_tag";
-import {IVideoLastAdded} from "./video_last_added";
-import {ITagShow} from "./tag_show";
+import {IVideoTopTag} from "../interfaces/video_top_tag";
+import {IVideoLastAdded} from "../interfaces/video_last_added";
+import {ITagShow} from "../interfaces/tag_show";
 
 
 @Injectable({

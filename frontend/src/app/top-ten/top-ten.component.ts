@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {TagService} from "../tag.service";
-import {VideoService} from "../video.service";
+import {TagService} from "../services/tag.service";
+import {VideoService} from "../services/video.service";
 import {Router} from "@angular/router";
 
 @Component({

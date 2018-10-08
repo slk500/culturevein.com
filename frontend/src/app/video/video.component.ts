@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {VideoService} from "../video.service";
-import {InputService} from "../input.service";
+import {VideoService} from "../services/video.service";
+import {InputService} from "../services/input.service";
 
 @Component({
   selector: 'app-video',

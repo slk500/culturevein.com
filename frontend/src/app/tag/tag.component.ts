@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {TagService} from "../tag.service";
-import {InputService} from "../input.service";
+import {TagService} from "../services/tag.service";
+import {InputService} from "../services/input.service";
 
 
 @Component({

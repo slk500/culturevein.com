@@ -4,7 +4,7 @@ import { FormsModule }   from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { TagComponent } from './tag/tag.component';
-import { TagService } from "./tag.service";
+import { TagService } from "./services/tag.service";
 import {HttpClientModule} from "@angular/common/http";
 import { VideoComponent } from './video/video.component';
 import { AppRoutingModule } from './/app-routing.module';
@@ -14,11 +14,11 @@ import { LinksComponent } from './links/links.component';
 import { AboutComponent } from './about/about.component';
 import { TagShowComponent } from './tag-show/tag-show.component';
 import { VideoShowComponent } from './video-show/video-show.component';
-import {MinuteSecondsPipe} from "./minute-seconds.pipe";
+import {MinuteSecondsPipe} from "./pipes/minute-seconds.pipe";
 import {NgxY2PlayerModule} from "ngx-y2-player";
 import {Select2Module} from "ng2-select2";
-import { FilterPipe }from './filter.pipe';
-import {InputService} from "./input.service";
+import { FilterPipe }from './pipes/filter.pipe';
+import {InputService} from "./services/input.service";
 
 @NgModule({
   declarations: [

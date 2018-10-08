@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
-import {TagService} from "../tag.service";
+import {TagService} from "../services/tag.service";
 
 @Component({
   selector: 'app-tag-show',

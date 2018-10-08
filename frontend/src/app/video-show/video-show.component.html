@@ -1,12 +1,12 @@
 <div class="col-xs-8 col-xs-offset-2">
 
     <!--<div #container>-->
-        <!--<ngx-y2-player-->
-                <!--#video-->
-                <!--[playerOptions]="playerOptions"-->
-                <!--[container]="container"-->
-        <!--&gt;-->
-        <!--</ngx-y2-player>-->
+    <!--<ngx-y2-player-->
+    <!--#video-->
+    <!--[playerOptions]="playerOptions"-->
+    <!--[container]="container"-->
+    <!--&gt;-->
+    <!--</ngx-y2-player>-->
     <!--</div>-->
 
     <div id="DIV_scene_tag" class="white_container">
@@ -17,83 +17,95 @@
             <ul class="tag">
                 <li *ngFor="let tag of videoTags"
                     [ngClass]="tagStyle(tag)">
-                    <a [routerLink]="['/tags', tag.slug]" style="color:white" > {{ tag.name }} </a>
+                    <a [routerLink]="['/tags', tag.slug]" style="color:white"> {{ tag.name }} </a>
                     <ol>
                         <li *ngFor="let time of tag.times"
                             style="cursor:pointer">
-                           <a (click)="playPart(time.start, time.stop)" >{{ time.start |minuteSeconds }} - {{ time.stop |minuteSeconds }}</a>
+                            <a (click)="playPart(time.start, time.stop)">{{ time.start |minuteSeconds }} - {{ time.stop
+                                |minuteSeconds }}</a>
                         </li>
                     </ol>
                 </li>
             </ul>
-            <br><br>
-            <!--<button class="btn btn-info">Edit</button><br>-->
-            <select2 [data]="tags" [cssImport]=true [options]="select2Options"></select2>
-            <button type='button' class='btn btn-warning center-block' id='BUTTON_save_tag' onclick='add_tag()'>Add TAG</button>
-
-            Do you want to set exposure time?
-            <button type='button' class='btn btn-success center-block' onclick='preciseTime(true)'>Tak</button>
-            <button type='button' class='btn btn-danger center-block' onclick='preciseTime(false)'>Nie</button>
         </div>
 
+            <div>
+                <select2  [cssImport]=true [options]="select2Options" [width]="'50%'" (valueChanged)="changed($event)">
+                    <option></option>
+                    <option *ngFor="let tag of tags"> {{ tag.name }}</option>
+                </select2>
+            </div>
+
+            <div *ngIf="isSelect2ChangedValue">
+                Do you want to set exposure time?
+                <button type='button' class='btn btn-success center-block' (click)="setExposureTime(true)">Tak</button>
+                <br>
+                <button type='button' class='btn btn-danger center-block' (click)="setExposureTime(false)">Nie</button>
+                <br>
+            </div>
+            <div *ngIf="isExposureTime"> Teraz ustawiamy czas</div>
+
+
+        <button *ngIf="isExposureTime == false" type='button' class='btn btn-warning center-block' (click)='addTag()'>Add TAG </button>
+
         <!--<div>-->
-            <!--<form id='timer_tag' class="form">-->
-                <!--<b><p class='text-center'>Select exposure time of the tag or just press Add TAG button to tag a whole music video</p></b>-->
-                <!--<div class="form-group">-->
+        <!--<form id='timer_tag' class="form">-->
+        <!--<b><p class='text-center'>Select exposure time of the tag or just press Add TAG button to tag a whole music video</p></b>-->
+        <!--<div class="form-group">-->
 
-                    <!--<div class='col-xs-5' id='start'>-->
-                        <!--<p class='text-center'> START (mm:ss)</p>-->
-                        <!--<div class="col-md-4">-->
-                            <!--<input class="form-control" type='number' id='tag_start_mm' min='0' max='{{ videoInfo.duration / 60 }}' value='0'>-->
-                        <!--</div>-->
-                        <!--<div class="col-md-4">-->
-                            <!--<input class="form-control" type='number' id='tag_start_ss' min='0' max='{{ videoInfo.duration % 60 }}' value='0'>-->
-                        <!--</div>-->
-                    <!--</div>-->
+        <!--<div class='col-xs-5' id='start'>-->
+        <!--<p class='text-center'> START (mm:ss)</p>-->
+        <!--<div class="col-md-4">-->
+        <!--<input class="form-control" type='number' id='tag_start_mm' min='0' max='{{ videoInfo.duration / 60 }}' value='0'>-->
+        <!--</div>-->
+        <!--<div class="col-md-4">-->
+        <!--<input class="form-control" type='number' id='tag_start_ss' min='0' max='{{ videoInfo.duration % 60 }}' value='0'>-->
+        <!--</div>-->
+        <!--</div>-->
 
-                    <!--<div class='col-xs-5' id='stop'>-->
-                        <!--<p class='text-center'>STOP (mm:ss)</p>-->
-                        <!--<div class="col-md-4">-->
-                            <!--<input class="form-control" type="number" id='tag_stop_mm' min='0' max='{{ videoInfo.duration / 60 }}' value='{{ Math.floor(videoInfo.duration / 60) }}'>-->
-                        <!--</div>-->
-                        <!--<div class="col-md-4">-->
-                            <!--<input class="form-control" type="number" id='tag_stop_ss' min='0' max='{{ videoInfo.duration % 60 }}' value='{{ videoInfo.duration % 60 }}'>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div><br>-->
-            <!--</form>-->
+        <!--<div class='col-xs-5' id='stop'>-->
+        <!--<p class='text-center'>STOP (mm:ss)</p>-->
+        <!--<div class="col-md-4">-->
+        <!--<input class="form-control" type="number" id='tag_stop_mm' min='0' max='{{ videoInfo.duration / 60 }}' value='{{ Math.floor(videoInfo.duration / 60) }}'>-->
+        <!--</div>-->
+        <!--<div class="col-md-4">-->
+        <!--<input class="form-control" type="number" id='tag_stop_ss' min='0' max='{{ videoInfo.duration % 60 }}' value='{{ videoInfo.duration % 60 }}'>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div><br>-->
+        <!--</form>-->
         <!--</div>-->
 
         <!--<button class="btn btn-success" id='btn_show_add_tag' onclick="">Add TAG</button><br><br>-->
         <!--<div id='add_tag' class='hide'>-->
 
-            <!--<select id='SELECT_tag'  >-->
-                <!--<option></option> &lt;!&ndash;empty placeholder &ndash;&gt;-->
-                <!--<optgroup label='Tags in video'>-->
-                    <!--{% for tag in db_tags_in_this_video %}-->
-                    <!--<option value=''> tag</option>-->
-                    <!--{% endfor %}-->
-                <!--</optgroup>-->
-                <!--<optgroup label='Tags in database'>-->
-                    <!--{% for tag in all_tags_minus_tags_in_video %}-->
-                    <!--<option value='tag'>tag</option>-->
-                    <!--{% endfor %}-->
-                <!--</optgroup>-->
-            <!--</select><br><br>-->
+        <!--<select id='SELECT_tag'  >-->
+        <!--<option></option> &lt;!&ndash;empty placeholder &ndash;&gt;-->
+        <!--<optgroup label='Tags in video'>-->
+        <!--{% for tag in db_tags_in_this_video %}-->
+        <!--<option value=''> tag</option>-->
+        <!--{% endfor %}-->
+        <!--</optgroup>-->
+        <!--<optgroup label='Tags in database'>-->
+        <!--{% for tag in all_tags_minus_tags_in_video %}-->
+        <!--<option value='tag'>tag</option>-->
+        <!--{% endfor %}-->
+        <!--</optgroup>-->
+        <!--</select><br><br>-->
 
-            <!--<br>-->
-            <!--<div id="DIV_added_tag" class="col-md-12"></div>-->
-            <!--<div id="DIV_save_tag">-->
+        <!--<br>-->
+        <!--<div id="DIV_added_tag" class="col-md-12"></div>-->
+        <!--<div id="DIV_save_tag">-->
 
-                <!--<form action="save_tag.php" method="post" id="FORM_save_tag">-->
-                    <!--<input type="hidden" id="tag_to_save" name="tag_to_save">-->
-                    <!--<input type="hidden" id="video_id" name="video_id" value="4368">-->
-                    <!--<br>-->
-                    <!--<button id="BUTTON_insert_tag" class="btn btn-danger" style="visibility: hidden;">Save</button>-->
+        <!--<form action="save_tag.php" method="post" id="FORM_save_tag">-->
+        <!--<input type="hidden" id="tag_to_save" name="tag_to_save">-->
+        <!--<input type="hidden" id="video_id" name="video_id" value="4368">-->
+        <!--<br>-->
+        <!--<button id="BUTTON_insert_tag" class="btn btn-danger" style="visibility: hidden;">Save</button>-->
 
-                    <!--<p id="RESULT_add_tag"></p>-->
-                <!--</form>-->
-            <!--</div>&lt;!&ndash; DIV_save_tag &ndash;&gt;-->
+        <!--<p id="RESULT_add_tag"></p>-->
+        <!--</form>-->
+        <!--</div>&lt;!&ndash; DIV_save_tag &ndash;&gt;-->
 
         <!--</div>&lt;!&ndash; DIV_scene_tag &ndash;&gt;-->
 

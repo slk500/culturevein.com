@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {Itag} from "./tag";
+import {Itag} from "../interfaces/tag";
 import { throwError as obervableThrowError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import {INewtTag} from "./tag_new";
-import {ITopTag} from "./tag_top";
-import {ITagShow} from "./tag_show";
-import {ITagVideo} from "../tag_video";
+import {INewtTag} from "../interfaces/tag_new";
+import {ITopTag} from "../interfaces/tag_top";
+import {ITagShow} from "../interfaces/tag_show";
+import {ITagVideo} from "../../tag_video";
 
 
 @Injectable({

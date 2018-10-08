@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {Router} from "@angular/router";
-import {InputService} from "./input.service";
+import {InputService} from "./services/input.service";
 
 @Component({
   selector: 'app-root',

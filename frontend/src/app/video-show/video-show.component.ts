@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
-import {VideoService} from "../video.service";
-import {TagService} from "../tag.service";
+import {VideoService} from "../services/video.service";
+import {TagService} from "../services/tag.service";
 import {NgxY2PlayerComponent, NgxY2PlayerOptions} from "ngx-y2-player";
 import {Select2OptionData} from "ng2-select2";
 
@@ -32,6 +32,10 @@ export class VideoShowComponent implements OnInit {
     public Math;
 
     public select2Options: Select2Options;
+
+    public isExposureTime = null;
+
+    public isSelect2ChangedValue = false;
 
     constructor(private route: ActivatedRoute, private router: Router, private _videoService: VideoService,
                 private _tagService: TagService) {
@@ -69,9 +73,13 @@ export class VideoShowComponent implements OnInit {
         };
 
         this.select2Options = {
-            placeholder: '17',
+            placeholder: 'Select TAG or type a new one',
             tags :true
         };
+    }
+
+    public changed(e: any): void {
+        this.isSelect2ChangedValue = true;
     }
 
     convertToFormat(data)
@@ -82,9 +90,17 @@ export class VideoShowComponent implements OnInit {
         });
     }
 
-    preciseTime(answer){
+    setExposureTime(answer): void {
+
+        this.isExposureTime = answer;
 
     }
+
+    addTag(): void {
+
+    }
+
+
 
     playPart(start, stop): void {
 
