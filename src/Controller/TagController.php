@@ -4,14 +4,18 @@ namespace Controller;
 
 use Normalizer\TagsForVideo;
 use Repository\TagRepository;
+use Repository\VideoTagRepository;
 
 class TagController extends BaseController
 {
     private $tagRepository;
 
+    private $videoTagRepository;
+
     public function __construct()
     {
         $this->tagRepository = new TagRepository();
+        $this->videoTagRepository = new VideoTagRepository();
     }
 
     public function create(object $data)
@@ -19,8 +23,12 @@ class TagController extends BaseController
         $tagId = $this->tagRepository->findId($data);
 
         if (!$tagId) {
-           $tagId = $this->tagRepository->create($data);
+           $this->tagRepository->create($data);
         }
+
+        $data->tag_id = $tagId;
+
+        $this->videoTagRepository->create($data);
 
         $this->response($data);
     }

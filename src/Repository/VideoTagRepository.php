@@ -2,7 +2,7 @@
 
 namespace Repository;
 
-class TagVideoRepository extends Database
+class VideoTagRepository extends Database
 {
     public function create(object $data)
     {

@@ -2,14 +2,14 @@
 
 use PHPUnit\Framework\TestCase;
 use Repository\TagRepository;
-use Repository\TagVideoRepository;
+use Repository\VideoTagRepository;
 use Repository\VideoRepository;
 use Service\DatabaseHelper;
 
-class TagVideoRepositoryTest extends TestCase
+class VideoTagRepositoryTest extends TestCase
 {
     /**
-     * @var TagVideoRepository
+     * @var VideoTagRepository
      */
     private $tagVideoRepository;
 
@@ -20,7 +20,7 @@ class TagVideoRepositoryTest extends TestCase
 
     public function setUp()
     {
-        $this->tagVideoRepository = new TagVideoRepository();
+        $this->tagVideoRepository = new VideoTagRepository();
         $this->databaseHelper = new DatabaseHelper();
 
         $this->databaseHelper->truncateTables([

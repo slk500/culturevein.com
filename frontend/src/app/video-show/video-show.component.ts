@@ -97,10 +97,8 @@ export class VideoShowComponent implements OnInit {
     }
 
     addTag(): void {
-
+        this._tagService.addTagToVideo();
     }
-
-
 
     playPart(start, stop): void {
 

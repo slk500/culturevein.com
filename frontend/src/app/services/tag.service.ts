@@ -45,6 +45,16 @@ export class TagService {
 
     }
 
+    addTagToVideo()
+    {
+        this.http.post('api/tags', {
+            video_id : 3799,
+            name : 'chess',
+            start : 0,
+            stop : 25
+        }).subscribe((data:any) => {console.log(data)})
+    }
+
   errorHandler(error : HttpErrorResponse) {
     return obervableThrowError(error.message || 'Server Error')
   }
