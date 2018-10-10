@@ -20,6 +20,7 @@ import {Select2Module} from "ng2-select2";
 import { FilterPipe }from './pipes/filter.pipe';
 import {InputService} from "./services/input.service";
 import {APIInterceptor} from "./http-interceptor";
+import {SliderModule} from 'primeng/slider';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import {APIInterceptor} from "./http-interceptor";
        AppRoutingModule,
       NgxY2PlayerModule,
       Select2Module,
-      FormsModule
+      FormsModule,
+      SliderModule
   ],
   providers: [TagService, InputService, {
       provide: HTTP_INTERCEPTORS,

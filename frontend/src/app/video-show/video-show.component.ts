@@ -4,6 +4,7 @@ import {VideoService} from "../services/video.service";
 import {TagService} from "../services/tag.service";
 import {NgxY2PlayerComponent, NgxY2PlayerOptions} from "ngx-y2-player";
 import {Select2OptionData} from "ng2-select2";
+import {SliderModule} from 'primeng/slider';
 
 @Component({
   selector: 'app-video-show',
@@ -36,6 +37,8 @@ export class VideoShowComponent implements OnInit {
     public isExposureTime = null;
 
     public isSelect2ChangedValue = false;
+
+    public rangeValues: number[] = [0,100];
 
     constructor(private route: ActivatedRoute, private router: Router, private _videoService: VideoService,
                 private _tagService: TagService) {
