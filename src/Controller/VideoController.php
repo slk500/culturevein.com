@@ -15,9 +15,9 @@ class VideoController extends BaseController
 
     public function list()
     {
-        $tags = $this->videoRepository->findAll();
+        $videos = $this->videoRepository->findAll();
 
-        $this->response($tags);
+        $this->response($videos);
     }
 
     public function show(string $youtubeId)
@@ -29,15 +29,15 @@ class VideoController extends BaseController
 
     public function listHighestNumberOfTags()
     {
-        $tags = $this->videoRepository->withHighestNumberOfTags();
+        $videos = $this->videoRepository->withHighestNumberOfTags();
 
-        $this->response($tags);
+        $this->response($videos);
     }
 
     public function lastTen()
     {
-        $tags = $this->videoRepository->lastAdded();
+        $videos = $this->videoRepository->lastAdded();
 
-        $this->response($tags);
+        $this->response($videos);
     }
 }

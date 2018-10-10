@@ -116,7 +116,7 @@ final class VideoRepository
                 FROM video
                 LEFT JOIN artist_video USING (video_id)
                 LEFT JOIN artist USING (artist_id)
-                ORDER BY video.create_time DESC
+                ORDER BY video.created_at DESC
                 LIMIT 10";
 
         $data = $this->database->fetch($query);

@@ -74,13 +74,13 @@ class TagRepository extends Database
     public function newestTen()
     {
         $query = "SELECT video.youtube_id, tag.name, artist.name as artist_name, video.name AS video_name,
-                tag.slug, artist.slug as artist_slug, tag_video.create_time
+                tag.slug, artist.slug as artist_slug, tag_video.created_at
                 FROM tag_video
                 JOIN video USING (video_id) 
                 JOIN tag USING (tag_id)
                 LEFT JOIN artist_video USING (video_id)
                 LEFT JOIN artist USING (artist_id) 
-                ORDER BY tag_video.create_time DESC
+                ORDER BY tag_video.created_at DESC
                 LIMIT 10";
 
 

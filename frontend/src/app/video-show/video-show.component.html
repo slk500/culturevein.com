@@ -46,68 +46,10 @@
             <div *ngIf="isExposureTime"> Teraz ustawiamy czas</div>
 
 
-        <button *ngIf="isExposureTime == false" type='button' class='btn btn-warning center-block' (click)='addTag()'>Add TAG </button>
+        <button *ngIf="isExposureTime == false" type='button' class='btn btn-primary center-block' (click)='addTag()'>Add TAG </button>
 
-        <!--<div>-->
-        <!--<form id='timer_tag' class="form">-->
-        <!--<b><p class='text-center'>Select exposure time of the tag or just press Add TAG button to tag a whole music video</p></b>-->
-        <!--<div class="form-group">-->
-
-        <!--<div class='col-xs-5' id='start'>-->
-        <!--<p class='text-center'> START (mm:ss)</p>-->
-        <!--<div class="col-md-4">-->
-        <!--<input class="form-control" type='number' id='tag_start_mm' min='0' max='{{ videoInfo.duration / 60 }}' value='0'>-->
-        <!--</div>-->
-        <!--<div class="col-md-4">-->
-        <!--<input class="form-control" type='number' id='tag_start_ss' min='0' max='{{ videoInfo.duration % 60 }}' value='0'>-->
-        <!--</div>-->
-        <!--</div>-->
-
-        <!--<div class='col-xs-5' id='stop'>-->
-        <!--<p class='text-center'>STOP (mm:ss)</p>-->
-        <!--<div class="col-md-4">-->
-        <!--<input class="form-control" type="number" id='tag_stop_mm' min='0' max='{{ videoInfo.duration / 60 }}' value='{{ Math.floor(videoInfo.duration / 60) }}'>-->
-        <!--</div>-->
-        <!--<div class="col-md-4">-->
-        <!--<input class="form-control" type="number" id='tag_stop_ss' min='0' max='{{ videoInfo.duration % 60 }}' value='{{ videoInfo.duration % 60 }}'>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div><br>-->
-        <!--</form>-->
-        <!--</div>-->
-
-        <!--<button class="btn btn-success" id='btn_show_add_tag' onclick="">Add TAG</button><br><br>-->
-        <!--<div id='add_tag' class='hide'>-->
-
-        <!--<select id='SELECT_tag'  >-->
-        <!--<option></option> &lt;!&ndash;empty placeholder &ndash;&gt;-->
-        <!--<optgroup label='Tags in video'>-->
-        <!--{% for tag in db_tags_in_this_video %}-->
-        <!--<option value=''> tag</option>-->
-        <!--{% endfor %}-->
-        <!--</optgroup>-->
-        <!--<optgroup label='Tags in database'>-->
-        <!--{% for tag in all_tags_minus_tags_in_video %}-->
-        <!--<option value='tag'>tag</option>-->
-        <!--{% endfor %}-->
-        <!--</optgroup>-->
-        <!--</select><br><br>-->
-
-        <!--<br>-->
-        <!--<div id="DIV_added_tag" class="col-md-12"></div>-->
-        <!--<div id="DIV_save_tag">-->
-
-        <!--<form action="save_tag.php" method="post" id="FORM_save_tag">-->
-        <!--<input type="hidden" id="tag_to_save" name="tag_to_save">-->
-        <!--<input type="hidden" id="video_id" name="video_id" value="4368">-->
-        <!--<br>-->
-        <!--<button id="BUTTON_insert_tag" class="btn btn-danger" style="visibility: hidden;">Save</button>-->
-
-        <!--<p id="RESULT_add_tag"></p>-->
-        <!--</form>-->
-        <!--</div>&lt;!&ndash; DIV_save_tag &ndash;&gt;-->
-
-        <!--</div>&lt;!&ndash; DIV_scene_tag &ndash;&gt;-->
+        <input type="range" id="start" name="volume"
+               min="0" max="11" />
 
     </div>
 </div>
