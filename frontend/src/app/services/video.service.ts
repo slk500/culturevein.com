@@ -27,13 +27,13 @@ export class VideoService {
     }
 
     getVideosTopTag() : Observable<IVideoTopTag[]> {
-        return this.http.get<IVideoTopTag[]>('api/videos-top-tags')
+        return this.http.get<IVideoTopTag[]>('api/videos-tags-top')
             .pipe(catchError(this.errorHandler))
 
     }
 
     getVideosLastAdded() : Observable<IVideoLastAdded[]> {
-        return this.http.get<IVideoLastAdded[]>('api/videos-last-added')
+        return this.http.get<IVideoLastAdded[]>('api/videos-new')
             .pipe(catchError(this.errorHandler))
 
     }

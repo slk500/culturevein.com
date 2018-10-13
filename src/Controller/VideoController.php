@@ -27,7 +27,7 @@ class VideoController extends BaseController
         $this->response(reset($tags));
     }
 
-    public function listHighestNumberOfTags()
+    public function highestNumberOfTags()
     {
         $videos = $this->videoRepository->withHighestNumberOfTags();
 

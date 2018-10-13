@@ -1,91 +1,30 @@
 <?php
 
-//ini_set('display_startup_errors',1);
-//ini_set('display_errors',1);
-//error_reporting(-1);
-
-use Controller\TagController;
-use Controller\VideoController;
+ini_set('display_startup_errors',1);
+ini_set('display_errors',1);
+error_reporting(-1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
+$router = new Router();
 
-$uri = $_SERVER['REQUEST_URI'];
+$router->add('/^\/api\/tags\/*$/',['controller' => 'TagController', 'action' => 'list']);
+$router->add('/^\/api\/tags-top\/*$/',['controller' => 'TagController', 'action' => 'topTen']);
+$router->add('/^\/api\/tags-new\/*$/',['controller' => 'TagController', 'action' => 'lastTen']);
+$router->add('/^\/api\/tags\/(?<slug>\w+)\/*$/',['controller' => 'TagController', 'action' => 'show']);
 
-$parts = parse_url($uri);
+$router->add('/^\/api\/videos\/*$/',['controller' => 'VideoController', 'action' => 'list']);
+$router->add('/^\/api\/videos-tags-top\/*$/',['controller' => 'VideoController', 'action' => 'highestNumberOfTags']);
+$router->add('/^\/api\/videos-new\/*$/',['controller' => 'VideoController', 'action' => 'lastTen']);
 
-$path =  $parts['path'];
+$router->add('/^\/api\/videos\/(?<youtubeId>\w+)\/*$/',['controller' => 'VideoController', 'action' => 'show']);
+$router->add('/^\/api\/videos\/(?<youtubeId>\w+)\/tags\/*$/',['controller' => 'VideoController', 'action' => 'show']);
 
+$url = $_SERVER['REQUEST_URI'];
 
-parse_str($parts['query'], $query);
-$youtubeId = $query['youtubeid'] ?? null;
-
-$paths = explode('/', $uri);
-
-if (count($paths) === 4) {
-
-    //api/tags/slug
-    if($paths[2] === 'tags') {
-
-        $slug = end($paths);
-        $controller = new TagController();
-        $controller->show($slug);
-    }
-
-    //api/videos/youtubeId
-    if($paths[2] === 'videos') {
-
-        $slug = end($paths);
-        $controller = new VideoController();
-        $controller->show($slug);
-    }
+if (!$router->match($url)){
+    http_response_code(404);
 }
 
-if ($path === '/api/tags') {
+$router->dispatch($url);
 
-    $controller = new TagController();
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $body = file_get_contents('php://input');
-        $data = json_decode($body);
-        $controller->create($data);
-    }else{
-
-        if($youtubeId){
-            $controller->listQuery($youtubeId);
-        }else{
-            $controller->list();
-        }
-    }
-}
-
-if ($uri == '/api/tags-top') {
-
-    $controller = new TagController();
-    $controller->topTen();
-}
-
-if ($uri == '/api/tags-new') {
-
-    $controller = new TagController();
-    $controller->lastTen();
-}
-
-
-if ($uri == '/api/videos') {
-
-    $controller = new VideoController();
-    $controller->list();
-}
-
-if ($uri == '/api/videos-top-tags') {
-
-    $controller = new VideoController();
-    $controller->listHighestNumberOfTags();
-}
-
-if ($uri == '/api/videos-last-added') {
-
-    $controller = new VideoController();
-    $controller->lastTen();
-}

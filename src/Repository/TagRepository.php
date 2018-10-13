@@ -3,6 +3,7 @@
 namespace Repository;
 
 use Cocur\Slugify\Slugify;
+use Controller\TagController;
 
 class TagRepository extends Database
 {

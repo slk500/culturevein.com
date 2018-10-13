@@ -20,6 +20,11 @@ class TagController extends BaseController
 
     public function create(object $data)
     {
+      ///  $body = file_get_contents('php://input');
+//        $data = json_decode($body);
+//        $controller->create($data);
+
+
         $tagId = $this->tagRepository->findId($data);
 
         if (!$tagId) {
@@ -40,9 +45,9 @@ class TagController extends BaseController
         $this->response($tags);
     }
 
-    public function listQuery(string $query)
+    public function listQuery(string $youtubeId)
     {
-        $tags = $this->tagRepository->findByVideo($query);
+        $tags = $this->tagRepository->findByVideo($youtubeId);
         $tags = (new TagsForVideo())->normalize($tags);
 
         $this->response($tags);
