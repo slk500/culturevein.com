@@ -9,31 +9,6 @@ class RouterTest extends TestCase
     /**
      * @test
      */
-    public function straight_regex()
-    {
-        $router = new \Router();
-
-        $router->add('/^\/api\/tags\/*$/',['controller' => 'TagController', 'action' => 'list']);
-
-        $this->assertTrue($router->match('/api/tags'));
-
-        $router = new \Router();
-
-        $router->add('/^\/api\/tags\/(?<slug>\w+)\/*$/',['controller' => 'TagController', 'action' => 'list']);
-
-        $this->assertTrue($router->match('/api/tags/chess'));
-
-        $router = new \Router();
-
-        $router->add('/^\/api\/tags-top\/*$/',['controller' => 'TagController', 'action' => 'list']);
-
-        $this->assertTrue($router->match('/api/tags-top'));
-    }
-
-
-    /**
-     * @test
-     */
     public function route_with_id()
     {
         $result = preg_match('/\/api\/videos\/(?<youtubeId>\w+)/','/api/videos/YsGk7I5AZBs', $matches);
