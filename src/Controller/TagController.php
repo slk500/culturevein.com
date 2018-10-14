@@ -19,12 +19,10 @@ class TagController extends BaseController
         $this->videoTagRepository = new VideoTagRepository();
     }
 
-    public function create(object $data)
+    public function create()
     {
-      ///  $body = file_get_contents('php://input');
-//        $data = json_decode($body);
-//        $controller->create($data);
-
+        $body = file_get_contents('php://input');
+        $data = json_decode($body);
 
         $tagId = $this->tagRepository->findId($data);
 

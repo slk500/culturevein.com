@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {Itag} from "../interfaces/tag";
 import { throwError as obervableThrowError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -47,12 +47,15 @@ export class TagService {
 
     addTagToVideo()
     {
+        const headers = new HttpHeaders()
+            .set('Access-Control-Allow-Origin','*');
+
         this.http.post('api/tags', {
             video_id : 3799,
             name : 'chess',
             start : 0,
             stop : 25
-        }).subscribe((data:any) => {console.log(data)})
+        }, {headers}).subscribe((data:any) => {console.log(data)})
     }
 
   errorHandler(error : HttpErrorResponse) {

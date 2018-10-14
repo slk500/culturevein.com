@@ -33,8 +33,7 @@ class TagControllerTest extends TestCase
           ]
         );
 
-        $this->assertEquals(17, $response->getBody()->getContents());
-
-        //$this->assertEquals(201,$response->getStatusCode());
+        $this->assertEquals('{"video_id":3799,"name":"chess","start":0,"stop":25,"tag_id":17}', $response->getBody()->getContents());
+        $this->assertEquals(201,$response->getStatusCode());
     }
 }
