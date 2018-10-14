@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Repository;
 
 use Cocur\Slugify\Slugify;
-use Controller\TagController;
 
 class TagRepository extends Database
 {
