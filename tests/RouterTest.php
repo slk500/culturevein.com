@@ -41,11 +41,19 @@ class RouterTest extends TestCase
         $this->assertSame($result, 1);
         $this->assertEquals('YsGk7I5AZBs', $matches['youtubeId']);
 
-        $result = preg_match('/^\/api\/tags\/(?<slug>\w+)\/*$/','/api/tags/chess', $matches);
+        $result = preg_match('/^\/api\/tags\/(?<slug>[\w-]+)\/*$/','/api/tags/chess', $matches);
 
         $this->assertSame($result, 1);
         $this->assertEquals('chess', $matches['slug']);
 
+        $result = preg_match('/^\/api\/tags\/(?<slug>[\w-]+)\/*$/','/api/tags/arnold-schwarzenegger', $matches);
+
+        $this->assertSame($result, 1);
+        $this->assertEquals('arnold-schwarzenegger', $matches['slug']);
+
+
+        $result = preg_match('/^\/api\/videos\/(?<youtubeId>\w{11})\/tags\/*$/','/api/videos/123456123456/tags', $matches);
+        $this->assertSame($result, 0);
     }
 
     /**

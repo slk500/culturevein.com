@@ -109,7 +109,7 @@ final class VideoRepository
         return $data;
     }
 
-    public function lastAdded()
+    public function newestTen()
     {
         $query = "SELECT video.youtube_id,
                 artist.name as artist_name, video.name

@@ -40,7 +40,7 @@ export class TagService {
     }
 
     getTagsForVideo(youtubeId) : Observable<ITagVideo[]> {
-        return this.http.get<ITagVideo[]>('api/tags?youtubeid=' + youtubeId)
+        return this.http.get<ITagVideo[]>('api/videos/'+ youtubeId + '/tags')
             .pipe(catchError(this.errorHandler))
 
     }

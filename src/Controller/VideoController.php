@@ -2,15 +2,20 @@
 
 namespace Controller;
 
+use Normalizer\TagsForVideo;
+use Repository\TagRepository;
 use Repository\VideoRepository;
 
 class VideoController extends BaseController
 {
-    protected $videoRepository;
+    private $videoRepository;
+
+    private $tagRepository;
 
     public function __construct()
     {
         $this->videoRepository = new VideoRepository();
+        $this->tagRepository = new TagRepository();
     }
 
     public function list()
@@ -34,10 +39,18 @@ class VideoController extends BaseController
         $this->response($videos);
     }
 
-    public function lastTen()
+    public function newestTen()
     {
-        $videos = $this->videoRepository->lastAdded();
+        $videos = $this->videoRepository->newestTen();
 
         $this->response($videos);
+    }
+
+    public function tags(string $youtubeId)
+    {
+        $tags = $this->tagRepository->findByVideo($youtubeId);
+        $tags = (new TagsForVideo())->normalize($tags);
+
+        $this->response($tags);
     }
 }
