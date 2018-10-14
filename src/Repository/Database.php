@@ -7,7 +7,7 @@ namespace Repository;
 use mysqli;
 use Symfony\Component\Dotenv\Dotenv;
 
-class Database
+final class Database
 {
     /**
      * @var $mysqli mysqli

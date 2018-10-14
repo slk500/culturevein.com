@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Normalizer;
 
-class TagsForVideo
+final class TagsForVideo
 {
     public function normalize(array $array)
     {

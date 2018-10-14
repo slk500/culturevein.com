@@ -6,11 +6,21 @@ namespace Repository;
 
 use Cocur\Slugify\Slugify;
 
-class TagRepository extends Database
+final class TagRepository
 {
+    /**
+     * @var Database
+     */
+    private $database;
+
+    public function __construct()
+    {
+        $this->database = new Database();
+    }
+
     public function findId(object $data)
     {
-        $stmt = $this->mysqli->prepare("SELECT tag_id FROM tag WHERE name = ?");
+        $stmt = $this->database->mysqli->prepare("SELECT tag_id FROM tag WHERE name = ?");
         $stmt->bind_param("s", $data->name);
         $stmt->execute();
         $stmt->bind_result($tag_id);
@@ -28,7 +38,7 @@ class TagRepository extends Database
                   JOIN video using (video_id)
                         ORDER BY name";
 
-        $data = $this->fetch($query);
+        $data = $this->database->fetch($query);
 
 
         return $data;
@@ -36,7 +46,7 @@ class TagRepository extends Database
 
     public function findByVideo(string $youtubeId)
     {
-        $stmt = $this->mysqli->prepare("SELECT tag.name,
+        $stmt = $this->database->mysqli->prepare("SELECT tag.name,
         GROUP_CONCAT(tag_video.start,'-',tag_video.stop) as times,
         tag.slug, tvc.video_id is not null as complete
         FROM tag_video
@@ -68,7 +78,7 @@ class TagRepository extends Database
                 ORDER BY `count` DESC
                 LIMIT 10";
 
-        $data = $this->fetch($query);
+        $data = $this->database->fetch($query);
 
         return $data;
     }
@@ -86,7 +96,7 @@ class TagRepository extends Database
                 LIMIT 10";
 
 
-        $data = $this->fetch($query);
+        $data = $this->database->fetch($query);
 
         return $data;
 
@@ -95,7 +105,7 @@ class TagRepository extends Database
     public function find(string $slug)
     {
 
-        $stmt = $this->mysqli->prepare("SELECT video.youtube_id, artist.name as artist_name, video.name as video_name,
+        $stmt = $this->database->mysqli->prepare("SELECT video.youtube_id, artist.name as artist_name, video.name as video_name,
                                         clean_time(SUM(tag_video.stop)-SUM(tag_video.start)) AS expose,
                                         tag.name, tag.slug
                                         FROM tag_video 
@@ -136,10 +146,10 @@ class TagRepository extends Database
     {
         $slug = (new Slugify())->slugify($data->name);
 
-        $stmt = $this->mysqli->prepare("INSERT INTO tag (name, slug) VALUES (?, ?)");
+        $stmt = $this->database->mysqli->prepare("INSERT INTO tag (name, slug) VALUES (?, ?)");
         $stmt->bind_param("ss", $data->name, $slug);
         $stmt->execute();
 
-        return $this->mysqli->insert_id;
+        return $this->database->mysqli->insert_id;
     }
 }
