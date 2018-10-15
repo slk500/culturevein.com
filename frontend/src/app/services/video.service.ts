@@ -3,8 +3,8 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Ivideo} from "../interfaces/video";
 import { throwError as obervableThrowError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import {IVideoTopTag} from "../interfaces/video_top_tag";
-import {IVideoLastAdded} from "../interfaces/video_last_added";
+import {IVideoTagTop} from "../interfaces/video_top_tag";
+import {IVideoNew} from "../interfaces/video_last_added";
 import {ITagShow} from "../interfaces/tag_show";
 
 
@@ -26,14 +26,14 @@ export class VideoService {
             .pipe(catchError(this.errorHandler))
     }
 
-    getVideosTopTag() : Observable<IVideoTopTag[]> {
-        return this.http.get<IVideoTopTag[]>('api/videos-tags-top')
+    getVideosTopTag() : Observable<IVideoTagTop[]> {
+        return this.http.get<IVideoTagTop[]>('api/videos-tags-top')
             .pipe(catchError(this.errorHandler))
 
     }
 
-    getVideosLastAdded() : Observable<IVideoLastAdded[]> {
-        return this.http.get<IVideoLastAdded[]>('api/videos-new')
+    getVideosLastAdded() : Observable<IVideoNew[]> {
+        return this.http.get<IVideoNew[]>('api/videos-new')
             .pipe(catchError(this.errorHandler))
 
     }

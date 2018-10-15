@@ -1,64 +1,61 @@
-import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Itag} from "../interfaces/tag";
-import { throwError as obervableThrowError, Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import {throwError as obervableThrowError, Observable} from 'rxjs';
+import {catchError} from 'rxjs/operators';
 import {INewtTag} from "../interfaces/tag_new";
-import {ITopTag} from "../interfaces/tag_top";
+import {ITagTop} from "../interfaces/tag_top";
 import {ITagShow} from "../interfaces/tag_show";
-import {ITagVideo} from "../../tag_video";
+import {IVideoTag} from "../interfaces/video_tag";
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class TagService {
 
-  constructor(private http: HttpClient ) { }
+    constructor(private http: HttpClient) {
+    }
 
-  getTags() : Observable<Itag[]> {
-    return this.http.get<Itag[]>('api/tags')
-        .pipe(catchError(this.errorHandler))
+    getTags(): Observable<Itag[]> {
+        return this.http.get<Itag[]>('api/tags')
+            .pipe(catchError(this.errorHandler))
 
-  }
+    }
 
-  getTag(tagSlug) : Observable<ITagShow[]> {
+    getTag(tagSlug): Observable<ITagShow[]> {
         return this.http.get<ITagShow[]>('api/tags/' + tagSlug)
             .pipe(catchError(this.errorHandler))
     }
 
-  getTagsNew() : Observable<INewtTag[]> {
+    getTagsNew(): Observable<INewtTag[]> {
         return this.http.get<INewtTag[]>('api/tags-new')
             .pipe(catchError(this.errorHandler))
 
     }
 
-   getTagsTop() : Observable<ITopTag[]> {
-        return this.http.get<ITopTag[]>('api/tags-top')
+    getTagsTop(): Observable<ITagTop[]> {
+        return this.http.get<ITagTop[]>('api/tags-top')
             .pipe(catchError(this.errorHandler))
 
     }
 
-    getTagsForVideo(youtubeId) : Observable<ITagVideo[]> {
-        return this.http.get<ITagVideo[]>('api/videos/'+ youtubeId + '/tags')
+    getVideoTags(youtubeId): Observable<IVideoTag[]> {
+        return this.http.get<IVideoTag[]>('api/videos/' + youtubeId + '/tags')
             .pipe(catchError(this.errorHandler))
 
     }
 
-    addTagToVideo()
-    {
-        const headers = new HttpHeaders()
-            .set('Access-Control-Allow-Origin','*');
-
-        this.http.post('api/tags', {
-            video_id : 3799,
-            name : 'chess',
-            start : 0,
-            stop : 25
-        }, {headers}).subscribe((data:any) => {console.log(data)})
+    addVideoTag(videoId, start, stop, name) {
+        return this.http.post('api/tags', {
+            video_id: videoId,
+            name: name,
+            start: start,
+            stop: stop
+        })
     }
 
-  errorHandler(error : HttpErrorResponse) {
-    return obervableThrowError(error.message || 'Server Error')
-  }
+    errorHandler(error: HttpErrorResponse) {
+        return obervableThrowError(error.message || 'Server Error')
+    }
 }

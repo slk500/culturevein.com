@@ -30,30 +30,28 @@
         </div>
 
             <div>
-                <select2  [cssImport]=true [options]="select2Options" [width]="'50%'" (valueChanged)="changed($event)">
+                <select2  [cssImport]=true [options]="select2Options" [width]="'50%'" (valueChanged)="changed($event)" [value]="selectedValue" >
                     <option></option>
                     <option *ngFor="let tag of tags"> {{ tag.name }}</option>
                 </select2>
             </div>
         <br>
-        <div> Start {{ rangeValues[0] }} End {{ rangeValues[1] }}</div>
 
-        <p-slider [(ngModel)]="rangeValues" [range]="true"></p-slider>
 
-        <br>
-
-        <button type='button' class='btn btn-primary center-block'> Test </button>
-        <br>
-        <button type='button' class='btn btn-primary center-block' (click)='addTag()'>Add TAG </button>
 
             <div *ngIf="isSelect2ChangedValue">
                 Do you want to set exposure time?
-                <button type='button' class='btn btn-success center-block' (click)="setExposureTime(true)">Tak</button>
+                <button type='button' class='btn btn-success center-block' (click)="setExposureTime(true)">Yes</button>
                 <br>
-                <button type='button' class='btn btn-danger center-block' (click)="setExposureTime(false)">Nie</button>
+                <button type='button' class='btn btn-danger center-block' (click)="setExposureTime(false)">No</button>
                 <br>
             </div>
-            <div *ngIf="isExposureTime"> Teraz ustawiamy czas</div>
+            <div *ngIf="isExposureTime">
+                <div> Start {{ rangeValues[0] }} End {{ rangeValues[1] }}</div>
+                <p-slider [(ngModel)]="rangeValues" [range]="true"></p-slider>
+                <br>
+                <button type='button' class='btn btn-primary center-block' (click)='addTag()'>Add TAG </button>
+            </div>
 
 
         <button *ngIf="isExposureTime == false" type='button' class='btn btn-primary center-block' (click)='addTag()'>Add TAG </button>

@@ -1,4 +1,4 @@
-export interface ITopTag {
+export interface ITagTop {
     name: string,
     count: number,
     slug: string,

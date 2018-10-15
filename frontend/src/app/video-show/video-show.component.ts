@@ -7,9 +7,9 @@ import {Select2OptionData} from "ng2-select2";
 import {SliderModule} from 'primeng/slider';
 
 @Component({
-  selector: 'app-video-show',
-  templateUrl: './video-show.component.html',
-  styleUrls: ['./video-show.component.css']
+    selector: 'app-video-show',
+    templateUrl: './video-show.component.html',
+    styleUrls: ['./video-show.component.css']
 })
 
 export class VideoShowComponent implements OnInit {
@@ -38,7 +38,9 @@ export class VideoShowComponent implements OnInit {
 
     public isSelect2ChangedValue = false;
 
-    public rangeValues: number[] = [0,100];
+    public rangeValues: number[] = [0, 100];
+
+    public selectedValue;
 
     constructor(private route: ActivatedRoute, private router: Router, private _videoService: VideoService,
                 private _tagService: TagService) {
@@ -46,7 +48,7 @@ export class VideoShowComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.route.paramMap.subscribe((params : ParamMap) => {
+        this.route.paramMap.subscribe((params: ParamMap) => {
             this.youtubeId = params.get('youtubeId');
         });
 
@@ -54,16 +56,12 @@ export class VideoShowComponent implements OnInit {
             .subscribe(data => this.videoInfo = data,
                 error => this.errorMsg = error);
 
-        this._tagService.getTagsForVideo(this.youtubeId)
+        this._tagService.getVideoTags(this.youtubeId)
             .subscribe(data => this.videoTags = data,
                 error => this.errorMsg = error);
 
         this._tagService.getTags()
             .subscribe(data => this.tags = this.convertToFormat(data),
-                error => this.errorMsg = error);
-
-        this._tagService.getTagsForVideo(this.youtubeId)
-            .subscribe(data => this.videoTags = data,
                 error => this.errorMsg = error);
 
         this.playerOptions = {
@@ -77,16 +75,16 @@ export class VideoShowComponent implements OnInit {
 
         this.select2Options = {
             placeholder: 'Select TAG or type a new one',
-            tags :true
+            tags: true
         };
     }
 
     public changed(e: any): void {
         this.isSelect2ChangedValue = true;
+        this.selectedValue = e.value;
     }
 
-    convertToFormat(data)
-    {
+    convertToFormat(data) {
         return $.map(data, function (obj) {
             obj.text = obj.text || obj.name;
             return obj;
@@ -100,7 +98,27 @@ export class VideoShowComponent implements OnInit {
     }
 
     addTag(): void {
-        this._tagService.addTagToVideo();
+
+        let start = null;
+        let stop = null;
+
+        if(this.isExposureTime == true){
+            start = this.rangeValues[0];
+            stop = this.rangeValues[1];
+        }
+
+       let result =  this._tagService.addVideoTag(this.videoInfo.video_id, start, stop, this.selectedValue);
+
+        // let person = [];
+        // person["complete"] = false;
+        // person["name"] = "Dupa";
+        // person["slug"] = "dupa";
+        // person["times"] = null;
+
+        console.log(result);
+
+        this.videoTags.push(result);
+
     }
 
     playPart(start, stop): void {
@@ -108,7 +126,7 @@ export class VideoShowComponent implements OnInit {
         clearTimeout(this.timer);
 
         this.video.videoPlayer.seekTo(start, true);
-        if(this.video.videoPlayer.getPlayerState() != YT.PlayerState.PLAYING){
+        if (this.video.videoPlayer.getPlayerState() != YT.PlayerState.PLAYING) {
             this.video.videoPlayer.playVideo();
         }
 
@@ -116,22 +134,22 @@ export class VideoShowComponent implements OnInit {
         let secondsToPlay = stop - start;
         let hackAddTimeToPauseOnStopTime = 1000;
         this.timer = setTimeout(() => {
-             this.video.videoPlayer.pauseVideo();
+            this.video.videoPlayer.pauseVideo();
         }, secondsToPlay * millisecondsInOneMinute + hackAddTimeToPauseOnStopTime);
     }
 
     tagStyle(tag): string {
 
-        if(tag.times == null) {
+        if (tag.times == null) {
             return 'btn-default';
         }
 
-        if(tag.complete) {
+        if (tag.complete) {
             return 'btn-success';
         }
 
         let arr = tag.times[0];
-        if(arr.start == 0 && arr.stop == this.videoInfo.duration){
+        if (arr.start == 0 && arr.stop == this.videoInfo.duration) {
             return 'btn-danger'
         }
 
