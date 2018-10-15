@@ -47,12 +47,13 @@ export class TagService {
     }
 
     addVideoTag(videoId, start, stop, name) {
-        return this.http.post('api/tags', {
+
+       return this.http.post<IVideoTag>('api/tags', {
             video_id: videoId,
             name: name,
             start: start,
             stop: stop
-        })
+        }).subscribe((data:any) => data)
     }
 
     errorHandler(error: HttpErrorResponse) {

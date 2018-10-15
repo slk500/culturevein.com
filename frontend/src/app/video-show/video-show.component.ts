@@ -5,6 +5,7 @@ import {TagService} from "../services/tag.service";
 import {NgxY2PlayerComponent, NgxY2PlayerOptions} from "ngx-y2-player";
 import {Select2OptionData} from "ng2-select2";
 import {SliderModule} from 'primeng/slider';
+import {Ivideo} from "../interfaces/video";
 
 @Component({
     selector: 'app-video-show',
@@ -18,7 +19,7 @@ export class VideoShowComponent implements OnInit {
 
     public youtubeId;
 
-    public videoInfo;
+    public videoInfo: Ivideo;
 
     public errorMsg;
 
@@ -92,9 +93,7 @@ export class VideoShowComponent implements OnInit {
     }
 
     setExposureTime(answer): void {
-
         this.isExposureTime = answer;
-
     }
 
     addTag(): void {
@@ -107,18 +106,7 @@ export class VideoShowComponent implements OnInit {
             stop = this.rangeValues[1];
         }
 
-       let result =  this._tagService.addVideoTag(this.videoInfo.video_id, start, stop, this.selectedValue);
-
-        // let person = [];
-        // person["complete"] = false;
-        // person["name"] = "Dupa";
-        // person["slug"] = "dupa";
-        // person["times"] = null;
-
-        console.log(result);
-
-        this.videoTags.push(result);
-
+       this._tagService.addVideoTag(this.videoInfo.video_id, start, stop, this.selectedValue);
     }
 
     playPart(start, stop): void {
