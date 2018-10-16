@@ -3,8 +3,8 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Ivideo} from "../interfaces/video";
 import { throwError as obervableThrowError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import {IVideoTagTop} from "../interfaces/video_top_tag";
-import {IVideoNew} from "../interfaces/video_last_added";
+import {IVideoTagTop} from "../interfaces/video_tag_top";
+import {IVideoNew} from "../interfaces/video_new";
 import {ITagShow} from "../interfaces/tag_show";
 
 
