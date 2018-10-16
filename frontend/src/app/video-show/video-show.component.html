@@ -40,12 +40,13 @@
 
 
             <div *ngIf="isSelect2ChangedValue">
-                Do you want to set exposure time?
+                Can you set exposure time?
                 <button type='button' class='btn btn-success center-block' (click)="setExposureTime(true)">Yes</button>
                 <br>
                 <button type='button' class='btn btn-danger center-block' (click)="setExposureTime(false)">No</button>
                 <br>
             </div>
+
             <div *ngIf="isExposureTime">
                 <div> Start {{ rangeValues[0] }} End {{ rangeValues[1] }}</div>
                 <p-slider [(ngModel)]="rangeValues" [range]="true"></p-slider>

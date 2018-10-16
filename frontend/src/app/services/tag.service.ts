@@ -53,7 +53,7 @@ export class TagService {
             name: name,
             start: start,
             stop: stop
-        }).subscribe((data:any) => data)
+        })
     }
 
     errorHandler(error: HttpErrorResponse) {

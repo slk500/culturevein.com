@@ -106,7 +106,15 @@ export class VideoShowComponent implements OnInit {
             stop = this.rangeValues[1];
         }
 
-       this._tagService.addVideoTag(this.videoInfo.video_id, start, stop, this.selectedValue);
+       this._tagService.
+       addVideoTag(this.videoInfo.video_id, start, stop, this.selectedValue).
+       subscribe((data:any) => {
+           this._tagService.
+           getVideoTags(this.youtubeId)
+               .subscribe(data => this.videoTags = data,
+                   error => this.errorMsg = error);
+       });
+
     }
 
     playPart(start, stop): void {
