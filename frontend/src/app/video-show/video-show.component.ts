@@ -6,6 +6,7 @@ import {NgxY2PlayerComponent, NgxY2PlayerOptions} from "ngx-y2-player";
 import {Select2OptionData} from "ng2-select2";
 import {SliderModule} from 'primeng/slider';
 import {Ivideo} from "../interfaces/video";
+import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
     selector: 'app-video-show',
@@ -17,7 +18,7 @@ export class VideoShowComponent implements OnInit {
 
     @ViewChild('video') video: NgxY2PlayerComponent;
 
-    public youtubeId;
+    public youtubeId: string;
 
     public videoInfo: Ivideo;
 
@@ -31,6 +32,10 @@ export class VideoShowComponent implements OnInit {
 
     public timer;
 
+    public min;
+
+    public max;
+
     public Math;
 
     public select2Options: Select2Options;
@@ -39,12 +44,16 @@ export class VideoShowComponent implements OnInit {
 
     public isSelect2ChangedValue = false;
 
-    public rangeValues: number[] = [0, 100];
+    public isTagVideoAlreadyExistWithNoTime = false;
+
+    public rangeValues: number[] = [0, 0];
 
     public selectedValue;
 
-    constructor(private route: ActivatedRoute, private router: Router, private _videoService: VideoService,
-                private _tagService: TagService) {
+    constructor(private route: ActivatedRoute, private router: Router,
+                private _videoService: VideoService,
+                private _tagService: TagService)
+    {
         this.Math = Math;
     }
 
@@ -54,7 +63,11 @@ export class VideoShowComponent implements OnInit {
         });
 
         this._videoService.getVideo(this.youtubeId)
-            .subscribe(data => this.videoInfo = data,
+            .subscribe(data => {
+                this.videoInfo = data;
+                this.rangeValues[1] = data.duration;
+                this.rangeValues[0] = 0;
+                },
                 error => this.errorMsg = error);
 
         this._tagService.getVideoTags(this.youtubeId)
@@ -83,6 +96,7 @@ export class VideoShowComponent implements OnInit {
     public changed(e: any): void {
         this.isSelect2ChangedValue = true;
         this.selectedValue = e.value;
+        this.isTagVideoAlreadyExistWithNoTime = this.isSelectedTagWasAddedWithNoTime();
     }
 
     convertToFormat(data) {
@@ -94,6 +108,16 @@ export class VideoShowComponent implements OnInit {
 
     setExposureTime(answer): void {
         this.isExposureTime = answer;
+    }
+
+    isSelectedTagWasAddedWithNoTime(): boolean {
+
+        for (let index = 0; index < this.videoTags.length; ++index) {
+            if(this.videoTags[index].name == this.selectedValue){
+                return true;
+            }
+        }
+        return false;
     }
 
     addTag(): void {

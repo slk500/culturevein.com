@@ -37,9 +37,7 @@
             </div>
         <br>
 
-
-
-            <div *ngIf="isSelect2ChangedValue">
+            <div *ngIf="isSelect2ChangedValue && isTagVideoAlreadyExistWithNoTime == false">
                 Can you set exposure time?
                 <button type='button' class='btn btn-success center-block' (click)="setExposureTime(true)">Yes</button>
                 <br>
@@ -47,15 +45,13 @@
                 <br>
             </div>
 
-            <div *ngIf="isExposureTime">
-                <div> Start {{ rangeValues[0] }} End {{ rangeValues[1] }}</div>
-                <p-slider [(ngModel)]="rangeValues" [range]="true"></p-slider>
+            <div *ngIf="isExposureTime || isTagVideoAlreadyExistWithNoTime">
+                <div> Start {{ rangeValues[0] | minuteSeconds }} End {{ rangeValues[1] | minuteSeconds }}</div>
+                <p-slider [(ngModel)]="rangeValues" [range]="true" [max]="videoInfo?.duration" ></p-slider>
                 <br>
                 <button type='button' class='btn btn-primary center-block' (click)='addTag()'>Add TAG </button>
             </div>
 
-
         <button *ngIf="isExposureTime == false" type='button' class='btn btn-primary center-block' (click)='addTag()'>Add TAG </button>
-
     </div>
 </div>
