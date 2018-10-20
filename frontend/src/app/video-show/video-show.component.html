@@ -1,13 +1,13 @@
 <div class="col-xs-8 col-xs-offset-2">
 
-    <!--<div #container>-->
-    <!--<ngx-y2-player-->
-    <!--#video-->
-    <!--[playerOptions]="playerOptions"-->
-    <!--[container]="container"-->
-    <!--&gt;-->
-    <!--</ngx-y2-player>-->
-    <!--</div>-->
+    <div #container>
+    <ngx-y2-player
+    #video
+    [playerOptions]="playerOptions"
+    [container]="container"
+    >
+    </ngx-y2-player>
+    </div>
 
     <div id="DIV_scene_tag" class="white_container">
         <h4>{{ videoInfo?.artist_name}} - {{ videoInfo?.name }}</h4>
@@ -28,7 +28,7 @@
                 </li>
             </ul>
         </div>
-
+Tutaj czas : {{time}}
             <div>
                 <select2  [cssImport]=true [options]="select2Options" [width]="'50%'" (valueChanged)="changed($event)" [value]="selectedValue" >
                     <option></option>
@@ -49,9 +49,14 @@
                 <div> Start {{ rangeValues[0] | minuteSeconds }} End {{ rangeValues[1] | minuteSeconds }}</div>
                 <p-slider [(ngModel)]="rangeValues" [range]="true" [max]="videoInfo?.duration" ></p-slider>
                 <br>
+                <button type='button' class='btn btn-primary center-block'> Test </button>
+                <br>
                 <button type='button' class='btn btn-primary center-block' (click)='addTag()'>Add TAG </button>
             </div>
 
         <button *ngIf="isExposureTime == false" type='button' class='btn btn-primary center-block' (click)='addTag()'>Add TAG </button>
+
+        <p *ngIf="tagWasAddedText">Great! Tag was added</p>
+
     </div>
 </div>

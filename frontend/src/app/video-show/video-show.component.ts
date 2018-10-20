@@ -32,10 +32,6 @@ export class VideoShowComponent implements OnInit {
 
     public timer;
 
-    public min;
-
-    public max;
-
     public Math;
 
     public select2Options: Select2Options;
@@ -50,10 +46,15 @@ export class VideoShowComponent implements OnInit {
 
     public selectedValue;
 
+    public tagWasAddedText: boolean;
+
+    public time;
+
+    public interval;
+
     constructor(private route: ActivatedRoute, private router: Router,
                 private _videoService: VideoService,
-                private _tagService: TagService)
-    {
+                private _tagService: TagService) {
         this.Math = Math;
     }
 
@@ -64,9 +65,9 @@ export class VideoShowComponent implements OnInit {
 
         this._videoService.getVideo(this.youtubeId)
             .subscribe(data => {
-                this.videoInfo = data;
-                this.rangeValues[1] = data.duration;
-                this.rangeValues[0] = 0;
+                    this.videoInfo = data;
+                    this.rangeValues[1] = data.duration;
+                    this.rangeValues[0] = 0;
                 },
                 error => this.errorMsg = error);
 
@@ -113,7 +114,7 @@ export class VideoShowComponent implements OnInit {
     isSelectedTagWasAddedWithNoTime(): boolean {
 
         for (let index = 0; index < this.videoTags.length; ++index) {
-            if(this.videoTags[index].name == this.selectedValue){
+            if (this.videoTags[index].name == this.selectedValue) {
                 return true;
             }
         }
@@ -125,20 +126,41 @@ export class VideoShowComponent implements OnInit {
         let start = null;
         let stop = null;
 
-        if(this.isExposureTime == true){
+        if (this.isExposureTime == true) {
             start = this.rangeValues[0];
             stop = this.rangeValues[1];
         }
 
-       this._tagService.
-       addVideoTag(this.videoInfo.video_id, start, stop, this.selectedValue).
-       subscribe((data:any) => {
-           this._tagService.
-           getVideoTags(this.youtubeId)
-               .subscribe(data => this.videoTags = data,
-                   error => this.errorMsg = error);
-       });
+        this._tagService.addVideoTag(this.videoInfo.video_id, start, stop, this.selectedValue).subscribe((data: any) => {
+            this._tagService.getVideoTags(this.youtubeId)
+                .subscribe(data => this.videoTags = data,
+                    error => this.errorMsg = error);
+        });
+        this.tagWasAddedText = true;
+        this.isTagVideoAlreadyExistWithNoTime = true;
+        this.isExposureTime = true;
 
+        setTimeout(() => {
+            this.tagWasAddedText = false
+        }, 3000);
+    }
+
+    stopAt(stop) {
+
+        console.log(this.video.videoPlayer.getCurrentTime());
+
+        if (this.video.videoPlayer.getCurrentTime() >= stop) {
+            this.video.videoPlayer.pauseVideo();
+            if (this.interval) {
+                clearInterval(this.interval);
+            }
+        }
+
+        else {
+            this.interval = setInterval(() => {
+            this.stopAt(stop);
+            }, 1000);
+        }
     }
 
     playPart(start, stop): void {
@@ -148,14 +170,8 @@ export class VideoShowComponent implements OnInit {
         this.video.videoPlayer.seekTo(start, true);
         if (this.video.videoPlayer.getPlayerState() != YT.PlayerState.PLAYING) {
             this.video.videoPlayer.playVideo();
+            this.stopAt(stop)
         }
-
-        let millisecondsInOneMinute = 1000;
-        let secondsToPlay = stop - start;
-        let hackAddTimeToPauseOnStopTime = 1000;
-        this.timer = setTimeout(() => {
-            this.video.videoPlayer.pauseVideo();
-        }, secondsToPlay * millisecondsInOneMinute + hackAddTimeToPauseOnStopTime);
     }
 
     tagStyle(tag): string {
