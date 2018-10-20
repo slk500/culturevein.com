@@ -30,8 +30,6 @@ export class VideoShowComponent implements OnInit {
 
     public playerOptions;
 
-    public timer;
-
     public Math;
 
     public select2Options: Select2Options;
@@ -147,30 +145,23 @@ export class VideoShowComponent implements OnInit {
 
     stopAt(stop) {
 
-        console.log(this.video.videoPlayer.getCurrentTime());
-
         if (this.video.videoPlayer.getCurrentTime() >= stop) {
             this.video.videoPlayer.pauseVideo();
             if (this.interval) {
                 clearInterval(this.interval);
             }
         }
-
-        else {
-            this.interval = setInterval(() => {
-            this.stopAt(stop);
-            }, 1000);
-        }
     }
 
     playPart(start, stop): void {
 
-        clearTimeout(this.timer);
-
         this.video.videoPlayer.seekTo(start, true);
         if (this.video.videoPlayer.getPlayerState() != YT.PlayerState.PLAYING) {
             this.video.videoPlayer.playVideo();
-            this.stopAt(stop)
+
+            this.interval = setInterval(() => {
+                this.stopAt(stop);
+            }, 1000);
         }
     }
 
