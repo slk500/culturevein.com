@@ -1,0 +1,16 @@
+<div class='col-xs-10 col-xs-offset-1 white_container pad'>
+      <input (keyup)="onKey($event)" placeholder='YouTube link or YouTube Id' class='form-control'>
+</div>
+
+<div *ngIf="youtubeId" class="col-xs-10 col-xs-offset-1">
+  <p>Siemaaaaaaaaa</p>
+  <div #container>
+    <ngx-y2-player
+            #video
+            [playerOptions]="playerOptions"
+            [container]="container">
+    </ngx-y2-player>
+  </div>
+
+</div>
+

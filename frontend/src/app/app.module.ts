@@ -21,6 +21,7 @@ import { FilterPipe }from './pipes/filter.pipe';
 import {InputService} from "./services/input.service";
 import {APIInterceptor} from "./http-interceptor";
 import {SliderModule} from 'primeng/slider';
+import { AddComponent } from './add/add.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import {SliderModule} from 'primeng/slider';
     VideoShowComponent,
     MinuteSecondsPipe,
     FilterPipe,
+    AddComponent,
   ],
   imports: [
     BrowserModule,

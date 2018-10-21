@@ -8,6 +8,7 @@ import {AboutComponent} from "./about/about.component";
 import {LinksComponent} from "./links/links.component";
 import {TagShowComponent} from "./tag-show/tag-show.component";
 import {VideoShowComponent} from "./video-show/video-show.component";
+import {AddComponent} from "./add/add.component";
 
 const routes: Routes = [
     { path: '', component: TopTenComponent},
@@ -17,6 +18,7 @@ const routes: Routes = [
     { path: 'tags/:slug', component: TagShowComponent},
     { path: 'about', component: AboutComponent},
     { path: 'links', component: LinksComponent},
+    { path: 'add', component: AddComponent},
     { path: "**", component: PageNotFoundComponent}
 ];
 

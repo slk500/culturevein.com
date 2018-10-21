@@ -46,8 +46,6 @@ export class VideoShowComponent implements OnInit {
 
     public tagWasAddedText: boolean;
 
-    public time;
-
     public interval;
 
     constructor(private route: ActivatedRoute, private router: Router,
