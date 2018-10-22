@@ -6,6 +6,7 @@ namespace Repository;
 
 use DateInterval;
 use DateTime;
+use Service\YouTube;
 
 final class VideoRepository
 {
@@ -19,15 +20,22 @@ final class VideoRepository
      */
     private $database;
 
+    /**
+     * @var YouTube
+     */
+    private $youTube;
+
+
     public function __construct()
     {
         $this->artistRepository = new ArtistRepository();
+        $this->youTube = new YouTube();
         $this->database = new Database();
     }
 
     public function create(object $data): int
     {
-        $duration = $this->getYoutubeDuration($data->youtube_id);
+        $duration = $this->youTube->getDuration($data->youtube_id);
 
         $stmt = $this->database->mysqli->prepare("INSERT INTO video (youtube_id, name, release_date, duration) VALUES (?,?,?,?)");
         $stmt->bind_param("sssi", $data->youtube_id, $data->name, $data->release_date, $duration);
@@ -45,19 +53,6 @@ final class VideoRepository
         $stmt = $this->database->mysqli->prepare("INSERT INTO artist_video (artist_id, video_id) VALUES (?,?)");
         $stmt->bind_param("ii", $artist_id, $video_id);
         $stmt->execute();
-    }
-
-    public function getYoutubeDuration(string $id)
-    {
-        $json = json_decode(
-            file_get_contents('https://www.googleapis.com/youtube/v3/videos' .
-                '?part=contentDetails&id=' . $id . '&key=' . getenv('YT_API_KEY')));
-
-        $start = new DateTime('@0');
-        $youtube = new DateTime('@0');
-        $youtube->add(new DateInterval($json->items[0]->contentDetails->duration));
-
-        return $youtube->getTimestamp() - $start->getTimestamp();
     }
 
     public function find(string $youTubeId)

@@ -16,7 +16,8 @@ final class Router
             ['route' => '/^\/api\/videos-tags-top\/*$/', 'controller' => 'VideoController', 'action' => 'highestNumberOfTags', 'method' => 'GET'],
             ['route' => '/^\/api\/videos-new\/*$/', 'controller' => 'VideoController', 'action' => 'newestTen', 'method' => 'GET'],
             ['route' => '/^\/api\/videos\/(?<youtubeId>[\w-]{11})\/*$/', 'controller' => 'VideoController', 'action' => 'show', 'method' => 'GET'],
-            ['route' => '/^\/api\/videos\/(?<youtubeId>[\w-]{11})\/tags\/*$/', 'controller' => 'VideoController', 'action' => 'tags', 'method' => 'GET']
+            ['route' => '/^\/api\/videos\/(?<youtubeId>[\w-]{11})\/tags\/*$/', 'controller' => 'VideoController', 'action' => 'tags', 'method' => 'GET'],
+            ['route' => '/^\/api\/youtube\/(?<youtubeId>[\w-]{11})\/*$/', 'controller' => 'YouTubeController', 'action' => 'getArtistAndTitle', 'method' => 'GET']
         ];
 
     /**

@@ -12,11 +12,11 @@ import { Component, OnInit } from '@angular/core';
                   Tags are divided into 4 groups/colors:
                   <li><span class="label label-default">Grey</span> tag without exposure time </li>
                   <li><span class="label label-danger">Red</span> tag with exposure time equal to duration of the video. Tag can describe whole video - like lyric video</li>
-                  <li><span class="label label-warning">Orange</span> tag with at least one exposure time added but there are more to add/li>
+                  <li><span class="label label-warning">Orange</span> tag with at least one exposure time added but there are more to add</li>
                   <li><span class="label label-success">Green</span> tag with completly all exposure times added</li>
               </ul><br>
               <li>You can follow a tag and get notifications every time someone adds
-                  it to a video. To do so, you need to be registered user..</li><br>
+                  it to a video. To do so, you need to be registered user.</li><br>
               <li>If you like this site please let me know - give a like on <a href="https://www.facebook.com/CultureVein">FACEBOOK</a> or contact me.</li><br>
               <li>It's still very early experimental version of site. Not everything works ;)   </li><br>
           </ol>
