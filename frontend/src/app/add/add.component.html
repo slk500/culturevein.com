@@ -1,16 +1,24 @@
 <div class='col-xs-10 col-xs-offset-1 white_container pad'>
-      <input (keyup)="onKey($event)" placeholder='YouTube link or YouTube Id' class='form-control'>
+    <input (keyup)="onKey($event)" placeholder='YouTube link or YouTube Id' class='form-control'>
 </div>
 
 <div *ngIf="youtubeId" class="col-xs-10 col-xs-offset-1">
-  <p>Siemaaaaaaaaa</p>
-  <div #container>
-    <ngx-y2-player
-            #video
-            [playerOptions]="playerOptions"
-            [container]="container">
-    </ngx-y2-player>
-  </div>
-
-</div>
+    <div class='form-group'>
+        <label for="artist_name">Artist Name</label>
+        <select2 [cssImport]=true [options]="select2Options" [width]="'100%'" (valueChanged)="changed($event)"
+                 [value]="selectedValue" id="artist_name">
+        <option></option>
+        <option *ngFor="let artist of artists"> {{ artist.name }}</option>
+        </select2>
+        <br>
+        <div class='form-group'><label for='tytul_utworu'>Title</label><input type='text' class='form-control' id='tytul_utworu' name='music_video_title'></div>
+        <div #container>
+            <ngx-y2-player
+                    #video
+                    [playerOptions]="playerOptions"
+                    [container]="container">
+            </ngx-y2-player>
+        </div>
+        <button type='button' class='btn btn-primary center-block'>Add Video</button>
+    </div>
 

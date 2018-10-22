@@ -95,11 +95,9 @@ final class TagRepository
                 ORDER BY tag_video.created_at DESC
                 LIMIT 10";
 
-
         $data = $this->database->fetch($query);
 
         return $data;
-
     }
 
     public function find(string $slug)

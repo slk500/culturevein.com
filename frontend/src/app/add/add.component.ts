@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {VideoService} from "../services/video.service";
+import {ArtistService} from "../artist.service";
 
 @Component({
     selector: 'app-add',
@@ -15,11 +17,21 @@ export class AddComponent implements OnInit {
 
     public text = '';
 
-    constructor() {
+    public select2Options: Select2Options;
+
+    public selectedValue;
+
+    public artists = [];
+
+    public errorMsg;
+
+    constructor(private _artistService: ArtistService) {
     }
 
     ngOnInit() {
-
+        this._artistService.getArtists()
+            .subscribe(data => this.artists = data,
+                error => this.errorMsg = error);
     }
 
     onKey(event: any) {
@@ -34,6 +46,10 @@ export class AddComponent implements OnInit {
                 width: 'auto',
             };
         }
+    }
+
+    public changed(e: any): void {
+        this.selectedValue = e.value;
     }
 
     private findYouTubeId() {

@@ -6,6 +6,7 @@ final class Router
 {
     public const ROUTES =
         [
+            ['route' => '/^\/api\/artists\/*$/', 'controller' => 'ArtistController', 'action' => 'list', 'method' => 'GET'],
             ['route' => '/^\/api\/tags\/*$/', 'controller' => 'TagController', 'action' => 'create', 'method' => 'POST'],
             ['route' => '/^\/api\/tags\/*$/', 'controller' => 'TagController', 'action' => 'list', 'method' => 'GET'],
             ['route' => '/^\/api\/tags-top\/*$/', 'controller' => 'TagController', 'action' => 'topTen', 'method' => 'GET'],

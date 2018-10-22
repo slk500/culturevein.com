@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Repository;
 
-
 use Cocur\Slugify\Slugify;
 
 final class ArtistRepository
@@ -42,5 +41,14 @@ final class ArtistRepository
         }
 
         return $artist_id;
+    }
+
+    public function findAll(): array
+    {
+        $query = "SELECT name FROM artist ORDER BY name";
+
+        $data = $this->database->fetch($query);
+
+        return $data;
     }
 }
