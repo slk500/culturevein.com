@@ -4,14 +4,14 @@
 
 <div *ngIf="youtubeId" class="col-xs-10 col-xs-offset-1">
     <div class='form-group'>
-        <label for="artist_name">Artist Name</label>
+        <label for="artist">Artist Name</label>
         <select2 [cssImport]=true [options]="select2Options" [width]="'100%'" (valueChanged)="changed($event)"
-                 [value]="selectedValue" id="artist_name">
-        <option></option>
+                 [value]="selectedValue" id="artist">
+            <option></option>
         <option *ngFor="let artist of artists"> {{ artist.name }}</option>
         </select2>
         <br>
-        <div class='form-group'><label for='tytul_utworu'>Title</label><input type='text' class='form-control' id='tytul_utworu' name='music_video_title'></div>
+        <div class='form-group'><label for='title'>Title</label><input type='text' class='form-control' id='title' name='title' [value]="title"></div>
         <div #container>
             <ngx-y2-player
                     #video

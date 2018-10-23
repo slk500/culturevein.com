@@ -1,18 +1,22 @@
 import { Injectable } from '@angular/core';
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {catchError} from "rxjs/operators";
 import {Observable, throwError as obervableThrowError} from "rxjs/index";
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {IArtist} from "./interfaces/artist";
+
+interface IArtistAndTitle {
+  artist: string,
+  title: string
+}
 
 @Injectable({
   providedIn: 'root'
 })
-export class ArtistService {
+export class YouTubeService {
 
     constructor(private http: HttpClient ) { }
 
-    getArtists() : Observable<IArtist[]> {
-        return this.http.get<IArtist[]>('api/artists')
+    getArtistAndTitle(youtubeId) : Observable<IArtistAndTitle> {
+        return this.http.get<IArtistAndTitle>('api/youtube/' + youtubeId)
             .pipe(catchError(this.errorHandler))
 
     }

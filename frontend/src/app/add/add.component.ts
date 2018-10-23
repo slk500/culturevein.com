@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {VideoService} from "../services/video.service";
 import {ArtistService} from "../artist.service";
+import {YouTubeService} from "../you-tube.service";
 
 @Component({
     selector: 'app-add',
@@ -23,9 +23,13 @@ export class AddComponent implements OnInit {
 
     public artists = [];
 
+    public artist;
+
+    public title = '';
+
     public errorMsg;
 
-    constructor(private _artistService: ArtistService) {
+    constructor(private _artistService: ArtistService, private _youTubeService: YouTubeService) {
     }
 
     ngOnInit() {
@@ -40,6 +44,14 @@ export class AddComponent implements OnInit {
         this.findYouTubeId();
 
         if (this.youtubeId) {
+
+            this._youTubeService.getArtistAndTitle(this.youtubeId).
+           subscribe(data => {
+               this.artist = data.artist;
+               this.title = data.title;
+               },
+               error => this.errorMsg = error);
+
             this.playerOptions = {
                 videoId: this.youtubeId,
                 height: 'auto',
@@ -52,17 +64,17 @@ export class AddComponent implements OnInit {
         this.selectedValue = e.value;
     }
 
-    private findYouTubeId() {
+    private findYouTubeId(): string {
 
         let check = "?v=";
         let check_mobile = "youtu.be/";
 
-        if ((this.input.indexOf(check) > -1)) {
+        if (this.input.indexOf(check) > -1) {
 
             return this.youtubeId = this.input.substring(this.input.indexOf("?v=") + 3);
         }
 
-        if ((this.input.indexOf(check_mobile) > -1)) {
+        if (this.input.indexOf(check_mobile) > -1) {
 
             return this.youtubeId = this.input.substring(this.input.indexOf("youtu.be/") + 9);
         }
