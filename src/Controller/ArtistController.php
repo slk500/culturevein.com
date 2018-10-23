@@ -21,4 +21,6 @@ class ArtistController extends BaseController
 
         $this->response($artists);
     }
+
+
 }

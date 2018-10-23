@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace Controller;
 
 
-use Service\YouTube;
+use Service\YouTubeService;
 
 class YouTubeController extends BaseController
 {
     /**
-     * @var YouTube
+     * @var YouTubeService
      */
     private $youTube;
 
     public function __construct()
     {
-        $this->youTube = new YouTube();
+        $this->youTube = new YouTubeService();
     }
 
     public function getArtistAndTitle(string $id)

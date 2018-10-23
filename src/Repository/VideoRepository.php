@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Repository;
 
-use DateInterval;
-use DateTime;
-use Service\YouTube;
+use Service\YouTubeService;
 
 final class VideoRepository
 {
@@ -21,7 +19,7 @@ final class VideoRepository
     private $database;
 
     /**
-     * @var YouTube
+     * @var YouTubeService
      */
     private $youTube;
 
@@ -29,7 +27,7 @@ final class VideoRepository
     public function __construct()
     {
         $this->artistRepository = new ArtistRepository();
-        $this->youTube = new YouTube();
+        $this->youTube = new YouTubeService();
         $this->database = new Database();
     }
 
@@ -37,13 +35,11 @@ final class VideoRepository
     {
         $duration = $this->youTube->getDuration($data->youtube_id);
 
-        $stmt = $this->database->mysqli->prepare("INSERT INTO video (youtube_id, name, release_date, duration) VALUES (?,?,?,?)");
-        $stmt->bind_param("sssi", $data->youtube_id, $data->name, $data->release_date, $duration);
+        $stmt = $this->database->mysqli->prepare("INSERT INTO video (youtube_id, name, duration) VALUES (?,?,?)");
+        $stmt->bind_param("ssi", $data->youtube_id, $data->name, $duration);
         $stmt->execute();
 
         $video_id = $this->database->mysqli->insert_id;
-
-       // $this->assignToArtist();
 
         return $video_id;
     }

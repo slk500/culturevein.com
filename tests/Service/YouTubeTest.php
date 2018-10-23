@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Service;
 
 use PHPUnit\Framework\TestCase;
-use Service\YouTube;
+use Service\YouTubeService;
 
 class YouTubeTest extends TestCase
 {
@@ -14,7 +14,7 @@ class YouTubeTest extends TestCase
      */
     public function get_artist_and_title()
     {
-        $youTube = new YouTube();
+        $youTube = new YouTubeService();
 
         $result = $youTube->getArtistAndTitle('wQRV5omnBBU');
 

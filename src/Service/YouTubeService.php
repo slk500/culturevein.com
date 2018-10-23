@@ -9,7 +9,7 @@ use DateInterval;
 use DateTime;
 use Symfony\Component\Dotenv\Dotenv;
 
-final class YouTube
+final class YouTubeService
 {
     public function __construct()
     {
