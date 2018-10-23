@@ -34,7 +34,8 @@ class VideoControllerTest extends TestCase
             ]
         );
 
-        $this->assertEquals('{"video_id":3799,"name":"chess","start":0,"stop":25,"tag_id":17}', $response->getBody()->getContents());
+        $this->assertEquals('{"artist":"Burak Yeter","name":"Tuesday ft. Danelle Sandoval","youtube_id":"Y1_VsyLAGuk","artist_id":1,"video_id":1}',
+            $response->getBody()->getContents());
         $this->assertEquals(201,$response->getStatusCode());
     }
 }

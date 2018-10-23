@@ -6,6 +6,7 @@ import { catchError } from 'rxjs/operators';
 import {IVideoTagTop} from "../interfaces/video_tag_top";
 import {IVideoNew} from "../interfaces/video_new";
 import {ITagShow} from "../interfaces/tag_show";
+import {IVideoTag} from "../interfaces/video_tag";
 
 
 @Injectable({
@@ -14,6 +15,14 @@ import {ITagShow} from "../interfaces/tag_show";
 export class VideoService {
 
     constructor(private http: HttpClient ) { }
+
+    addVideo(artist, name, youtube_id) {
+        return this.http.post('api/videos', {
+            artist: artist,
+            name: name,
+            youtube_id: youtube_id
+        })
+    }
 
     getVideos() : Observable<Ivideo[]> {
         return this.http.get<Ivideo[]>('api/videos')
@@ -41,6 +50,4 @@ export class VideoService {
     errorHandler(error : HttpErrorResponse) {
         return obervableThrowError(error.message || 'Server Error')
     }
-
-
 }
