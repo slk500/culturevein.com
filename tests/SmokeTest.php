@@ -30,10 +30,6 @@ class SmokeTest extends TestCase
 
     public function urlProvider()
     {
-        yield ['/'];
-        yield ['/posts'];
-        yield ['/post/fixture-post-1'];
-        yield ['/blog/category/fixture-category'];
-        yield ['/archives'];
+        yield ['/api/tags'];
     }
 }
