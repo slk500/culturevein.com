@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Service;
 
 use Console_Table;
@@ -14,9 +16,22 @@ final class DatabaseHelper
         $this->database = new Database();
     }
 
-    public function truncateTables(array $tables): void
+    public function truncate_all_tables(): void
     {
-        $tablesNamesInDatabase = $this->getAllTablesNames();
+        $tables = $this->get_all_tables_names();
+
+        $sql = 'SET FOREIGN_KEY_CHECKS = 0;';
+        foreach ($tables as $table) {
+            $sql .= "TRUNCATE $table;";
+        }
+        $sql .= 'SET FOREIGN_KEY_CHECKS = 1;';
+
+        $this->database->execute($sql);
+    }
+
+    public function truncate_tables(array $tables): void
+    {
+        $tablesNamesInDatabase = $this->get_all_tables_names();
 
         foreach ($tables as $table) {
             $exist = in_array($table, $tablesNamesInDatabase);
@@ -35,7 +50,7 @@ final class DatabaseHelper
         $this->database->execute($sql);
     }
 
-    public function checkIsAllTablesAreEmpty()
+    public function are_tables_empty()
     {
         $sql = "SHOW TABLE STATUS WHERE Rows > 0;";
 
@@ -83,7 +98,7 @@ final class DatabaseHelper
 //        }
 //    }
 
-    public function getAllTablesNames(): array
+    public function get_all_tables_names(): array
     {
         $sql = "SHOW TABLES";
 
@@ -97,7 +112,7 @@ final class DatabaseHelper
         return $result;
     }
 
-    private function printTable($table, $result)
+    private function print_table($table, $result)
     {
         $tbl = new Console_Table();
         $headers = array_keys(reset($result));

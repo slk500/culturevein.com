@@ -33,7 +33,7 @@ class VideoTagRepositoryTest extends TestCase
             'video'
         ]);
 
-        $this->databaseHelper->checkIsAllTablesAreEmpty();
+        $this->databaseHelper->is_tables_are_empty();
 
     }
 

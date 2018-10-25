@@ -23,7 +23,7 @@ class DatabaseTest extends TestCase
             'user',
             'video'
         ]);
-        $databaseHelper->checkIsAllTablesAreEmpty();
+        $databaseHelper->is_tables_are_empty();
 
     }
 }

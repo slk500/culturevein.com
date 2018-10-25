@@ -16,6 +16,8 @@ class VideoControllerTest extends TestCase
         $this->client = new GuzzleHttp\Client([
             'base_uri' => 'http://localhost:8000',
         ]);
+
+
     }
 
     /**
