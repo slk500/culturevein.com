@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use PHPUnit\Framework\TestCase;
 use Repository\TagRepository;
 use Repository\VideoTagRepository;
@@ -18,23 +20,16 @@ class VideoTagRepositoryTest extends TestCase
      */
     private $databaseHelper;
 
+    public static function setUpBeforeClass()
+    {
+        $databaseHelper = new DatabaseHelper();
+        $databaseHelper->truncate_all_tables();
+    }
+
     public function setUp()
     {
         $this->tagVideoRepository = new VideoTagRepository();
         $this->databaseHelper = new DatabaseHelper();
-
-        $this->databaseHelper->truncateTables([
-            'artist',
-            'artist_video',
-            'tag',
-            'tag_video',
-            'tag_video_complete',
-            'user',
-            'video'
-        ]);
-
-        $this->databaseHelper->is_tables_are_empty();
-
     }
 
     /**

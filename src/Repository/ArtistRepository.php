@@ -38,7 +38,7 @@ final class ArtistRepository
 
         $stmt->bind_result($artist_id);
 
-        return $stmt->get_result()
+        return  $stmt->get_result()
             ->fetch_object()
             ->artist_id;
     }

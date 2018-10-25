@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
+use Service\DatabaseHelper;
 
 class VideoControllerTest extends TestCase
 {
@@ -11,12 +12,18 @@ class VideoControllerTest extends TestCase
      */
     private $client;
 
+    public static function setUpBeforeClass()
+    {
+        $databaseHelper = new DatabaseHelper();
+        $databaseHelper->truncate_all_tables();
+    }
+
+
     public function setUp()
     {
         $this->client = new GuzzleHttp\Client([
             'base_uri' => 'http://localhost:8000',
         ]);
-
 
     }
 

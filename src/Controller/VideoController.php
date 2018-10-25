@@ -24,11 +24,8 @@ class VideoController extends BaseController
         $this->artistRepository = new ArtistRepository();
     }
 
-    public function create()
+    public function create(object $data)
     {
-        $body = file_get_contents('php://input');
-        $data = json_decode($body);
-
         $videoId = $this->videoRepository->create($data);
 
         $artistId = $this->artistRepository->find($data->artist);

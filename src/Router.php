@@ -14,8 +14,8 @@ final class Router
             ['route' => '/^\/api\/tags-new\/*$/', 'controller' => 'TagController', 'action' => 'newestTen', 'method' => 'GET'],
             ['route' => '/^\/api\/tags\/(?<slug>[\w-]+)\/*$/', 'controller' => 'TagController', 'action' => 'show', 'method' => 'GET'],
 
-            ['route' => '/^\/api\/videos\/*$/', 'controller'=> 'VideoController', 'action' => 'create', 'method' => 'POST'],
-            ['route' => '/^\/api\/videos\/*$/', 'controller'=> 'VideoController', 'action' => 'list', 'method' => 'GET'],
+            ['route' => '/^\/api\/videos\/*$/', 'controller' => 'VideoController', 'action' => 'create', 'method' => 'POST'],
+            ['route' => '/^\/api\/videos\/*$/', 'controller' => 'VideoController', 'action' => 'list', 'method' => 'GET'],
             ['route' => '/^\/api\/videos-tags-top\/*$/', 'controller' => 'VideoController', 'action' => 'highestNumberOfTags', 'method' => 'GET'],
             ['route' => '/^\/api\/videos-new\/*$/', 'controller' => 'VideoController', 'action' => 'newestTen', 'method' => 'GET'],
             ['route' => '/^\/api\/videos\/(?<youtubeId>[\w-]{11})\/*$/', 'controller' => 'VideoController', 'action' => 'show', 'method' => 'GET'],
@@ -47,7 +47,9 @@ final class Router
 
                 $this->controller = $route['controller'];
                 $this->action = $route['action'];
-                $this->param = end($matches);
+
+                $this->param = $this->getParams($route);
+
                 return true;
             }
         }
@@ -63,5 +65,16 @@ final class Router
             $actionName = $this->action;
             $controller->$actionName($this->param);
         }
+    }
+
+
+    private function getParams(array $route)
+    {
+        if ($route['method'] === 'POST' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+            $body = file_get_contents('php://input');
+            return json_decode($body);
+        }
+
+        return end($matches);
     }
 }
