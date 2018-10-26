@@ -4,30 +4,16 @@ declare(strict_types=1);
 
 namespace Normalizer;
 
-final class TagsForVideo
+final class VideoTagNormalizer
 {
     public function normalize(array $array)
     {
-        $result = [];
+       $array['times'] = $this->convert_times($array['times']);
 
-        foreach ($array as $key => $value){
-
-            $times = null;
-            if($key === 'times'){
-                $times = $this->convert($value);
-            }
-
-            $result []= ['name' => $arr['name'],
-                'times' => $times,
-                'slug' => $arr['slug'],
-                'complete' => (bool) $arr['complete']
-            ];
-
-        }
-        return $result;
+       return $array;
     }
 
-    public function convert(string $string)
+    public function convert_times(string $string)
     {
         $tmps =  explode(',', $string);
 

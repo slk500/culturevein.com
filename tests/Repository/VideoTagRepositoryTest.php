@@ -13,23 +13,22 @@ class VideoTagRepositoryTest extends TestCase
     /**
      * @var VideoTagRepository
      */
-    private $tagVideoRepository;
+    private $video_tag_repository;
 
     /**
      * @var DatabaseHelper
      */
-    private $databaseHelper;
+    private $database_helper;
 
     public static function setUpBeforeClass()
     {
-        $databaseHelper = new DatabaseHelper();
-        $databaseHelper->truncate_all_tables();
+        (new DatabaseHelper())->truncate_all_tables();
     }
 
     public function setUp()
     {
-        $this->tagVideoRepository = new VideoTagRepository();
-        $this->databaseHelper = new DatabaseHelper();
+        $this->video_tag_repository = new VideoTagRepository();
+        $this->database_helper = new DatabaseHelper();
     }
 
     /**
@@ -37,25 +36,24 @@ class VideoTagRepositoryTest extends TestCase
      */
     public function create_video_tag()
     {
-        $tagRepository = new TagRepository();
-        $tag = new stdClass();
-        $tag->name = 'some tag';
-        $tagId = $tagRepository->create($tag);
+        $tag_repository = new TagRepository();
+        $tag_name = 'tag_name';
+        $tag_id = $tag_repository->create($tag_name);
 
-        $videoRepository = new VideoRepository();
+        $video_repository = new VideoRepository();
         $video = new stdClass();
         $video->name = 'Yes Sir, I Can Boogie';
         $video->youtube_id = 'VSQjx79dR8s';
-        $videoId = $videoRepository->create($video);
+        $video_id = $video_repository->create($video);
 
         $data = new stdClass();
-        $data->tag_id = $tagId;
-        $data->video_id = $videoId;
+        $data->tag_id = $tag_id;
+        $data->video_id = $video_id;
         $data->start = 0;
         $data->stop = 10;
 
-        $tagId = $this->tagVideoRepository->create($data);
+        $video_tag_id = $this->video_tag_repository->create($data);
 
-        $this->assertNotNull($tagId);
+        $this->assertSame(1, $video_tag_id);
     }
 }

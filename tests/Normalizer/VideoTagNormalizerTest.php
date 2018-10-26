@@ -2,18 +2,30 @@
 
 declare(strict_types=1);
 
+use Normalizer\VideoTagNormalizer;
 use PHPUnit\Framework\TestCase;
 
-class TagsForVideoTest extends TestCase
+class VideoTagNormalizerTest extends TestCase
 {
+    /**
+     * @var VideoTagNormalizer
+     */
+    private $video_tag_normalizer;
+
+
+    public function setUp()
+    {
+        $this->video_tag_normalizer = new VideoTagNormalizer();
+    }
+
     /**
      * @test
      */
-    public function times_to_array()
+    public function convert_times()
     {
         $input = '314-357,386-408';
 
-        $output = $this->convert($input);
+        $output = $this->video_tag_normalizer->convert_times($input);
 
         $expectedOutput = [
             [
@@ -29,28 +41,10 @@ class TagsForVideoTest extends TestCase
         $this->assertSame($expectedOutput, $output);
     }
 
-    public function convert(string $string)
-    {
-        $tmps =  explode(',', $string);
-
-        $output = [];
-
-        foreach ($tmps as $tmp){
-
-                $r = explode('-', $tmp);
-                $output []=  [
-                    'start' => (int)$r[0],
-                    'stop' => (int)$r[1]
-                    ];
-        }
-
-        return $output;
-    }
-
     /**
      * @test
      */
-    public function simple()
+    public function normalize()
     {
         $input = [
             "name" => "BMW",
@@ -72,10 +66,10 @@ class TagsForVideoTest extends TestCase
                 ]
             ],
             'slug' => 'bmw',
-            'complete' => false
+            'complete' => 1
         ];
 
-        $normalizer = new \Normalizer\TagsForVideo();
+        $normalizer = new VideoTagNormalizer();
         $output = $normalizer->normalize($input);
 
         $this->assertSame($expectedResult, $output);

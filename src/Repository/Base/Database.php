@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Repository;
+namespace Repository\Base;
 
 use mysqli;
 use Symfony\Component\Dotenv\Dotenv;
@@ -17,7 +17,7 @@ final class Database
     public function __construct()
     {
         $dotenv = new Dotenv();
-        $dotenv->load(__DIR__.'/../../.env');
+        $dotenv->load(__DIR__.'/../../../.env');
 
             $dbServer = getenv('DB_SERVER');
             $dbUser = getenv('DB_USER');

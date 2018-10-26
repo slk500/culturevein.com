@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Repository;
 
 use Cocur\Slugify\Slugify;
+use Repository\Base\Database;
 
 final class TagRepository
 {
@@ -18,16 +19,15 @@ final class TagRepository
         $this->database = new Database();
     }
 
-    public function findId(object $data)
+    public function find_id_by_name(string $name)
     {
         $stmt = $this->database->mysqli->prepare("SELECT tag_id FROM tag WHERE name = ?");
-        $stmt->bind_param("s", $data->name);
+        $stmt->bind_param("s", $name);
         $stmt->execute();
         $stmt->bind_result($tag_id);
+        $stmt->fetch();
 
-        return $stmt->get_result()
-            ->fetch_object()
-            ->tag_id;
+        return $tag_id;
     }
 
     public function findAll():?array
@@ -39,7 +39,6 @@ final class TagRepository
                         ORDER BY name";
 
         $data = $this->database->fetch($query);
-
 
         return $data;
     }
@@ -140,12 +139,12 @@ final class TagRepository
         "SELECT count(tag_id) FROM tag_user_subscribe WHERE tag_id = ?";
     }
 
-    public function create($data): int
+    public function create(string $tag_name): int
     {
-        $slug = (new Slugify())->slugify($data->name);
+        $slug = (new Slugify())->slugify($tag_name);
 
         $stmt = $this->database->mysqli->prepare("INSERT INTO tag (name, slug) VALUES (?, ?)");
-        $stmt->bind_param("ss", $data->name, $slug);
+        $stmt->bind_param("ss", $tag_name, $slug);
         $stmt->execute();
 
         return $this->database->mysqli->insert_id;

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Service;
 
 use Console_Table;
-use Repository\Database;
+use Repository\Base\Database;
 
 final class DatabaseHelper
 {
@@ -50,7 +50,7 @@ final class DatabaseHelper
         $this->database->execute($sql);
     }
 
-    public function are_tables_empty()
+    public function are_tables_empty(): bool
     {
         $sql = "SHOW TABLE STATUS WHERE Rows > 0;";
 
@@ -64,6 +64,8 @@ final class DatabaseHelper
         if ($tablesNames) {
             throw new \Exception(PHP_EOL . 'These tables are not empty:' . implode(',',$tablesNames));
         }
+
+        return true;
     }
 //
 //    public function showTables(array $show = [], array $exclude = []): void

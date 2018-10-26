@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Repository;
 
+use Repository\Base\Database;
+
 final class VideoTagRepository
 {
     /**

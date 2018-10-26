@@ -3,7 +3,6 @@
 use PHPUnit\Framework\TestCase;
 use Repository\TagRepository;
 use Repository\VideoRepository;
-use Repository\VideoTagRepository;
 use Service\DatabaseHelper;
 
 class TagControllerTest extends TestCase
@@ -15,8 +14,7 @@ class TagControllerTest extends TestCase
 
     public static function setUpBeforeClass()
     {
-        $databaseHelper = new DatabaseHelper();
-        $databaseHelper->truncate_all_tables();
+        (new DatabaseHelper())->truncate_all_tables();
     }
 
     public function setUp()
@@ -32,24 +30,15 @@ class TagControllerTest extends TestCase
     public function create_video_tag()
     {
         $tag_repository = new TagRepository();
-        $data = new stdClass();
-        $data->name = 'tag';
-        $tag_id = $tag_repository->create($data);
+        $tag_name = 'tag';
+        $tag_repository->create($tag_name);
 
         $video_repository = new VideoRepository();
         $video = new stdClass();
         $video->name = 'Yes Sir, I Can Boogie';
         $video->youtube_id = 'VSQjx79dR8s';
         $video->artist_name = 'Boccara';
-
         $video_id = $video_repository->create($video);
-
-        $video_tag_repository = new VideoTagRepository();
-        $data = new stdClass();
-        $data->video_id = 1;
-        $data->tag_id = $tag_id;
-
-        $video_tag_repository->create($data);
 
         $response = $this->client->post(
           'api/tags',
@@ -64,6 +53,6 @@ class TagControllerTest extends TestCase
         );
 
         $this->assertEquals('{"video_id":1,"name":"tag","start":0,"stop":25,"tag_id":1}', $response->getBody()->getContents());
-        $this->assertEquals(201,$response->getStatusCode());
+        $this->assertEquals(201, $response->getStatusCode());
     }
 }

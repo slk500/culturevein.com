@@ -4,60 +4,53 @@ declare(strict_types=1);
 
 namespace Controller;
 
+use Controller\Base\BaseController;
+use Factory\VideoTagFactory;
 use Repository\TagRepository;
-use Repository\VideoTagRepository;
 
 class TagController extends BaseController
 {
-    private $tagRepository;
+    private $tag_repository;
 
-    private $videoTagRepository;
+    private $tag_factory;
 
     public function __construct()
     {
-        $this->tagRepository = new TagRepository();
-        $this->videoTagRepository = new VideoTagRepository();
+        $this->tag_repository = new TagRepository();
+        $this->tag_factory = new VideoTagFactory();
     }
 
     public function create(object $data)
     {
-        $tagId = $this->tagRepository->findId($data);
+        $this->tag_factory->create($data);
 
-        if (!$tagId) {
-           $this->tagRepository->create($data);
-        }
-
-        $data->tag_id = $tagId;
-
-        $this->videoTagRepository->create($data);
-
-        $this->response($data);
+        $this->responseCreated($data);
     }
 
     public function list()
     {
-        $tags = $this->tagRepository->findAll();
+        $tags = $this->tag_repository->findAll();
 
         $this->response($tags);
     }
 
     public function show(string $slug)
     {
-        $tag = $this->tagRepository->find($slug);
+        $tag = $this->tag_repository->find($slug);
 
         $this->response($tag);
     }
 
     public function topTen()
     {
-        $tags = $this->tagRepository->top();
+        $tags = $this->tag_repository->top();
 
         $this->response($tags);
     }
 
     public function newestTen()
     {
-        $tags = $this->tagRepository->newestTen();
+        $tags = $this->tag_repository->newestTen();
 
         $this->response($tags);
     }

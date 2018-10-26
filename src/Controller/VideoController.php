@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Controller;
 
-use Normalizer\TagsForVideo;
-use Repository\ArtistRepository;
+use Controller\Base\BaseController;
+use Factory\VideoFactory;
+use Normalizer\VideoTagNormalizer;
 use Repository\TagRepository;
 use Repository\VideoRepository;
 
@@ -15,29 +16,18 @@ class VideoController extends BaseController
 
     private $tagRepository;
 
-    private $artistRepository;
+    private $videoFactory;
 
     public function __construct()
     {
         $this->videoRepository = new VideoRepository();
         $this->tagRepository = new TagRepository();
-        $this->artistRepository = new ArtistRepository();
+        $this->videoFactory = new VideoFactory();
     }
 
     public function create(object $data)
     {
-        $videoId = $this->videoRepository->create($data);
-
-        $artistId = $this->artistRepository->find($data->artist);
-
-        if(!$artistId){
-            $artistId = $this->artistRepository->create($data->artist);
-        }
-
-        $this->videoRepository->assignToArtist($artistId, $videoId);
-
-        $data->artist_id = $artistId;
-        $data->video_id = $videoId;
+        $data =$this->videoFactory->create($data);
 
         $this->responseCreated($data);
     }
@@ -73,7 +63,7 @@ class VideoController extends BaseController
     public function tags(string $youtubeId)
     {
         $tags = $this->tagRepository->findByVideo($youtubeId);
-        $tags = (new TagsForVideo())->normalize($tags);
+        $tags = (new VideoTagNormalizer())->normalize($tags);
 
         $this->response($tags);
     }

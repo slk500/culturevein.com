@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Repository;
 
+use Repository\Base\Database;
 use Service\YouTubeService;
 
 final class VideoRepository

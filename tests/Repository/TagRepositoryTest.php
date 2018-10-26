@@ -4,17 +4,27 @@ declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
 use Repository\TagRepository;
+use Service\DatabaseHelper;
 
 class TagRepositoryTest extends TestCase
 {
+
+    public static function setUpBeforeClass()
+    {
+        (new DatabaseHelper())->truncate_all_tables();
+    }
+
     /**
      * @var TagRepository
      */
-    private $tagRepository;
+    private $tag_repository;
 
     public function setUp()
     {
-        $this->tagRepository = new TagRepository();
+        $this->tag_repository = new TagRepository();
+        (new DatabaseHelper())->truncate_tables([
+            'tag'
+        ]);
     }
 
     /**
@@ -22,14 +32,26 @@ class TagRepositoryTest extends TestCase
      */
     public function create_tag()
     {
-        $data = new stdClass();
-        $data->video_id = 3799;
-        $data->name = 'chess';
-        $data->start = 0;
-        $data->stop = 25;
+        $tag_name = 'chess';
 
-        $tagId = $this->tagRepository->create($data);
+        $tag_id = $this->tag_repository->create($tag_name);
 
-        $this->assertNotNull($tagId);
+        $this->assertSame(1, $tag_id);
     }
+
+    /**
+     * @test
+     */
+    public function find_id_by_name()
+    {
+        $tag_name = 'tag';
+
+        $tag_id = $this->tag_repository->create($tag_name);
+
+        $found_id = $this->tag_repository->find_id_by_name($tag_name);
+
+        $this->assertSame($tag_id, $found_id);
+    }
+
+
 }

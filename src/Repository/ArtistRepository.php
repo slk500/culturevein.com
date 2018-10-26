@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Repository;
 
 use Cocur\Slugify\Slugify;
+use Repository\Base\Database;
 
 final class ArtistRepository
 {
@@ -30,17 +31,15 @@ final class ArtistRepository
             ->insert_id;
     }
 
-    public function find(string $name): ?int
+    public function find(string $name)
     {
         $stmt = $this->database->mysqli->prepare("SELECT artist_id FROM artist WHERE name = ?");
         $stmt->bind_param("s", $name);
         $stmt->execute();
-
         $stmt->bind_result($artist_id);
+        $stmt->fetch();
 
-        return  $stmt->get_result()
-            ->fetch_object()
-            ->artist_id;
+        return  $artist_id;
     }
 
     public function findAll(): array

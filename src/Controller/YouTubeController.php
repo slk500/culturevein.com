@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Controller;
 
-
+use Controller\Base\BaseController;
 use Service\YouTubeService;
 
 class YouTubeController extends BaseController

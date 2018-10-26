@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Controller;
 
+use Controller\Base\BaseController;
 use Repository\ArtistRepository;
 
 class ArtistController extends BaseController
