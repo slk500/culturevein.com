@@ -34,7 +34,7 @@ final class TagRepository
     {
         $query = "SELECT DISTINCT(tag.name), tag.slug, tag.tag_id as id
                   FROM tag
-                  JOIN tag_video using (tag_id)
+                  JOIN video_tag using (tag_id)
                   JOIN video using (video_id)
                         ORDER BY name";
 
@@ -46,15 +46,15 @@ final class TagRepository
     public function findByVideo(string $youtubeId)
     {
         $stmt = $this->database->mysqli->prepare("SELECT tag.name,
-        GROUP_CONCAT(tag_video.start,'-',tag_video.stop) as times,
+        GROUP_CONCAT(video_tag.start,'-',video_tag.stop) as times,
         tag.slug, tvc.video_id is not null as complete
-        FROM tag_video
+        FROM video_tag
         JOIN tag USING (tag_id)
         JOIN video USING (video_id)
-        LEFT JOIN tag_video_complete tvc on tag.tag_id = tvc.tag_id and tvc.video_id = video.video_id
+        LEFT JOIN video_tag_complete tvc on tag.tag_id = tvc.tag_id and tvc.video_id = video.video_id
         WHERE video.youtube_id = ?
         GROUP BY tag.name
-        ORDER BY tag.name, tag_video.start");
+        ORDER BY tag.name, video_tag.start");
 
         $stmt->bind_param("s", $youtubeId);
         $stmt->execute();
@@ -71,7 +71,7 @@ final class TagRepository
     {
         $query = "SELECT tag.name, count(distinct video.video_id) AS count, tag.slug
                 FROM tag
-                JOIN tag_video USING (tag_id)
+                JOIN video_tag USING (tag_id)
                 JOIN video USING (video_id) 
                 GROUP BY tag.name, tag.slug
                 ORDER BY `count` DESC
@@ -85,13 +85,13 @@ final class TagRepository
     public function newestTen()
     {
         $query = "SELECT video.youtube_id, tag.name, artist.name as artist_name, video.name AS video_name,
-                tag.slug, artist.slug as artist_slug, tag_video.created_at
-                FROM tag_video
+                tag.slug, artist.slug as artist_slug, video_tag.created_at
+                FROM video_tag
                 JOIN video USING (video_id) 
                 JOIN tag USING (tag_id)
                 LEFT JOIN artist_video USING (video_id)
                 LEFT JOIN artist USING (artist_id) 
-                ORDER BY tag_video.created_at DESC
+                ORDER BY video_tag.created_at DESC
                 LIMIT 10";
 
         $data = $this->database->fetch($query);
@@ -103,9 +103,9 @@ final class TagRepository
     {
 
         $stmt = $this->database->mysqli->prepare("SELECT video.youtube_id, artist.name as artist_name, video.name as video_name,
-                                        clean_time(SUM(tag_video.stop)-SUM(tag_video.start)) AS expose,
+                                        clean_time(SUM(video_tag.stop)-SUM(video_tag.start)) AS expose,
                                         tag.name, tag.slug
-                                        FROM tag_video 
+                                        FROM video_tag 
                                         LEFT JOIN video USING (video_id)
                                         LEFT JOIN tag USING (tag_id)
                                         LEFT JOIN artist_video USING (video_id)
