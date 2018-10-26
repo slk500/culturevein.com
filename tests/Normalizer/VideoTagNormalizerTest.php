@@ -70,8 +70,8 @@ class VideoTagNormalizerTest extends TestCase
         ];
 
         $normalizer = new VideoTagNormalizer();
-        $output = $normalizer->normalize($input);
+        $normalizer->normalize($input);
 
-        $this->assertSame($expectedResult, $output);
+        $this->assertSame($expectedResult, $input);
     }
 }

@@ -6,20 +6,18 @@ namespace Normalizer;
 
 final class VideoTagNormalizer
 {
-    public function normalize(array $array)
+    public function normalize(array &$array): void
     {
        $array['times'] = $this->convert_times($array['times']);
-
-       return $array;
     }
 
     public function convert_times(string $string)
     {
-        $tmps =  explode(',', $string);
+        $temps =  explode(',', $string);
 
         $output = [];
 
-        foreach ($tmps as $tmp){
+        foreach ($temps as $tmp){
 
             $r = explode('-', $tmp);
             $output []=  [
