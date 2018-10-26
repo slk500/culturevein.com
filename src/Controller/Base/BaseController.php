@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Controller;
+namespace Controller\Abstraction;
 
 abstract class BaseController
 {

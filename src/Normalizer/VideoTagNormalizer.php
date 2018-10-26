@@ -10,11 +10,11 @@ final class TagsForVideo
     {
         $result = [];
 
-        foreach ($array as $arr){
+        foreach ($array as $key => $value){
 
             $times = null;
-            if($arr['times']){
-                $times = $this->convert($arr['times']);
+            if($key === 'times'){
+                $times = $this->convert($value);
             }
 
             $result []= ['name' => $arr['name'],

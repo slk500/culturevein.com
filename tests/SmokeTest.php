@@ -31,5 +31,6 @@ class SmokeTest extends TestCase
     public function urlProvider()
     {
         yield ['/api/tags'];
+        yield ['/api/videos'];
     }
 }

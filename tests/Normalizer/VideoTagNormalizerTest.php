@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use PHPUnit\Framework\TestCase;
 
 class TagsForVideoTest extends TestCase
@@ -45,9 +47,6 @@ class TagsForVideoTest extends TestCase
         return $output;
     }
 
-
-
-
     /**
      * @test
      */
@@ -80,35 +79,5 @@ class TagsForVideoTest extends TestCase
         $output = $normalizer->normalize($input);
 
         $this->assertSame($expectedResult, $output);
-    }
-
-
-    public function normalize()
-    {
-        $input = [
-            0 =>
-                [
-                    'name' => 'BMW',
-                    'start' => 314,
-                    'stop' => 357,
-                    'slug' => 'bmw',
-                ],
-            1 =>
-                [
-                    'name' => 'BMW',
-                    'start' => 386,
-                    'stop' => 408,
-                    'slug' => 'bmw',
-                ],
-            2 =>
-                [
-                    'name' => 'Subaru',
-                    'start' => 357,
-                    'stop' => 371,
-                    'slug' => 'subaru',
-                ],
-        ];
-
-
     }
 }
