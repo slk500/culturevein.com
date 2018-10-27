@@ -46,7 +46,7 @@ class VideoController extends BaseController
         $this->response(reset($tags));
     }
 
-    public function highest_number_of_rags()
+    public function highest_number_of_tags()
     {
         $videos = $this->video_repository->with_highest_number_of_tags();
 
