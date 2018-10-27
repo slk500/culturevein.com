@@ -19,6 +19,6 @@
                     [container]="container">
             </ngx-y2-player>
         </div>
-        <button type='button' class='btn btn-primary center-block' (click)="addVideo()">Add Video</button>
+        <button *ngIf="youtubeId && selectedValue" type='button' class='btn btn-primary center-block' (click)="addVideo()">Add Video</button>
     </div>
 

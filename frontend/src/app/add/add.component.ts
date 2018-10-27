@@ -39,6 +39,11 @@ export class AddComponent implements OnInit {
         this._artistService.getArtists()
             .subscribe(data => this.artists = data,
                 error => this.errorMsg = error);
+
+        this.select2Options = {
+            placeholder: 'Select an artist or type a new one',
+            tags: true
+        };
     }
 
     addVideo(){

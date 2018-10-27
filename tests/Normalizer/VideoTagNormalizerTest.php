@@ -47,26 +47,30 @@ class VideoTagNormalizerTest extends TestCase
     public function normalize()
     {
         $input = [
-            "name" => "BMW",
-            "times" => "314-357,386-408",
-            "slug" => "bmw",
-            "complete" => 1
+            [
+                "name" => "BMW",
+                "times" => "314-357,386-408",
+                "slug" => "bmw",
+                "complete" => 1
+            ]
         ];
 
         $expectedResult = [
-            'name' => 'BMW',
-            'times' => [
-                [
-                    'start' => 314,
-                    'stop' => 357
+            [
+                'name' => 'BMW',
+                'times' => [
+                    [
+                        'start' => 314,
+                        'stop' => 357
+                    ],
+                    [
+                        'start' => 386,
+                        'stop' => 408
+                    ]
                 ],
-                [
-                    'start' => 386,
-                    'stop' => 408
-                ]
-            ],
-            'slug' => 'bmw',
-            'complete' => 1
+                'slug' => 'bmw',
+                'complete' => 1
+            ]
         ];
 
         $normalizer = new VideoTagNormalizer();

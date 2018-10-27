@@ -48,9 +48,9 @@ class VideoController extends BaseController
 
     public function show(string $youtubeId)
     {
-        $tags = $this->video_repository->find($youtubeId);
+        $video = $this->video_repository->find($youtubeId);
 
-        $this->response(reset($tags));
+        $this->response(reset($video));
     }
 
     public function highest_number_of_tags()

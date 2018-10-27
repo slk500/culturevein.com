@@ -8,8 +8,10 @@ final class VideoTagNormalizer
 {
     public function normalize(array &$array): void
     {
-        if (key_exists('times', $array)){
-        $array['times'] = $this->convert_times($array['times']);
+        foreach ($array as &$ar) {
+            if (key_exists('times', $ar)) {
+                $ar['times'] = $this->convert_times($ar['times']);
+            }
         }
     }
 

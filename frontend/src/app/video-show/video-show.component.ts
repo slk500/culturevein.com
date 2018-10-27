@@ -79,9 +79,6 @@ export class VideoShowComponent implements OnInit {
             videoId: this.youtubeId,
             height: 'auto',
             width: 'auto',
-            // playerVars: {
-            //     autoplay: 1,
-            // },
         };
 
         this.select2Options = {
