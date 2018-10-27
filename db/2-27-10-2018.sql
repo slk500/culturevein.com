@@ -249,73 +249,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP FUNCTION IF EXISTS `f_episode` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-CREATE DEFINER=`szkola_admin`@`localhost` FUNCTION `f_episode`(`number` INT(10)) RETURNS varchar(4) CHARSET utf8
-    DETERMINISTIC
-BEGIN
-IF number <= 9 THEN
-	RETURN CONCAT('E',LPAD(number, 2, 0));
-ELSE
-	RETURN CONCAT('E',number);
-END IF;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP FUNCTION IF EXISTS `generate_slug` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-CREATE DEFINER=`szkola_admin`@`localhost` FUNCTION `generate_slug`(`str` VARCHAR(512)) RETURNS varchar(512) CHARSET utf8
-    NO SQL
-    SQL SECURITY INVOKER
-BEGIN
-  SET str = tr(
-            tr(
-                LOWER(str)
-                , 'áàäâãåéèëêíìïîóòöôõúùüûñýçğş'
-                , 'aaaaaaeeeeiiiiooooouuuunycgs'
-            )
-            , '\\#$%&/¿?¡!¬|@~«<{[()]}>»·*+=.,;:ªº^°"''`´‘’”“'
-            , NULL
-  );
-
-  WHILE str LIKE '%  %' DO
-    SET str = REPLACE(str, '  ', ' ');
-  END WHILE;
-
-  RETURN REPLACE(
-                  REPLACE(
-                           str
-                          ,'_'
-                          ,'-'
-                  )
-                  , ' '
-                  , '-'
-  );
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -326,4 +259,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-27  1:45:28
+-- Dump completed on 2018-10-27 20:20:14
