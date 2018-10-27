@@ -20,10 +20,10 @@ class DatabaseHelperTest extends TestCase
             'artist',
             'artist_video',
             'tag',
-            'tag_video',
-            'tag_video_complete',
             'user',
-            'video'
+            'video',
+            'video_tag',
+            'video_tag_complete'
         ]);
 
         $result = $databaseHelper->are_tables_empty();

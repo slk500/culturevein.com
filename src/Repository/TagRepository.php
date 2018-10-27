@@ -30,7 +30,7 @@ final class TagRepository
         return $tag_id;
     }
 
-    public function findAll():?array
+    public function find_all():?array
     {
         $query = "SELECT DISTINCT(tag.name), tag.slug, tag.tag_id as id
                   FROM tag
@@ -43,7 +43,7 @@ final class TagRepository
         return $data;
     }
 
-    public function findByVideo(string $youtubeId)
+    public function find_by_video(string $youtubeId)
     {
         $stmt = $this->database->mysqli->prepare("SELECT tag.name,
         GROUP_CONCAT(video_tag.start,'-',video_tag.stop) as times,
@@ -82,7 +82,7 @@ final class TagRepository
         return $data;
     }
 
-    public function newestTen()
+    public function newest_ten()
     {
         $query = "SELECT video.youtube_id, tag.name, artist.name as artist_name, video.name AS video_name,
                 tag.slug, artist.slug as artist_slug, video_tag.created_at
@@ -126,7 +126,7 @@ final class TagRepository
         return $data;
     }
 
-    public function isUserSubscribed($userId, $slug)
+    public function is_user_subscribed($userId, $slug)
     {
         $query = "SELECT user.user_id
                        FROM tag_user_subscribe
@@ -134,7 +134,7 @@ final class TagRepository
                        WHERE tag_id = ? AND user.user_id = ?";
     }
 
-    public function howManyUsersSubscribe($slug)
+    public function how_many_users_are_subscribe($slug)
     {
         "SELECT count(tag_id) FROM tag_user_subscribe WHERE tag_id = ?";
     }

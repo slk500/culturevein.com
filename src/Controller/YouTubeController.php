@@ -12,17 +12,17 @@ class YouTubeController extends BaseController
     /**
      * @var YouTubeService
      */
-    private $youTube;
+    private $youtube;
 
     public function __construct()
     {
-        $this->youTube = new YouTubeService();
+        $this->youtube = new YouTubeService();
     }
 
-    public function getArtistAndTitle(string $id)
+    public function get_artist_and_title(string $id)
     {
         $this->response(
-            $this->youTube->getArtistAndTitle($id)
+            $this->youtube->get_artist_and_title($id)
         );
     }
 }

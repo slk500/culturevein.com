@@ -42,7 +42,7 @@ final class ArtistRepository
         return  $artist_id;
     }
 
-    public function findAll(): array
+    public function find_all(): array
     {
         $query = "SELECT name FROM artist ORDER BY name";
 

@@ -12,7 +12,7 @@ final class VideoRepository
     /**
      * @var ArtistRepository
      */
-    private $artistRepository;
+    private $artist_repository;
 
     /**
      * @var Database
@@ -22,19 +22,19 @@ final class VideoRepository
     /**
      * @var YouTubeService
      */
-    private $youTube;
+    private $youtube;
 
 
     public function __construct()
     {
-        $this->artistRepository = new ArtistRepository();
-        $this->youTube = new YouTubeService();
+        $this->artist_repository = new ArtistRepository();
+        $this->youtube = new YouTubeService();
         $this->database = new Database();
     }
 
     public function create(object $data): int
     {
-        $duration = $this->youTube->getDuration($data->youtube_id);
+        $duration = $this->youtube->get_duration($data->youtube_id);
 
         $stmt = $this->database->mysqli->prepare("INSERT INTO video (youtube_id, name, duration) VALUES (?,?,?)");
         $stmt->bind_param("ssi", $data->youtube_id, $data->name, $duration);
@@ -45,7 +45,7 @@ final class VideoRepository
         return $video_id;
     }
 
-    public function assignToArtist(int $artist_id, int $video_id)
+    public function assign_to_artist(int $artist_id, int $video_id)
     {
         $stmt = $this->database->mysqli->prepare("INSERT INTO artist_video (artist_id, video_id) VALUES (?,?)");
         $stmt->bind_param("ii", $artist_id, $video_id);
@@ -72,7 +72,7 @@ final class VideoRepository
         return $data;
     }
 
-    public function findAll()
+    public function find_all()
     {
         $query = "SELECT youtube_id, artist.name as artist_name, video.name
                 FROM video
@@ -85,7 +85,7 @@ final class VideoRepository
         return $data;
     }
 
-    public function withHighestNumberOfTags()
+    public function with_highest_number_of_tags()
     {
         $query = "SELECT artist.name as artist_name, video.name, count(DISTINCT tag.tag_id) AS count,
               video.youtube_id
@@ -103,7 +103,7 @@ final class VideoRepository
         return $data;
     }
 
-    public function newestTen()
+    public function newest_ten()
     {
         $query = "SELECT video.youtube_id,
                 artist.name as artist_name, video.name

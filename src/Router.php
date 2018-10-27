@@ -47,7 +47,7 @@ final class Router
 
                 $this->controller = $route['controller'];
                 $this->action = $route['action'];
-                $this->param = $this->getParams($route, $matches);
+                $this->param = $this->get_params($route, $matches);
                 return true;
             }
         }
@@ -65,7 +65,7 @@ final class Router
         }
     }
 
-    private function getParams(array $route, array $matches)
+    private function get_params(array $route, array $matches)
     {
         if ($route['method'] === 'POST' && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $body = file_get_contents('php://input');

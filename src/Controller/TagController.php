@@ -24,12 +24,12 @@ class TagController extends BaseController
     {
         $this->tag_factory->create($data);
 
-        $this->responseCreated($data);
+        $this->response_created($data);
     }
 
     public function list()
     {
-        $tags = $this->tag_repository->findAll();
+        $tags = $this->tag_repository->find_all();
 
         $this->response($tags);
     }
@@ -41,16 +41,16 @@ class TagController extends BaseController
         $this->response($tag);
     }
 
-    public function topTen()
+    public function top_ten()
     {
         $tags = $this->tag_repository->top();
 
         $this->response($tags);
     }
 
-    public function newestTen()
+    public function newest_ten()
     {
-        $tags = $this->tag_repository->newestTen();
+        $tags = $this->tag_repository->newest_ten();
 
         $this->response($tags);
     }

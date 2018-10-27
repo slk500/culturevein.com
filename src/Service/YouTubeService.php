@@ -17,7 +17,7 @@ final class YouTubeService
         $dotenv->load(__DIR__.'/../../.env');
     }
 
-    public function getDuration(string $id)
+    public function get_duration(string $id)
     {
         $result = json_decode(
             file_get_contents('https://www.googleapis.com/youtube/v3/videos' .
@@ -30,7 +30,7 @@ final class YouTubeService
         return $youtube->getTimestamp() - $start->getTimestamp();
     }
 
-    public function getArtistAndTitle(string $id): array
+    public function get_artist_and_title(string $id): array
     {
         $result = json_decode(
             file_get_contents('https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' . $id . '&key=' . getenv('YT_API_KEY')));

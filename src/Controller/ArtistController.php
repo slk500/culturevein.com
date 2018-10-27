@@ -9,16 +9,16 @@ use Repository\ArtistRepository;
 
 class ArtistController extends BaseController
 {
-    private $artistRepository;
+    private $artist_repository;
 
     public function __construct()
     {
-        $this->artistRepository = new ArtistRepository();
+        $this->artist_repository = new ArtistRepository();
     }
 
     public function list()
     {
-        $artists = $this->artistRepository->findAll();
+        $artists = $this->artist_repository->find_all();
 
         $this->response($artists);
     }

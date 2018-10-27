@@ -16,7 +16,7 @@ class YouTubeTest extends TestCase
     {
         $youTube = new YouTubeService();
 
-        $result = $youTube->getArtistAndTitle('wQRV5omnBBU');
+        $result = $youTube->get_artist_and_title('wQRV5omnBBU');
 
         $this->assertEquals('Martin Solveig', $result['artist']);
         $this->assertEquals('Do It Right ft. Tkay Maidza', $result['title']);

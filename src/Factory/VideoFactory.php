@@ -10,27 +10,27 @@ use Repository\VideoRepository;
 
 class VideoFactory
 {
-    private $videoRepository;
+    private $video_repository;
 
-    private $artistRepository;
+    private $artist_repository;
 
     public function __construct()
     {
-        $this->videoRepository = new VideoRepository();
-        $this->artistRepository = new ArtistRepository();
+        $this->video_repository = new VideoRepository();
+        $this->artist_repository = new ArtistRepository();
     }
 
     public function create(object $data)
     {
-        $videoId = $this->videoRepository->create($data);
+        $videoId = $this->video_repository->create($data);
 
-        $artistId = $this->artistRepository->find($data->artist);
+        $artistId = $this->artist_repository->find($data->artist);
 
         if(!$artistId){
-            $artistId = $this->artistRepository->create($data->artist);
+            $artistId = $this->artist_repository->create($data->artist);
         }
 
-        $this->videoRepository->assignToArtist($artistId, $videoId);
+        $this->video_repository->assign_to_artist($artistId, $videoId);
 
         $data->artist_id = $artistId;
         $data->video_id = $videoId;
