@@ -6,6 +6,7 @@ namespace Controller;
 
 use Controller\Base\BaseController;
 use Factory\VideoFactory;
+use DTO\VideoCreate;
 use Normalizer\VideoTagNormalizer;
 use Repository\TagRepository;
 use Repository\VideoRepository;
@@ -27,9 +28,15 @@ class VideoController extends BaseController
 
     public function create(object $data)
     {
-        $data = $this->video_factory->create($data);
+        $video_create = new VideoCreate(
+            $data->artist,
+            $data->name,
+            $data->youtube_id
+        );
 
-        $this->response_created($data);
+        $this->video_factory->create($video_create);
+
+        http_response_code(201);
     }
 
     public function list()

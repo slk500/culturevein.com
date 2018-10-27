@@ -6,6 +6,7 @@ namespace Tests\Factory;
 
 use Factory\VideoTagFactory;
 use Factory\VideoFactory;
+use DTO\VideoCreate;
 use PHPUnit\Framework\TestCase;
 use Repository\TagRepository;
 use Repository\VideoRepository;
@@ -16,8 +17,7 @@ class VideoTagFactoryTest extends TestCase
 {
     public static function setUpBeforeClass()
     {
-        $databaseHelper = new DatabaseHelper();
-        $databaseHelper->truncate_all_tables();
+        (new DatabaseHelper())->truncate_all_tables();
     }
 
     /**
@@ -29,17 +29,19 @@ class VideoTagFactoryTest extends TestCase
         $tag_name = 'tag';
         $tag_id = $tag_repository->create($tag_name);
 
-        $video_repository = new VideoRepository();
-        $video = new stdClass();
-        $video->name = 'Yes Sir, I Can Boogie';
-        $video->youtube_id = 'VSQjx79dR8s';
-        $video->artist_name = 'Boccara';
-        $video_id = $video_repository->create($video);
+        $video_create = new VideoCreate(
+            'Burak Yeter',
+            'Tuesday ft. Danelle Sandoval',
+            'Y1_VsyLAGuk'
+        );
+
+        $video_factory = new VideoFactory();
+        $video_factory->create($video_create);
 
         $video_tag_factory = new VideoTagFactory();
 
         $data = new stdClass();
-        $data->video_id = $video_id;
+        $data->video_id = 1;
         $data->name = 'tag';
         $data->start = 0;
         $data->stop = 20;

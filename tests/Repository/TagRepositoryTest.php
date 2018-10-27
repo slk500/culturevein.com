@@ -8,16 +8,15 @@ use Service\DatabaseHelper;
 
 class TagRepositoryTest extends TestCase
 {
+    /**
+     * @var TagRepository
+     */
+    private $tag_repository;
 
     public static function setUpBeforeClass()
     {
         (new DatabaseHelper())->truncate_all_tables();
     }
-
-    /**
-     * @var TagRepository
-     */
-    private $tag_repository;
 
     public function setUp()
     {

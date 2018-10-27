@@ -41,10 +41,10 @@ class VideoTagRepositoryTest extends TestCase
         $tag_id = $tag_repository->create($tag_name);
 
         $video_repository = new VideoRepository();
-        $video = new stdClass();
-        $video->name = 'Yes Sir, I Can Boogie';
-        $video->youtube_id = 'VSQjx79dR8s';
-        $video_id = $video_repository->create($video);
+
+        $video_id = $video_repository->create(
+            'Yes Sir, I Can Boogie',
+            'VSQjx79dR8s');
 
         $data = new stdClass();
         $data->tag_id = $tag_id;

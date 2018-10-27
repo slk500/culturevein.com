@@ -4,17 +4,23 @@ declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
 use Repository\VideoRepository;
+use Service\DatabaseHelper;
 
 class VideoRepositoryTest extends TestCase
 {
     /**
      * @var VideoRepository
      */
-    private $videoRepository;
+    private $video_repository;
+
+    public static function setUpBeforeClass()
+    {
+        (new DatabaseHelper())->truncate_all_tables();
+    }
 
     public function setUp()
     {
-        $this->videoRepository = new VideoRepository();
+        $this->video_repository = new VideoRepository();
     }
 
     /**
@@ -22,13 +28,10 @@ class VideoRepositoryTest extends TestCase
      */
     public function create_video()
     {
-        $video = new stdClass();
-        $video->name = 'Yes Sir, I Can Boogie';
-        $video->youtube_id = 'VSQjx79dR8s';
-        $video->artist_name = 'Boccara';
+        $video_id = $this->video_repository->create(
+            'Yes Sir, I Can Boogie',
+            'VSQjx79dR8s');
 
-        $tagId = $this->videoRepository->create($video);
-
-        $this->assertNotNull($tagId);
+        $this->assertSame(1, $video_id);
     }
 }

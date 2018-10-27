@@ -1,5 +1,7 @@
 <?php
 
+use Factory\VideoFactory;
+use DTO\VideoCreate;
 use PHPUnit\Framework\TestCase;
 use Repository\TagRepository;
 use Repository\VideoRepository;
@@ -33,18 +35,22 @@ class TagControllerTest extends TestCase
         $tag_name = 'tag';
         $tag_repository->create($tag_name);
 
-        $video_repository = new VideoRepository();
-        $video = new stdClass();
-        $video->name = 'Yes Sir, I Can Boogie';
-        $video->youtube_id = 'VSQjx79dR8s';
-        $video->artist_name = 'Boccara';
-        $video_id = $video_repository->create($video);
+        $video_factory = new VideoFactory();
+
+        $video_create = new VideoCreate(
+            'Burak Yeter',
+            'Tuesday ft. Danelle Sandoval',
+            'Y1_VsyLAGuk'
+        );
+
+        $video_factory->create($video_create);
+
 
         $response = $this->client->post(
           'api/tags',
           [
               'json' => [
-                  'video_id' => $video_id,
+                  'video_id' => 1,
                   'name' => 'tag',
                   'start' => 0,
                   'stop' => 25

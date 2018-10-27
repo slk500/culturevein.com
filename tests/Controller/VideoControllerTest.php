@@ -29,6 +29,7 @@ class VideoControllerTest extends TestCase
 
     /**
      * @test
+     * @covers VideoController::create()
      */
     public function create_video()
     {
@@ -43,8 +44,6 @@ class VideoControllerTest extends TestCase
             ]
         );
 
-        $this->assertEquals('{"artist":"Burak Yeter","name":"Tuesday ft. Danelle Sandoval","youtube_id":"Y1_VsyLAGuk","artist_id":1,"video_id":1}',
-            $response->getBody()->getContents());
         $this->assertEquals(201,$response->getStatusCode());
     }
 }

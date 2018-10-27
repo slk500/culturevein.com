@@ -32,12 +32,12 @@ final class VideoRepository
         $this->database = new Database();
     }
 
-    public function create(object $data): int
+    public function create(string $video_name, string $youtube_id): int
     {
-        $duration = $this->youtube->get_duration($data->youtube_id);
+        $duration = $this->youtube->get_duration($youtube_id);
 
         $stmt = $this->database->mysqli->prepare("INSERT INTO video (youtube_id, name, duration) VALUES (?,?,?)");
-        $stmt->bind_param("ssi", $data->youtube_id, $data->name, $duration);
+        $stmt->bind_param("ssi", $youtube_id, $video_name, $duration);
         $stmt->execute();
 
         $video_id = $this->database->mysqli->insert_id;

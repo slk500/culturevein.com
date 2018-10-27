@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Factory;
 
 use Factory\VideoFactory;
+use DTO\VideoCreate;
 use PHPUnit\Framework\TestCase;
 use Service\DatabaseHelper;
 
@@ -12,8 +13,17 @@ class VideoFactoryTest extends TestCase
 {
     public static function setUpBeforeClass()
     {
-        $databaseHelper = new DatabaseHelper();
-        $databaseHelper->truncate_all_tables();
+        (new DatabaseHelper())->truncate_all_tables();
+    }
+
+    public function setUp()
+    {
+        $this->markTestSkipped('Check in database');
+
+        (new DatabaseHelper())->truncate_tables([
+            'artist',
+            'video'
+        ]);
     }
 
     /**
@@ -23,14 +33,28 @@ class VideoFactoryTest extends TestCase
     {
         $video_factory = new VideoFactory();
 
-        $data = new \stdClass();
-        $data->artist = 'Burak Yeter';
-        $data->name = 'Tuesday ft. Danelle Sandoval';
-        $data->youtube_id = 'Y1_VsyLAGuk';
+        $video_create = new VideoCreate(
+            'Burak Yeter',
+            'Tuesday ft. Danelle Sandoval',
+            'Y1_VsyLAGuk'
+        );
 
-        $result = $video_factory->create($data);
+        $video_factory->create($video_create);
+    }
 
-        $this->assertEquals(1, $result->artist_id);
-        $this->assertEquals(1, $result->video_id);
+    /**
+     * @test
+     */
+    public function create_try_without_artist_name()
+    {
+        $video_factory = new VideoFactory();
+
+        $video_create = new VideoCreate(
+            null,
+            'Tuesday ft. Danelle Sandoval',
+            'Y1_VsyLAGuk'
+        );
+
+        $video_factory->create($video_create);
     }
 }
