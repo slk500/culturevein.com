@@ -36,7 +36,7 @@ class VideoController extends BaseController
 
         $this->video_factory->create($video_create);
 
-        http_response_code(201);
+        $this->response_created($video_create);
     }
 
     public function list()
@@ -46,11 +46,11 @@ class VideoController extends BaseController
         $this->response($videos);
     }
 
-    public function show(string $youtubeId)
+    public function show(string $youtube_id)
     {
-        $video = $this->video_repository->find($youtubeId);
+        $video = $this->video_repository->find($youtube_id);
 
-        $this->response(reset($video));
+        $this->response($video);
     }
 
     public function highest_number_of_tags()
@@ -67,9 +67,9 @@ class VideoController extends BaseController
         $this->response($videos);
     }
 
-    public function tags(string $youtubeId)
+    public function tags(string $youtube_id)
     {
-        $tags = $this->tag_repository->find_by_video($youtubeId);
+        $tags = $this->tag_repository->find_by_video($youtube_id);
         (new VideoTagNormalizer())->normalize($tags);
 
         $this->response($tags);

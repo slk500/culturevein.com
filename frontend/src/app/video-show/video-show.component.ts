@@ -61,8 +61,8 @@ export class VideoShowComponent implements OnInit {
 
         this._videoService.getVideo(this.youtubeId)
             .subscribe(data => {
-                    this.videoInfo = data;
-                    this.rangeValues[1] = data.duration;
+                    this.videoInfo = data[0];
+                    this.rangeValues[1] = data[0].duration;
                     this.rangeValues[0] = 0;
                 },
                 error => this.errorMsg = error);

@@ -12,9 +12,11 @@ abstract class BaseController
         echo json_encode($data);
     }
 
-    protected function response_created($data): void
+    protected function response_created($data = null): void
     {
         http_response_code(201);
-        echo json_encode($data);
+        if($data) {
+            echo json_encode($data);
+        }
     }
 }

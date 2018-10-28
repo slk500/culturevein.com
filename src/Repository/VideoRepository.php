@@ -54,7 +54,7 @@ final class VideoRepository
 
     public function find(string $youTubeId)
     {
-        $stmt = $this->database->mysqli->prepare( "SELECT video.name, video.release_date,video.
+        $stmt = $this->database->mysqli->prepare( "SELECT video.name as video_name, video.release_date,video.
             youtube_id, video.duration, artist.name as artist_name, video.video_id
             FROM video
             LEFT JOIN artist_video USING (video_id)

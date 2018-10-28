@@ -30,8 +30,8 @@ export class VideoService {
 
     }
 
-    getVideo(youtubeId) : Observable<Ivideo> {
-        return this.http.get<Ivideo>('api/videos/' + youtubeId)
+    getVideo(youtubeId) : Observable<Ivideo[]> {
+        return this.http.get<Ivideo[]>('api/videos/' + youtubeId)
             .pipe(catchError(this.errorHandler))
     }
 

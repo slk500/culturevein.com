@@ -49,10 +49,10 @@ export class AddComponent implements OnInit {
     addVideo(){
         this._videoService.addVideo(
           this.selectedValue, this.title, this.youtubeId
-        ).subscribe(data => data,
+        ).subscribe(data => {
+            this.router.navigate([`/videos/${this.youtubeId}`]);
+        },
             error => this.errorMsg = error);
-
-        this.router.navigate([`/videos/${this.youtubeId}`]);
     }
 
     onKey(event: any) {
