@@ -1,6 +1,6 @@
 RewriteBase /
 Options FollowSymLinks
-DirectoryIndex index.php
+DirectoryIndex index.html
 
 RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
