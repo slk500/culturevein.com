@@ -30,7 +30,6 @@ final class Database
             echo "Failed to connect to MySQL: " . $this->mysqli->connect_error;
         }
         $this->mysqli->set_charset("utf8");
-        mysqli_report(MYSQLI_REPORT_ALL ^ MYSQLI_REPORT_INDEX);
     }
 
     public function fetch(string $query) : ?array
