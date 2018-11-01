@@ -3,6 +3,7 @@ import {ArtistService} from "../artist.service";
 import {YouTubeService} from "../you-tube.service";
 import {VideoService} from "../services/video.service";
 import {Router} from "@angular/router";
+import {map} from "rxjs/internal/operators";
 
 @Component({
     selector: 'app-add',
@@ -36,14 +37,7 @@ export class AddComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._artistService.getArtists()
-            .subscribe(data => this.artists = data,
-                error => this.errorMsg = error);
 
-        this.select2Options = {
-            placeholder: 'Select an artist or type a new one',
-            tags: true
-        };
     }
 
     addVideo(){
@@ -65,9 +59,29 @@ export class AddComponent implements OnInit {
             this._youTubeService.getArtistAndTitle(this.youtubeId).
            subscribe(data => {
                this.artist = data.artist;
+
                this.title = data.title;
                },
                error => this.errorMsg = error);
+
+
+            this._artistService.getArtists().
+            pipe(map(arr => arr.map(el => el.name)),)
+                .subscribe(
+                    data => {
+                        this.artists = data;
+                        this.artists.push(this.artist);
+                        this.artists.sort();
+                        this.selectedValue = this.artist;
+                    },
+                    error => this.errorMsg = error);
+
+
+            this.select2Options = {
+                placeholder: 'Select an artist or type a new one',
+                tags: true
+            };
+
 
             this.playerOptions = {
                 videoId: this.youtubeId,

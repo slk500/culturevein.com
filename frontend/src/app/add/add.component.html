@@ -2,11 +2,14 @@
     <input (keyup)="onKey($event)" placeholder='YouTube link or YouTube Id' class='form-control'>
 </div>
 
+
 <div *ngIf="youtubeId" class="col-xs-10 col-xs-offset-1">
     <div class='form-group'>
         <label for="artist">Artist Name</label>
-        <select2 [cssImport]=true [options]="select2Options" [width]="'100%'" (valueChanged)="changed($event)"
-                 [value]="selectedValue" id="artist">
+        <select2  [data]="artists" [cssImport]=true [options]="select2Options" [width]="'100%'" (valueChanged)="changed($event)"
+                 [value]="selectedValue" id="artist"
+        >
+
             <option></option>
         <option *ngFor="let artist of artists"> {{ artist.name }}</option>
         </select2>

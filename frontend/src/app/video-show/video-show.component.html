@@ -29,7 +29,7 @@
             <div>
                 <select2  [cssImport]=true [options]="select2Options" [width]="'50%'" (valueChanged)="changed($event)" [value]="selectedValue" >
                     <option></option>
-                    <option *ngFor="let tag of tags"> {{ tag.name }}</option>
+                    <option *ngFor="let tag of tags">{{ tag.name }}</option>
                 </select2>
             </div>
         <br>
