@@ -26,6 +26,8 @@ export class AddComponent implements OnInit {
 
     public artists = [];
 
+    public tempArtists = [];
+
     public artist;
 
     public title = '';
@@ -38,43 +40,41 @@ export class AddComponent implements OnInit {
 
     ngOnInit() {
 
+        this._artistService.getArtists().
+        pipe(map(arr => arr.map(el => el.name)),)
+            .subscribe(
+                data => {
+                    this.tempArtists = data;
+                },
+                error => this.errorMsg = error);
+
     }
 
-    addVideo(){
-        this._videoService.addVideo(
-          this.selectedValue, this.title, this.youtubeId
-        ).subscribe(data => {
-            this.router.navigate([`/videos/${this.youtubeId}`]);
-        },
-            error => this.errorMsg = error);
+    onPaste(event: ClipboardEvent) {
+        let clipboardData = event.clipboardData;
+        this.input = clipboardData.getData('text');
+        this.embedIfYoutubeId();
     }
 
     onKey(event: any) {
         this.input = event.target.value;
+        this.embedIfYoutubeId();
+    }
 
+    private embedIfYoutubeId() {
         this.findYouTubeId();
 
         if (this.youtubeId) {
 
-            this._youTubeService.getArtistAndTitle(this.youtubeId).
-           subscribe(data => {
-               this.artist = data.artist;
-
-               this.title = data.title;
-               },
-               error => this.errorMsg = error);
-
-
-            this._artistService.getArtists().
-            pipe(map(arr => arr.map(el => el.name)),)
-                .subscribe(
-                    data => {
-                        this.artists = data;
-                        this.artists.push(this.artist);
-                        this.artists.sort();
-                        this.selectedValue = this.artist;
-                    },
-                    error => this.errorMsg = error);
+            this._youTubeService.getArtistAndTitle(this.youtubeId).subscribe(data => {
+                    this.artist = data.artist;
+                    this.tempArtists.push(this.artist);
+                    this.tempArtists.sort();
+                    this.artists = this.tempArtists;
+                    this.selectedValue = this.artist;
+                    this.title = data.title;
+                },
+                error => this.errorMsg = error);
 
 
             this.select2Options = {
@@ -95,26 +95,27 @@ export class AddComponent implements OnInit {
         this.selectedValue = e.value;
     }
 
-    private findYouTubeId(): string {
+    private findYouTubeId(): void {
+            let regEx = "^(?:https?:)?//[^/]*(?:youtube(?:-nocookie)?\.com|youtu\.be).*[=/]([-\\w]{11})(?:\\?|=|&|$)";
+            let matches = this.input.match(regEx);
+            if(matches){
+                this.youtubeId = matches[1];
+            }
 
-        let check = "?v=";
-        let check_mobile = "youtu.be/";
+            if (matches) {
+                console.log(this.input + "\n" + matches[1] + "\n");
+            }else{
+                this.youtubeId = '';
+            }
 
-        if (this.input.indexOf(check) > -1) {
+    }
 
-            return this.youtubeId = this.input.substring(this.input.indexOf("?v=") + 3);
-        }
-
-        if (this.input.indexOf(check_mobile) > -1) {
-
-            return this.youtubeId = this.input.substring(this.input.indexOf("youtu.be/") + 9);
-        }
-
-        if (this.input.length === 11) {
-
-            return this.youtubeId = this.input;
-        }
-
-        return this.youtubeId = '';
+    addVideo(){
+        this._videoService.addVideo(
+            this.selectedValue, this.title, this.youtubeId
+        ).subscribe(data => {
+                this.router.navigate([`/videos/${this.youtubeId}`]);
+            },
+            error => this.errorMsg = error);
     }
 }
