@@ -1,7 +1,3 @@
-<!--<input type='text' class='form-control' id='title' [(ngModel)]="selectedTitle">-->
-
-<!--Tutaj {{selectedTitle}}-->
-
 <div class='col-xs-10 col-xs-offset-1 white_container pad'>
     <input (input)="onKey($event)" (paste)="onPaste($event)"
 
@@ -19,8 +15,6 @@
                  (valueChanged)="changed($event)"
                  [value]="selectedArtist" id="artist"
         >
-            <option></option>
-        <option *ngFor="let artist of artists"> {{ artist.name }} </option>
         </select2>
         <br>
         <div class='form-group'>

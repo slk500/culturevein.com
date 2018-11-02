@@ -18,8 +18,6 @@ export class AddComponent implements OnInit {
 
     public input = '';
 
-    public text = '';
-
     public select2Options: Select2Options;
 
     public selectedArtist;
