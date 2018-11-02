@@ -22,7 +22,7 @@ export class AddComponent implements OnInit {
 
     public select2Options: Select2Options;
 
-    public selectedValue;
+    public selectedArtist;
 
     public artists = [];
 
@@ -39,7 +39,6 @@ export class AddComponent implements OnInit {
     }
 
     ngOnInit() {
-
         this._artistService.getArtists().
         pipe(map(arr => arr.map(el => el.name)),)
             .subscribe(
@@ -47,7 +46,6 @@ export class AddComponent implements OnInit {
                     this.tempArtists = data;
                 },
                 error => this.errorMsg = error);
-
     }
 
     onPaste(event: ClipboardEvent) {
@@ -68,20 +66,18 @@ export class AddComponent implements OnInit {
 
             this._youTubeService.getArtistAndTitle(this.youtubeId).subscribe(data => {
                     this.artist = data.artist;
+                    this.title = data.title;
                     this.tempArtists.push(this.artist);
                     this.tempArtists.sort();
                     this.artists = this.tempArtists;
-                    this.selectedValue = this.artist;
-                    this.title = data.title;
+                    this.selectedArtist = this.artist;
                 },
                 error => this.errorMsg = error);
-
 
             this.select2Options = {
                 placeholder: 'Select an artist or type a new one',
                 tags: true
             };
-
 
             this.playerOptions = {
                 videoId: this.youtubeId,
@@ -92,7 +88,7 @@ export class AddComponent implements OnInit {
     }
 
     public changed(e: any): void {
-        this.selectedValue = e.value;
+        this.selectedArtist = e.value;
     }
 
     private findYouTubeId(): void {
@@ -100,19 +96,14 @@ export class AddComponent implements OnInit {
             let matches = this.input.match(regEx);
             if(matches){
                 this.youtubeId = matches[1];
-            }
-
-            if (matches) {
-                console.log(this.input + "\n" + matches[1] + "\n");
             }else{
                 this.youtubeId = '';
             }
-
     }
 
     addVideo(){
         this._videoService.addVideo(
-            this.selectedValue, this.title, this.youtubeId
+            this.selectedArtist, this.title, this.youtubeId
         ).subscribe(data => {
                 this.router.navigate([`/videos/${this.youtubeId}`]);
             },
