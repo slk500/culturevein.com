@@ -40,8 +40,8 @@ final class YouTubeService
                 $result->items[0]->snippet->title, -1, PREG_SPLIT_NO_EMPTY));
 
         $result = [
-          'artist' => $artistAndTitle[0],
-          'title' => $artistAndTitle[1]
+          'artist' => $artistAndTitle[0] ?? null,
+          'title' => $artistAndTitle[1] ?? null
         ];
 
         return $result;
