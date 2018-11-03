@@ -29,7 +29,39 @@ class TagControllerTest extends TestCase
     /**
      * @test
      */
-    public function create_video_tag()
+    public function test_create_video_tag()
+    {
+        $response = $this->create_video_tag();
+
+        $this->assertEquals('{"video_id":1,"name":"tag","start":0,"stop":25,"tag_id":1}', $response->getBody()->getContents());
+        $this->assertEquals(201, $response->getStatusCode());
+    }
+
+    /**
+     * @test
+     */
+    public function clear_time_of_video_tag()
+    {
+        $response = $this->create_video_tag();
+
+        $this->assertEquals('{"video_id":1,"name":"tag","start":0,"stop":25,"tag_id":1}', $response->getBody()->getContents());
+        $this->assertEquals(201, $response->getStatusCode());
+
+        $response = $this->client->patch(
+            'api/tags',
+            [
+                'json' => [
+                    'video_tag_id' => 1,
+                ]
+            ]
+        );
+
+        var_dump($response->getBody()->getContents());
+    }
+
+
+
+    private function create_video_tag(): \Psr\Http\Message\ResponseInterface
     {
         $tag_repository = new TagRepository();
         $tag_name = 'tag';
@@ -47,18 +79,16 @@ class TagControllerTest extends TestCase
 
 
         $response = $this->client->post(
-          'api/tags',
-          [
-              'json' => [
-                  'video_id' => 1,
-                  'name' => 'tag',
-                  'start' => 0,
-                  'stop' => 25
-              ]
-          ]
+            'api/tags',
+            [
+                'json' => [
+                    'video_id' => 1,
+                    'name' => 'tag',
+                    'start' => 0,
+                    'stop' => 25
+                ]
+            ]
         );
-
-        $this->assertEquals('{"video_id":1,"name":"tag","start":0,"stop":25,"tag_id":1}', $response->getBody()->getContents());
-        $this->assertEquals(201, $response->getStatusCode());
+        return $response;
     }
 }

@@ -43,30 +43,6 @@ final class TagRepository
         return $data;
     }
 
-    public function find_by_video(string $youtubeId)
-    {
-        $stmt = $this->database->mysqli->prepare("SELECT tag.name,
-        GROUP_CONCAT(video_tag.start,'-',video_tag.stop) as times,
-        tag.slug, tvc.video_id is not null as complete
-        FROM video_tag
-        JOIN tag USING (tag_id)
-        JOIN video USING (video_id)
-        LEFT JOIN video_tag_complete tvc on tag.tag_id = tvc.tag_id and tvc.video_id = video.video_id
-        WHERE video.youtube_id = ?
-        GROUP BY tag.name
-        ORDER BY tag.name, video_tag.start");
-
-        $stmt->bind_param("s", $youtubeId);
-        $stmt->execute();
-
-        $result = $stmt->get_result();
-        $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
-        $stmt->free_result();
-        $stmt->close();
-
-        return $data;
-    }
-
     public function top()
     {
         $query = "SELECT tag.name, count(distinct video.video_id) AS count, tag.slug
@@ -126,18 +102,19 @@ final class TagRepository
         return $data;
     }
 
-    public function is_user_subscribed($userId, $slug)
-    {
-        $query = "SELECT user.user_id
-                       FROM tag_user_subscribe
-                       JOIN user USING user_id
-                       WHERE tag_id = ? AND user.user_id = ?";
-    }
-
-    public function how_many_users_are_subscribe($slug)
-    {
-        "SELECT count(tag_id) FROM tag_user_subscribe WHERE tag_id = ?";
-    }
+    //todo
+//    public function is_user_subscribed($userId, $slug)
+//    {
+//        $query = "SELECT user.user_id
+//                       FROM tag_user_subscribe
+//                       JOIN user USING user_id
+//                       WHERE tag_id = ? AND user.user_id = ?";
+//    }
+//
+//    public function how_many_users_are_subscribe($slug)
+//    {
+//        "SELECT count(tag_id) FROM tag_user_subscribe WHERE tag_id = ?";
+//    }
 
     public function create(string $tag_name): int
     {

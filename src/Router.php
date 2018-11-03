@@ -8,8 +8,10 @@ final class Router
         [
             ['route' => '/^\/api\/artists\/*$/', 'controller' => 'ArtistController', 'action' => 'list', 'method' => 'GET'],
 
+            ['route' => '/^\/api\/tags\/*$/', 'controller' => 'TagController', 'action' => 'clear_time', 'method' => 'PATCH'],
             ['route' => '/^\/api\/tags\/*$/', 'controller' => 'TagController', 'action' => 'create', 'method' => 'POST'],
             ['route' => '/^\/api\/tags\/*$/', 'controller' => 'TagController', 'action' => 'list', 'method' => 'GET'],
+
             ['route' => '/^\/api\/tags-top\/*$/', 'controller' => 'TagController', 'action' => 'top_ten', 'method' => 'GET'],
             ['route' => '/^\/api\/tags-new\/*$/', 'controller' => 'TagController', 'action' => 'newest_ten', 'method' => 'GET'],
             ['route' => '/^\/api\/tags\/(?<slug>[\w-]+)\/*$/', 'controller' => 'TagController', 'action' => 'show', 'method' => 'GET'],
@@ -23,6 +25,10 @@ final class Router
 
             ['route' => '/^\/api\/youtube\/(?<youtubeId>[\w-]{11})\/*$/', 'controller' => 'YouTubeController', 'action' => 'get_artist_and_title', 'method' => 'GET']
         ];
+
+    public const METHODS_WITH_INPUT = [
+      'POST', 'PATCH'
+    ];
 
     /**
      * @var string
@@ -67,7 +73,7 @@ final class Router
 
     private function get_params(array $route, array $matches)
     {
-        if ($route['method'] === 'POST' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (in_array($route['method'], self::METHODS_WITH_INPUT) && in_array($_SERVER['REQUEST_METHOD'], self::METHODS_WITH_INPUT)) {
             $body = file_get_contents('php://input');
             return json_decode($body);
         }

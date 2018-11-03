@@ -10,19 +10,20 @@ use DTO\VideoCreate;
 use Normalizer\VideoTagNormalizer;
 use Repository\TagRepository;
 use Repository\VideoRepository;
+use Repository\VideoTagRepository;
 
 class VideoController extends BaseController
 {
     private $video_repository;
 
-    private $tag_repository;
+    private $video_tag_repository;
 
     private $video_factory;
 
     public function __construct()
     {
         $this->video_repository = new VideoRepository();
-        $this->tag_repository = new TagRepository();
+        $this->video_tag_repository = new VideoTagRepository();
         $this->video_factory = new VideoFactory();
     }
 
@@ -69,7 +70,7 @@ class VideoController extends BaseController
 
     public function tags(string $youtube_id)
     {
-        $tags = $this->tag_repository->find_by_video($youtube_id);
+        $tags = $this->video_tag_repository->find_by_video($youtube_id);
         (new VideoTagNormalizer())->normalize($tags);
 
         $this->response($tags);
