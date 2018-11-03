@@ -55,11 +55,7 @@ class TagControllerTest extends TestCase
                 ]
             ]
         );
-
-        var_dump($response->getBody()->getContents());
     }
-
-
 
     private function create_video_tag(): \Psr\Http\Message\ResponseInterface
     {

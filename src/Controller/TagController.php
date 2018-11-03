@@ -33,7 +33,7 @@ class TagController extends BaseController
 
     public function clear_time(object $data)
     {
-        $this->video_tag_repository->clear_time($data->tag_slug);
+        $this->video_tag_repository->clear_time($data->video_tag_id);
     }
 
     public function list()

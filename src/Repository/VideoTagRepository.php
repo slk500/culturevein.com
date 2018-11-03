@@ -13,12 +13,9 @@ final class VideoTagRepository
      */
     private $database;
 
-    private $video_tag_repository;
-
     public function __construct()
     {
         $this->database = new Database();
-        $this->video_tag_repository = new VideoTagRepository();
     }
 
     public function create(object $data)
@@ -54,7 +51,7 @@ final class VideoTagRepository
         return $data;
     }
 
-    public function clear_time(string $video_tag_id)
+    public function clear_time(int $video_tag_id)
     {
         $stmt = $this->database->mysqli->prepare(
             "UPDATE video_tag SET start = null, stop = null WHERE tag_video_id = ?"
