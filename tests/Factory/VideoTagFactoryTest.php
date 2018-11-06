@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\Factory;
 
+use DTO\VideoTagCreate;
 use Factory\VideoTagFactory;
 use Factory\VideoFactory;
 use DTO\VideoCreate;
 use PHPUnit\Framework\TestCase;
 use Repository\TagRepository;
-use Repository\VideoRepository;
+use Repository\VideoTagRepository;
 use Service\DatabaseHelper;
-use stdClass;
 
 class VideoTagFactoryTest extends TestCase
 {
@@ -25,31 +25,49 @@ class VideoTagFactoryTest extends TestCase
      */
     public function create()
     {
-        $tag_repository = new TagRepository();
-        $tag_name = 'tag';
-        $tag_id = $tag_repository->create($tag_name);
+        $tag_name = $tag_slug_id = 'tag';
+        (new TagRepository())->create($tag_name, $tag_slug_id);
+
+        $artist_name = 'Burak Yeter';
+        $video_name = 'Tuesday ft. Danelle Sandoval';
+        $youtube_id = 'Y1_VsyLAGuk';
 
         $video_create = new VideoCreate(
-            'Burak Yeter',
-            'Tuesday ft. Danelle Sandoval',
-            'Y1_VsyLAGuk'
+            $artist_name,
+            $video_name,
+            $youtube_id
         );
 
-        $video_factory = new VideoFactory();
-        $video_factory->create($video_create);
+        (new VideoFactory())->create($video_create);
 
         $video_tag_factory = new VideoTagFactory();
 
-        $data = new stdClass();
-        $data->video_id = 1;
-        $data->name = 'tag';
-        $data->start = 0;
-        $data->stop = 20;
+        $start = 0;
+        $stop = 20;
 
-        $result = $video_tag_factory->create($data);
+        $video_tag_create = new VideoTagCreate(
+            $youtube_id,
+            $tag_name,
+            $start,
+            $stop
+        );
 
-        $this->assertSame($tag_id, $result->tag_id);
+        $video_tag_factory->create($video_tag_create);
 
-        $this->assertEquals('{"video_id":1,"name":"tag","start":0,"stop":20,"tag_id":1}', json_encode($result));
+        $video_tag_repository = new VideoTagRepository();
+
+        $result = $video_tag_repository->find_all_for_video($youtube_id);
+
+        $video_tag = (end($result));
+
+        $expected = [
+            'tag_name' => 'tag',
+            'video_youtube_id' => 'Y1_VsyLAGuk',
+            'times' => '0-20',
+            'tag_slug_id' => 'tag',
+            'complete' => 0
+        ];
+
+        $this->assertSame($expected, $video_tag);
     }
 }

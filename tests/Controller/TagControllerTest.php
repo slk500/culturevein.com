@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Factory\VideoFactory;
 use DTO\VideoCreate;
 use PHPUnit\Framework\TestCase;
@@ -28,12 +30,12 @@ class TagControllerTest extends TestCase
 
     /**
      * @test
+     * @covers \Controller\TagController::create()
      */
     public function test_create_video_tag()
     {
         $response = $this->create_video_tag();
 
-        $this->assertEquals('{"video_id":1,"name":"tag","start":0,"stop":25,"tag_id":1}', $response->getBody()->getContents());
         $this->assertEquals(201, $response->getStatusCode());
     }
 
@@ -42,10 +44,7 @@ class TagControllerTest extends TestCase
      */
     public function clear_time_of_video_tag()
     {
-        $response = $this->create_video_tag();
-
-        $this->assertEquals('{"video_id":1,"name":"tag","start":0,"stop":25,"tag_id":1}', $response->getBody()->getContents());
-        $this->assertEquals(201, $response->getStatusCode());
+        $this->create_video_tag();
 
         $response = $this->client->patch(
             'api/tags',
@@ -55,36 +54,41 @@ class TagControllerTest extends TestCase
                 ]
             ]
         );
+
+        $this->assertEquals(200, $response->getStatusCode());
     }
 
     private function create_video_tag(): \Psr\Http\Message\ResponseInterface
     {
-        $tag_repository = new TagRepository();
-        $tag_name = 'tag';
-        $tag_repository->create($tag_name);
+        $tag_name = 'chess';
+        $tag_slug_id = 'chess';
 
-        $video_factory = new VideoFactory();
+        (new TagRepository())->create($tag_name, $tag_slug_id);
+
+        $artist_name = 'Burak Yeter';
+        $video_name = 'Tuesday ft. Danelle Sandoval';
+        $youtube_id = 'Y1_VsyLAGuk';
 
         $video_create = new VideoCreate(
-            'Burak Yeter',
-            'Tuesday ft. Danelle Sandoval',
-            'Y1_VsyLAGuk'
+            $artist_name,
+            $video_name,
+            $youtube_id
         );
 
-        $video_factory->create($video_create);
-
+        (new VideoFactory())->create($video_create);
 
         $response = $this->client->post(
             'api/tags',
             [
                 'json' => [
-                    'video_id' => 1,
-                    'name' => 'tag',
+                    'youtube_id' => $youtube_id,
+                    'tag_name' => $tag_name,
                     'start' => 0,
                     'stop' => 25
                 ]
             ]
         );
+
         return $response;
     }
 }

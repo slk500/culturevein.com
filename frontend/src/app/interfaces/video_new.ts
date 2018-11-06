@@ -1,5 +1,5 @@
 export interface IVideoNew {
     youtube_id: string,
     artist_slug: number,
-    name: string,
+    video_name: string,
 }

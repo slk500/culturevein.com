@@ -21,7 +21,6 @@ class VideoRepositoryTest extends TestCase
     public function setUp()
     {
         $this->video_repository = new VideoRepository();
-        (new DatabaseHelper())->truncate_all_tables();
     }
 
     /**
@@ -29,35 +28,17 @@ class VideoRepositoryTest extends TestCase
      */
     public function create_video()
     {
-        $video_id = $this->video_repository->create(
-            'Yes Sir, I Can Boogie',
-            'VSQjx79dR8s');
+        $youtube_id = 'VSQjx79dR8s';
+        $video_name =  'Yes Sir, I Can Boogie';
 
-        $this->assertSame(1, $video_id);
-    }
-
-    /**
-     * @test
-     */
-    public function find_video()
-    {
         $this->video_repository->create(
-            'Yes Sir, I Can Boogie',
-            'VSQjx79dR8s');
+            $video_name,
+            $youtube_id
+        );
 
-        $video = $this->video_repository->find('VSQjx79dR8s');
+        $video = $this->video_repository->find($youtube_id);
 
-        $expected = [
-            [
-                'video_name' => 'Yes Sir, I Can Boogie',
-                'release_date' => null,
-                'youtube_id' => 'VSQjx79dR8s',
-                'duration' => 272,
-                'artist_name' => null,
-                'video_id' => 1,
-            ]
-        ];
-
-        $this->assertSame($expected, $video);
+        $this->assertSame($video_name, $video->video_name);
+        $this->assertSame($youtube_id, $video->video_youtube_id);
     }
 }

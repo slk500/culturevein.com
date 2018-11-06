@@ -9,7 +9,7 @@
         <tr *ngFor="let tag of tagsTop; let i=index">
 
             <td class='text-center'> {{ i+1 }} </td>
-            <td><a [routerLink]="['/tags', tag.slug]"> {{ tag.name }} </a></td>
+            <td><a [routerLink]="['/tags', tag.tag_slug_id]"> {{ tag.tag_name }} </a></td>
             <td>{{ tag.count }}</td>
         </tr>
     </table>
@@ -26,7 +26,7 @@
         <tr *ngFor="let video of videosTopTags; let i=index">
 
             <td class='text-center'> {{ i+1 }} </td>
-            <td><a [routerLink]="['/videos', video.youtube_id]"> {{ video.artist_name }} - {{ video.name }}  </a></td>
+            <td><a [routerLink]="['/videos', video.video_youtube_id]"> {{ video.artist_name }} - {{ video.video_name }}  </a></td>
             <td> {{ video.count }}</td>
 
         </tr>
@@ -44,8 +44,8 @@
         <tr *ngFor="let tag of tagsNew; let i=index">
 
         <td class='text-center'> {{ i+1 }} </td>
-        <td><a [routerLink]="['/tags', tag.slug]"> {{ tag.name }} </a></td>
-        <td><a [routerLink]="['/videos', tag.youtube_id]"> {{ tag.artist_name }} - {{ tag.video_name }}  </a></td>
+        <td><a [routerLink]="['/tags', tag.tag_slug_id]"> {{ tag.tag_name }} </a></td>
+        <td><a [routerLink]="['/videos', tag.video_youtube_id]"> {{ tag.artist_name }} - {{ tag.video_name }}  </a></td>
 
         </tr>
 </table>
@@ -63,7 +63,7 @@
         <tr *ngFor="let video of videosLastAdded; let i=index">
 
             <td class='text-center'> {{ i+1 }} </td>
-            <td><a [routerLink]="['/videos', video.youtube_id]"> {{ video.artist_name }} - {{ video.name }}  </a></td>
+            <td><a [routerLink]="['/videos', video.video_youtube_id]"> {{ video.artist_name }} - {{ video.video_name }}  </a></td>
 
         </tr>
     </table>

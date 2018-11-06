@@ -25,22 +25,15 @@ class ArtistRepositoryTest extends TestCase
         $this->artist_repository = new ArtistRepository();
     }
 
-    public function create()
-    {
-        $artist_id = $this->artist_repository->create('Kazik Staszewski');
-        $this->assertSame(1, $artist_id);
-    }
-
     /**
      * @test
      */
-    public function find_id_by_name()
+    public function create_and_find()
     {
-        $artist_id = $this->artist_repository->create('Kazik Staszewski');
+        $this->artist_repository->create('Kazik Staszewski', 'kazik-staszewski');
 
-        $artistRepository = new ArtistRepository();
-        $found_id = $artistRepository->find('Kazik Staszewski');
+        $artist_slug_id = $this->artist_repository->find_slug_id_by_name('Kazik Staszewski');
 
-        $this->assertSame($artist_id, $found_id);
+        $this->assertSame('kazik-staszewski', $artist_slug_id);
     }
 }

@@ -18,7 +18,7 @@ export class VideoComponent implements OnInit {
     ngOnInit() {
         this._videoService.getVideos()
             .subscribe(data => this.videos = data,
-                error => this.errorMsg = error)
+                error => this.errorMsg = error);
         this.inputSearch.cast.subscribe(input => this.searchText = input);
     }
 

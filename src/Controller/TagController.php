@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Controller;
 
 use Controller\Base\BaseController;
+use DTO\VideoTagCreate;
 use Factory\VideoTagFactory;
 use Repository\TagRepository;
 use Repository\VideoTagRepository;
@@ -24,16 +25,25 @@ class TagController extends BaseController
         $this->video_tag_factory = new VideoTagFactory();
     }
 
-    public function create(object $data)
+    public function create(object $data): void
     {
-        $this->video_tag_factory->create($data);
+        $video_tag_create = new VideoTagCreate(
+            $data->youtube_id,
+            $data->tag_name,
+            $data->start,
+            $data->stop
+        );
 
-        $this->response_created($data);
+        $this->video_tag_factory->create($video_tag_create);
+
+        $this->response_created();
     }
 
-    public function clear_time(object $data)
+    public function clear_time(object $data): void
     {
         $this->video_tag_repository->clear_time($data->video_tag_id);
+
+        $this->response();
     }
 
     public function list()

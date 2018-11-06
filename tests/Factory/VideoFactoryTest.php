@@ -7,10 +7,18 @@ namespace Tests\Factory;
 use Factory\VideoFactory;
 use DTO\VideoCreate;
 use PHPUnit\Framework\TestCase;
+use Repository\ArtistRepository;
+use Repository\VideoRepository;
+use Repository\VideoTagRepository;
 use Service\DatabaseHelper;
 
 class VideoFactoryTest extends TestCase
 {
+    /**
+     * @var VideoRepository
+     */
+    private $video_repository;
+
     public static function setUpBeforeClass()
     {
         (new DatabaseHelper())->truncate_all_tables();
@@ -18,43 +26,35 @@ class VideoFactoryTest extends TestCase
 
     public function setUp()
     {
-        $this->markTestSkipped('Check in database');
-
         (new DatabaseHelper())->truncate_tables([
             'artist',
             'video'
         ]);
+
+        $this->video_repository = new VideoRepository();
     }
 
     /**
      * @test
      */
-    public function create()
+    public function create_and_find()
     {
-        $video_factory = new VideoFactory();
+        $artist_name = 'Burak Yeter';
+        $video_name = 'Tuesday ft. Danelle Sandoval';
+        $youtube_id = 'Y1_VsyLAGuk';
 
         $video_create = new VideoCreate(
-            'Burak Yeter',
-            'Tuesday ft. Danelle Sandoval',
-            'Y1_VsyLAGuk'
+            $artist_name,
+            $video_name,
+            $youtube_id
         );
 
-        $video_factory->create($video_create);
-    }
+        (new VideoFactory())->create($video_create);
 
-    /**
-     * @test
-     */
-    public function create_try_without_artist_name()
-    {
-        $video_factory = new VideoFactory();
+        $video = $this->video_repository->find($youtube_id);
 
-        $video_create = new VideoCreate(
-            null,
-            'Tuesday ft. Danelle Sandoval',
-            'Y1_VsyLAGuk'
-        );
-
-        $video_factory->create($video_create);
+        $this->assertSame($video_name, $video->video_name);
+        $this->assertSame($artist_name, $video->artist_name);
+        $this->assertSame($youtube_id, $video->video_youtube_id);
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Factory;
 
+use DTO\VideoTagCreate;
 use Repository\TagRepository;
 use Repository\VideoTagRepository;
 
@@ -18,18 +19,14 @@ class VideoTagFactory
         $this->video_tag_repository = new VideoTagRepository();
     }
 
-    public function create(object $data)
+    public function create(VideoTagCreate $video_tag_create): void
     {
-        $tag_id = $this->tag_repository->find_id_by_name($data->name);
+        $tag_slug_id = $this->tag_repository->find_slug_id_by_name($video_tag_create->tag_name);
 
-        if (!$tag_id) {
-            $tag_id = $this->tag_repository->create($data->name);
+        if (!$tag_slug_id) {
+            $this->tag_repository->create($video_tag_create->tag_name, $video_tag_create->tag_slug_id);
         }
 
-        $data->tag_id = $tag_id;
-
-        $this->video_tag_repository->create($data);
-
-        return $data;
+        $this->video_tag_repository->create($video_tag_create);
     }
 }

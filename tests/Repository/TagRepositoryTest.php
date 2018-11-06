@@ -21,36 +21,20 @@ class TagRepositoryTest extends TestCase
     public function setUp()
     {
         $this->tag_repository = new TagRepository();
-        (new DatabaseHelper())->truncate_tables([
-            'tag'
-        ]);
     }
 
     /**
      * @test
      */
-    public function create_tag()
+    public function create_and_find()
     {
         $tag_name = 'chess';
+        $tag_slug_id = 'chess';
 
-        $tag_id = $this->tag_repository->create($tag_name);
+        $this->tag_repository->create($tag_name, $tag_slug_id);
 
-        $this->assertSame(1, $tag_id);
+        $tag_slug_id_from_satabase = $this->tag_repository->find_slug_id_by_name($tag_name);
+
+        $this->assertSame($tag_slug_id, $tag_slug_id_from_satabase);
     }
-
-    /**
-     * @test
-     */
-    public function find_id_by_name()
-    {
-        $tag_name = 'tag';
-
-        $tag_id = $this->tag_repository->create($tag_name);
-
-        $found_id = $this->tag_repository->find_id_by_name($tag_name);
-
-        $this->assertSame($tag_id, $found_id);
-    }
-
-
 }

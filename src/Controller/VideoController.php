@@ -70,7 +70,7 @@ class VideoController extends BaseController
 
     public function tags(string $youtube_id)
     {
-        $tags = $this->video_tag_repository->find_by_video($youtube_id);
+        $tags = $this->video_tag_repository->find_all_for_video($youtube_id);
         (new VideoTagNormalizer())->normalize($tags);
 
         $this->response($tags);

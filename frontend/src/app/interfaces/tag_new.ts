@@ -1,9 +1,10 @@
 export interface INewtTag {
-    youtube_id: string,
-    title: string,
-    artist_name: string,
-    name: string,
-    slug: string,
+    artist_name: string
     artist_slug: string
-    create_time: string
+    created_at: string
+    tag_name: string
+    tag_slug_id: string
+    video_name: string
+    video_youtube_id: string
 }
+

@@ -19,24 +19,24 @@ final class TagRepository
         $this->database = new Database();
     }
 
-    public function find_id_by_name(string $name)
+    public function find_slug_id_by_name(string $name): ?string
     {
-        $stmt = $this->database->mysqli->prepare("SELECT tag_id FROM tag WHERE name = ?");
+        $stmt = $this->database->mysqli->prepare("SELECT tag_slug_id FROM tag WHERE name = ?");
         $stmt->bind_param("s", $name);
         $stmt->execute();
-        $stmt->bind_result($tag_id);
+        $stmt->bind_result($tag_slug_id);
         $stmt->fetch();
 
-        return $tag_id;
+        return $tag_slug_id;
     }
 
     public function find_all():?array
     {
-        $query = "SELECT DISTINCT(tag.name), tag.slug, tag.tag_id as id
-                  FROM tag
-                  JOIN video_tag using (tag_id)
-                  JOIN video using (video_id)
-                        ORDER BY name";
+        $query = "SELECT tag.name as tag_name, tag.tag_slug_id
+                  FROM video_tag
+                  LEFT JOIN tag USING (tag_slug_id)
+                  GROUP BY tag_name
+                  ORDER BY tag_name";
 
         $data = $this->database->fetch($query);
 
@@ -45,11 +45,11 @@ final class TagRepository
 
     public function top()
     {
-        $query = "SELECT tag.name, count(distinct video.video_id) AS count, tag.slug
+        $query = "SELECT tag.name as tag_name, count(distinct video.video_youtube_id) AS count, tag.tag_slug_id
                 FROM tag
-                JOIN video_tag USING (tag_id)
-                JOIN video USING (video_id) 
-                GROUP BY tag.name, tag.slug
+                JOIN video_tag USING (tag_slug_id)
+                JOIN video USING (video_youtube_id) 
+                GROUP BY tag.name, tag.tag_slug_id
                 ORDER BY `count` DESC
                 LIMIT 10";
 
@@ -60,12 +60,12 @@ final class TagRepository
 
     public function newest_ten()
     {
-        $query = "SELECT video.youtube_id, tag.name, artist.name as artist_name, video.name AS video_name,
-                tag.slug, artist.slug as artist_slug, video_tag.created_at
+        $query = "SELECT video.video_youtube_id, tag.name as tag_name, artist.name as artist_name, video.name AS video_name,
+                tag.tag_slug_id, artist.artist_slug_id as artist_slug, video_tag.created_at
                 FROM video_tag
-                JOIN video USING (video_id) 
-                JOIN tag USING (tag_id)
-                LEFT JOIN artist_video USING (video_id)
+                JOIN video USING (video_youtube_id) 
+                JOIN tag USING (tag_slug_id)
+                LEFT JOIN artist_video USING (video_youtube_id)
                 LEFT JOIN artist USING (artist_id) 
                 ORDER BY video_tag.created_at DESC
                 LIMIT 10";
@@ -77,16 +77,15 @@ final class TagRepository
 
     public function find(string $slug)
     {
-
-        $stmt = $this->database->mysqli->prepare("SELECT video.youtube_id, artist.name as artist_name, video.name as video_name,
+        $stmt = $this->database->mysqli->prepare("SELECT video.video_youtube_id, artist.name as artist_name, video.name as video_name,
                                         clean_time(SUM(video_tag.stop)-SUM(video_tag.start)) AS expose,
-                                        tag.name, tag.slug
+                                        tag.name, tag.tag_slug_id
                                         FROM video_tag 
-                                        LEFT JOIN video USING (video_id)
-                                        LEFT JOIN tag USING (tag_id)
-                                        LEFT JOIN artist_video USING (video_id)
+                                        LEFT JOIN video USING (video_youtube_id)
+                                        LEFT JOIN tag USING (tag_slug_id)
+                                        LEFT JOIN artist_video USING (video_youtube_id)
                                         LEFT JOIN artist USING (artist_id)
-                                        WHERE tag.slug = ?
+                                        WHERE tag.tag_slug_id = ?
                                         GROUP BY video_name
                                         ORDER BY expose DESC
                                         ");
@@ -116,14 +115,10 @@ final class TagRepository
 //        "SELECT count(tag_id) FROM tag_user_subscribe WHERE tag_id = ?";
 //    }
 
-    public function create(string $tag_name): int
+    public function create(string $tag_name, string $tag_slug_id): void
     {
-        $slug = (new Slugify())->slugify($tag_name);
-
-        $stmt = $this->database->mysqli->prepare("INSERT INTO tag (name, slug) VALUES (?, ?)");
-        $stmt->bind_param("ss", $tag_name, $slug);
+        $stmt = $this->database->mysqli->prepare("INSERT INTO tag (name, tag_slug_id) VALUES (?, ?)");
+        $stmt->bind_param("ss", $tag_name, $tag_slug_id);
         $stmt->execute();
-
-        return $this->database->mysqli->insert_id;
     }
 }

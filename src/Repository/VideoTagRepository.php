@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Repository;
 
+use DTO\VideoTagCreate;
 use Repository\Base\Database;
 
 final class VideoTagRepository
@@ -18,25 +19,29 @@ final class VideoTagRepository
         $this->database = new Database();
     }
 
-    public function create(object $data)
+    public function create(VideoTagCreate $video_tag_create): void
     {
-        $stmt = $this->database->mysqli->prepare("INSERT INTO video_tag (tag_id, video_id, start, stop) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("iiii", $data->tag_id,$data->video_id, $data->start, $data->stop);
+        $stmt = $this->database->mysqli->prepare("INSERT INTO video_tag (video_youtube_id, tag_slug_id, start, stop) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("ssii",
+            $video_tag_create->video_youtube_id,
+             $video_tag_create->tag_slug_id,
+                    $video_tag_create->start,
+                    $video_tag_create->stop
+        );
         $stmt->execute();
 
-        return $this->database->mysqli->insert_id;
     }
 
-    public function find_by_video(string $youtubeId)
+    public function find_all_for_video(string $youtubeId): array
     {
-        $stmt = $this->database->mysqli->prepare("SELECT tag.name,
+        $stmt = $this->database->mysqli->prepare("SELECT tag.name as tag_name, video_youtube_id,
         GROUP_CONCAT(video_tag.start,'-',video_tag.stop) as times,
-        tag.slug, tvc.video_id is not null as complete
+        tag.tag_slug_id, tvc.video_youtube_id is not null as complete
         FROM video_tag
-        JOIN tag USING (tag_id)
-        JOIN video USING (video_id)
-        LEFT JOIN video_tag_complete tvc on tag.tag_id = tvc.tag_id and tvc.video_id = video.video_id
-        WHERE video.youtube_id = ?
+        JOIN tag USING (tag_slug_id)
+        JOIN video USING (video_youtube_id)
+        LEFT JOIN video_tag_complete tvc USING (video_youtube_id)
+        WHERE video.video_youtube_id = ?
         GROUP BY tag.name
         ORDER BY tag.name, video_tag.start");
 
@@ -54,7 +59,7 @@ final class VideoTagRepository
     public function clear_time(int $video_tag_id)
     {
         $stmt = $this->database->mysqli->prepare(
-            "UPDATE video_tag SET start = null, stop = null WHERE tag_video_id = ?"
+            "UPDATE video_tag SET start = null, stop = null WHERE video_tag_id = ?"
         );
 
         $stmt->bind_param("i", $video_tag_id);

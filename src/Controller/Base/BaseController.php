@@ -6,7 +6,7 @@ namespace Controller\Base;
 
 abstract class BaseController
 {
-    protected function response($data): void
+    protected function response($data = null): void
     {
         http_response_code(200);
         echo json_encode($data);

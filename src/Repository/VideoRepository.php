@@ -4,16 +4,12 @@ declare(strict_types=1);
 
 namespace Repository;
 
+use Model\Video;
 use Repository\Base\Database;
 use Service\YouTubeService;
 
 final class VideoRepository
 {
-    /**
-     * @var ArtistRepository
-     */
-    private $artist_repository;
-
     /**
      * @var Database
      */
@@ -27,45 +23,39 @@ final class VideoRepository
 
     public function __construct()
     {
-        $this->artist_repository = new ArtistRepository();
         $this->youtube = new YouTubeService();
         $this->database = new Database();
     }
 
-    public function create(string $video_name, string $youtube_id): int
+    public function create(string $video_name, string $youtube_id): void
     {
+        //todo have to move out
         $duration = $this->youtube->get_duration($youtube_id);
 
-        $stmt = $this->database->mysqli->prepare("INSERT INTO video (youtube_id, name, duration) VALUES (?,?,?)");
+        $stmt = $this->database->mysqli->prepare("INSERT INTO video (video_youtube_id, name, duration) VALUES (?,?,?)");
         $stmt->bind_param("ssi", $youtube_id, $video_name, $duration);
         $stmt->execute();
-
-        $video_id = $this->database->mysqli->insert_id;
-
-        return $video_id;
     }
 
-    public function assign_to_artist(int $artist_id, int $video_id)
+    public function find(string $video_youtube_id): ?Video
     {
-        $stmt = $this->database->mysqli->prepare("INSERT INTO artist_video (artist_id, video_id) VALUES (?,?)");
-        $stmt->bind_param("ii", $artist_id, $video_id);
-        $stmt->execute();
-    }
-
-    public function find(string $youTubeId)
-    {
-        $stmt = $this->database->mysqli->prepare( "SELECT video.name as video_name, video.release_date,video.
-            youtube_id, video.duration, artist.name as artist_name, video.video_id
+        $stmt = $this->database->mysqli->prepare( "
+            SELECT 
+            video.name as video_name, 
+            video.release_date, 
+            video.video_youtube_id, 
+            video.duration, 
+            artist.name as artist_name
             FROM video
-            LEFT JOIN artist_video USING (video_id)
-            LEFT JOIN artist USING (artist_id)
-            WHERE video.youtube_id = ?");
+            LEFT JOIN artist_video USING (video_youtube_id)
+            LEFT JOIN artist USING (artist_slug_id)
+            WHERE video.video_youtube_id = ?");
 
-        $stmt->bind_param("s", $youTubeId);
+        $stmt->bind_param("s", $video_youtube_id);
         $stmt->execute();
 
         $result = $stmt->get_result();
-        $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        $data = mysqli_fetch_object($result, Video::class);
         $stmt->free_result();
         $stmt->close();
 
@@ -74,9 +64,9 @@ final class VideoRepository
 
     public function find_all()
     {
-        $query = "SELECT youtube_id, artist.name as artist_name, video.name
+        $query = "SELECT video_youtube_id, artist.name as artist_name, video.name as video_name
                 FROM video
-                LEFT JOIN artist_video USING (video_id)
+                LEFT JOIN artist_video USING (video_youtube_id)
                 LEFT JOIN artist USING (artist_id)
                 ORDER BY artist_name";
 
@@ -87,14 +77,14 @@ final class VideoRepository
 
     public function with_highest_number_of_tags()
     {
-        $query = "SELECT artist.name as artist_name, video.name, count(DISTINCT tag.tag_id) AS count,
-              video.youtube_id
+        $query = "SELECT artist.name as artist_name, video.name as video_name, count(DISTINCT tag.tag_slug_id) AS count,
+              video.video_youtube_id
               FROM tag
-              JOIN video_tag USING (tag_id)
-              JOIN video USING (video_id)
-              LEFT JOIN artist_video USING (video_id)
+              JOIN video_tag USING (tag_slug_id)
+              JOIN video USING (video_youtube_id)
+              LEFT JOIN artist_video USING (video_youtube_id)
               LEFT JOIN artist USING (artist_id)
-              GROUP BY video.youtube_id
+              GROUP BY video.video_youtube_id
               ORDER BY `count` DESC
               LIMIT 10";
 
@@ -105,10 +95,10 @@ final class VideoRepository
 
     public function newest_ten()
     {
-        $query = "SELECT video.youtube_id,
-                artist.name as artist_name, video.name
+        $query = "SELECT video.video_youtube_id,
+                artist.name as artist_name, video.name as video_name
                 FROM video
-                LEFT JOIN artist_video USING (video_id)
+                LEFT JOIN artist_video USING (video_youtube_id)
                 LEFT JOIN artist USING (artist_id)
                 ORDER BY video.created_at DESC
                 LIMIT 10";

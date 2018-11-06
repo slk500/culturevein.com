@@ -108,7 +108,7 @@ final class DatabaseHelper
 
         $result = [];
         foreach ($tablesNames as $tableName) {
-            $result [] = $tableName['Tables_in_culture'];
+            $result [] = $tableName['Tables_in_test']; //todo chagne name
         }
 
         return $result;

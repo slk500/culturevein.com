@@ -19,27 +19,22 @@ final class ArtistRepository
         $this->database = new Database();
     }
 
-    public function create(string $artist_name): int
+    public function create(string $artist_name, string $artist_slug_id)
     {
-        $slug = (new Slugify())->slugify($artist_name);
-
-        $stmt = $this->database->mysqli->prepare("INSERT INTO artist (name, slug) VALUES (?,?)");
-        $stmt->bind_param("ss", $artist_name, $slug);
+        $stmt = $this->database->mysqli->prepare("INSERT INTO artist (name, artist_slug_id) VALUES (?,?)");
+        $stmt->bind_param("ss", $artist_name, $artist_slug_id);
         $stmt->execute();
-
-        return $this->database->mysqli
-            ->insert_id;
     }
 
-    public function find(string $artist_name)
+    public function find_slug_id_by_name(string $artist_name)
     {
-        $stmt = $this->database->mysqli->prepare("SELECT artist_id FROM artist WHERE name = ?");
+        $stmt = $this->database->mysqli->prepare("SELECT artist_slug_id FROM artist WHERE name = ?");
         $stmt->bind_param("s", $artist_name);
         $stmt->execute();
-        $stmt->bind_result($artist_id);
+        $stmt->bind_result($artist_slug_id);
         $stmt->fetch();
 
-        return  $artist_id;
+        return  $artist_slug_id;
     }
 
     public function find_all(): array

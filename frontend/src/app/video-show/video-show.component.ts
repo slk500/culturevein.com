@@ -87,6 +87,15 @@ export class VideoShowComponent implements OnInit {
         };
     }
 
+    public deleteTag(videoId: string, slug : string){
+        console.log('deleteTag ' + slug + ' ' + videoId);
+    }
+
+    public deleteVideoTag(){
+        console.log('deleteVideoTag');
+    }
+
+
     public changed(e: any): void {
         this.isSelect2ChangedValue = true;
         this.selectedValue = e.value;
@@ -124,7 +133,7 @@ export class VideoShowComponent implements OnInit {
             stop = this.rangeValues[1];
         }
 
-        this._tagService.addVideoTag(this.videoInfo.video_id, start, stop, this.selectedValue).subscribe((data: any) => {
+        this._tagService.addVideoTag(this.videoInfo.video_youtube_id, start, stop, this.selectedValue).subscribe((data: any) => {
             this._tagService.getVideoTags(this.youtubeId)
                 .subscribe(data => this.videoTags = data,
                     error => this.errorMsg = error);
