@@ -15,7 +15,7 @@
             <ul class="tag">
                 <li *ngFor="let tag of videoTags"
                     [ngClass]="tagStyle(tag)">
-                    <a [routerLink]="['/tags', tag.slug]" style="color:white">{{ tag.name }} </a>
+                    <a [routerLink]="['/tags', tag.slug]" style="color:white">{{ tag.tag_name }} </a>
                     <span (click)="deleteTag(tag.slug)" class="glyphicon glyphicon-remove-circle button"></span>
                     <ol>
                         <li *ngFor="let time of tag.times">
@@ -29,7 +29,7 @@
             <div>
                 <select2  [cssImport]=true [options]="select2Options" [width]="'50%'" (valueChanged)="changed($event)" [value]="selectedValue" >
                     <option></option>
-                    <option *ngFor="let tag of tags">{{ tag.name }}</option>
+                    <option *ngFor="let tag of tags">{{ tag.tag_name }}</option>
                 </select2>
             </div>
         <br>

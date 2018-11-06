@@ -192,8 +192,11 @@ DROP TABLE IF EXISTS `video_tag_complete`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `video_tag_complete` (
   `video_youtube_id` varchar(11) NOT NULL DEFAULT '',
-  `tag_id` int(11) NOT NULL,
-  PRIMARY KEY (`tag_id`,`video_youtube_id`)
+  `tag_slug_id` varchar(255) NOT NULL,
+  PRIMARY KEY (`video_youtube_id`,`tag_slug_id`),
+  KEY `video_tag_complete_tag_tag_slug_id_fk` (`tag_slug_id`),
+  CONSTRAINT `video_tag_complete_tag_tag_slug_id_fk` FOREIGN KEY (`tag_slug_id`) REFERENCES `tag` (`tag_slug_id`),
+  CONSTRAINT `video_tag_complete_video_video_youtube_id_fk` FOREIGN KEY (`video_youtube_id`) REFERENCES `video` (`video_youtube_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -203,7 +206,7 @@ CREATE TABLE `video_tag_complete` (
 
 LOCK TABLES `video_tag_complete` WRITE;
 /*!40000 ALTER TABLE `video_tag_complete` DISABLE KEYS */;
-INSERT INTO `video_tag_complete` VALUES ('IeMvUlxXyz8',6),('3K0RzZGpyds',17),('Evug3WXIdak',17),('oIWV3WKpC2U',17),('7-tNUur2YoU',229),('7-tNUur2YoU',265),('xAh6fk0KD1c',266),('D0LyJqzaT2Q',278),('xAh6fk0KD1c',287),('bxWxXncl53U',340),('CduA0TULnow',347),('bxWxXncl53U',356),('HcXNPI-IPPM',434),('7-tNUur2YoU',443),('ymNFyxvIdaM',457),('RSdKmX2BH7o',462),('bxWxXncl53U',584),('Qc9c12q3mrc',610),('ZTEfInwgxVs',612),('hyeYUDqeadQ',627),('hyeYUDqeadQ',628),('hyeYUDqeadQ',629),('hyeYUDqeadQ',642),('hyeYUDqeadQ',643),('HcXNPI-IPPM',650),('qSMnrAJpEeo',650),('VASywEuqFd8',651),('ZAufONAig6w',655),('qrO4YZeyl0I',656),('bxWxXncl53U',657),('aAVRd5q8Ltg',659),('aAVRd5q8Ltg',660),('VASywEuqFd8',670),('ZAufONAig6w',713),('D0LyJqzaT2Q',714),('D0LyJqzaT2Q',716),('P5mtclwloEQ',735),('CJinWua98NA',767);
+INSERT INTO `video_tag_complete` VALUES ('3K0RzZGpyds','chess'),('7-tNUur2YoU','excitebike'),('7-tNUur2YoU','q-bert'),('7-tNUur2YoU','sonic-the-hedgehog'),('aAVRd5q8Ltg','popeye'),('aAVRd5q8Ltg','spider-man'),('bxWxXncl53U','basketball'),('bxWxXncl53U','bike'),('bxWxXncl53U','flute'),('bxWxXncl53U','hairdresser'),('CduA0TULnow','space'),('CJinWua98NA','mini'),('D0LyJqzaT2Q','angry-birds'),('D0LyJqzaT2Q','duke-nukem'),('D0LyJqzaT2Q','michael-j-fox'),('Evug3WXIdak','chess'),('HcXNPI-IPPM','bmw'),('HcXNPI-IPPM','subaru'),('hyeYUDqeadQ','hammurabi'),('hyeYUDqeadQ','hans-christian-andersen'),('hyeYUDqeadQ','j-r-r-tolkien'),('hyeYUDqeadQ','kamasutra'),('hyeYUDqeadQ','star-wars'),('IeMvUlxXyz8','bodycount'),('oIWV3WKpC2U','chess'),('P5mtclwloEQ','catwoman'),('Qc9c12q3mrc','hijack'),('qrO4YZeyl0I','nintendo-wii'),('qSMnrAJpEeo','subaru'),('RSdKmX2BH7o','star-trek'),('VASywEuqFd8','pikachu'),('VASywEuqFd8','suicide'),('xAh6fk0KD1c','dig-dug'),('xAh6fk0KD1c','donkey-kong'),('ymNFyxvIdaM','sony-playstation'),('ZAufONAig6w','fidget-spinner'),('ZAufONAig6w','mercedes'),('ZTEfInwgxVs','lamborghini');
 /*!40000 ALTER TABLE `video_tag_complete` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -249,4 +252,4 @@ ALTER DATABASE `test` CHARACTER SET utf8 COLLATE utf8_general_ci ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-05 22:41:01
+-- Dump completed on 2018-11-06 21:47:49

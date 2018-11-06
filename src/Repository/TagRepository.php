@@ -66,7 +66,7 @@ final class TagRepository
                 JOIN video USING (video_youtube_id) 
                 JOIN tag USING (tag_slug_id)
                 LEFT JOIN artist_video USING (video_youtube_id)
-                LEFT JOIN artist USING (artist_id) 
+                LEFT JOIN artist USING (artist_slug_id) 
                 ORDER BY video_tag.created_at DESC
                 LIMIT 10";
 
@@ -84,7 +84,7 @@ final class TagRepository
                                         LEFT JOIN video USING (video_youtube_id)
                                         LEFT JOIN tag USING (tag_slug_id)
                                         LEFT JOIN artist_video USING (video_youtube_id)
-                                        LEFT JOIN artist USING (artist_id)
+                                        LEFT JOIN artist USING (artist_slug_id)
                                         WHERE tag.tag_slug_id = ?
                                         GROUP BY video_name
                                         ORDER BY expose DESC

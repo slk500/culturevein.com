@@ -51,7 +51,7 @@ class VideoController extends BaseController
     {
         $video = $this->video_repository->find($youtube_id);
 
-        $this->response($video);
+        $this->response([$video]);
     }
 
     public function highest_number_of_tags()

@@ -34,16 +34,21 @@ final class VideoTagRepository
 
     public function find_all_for_video(string $youtubeId): array
     {
-        $stmt = $this->database->mysqli->prepare("SELECT tag.name as tag_name, video_youtube_id,
-        GROUP_CONCAT(video_tag.start,'-',video_tag.stop) as times,
-        tag.tag_slug_id, tvc.video_youtube_id is not null as complete
-        FROM video_tag
-        JOIN tag USING (tag_slug_id)
-        JOIN video USING (video_youtube_id)
-        LEFT JOIN video_tag_complete tvc USING (video_youtube_id)
+        $stmt = $this->database->mysqli->prepare("
+        SELECT 
+        tag.name as tag_name, 
+        vt.video_youtube_id,
+        GROUP_CONCAT(vt.start,'-',vt.stop) as times,
+        vt.tag_slug_id,
+        tvc.video_youtube_id is not null as complete
+        FROM video_tag vt
+        LEFT JOIN tag USING (tag_slug_id)
+        LEFT JOIN video USING (video_youtube_id)
+        LEFT JOIN video_tag_complete tvc USING (tag_slug_id)
         WHERE video.video_youtube_id = ?
-        GROUP BY tag.name
-        ORDER BY tag.name, video_tag.start");
+        GROUP BY vt.tag_slug_id
+        ORDER BY tag.name, vt.start
+        ");
 
         $stmt->bind_param("s", $youtubeId);
         $stmt->execute();

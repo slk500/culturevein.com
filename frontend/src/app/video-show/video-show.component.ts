@@ -85,6 +85,8 @@ export class VideoShowComponent implements OnInit {
             placeholder: 'Select TAG or type a new one',
             tags: true
         };
+
+        console.log(this.videoInfo);
     }
 
     public deleteTag(videoId: string, slug : string){

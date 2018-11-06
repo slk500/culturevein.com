@@ -67,7 +67,7 @@ final class VideoRepository
         $query = "SELECT video_youtube_id, artist.name as artist_name, video.name as video_name
                 FROM video
                 LEFT JOIN artist_video USING (video_youtube_id)
-                LEFT JOIN artist USING (artist_id)
+                LEFT JOIN artist USING (artist_slug_id)
                 ORDER BY artist_name";
 
         $data = $this->database->fetch($query);
@@ -83,7 +83,7 @@ final class VideoRepository
               JOIN video_tag USING (tag_slug_id)
               JOIN video USING (video_youtube_id)
               LEFT JOIN artist_video USING (video_youtube_id)
-              LEFT JOIN artist USING (artist_id)
+              LEFT JOIN artist USING (artist_slug_id)
               GROUP BY video.video_youtube_id
               ORDER BY `count` DESC
               LIMIT 10";
@@ -99,7 +99,7 @@ final class VideoRepository
                 artist.name as artist_name, video.name as video_name
                 FROM video
                 LEFT JOIN artist_video USING (video_youtube_id)
-                LEFT JOIN artist USING (artist_id)
+                LEFT JOIN artist USING (artist_slug_id)
                 ORDER BY video.created_at DESC
                 LIMIT 10";
 
