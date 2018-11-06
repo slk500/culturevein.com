@@ -23,18 +23,20 @@ class VideoTagNormalizerTest extends TestCase
      */
     public function convert_times()
     {
-        $input = '314-357,386-408';
+        $input = '314-357-103,386-408-99';
 
         $output = $this->video_tag_normalizer->convert_times($input);
 
         $expectedOutput = [
             [
                 'start' => 314,
-                'stop' => 357
+                'stop' => 357,
+                'video_tag_id' => 103
             ],
             [
                 'start' => 386,
-                'stop' => 408
+                'stop' => 408,
+                'video_tag_id' => 99
             ]
         ];
 
@@ -49,7 +51,7 @@ class VideoTagNormalizerTest extends TestCase
         $input = [
             [
                 "name" => "BMW",
-                "times" => "314-357,386-408",
+                "times" => "314-357-10,386-408-20",
                 "slug" => "bmw",
                 "complete" => 1
             ]
@@ -61,11 +63,13 @@ class VideoTagNormalizerTest extends TestCase
                 'times' => [
                     [
                         'start' => 314,
-                        'stop' => 357
+                        'stop' => 357,
+                        'video_tag_id' => 10
                     ],
                     [
                         'start' => 386,
-                        'stop' => 408
+                        'stop' => 408,
+                        'video_tag_id' => 20
                     ]
                 ],
                 'slug' => 'bmw',

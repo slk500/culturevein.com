@@ -69,7 +69,7 @@ class VideoTagRepositoryTest extends TestCase
         $video_tag = $this->video_tag_repository->find_all_for_video('Y1_VsyLAGuk');
 
         $this->assertSame('tag', $video_tag[0]['tag_name']);
-        $this->assertSame('0-20', $video_tag[0]['times']);
+        $this->assertSame('0-20-1', $video_tag[0]['times']);
         $this->assertSame('Y1_VsyLAGuk', $video_tag[0]['video_youtube_id']);
     }
 

@@ -26,7 +26,8 @@ final class VideoTagNormalizer
             $r = explode('-', $tmp);
             $output []=  [
                 'start' => (int)$r[0],
-                'stop' => (int)$r[1]
+                'stop' => (int)$r[1],
+                'video_tag_id' => (int)$r[2]
             ];
         }
 

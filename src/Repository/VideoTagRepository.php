@@ -38,7 +38,7 @@ final class VideoTagRepository
         SELECT 
         tag.name as tag_name, 
         vt.video_youtube_id,
-        GROUP_CONCAT(vt.start,'-',vt.stop) as times,
+        GROUP_CONCAT(vt.start,'-',vt.stop , '-', vt.video_tag_id) as times,
         vt.tag_slug_id,
         tvc.video_youtube_id is not null as complete
         FROM video_tag vt

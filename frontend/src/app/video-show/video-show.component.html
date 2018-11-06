@@ -20,7 +20,7 @@
                     <ol>
                         <li *ngFor="let time of tag.times">
                             <a (click)="playPart(time.start, time.stop)">{{ time.start |minuteSeconds }} - {{ time.stop |minuteSeconds }} </a>
-                            <span (click)="deleteVideoTag()" class="glyphicon glyphicon-remove-circle button"></span>
+                            <span (click)="deleteVideoTag(time.video_tag_id)" class="glyphicon glyphicon-remove-circle button"></span>
                         </li>
                     </ol>
                 </li>
