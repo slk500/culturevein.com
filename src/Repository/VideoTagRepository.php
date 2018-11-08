@@ -38,7 +38,8 @@ final class VideoTagRepository
         SELECT 
         tag.name as tag_name, 
         vt.video_youtube_id,
-        GROUP_CONCAT(vt.start,'-',vt.stop , '-', vt.video_tag_id) as times,
+        start,
+        stop,
         vt.tag_slug_id,
         tvc.video_youtube_id is not null as complete
         FROM video_tag vt
@@ -46,7 +47,6 @@ final class VideoTagRepository
         LEFT JOIN video USING (video_youtube_id)
         LEFT JOIN video_tag_complete tvc USING (tag_slug_id)
         WHERE video.video_youtube_id = ?
-        GROUP BY vt.tag_slug_id
         ORDER BY tag.name, vt.start
         ");
 
@@ -73,6 +73,6 @@ final class VideoTagRepository
 
     public function delete($youtube_id, $video_tag_id)
     {
-
+        $this->clear_time($youtube_id, $video_tag_id);
     }
 }

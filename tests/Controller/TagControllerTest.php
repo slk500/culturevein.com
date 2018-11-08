@@ -39,24 +39,24 @@ class TagControllerTest extends TestCase
         $this->assertEquals(201, $response->getStatusCode());
     }
 
-    /**
-     * @test
-     */
-    public function clear_time_of_video_tag()
-    {
-        $this->create_video_tag();
-
-        $response = $this->client->patch(
-            'api/tags',
-            [
-                'json' => [
-                    'video_tag_id' => 1,
-                ]
-            ]
-        );
-
-        $this->assertEquals(200, $response->getStatusCode());
-    }
+//    /**
+//     * @test
+//     */
+//    public function clear_time_of_video_tag()
+//    {
+//        $this->create_video_tag();
+//
+//        $response = $this->client->patch(
+//            'api/tags',
+//            [
+//                'json' => [
+//                    'video_tag_id' => 1,
+//                ]
+//            ]
+//        );
+//
+//        $this->assertEquals(200, $response->getStatusCode());
+//    }
 
     private function create_video_tag(): \Psr\Http\Message\ResponseInterface
     {

@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use DTO\VideoCreate;
-use Factory\VideoFactory;
 use PHPUnit\Framework\TestCase;
 use Repository\TagRepository;
 use Repository\VideoTagRepository;
@@ -17,6 +15,8 @@ class VideoTagRepositoryTest extends TestCase
      * @var VideoTagRepository
      */
     private $video_tag_repository;
+
+    private $youtube_id;
 
     public static function setUpBeforeClass()
     {
@@ -33,6 +33,8 @@ class VideoTagRepositoryTest extends TestCase
         );
 
         $this->video_tag_repository = new VideoTagRepository();
+
+        $this->youtube_id = 'Y1_VsyLAGuk';
     }
 
     /**
@@ -43,63 +45,47 @@ class VideoTagRepositoryTest extends TestCase
         $tag_name = $tag_slug_id = 'tag';
         (new TagRepository())->create($tag_name, $tag_slug_id);
 
-        $youtube_id = 'Y1_VsyLAGuk';
-
         (new VideoBuilder())
-            ->youtube_id($youtube_id)
+            ->youtube_id($this->youtube_id)
             ->artist_name('Burak Yeter')
             ->video_name('Tuesday ft. Danelle Sandoval')
             ->build();
 
 
         (new VideoTagBuilder())
-            ->youtube_id($youtube_id)
+            ->youtube_id($this->youtube_id)
             ->tag_name('tag')
             ->start(0)
             ->stop(20)
             ->build();
 
-        $video_tag = $this->video_tag_repository->find_all_for_video('Y1_VsyLAGuk');
+        $video_tag = $this->video_tag_repository->find_all_for_video($this->youtube_id);
 
         $this->assertSame('tag', $video_tag[0]['tag_name']);
-        $this->assertSame('0-20-1', $video_tag[0]['times']);
-        $this->assertSame('Y1_VsyLAGuk', $video_tag[0]['video_youtube_id']);
+        $this->assertSame(0, $video_tag[0]['start']);
+        $this->assertSame(20, $video_tag[0]['stop']);
+        $this->assertSame($this->youtube_id, $video_tag[0]['video_youtube_id']);
     }
 
     /**
      * @test
+     * @depends create_video_tag
+     * @info it will set times to null not delete it
      */
-    public function delete()
+    public function delete_last_video_tag_with_times()
     {
         $this->create_video_tag();
 
-        $this->video_tag_repository->clear_time(1);
-
-        $video_tag = $this->video_tag_repository->find_all_for_video('Y1_VsyLAGuk');
-
-        $this->assertNull($video_tag[0]['times']);
-    }
-
-    private function create_tag(): void
-    {
-        $tag_name = 'chess';
-        $tag_slug_id = 'chess';
-
-        (new TagRepository())->create($tag_name, $tag_slug_id);
-    }
-
-    private function create_video(): int
-    {
-        $artist_name = 'Burak Yeter';
-        $video_name = 'Tuesday ft. Danelle Sandoval';
-        $youtube_id = 'Y1_VsyLAGuk';
-
-        $video_create = new VideoCreate(
-            $artist_name,
-            $video_name,
-            $youtube_id
+        $this->video_tag_repository->delete(
+            $this->youtube_id,
+            1
         );
 
-        (new VideoFactory())->create($video_create);
+        $video_tag = $this->video_tag_repository->find_all_for_video($this->youtube_id);
+
+        $this->assertSame('tag', $video_tag[0]['tag_name']);
+        $this->assertNull($video_tag[0]['start']);
+        $this->assertNull($video_tag[0]['stop']);
+        $this->assertSame($this->youtube_id, $video_tag[0]['video_youtube_id']);
     }
 }

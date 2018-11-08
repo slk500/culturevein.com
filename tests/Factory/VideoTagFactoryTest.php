@@ -63,7 +63,8 @@ class VideoTagFactoryTest extends TestCase
         $expected = [
             'tag_name' => 'tag',
             'video_youtube_id' => 'Y1_VsyLAGuk',
-            'times' => '0-20-1',
+            'start' => 0,
+            'stop' => 20,
             'tag_slug_id' => 'tag',
             'complete' => 0
         ];
