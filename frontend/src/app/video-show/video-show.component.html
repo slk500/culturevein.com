@@ -15,12 +15,12 @@
             <ul class="tag">
                 <li *ngFor="let tag of videoTags"
                     [ngClass]="tagStyle(tag)">
-                    <a [routerLink]="['/tags', tag.slug]" style="color:white">{{ tag.tag_name }} </a>
+                    <a [routerLink]="['/tags', tag.tag_slug_id]" style="color:white">{{ tag.tag_name }} </a>
                     <span (click)="deleteTag(tag.slug)" class="glyphicon glyphicon-remove-circle button"></span>
                     <ol>
-                        <li *ngFor="let time of tag.times">
-                            <a (click)="playPart(time.start, time.stop)">{{ time.start |minuteSeconds }} - {{ time.stop |minuteSeconds }} </a>
-                            <span (click)="deleteVideoTag(time.video_tag_id)" class="glyphicon glyphicon-remove-circle button"></span>
+                        <li *ngFor="let video_tag of tag.video_tags">
+                            <a (click)="playPart(video_tag.start, video_tag.stop)">{{ video_tag.start |minuteSeconds }} - {{ video_tag.stop |minuteSeconds }} </a>
+                            <span (click)="deleteVideoTag(video_tag.video_tag_id)" class="glyphicon glyphicon-remove-circle button"></span>
                         </li>
                     </ol>
                 </li>

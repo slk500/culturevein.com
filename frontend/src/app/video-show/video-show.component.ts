@@ -173,7 +173,7 @@ export class VideoShowComponent implements OnInit {
 
     tagStyle(tag): string {
 
-        if (tag.times == null) {
+        if (tag.video_tags == null) {
             return 'btn-default';
         }
 
@@ -181,7 +181,7 @@ export class VideoShowComponent implements OnInit {
             return 'btn-success';
         }
 
-        let arr = tag.times[0];
+        let arr = tag.video_tags[0];
         if (arr.start == 0 && arr.stop == this.videoInfo.duration) {
             return 'btn-danger'
         }
