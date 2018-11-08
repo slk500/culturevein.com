@@ -6,42 +6,48 @@ namespace Normalizer;
 
 final class VideoTagNormalizer
 {
+
     //todo to complex -> make it simple
-    public function normalize(array &$array): array
+    public function normalize(array $array): array
     {
-        $last_tag_slug_id = '';
+        $previous_tag_slug_id = '';
+        $previous_key_array = null;
+        $result = [];
 
-        foreach ($array as $key => &$ar) {
+        foreach ($array as $key => $value) {
 
-            if($last_tag_slug_id === $ar['tag_slug_id']){
+            if($previous_tag_slug_id === $value['tag_slug_id']){
 
-                $array[$key -1]['video_tags'] []=
-                    [
-                        'start' => $ar['start'],
-                        'stop' => $ar['stop'],
-                        'video_tag_id' => $ar['video_tag_id']
-                    ];
+                $result[$previous_key_array]['video_tags'][]=[
+                    'start' => $value['start'],
+                    'stop' => $value['stop'],
+                    'video_tag_id' => $value['video_tag_id']
+                ];
 
-                unset($array[$key]);
-
-            }else {
-
-                $ar['video_tags'] []=
-                    [
-                        'start' => $ar['start'],
-                        'stop' => $ar['stop'],
-                        'video_tag_id' => $ar['video_tag_id']
-                    ];
-
-                unset($ar['start']);
-                unset($ar['stop']);
-                unset($ar['video_tag_id']);
-
+                $previous_tag_slug_id = $value['tag_slug_id'];
+                $previous_key_array = $previous_key_array;
             }
 
-            $last_tag_slug_id = $ar['tag_slug_id'];
-        }
+            else {
+                $video_tag = [
+                    'video_youtube_id' => $value['video_youtube_id'],
+                    'tag_name' => $value['tag_name'],
+                    'tag_slug_id' => $value['tag_slug_id'],
+                    'complete' => $value['complete'],
+                    'video_tags' => [
+                        [
+                            'start' => $value['start'],
+                            'stop' => $value['stop'],
+                            'video_tag_id' => $value['video_tag_id']
+                        ],
+                    ]
+                ];
 
-        return array_values($array);
+                $previous_tag_slug_id = $value['tag_slug_id'];
+                $previous_key_array = $key;
+                $result [] = $video_tag;
+            }
+        }
+        return array_values($result); //have to this -> angular will throw error otherwise
     }
 }

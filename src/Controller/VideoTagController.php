@@ -17,10 +17,10 @@ class VideoTagController extends BaseController
         $this->video_tag_repository = new VideoTagRepository();
     }
 
-    public function delete(object $data)
+    public function delete($video_tag_id)
     {
-        $this->video_tag_repository->delete($data->youtube_id, $data->video_tag_id);
+        $this->video_tag_repository->delete((int) $video_tag_id);
 
-        $this->response();
+        $this->response((int) $video_tag_id);
     }
 }

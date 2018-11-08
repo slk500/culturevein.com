@@ -86,17 +86,21 @@ export class VideoShowComponent implements OnInit {
             tags: true
         };
 
-        console.log(this.videoInfo);
     }
 
-    public deleteTag(videoId: string, slug : string){
+    public deleteTag(videoId: string, slug: string) {
         console.log('deleteTag ' + slug + ' ' + videoId);
     }
 
-    public deleteVideoTag(video_tag_id){
-        console.log('deleteVideoTag' + video_tag_id);
-    }
+    public deleteVideoTag(youtube_id, video_tag_id) {
 
+        this._tagService.deleteVideoTag(youtube_id, video_tag_id)
+            .subscribe((data: any) => {
+                this._tagService.getVideoTags(this.youtubeId)
+                    .subscribe(data => this.videoTags = data,
+                        error => this.errorMsg = error);
+            });
+    }
 
     public changed(e: any): void {
         this.isSelect2ChangedValue = true;
@@ -173,7 +177,7 @@ export class VideoShowComponent implements OnInit {
 
     tagStyle(tag): string {
 
-        if (tag.video_tags == null) {
+        if (tag['video_tags'][0]['stop'] == null && tag['video_tags'][0]['start'] == null) {
             return 'btn-default';
         }
 

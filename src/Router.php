@@ -22,7 +22,7 @@ final class Router
             ['route' => '/^\/api\/videos\/(?<youtubeId>[\w-]{11})\/*$/', 'controller' => 'VideoController', 'action' => 'show', 'method' => 'GET'],
             ['route' => '/^\/api\/videos\/(?<youtubeId>[\w-]{11})\/tags\/*$/', 'controller' => 'VideoController', 'action' => 'tags', 'method' => 'GET'],
 
-            ['route' => '/^\/api\/video\/tags\/(?<youtubeId>[\w-]{11})\/*$/', 'controller' => 'VideoTagController', 'action' => 'delete', 'method' => 'DELETE'],
+            ['route' => '/^\/api\/videos\/(?<youtubeId>[\w-]{11})\/tags\/(?<videoTagId>[\d-]+)*$/', 'controller' => 'VideoTagController', 'action' => 'delete', 'method' => 'GET'],
 
             ['route' => '/^\/api\/youtube\/(?<youtubeId>[\w-]{11})\/*$/', 'controller' => 'YouTubeController', 'action' => 'get_artist_and_title', 'method' => 'GET']
         ];

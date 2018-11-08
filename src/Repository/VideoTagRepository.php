@@ -46,7 +46,7 @@ final class VideoTagRepository
         FROM video_tag vt
         LEFT JOIN tag USING (tag_slug_id)
         LEFT JOIN video USING (video_youtube_id)
-        LEFT JOIN video_tag_complete tvc USING (tag_slug_id)
+        LEFT JOIN video_tag_complete tvc USING (video_youtube_id)
         WHERE video.video_youtube_id = ?
         ORDER BY tag.name, vt.start
         ");
@@ -62,18 +62,18 @@ final class VideoTagRepository
         return $data;
     }
 
-    public function clear_time(string $video_youtube_id, int $video_tag_id)
+    public function clear_time(int $video_tag_id)
     {
         $stmt = $this->database->mysqli->prepare(
-            "UPDATE video_tag SET start = null, stop = null WHERE video_tag_id = ? AND video_youtube_id = ?"
+            "UPDATE video_tag SET start = null, stop = null WHERE video_tag_id = ?"
         );
 
-        $stmt->bind_param("is", $video_tag_id, $video_youtube_id);
+        $stmt->bind_param("i", $video_tag_id);
         $stmt->execute();
     }
 
-    public function delete($youtube_id, $video_tag_id)
+    public function delete($video_tag_id)
     {
-        $this->clear_time($youtube_id, $video_tag_id);
+        $this->clear_time($video_tag_id);
     }
 }

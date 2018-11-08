@@ -76,10 +76,12 @@ class VideoTagRepositoryTest extends TestCase
     {
         $this->create_video_tag();
 
-        $this->video_tag_repository->delete(
-            $this->youtube_id,
-            1
-        );
+        $video_tag = $this->video_tag_repository->find_all_for_video($this->youtube_id);
+
+        $this->assertSame(0, $video_tag[0]['start']);
+        $this->assertSame(20, $video_tag[0]['stop']);
+
+        $this->video_tag_repository->delete(1);
 
         $video_tag = $this->video_tag_repository->find_all_for_video($this->youtube_id);
 

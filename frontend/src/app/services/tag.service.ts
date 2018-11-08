@@ -56,8 +56,9 @@ export class TagService {
         })
     }
 
-    deleteVideoTa(videoTagId: number) {
-        return this.http.delete('api/video/tags' + videoTagId);
+    deleteVideoTag(youtubeId: string, videoTagId: number): Observable<Itag> {
+        return this.http.get<Itag>('api/videos/' + youtubeId + '/tags/' + videoTagId)
+            .pipe(catchError(this.errorHandler))
     }
 
 
