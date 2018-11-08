@@ -61,13 +61,18 @@ final class VideoTagRepository
         return $data;
     }
 
-    public function clear_time(int $video_tag_id)
+    public function clear_time(string $video_youtube_id, int $video_tag_id)
     {
         $stmt = $this->database->mysqli->prepare(
-            "UPDATE video_tag SET start = null, stop = null WHERE video_tag_id = ?"
+            "UPDATE video_tag SET start = null, stop = null WHERE video_tag_id = ? AND video_youtube_id = ?"
         );
 
-        $stmt->bind_param("i", $video_tag_id);
+        $stmt->bind_param("is", $video_tag_id, $video_youtube_id);
         $stmt->execute();
+    }
+
+    public function delete($youtube_id, $video_tag_id)
+    {
+
     }
 }

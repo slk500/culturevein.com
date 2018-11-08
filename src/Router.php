@@ -8,7 +8,6 @@ final class Router
         [
             ['route' => '/^\/api\/artists\/*$/', 'controller' => 'ArtistController', 'action' => 'list', 'method' => 'GET'],
 
-            ['route' => '/^\/api\/tags\/*$/', 'controller' => 'TagController', 'action' => 'clear_time', 'method' => 'PATCH'],
             ['route' => '/^\/api\/tags\/*$/', 'controller' => 'TagController', 'action' => 'create', 'method' => 'POST'],
             ['route' => '/^\/api\/tags\/*$/', 'controller' => 'TagController', 'action' => 'list', 'method' => 'GET'],
 
@@ -22,6 +21,8 @@ final class Router
             ['route' => '/^\/api\/videos-new\/*$/', 'controller' => 'VideoController', 'action' => 'newest_ten', 'method' => 'GET'],
             ['route' => '/^\/api\/videos\/(?<youtubeId>[\w-]{11})\/*$/', 'controller' => 'VideoController', 'action' => 'show', 'method' => 'GET'],
             ['route' => '/^\/api\/videos\/(?<youtubeId>[\w-]{11})\/tags\/*$/', 'controller' => 'VideoController', 'action' => 'tags', 'method' => 'GET'],
+
+            ['route' => '/^\/api\/video\/tags\/(?<youtubeId>[\w-]{11})\/*$/', 'controller' => 'VideoTagController', 'action' => 'delete', 'method' => 'DELETE'],
 
             ['route' => '/^\/api\/youtube\/(?<youtubeId>[\w-]{11})\/*$/', 'controller' => 'YouTubeController', 'action' => 'get_artist_and_title', 'method' => 'GET']
         ];

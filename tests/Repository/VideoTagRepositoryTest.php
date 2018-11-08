@@ -3,12 +3,13 @@
 declare(strict_types=1);
 
 use DTO\VideoCreate;
-use DTO\VideoTagCreate;
 use Factory\VideoFactory;
 use PHPUnit\Framework\TestCase;
 use Repository\TagRepository;
 use Repository\VideoTagRepository;
 use Service\DatabaseHelper;
+use Tests\Builder\VideoBuilder;
+use Tests\Builder\VideoTagBuilder;
 
 class VideoTagRepositoryTest extends TestCase
 {
@@ -42,29 +43,21 @@ class VideoTagRepositoryTest extends TestCase
         $tag_name = $tag_slug_id = 'tag';
         (new TagRepository())->create($tag_name, $tag_slug_id);
 
-        $artist_name = 'Burak Yeter';
-        $video_name = 'Tuesday ft. Danelle Sandoval';
         $youtube_id = 'Y1_VsyLAGuk';
 
-        $video_create = new VideoCreate(
-            $artist_name,
-            $video_name,
-            $youtube_id
-        );
+        (new VideoBuilder())
+            ->youtube_id($youtube_id)
+            ->artist_name('Burak Yeter')
+            ->video_name('Tuesday ft. Danelle Sandoval')
+            ->build();
 
-        (new VideoFactory())->create($video_create);
 
-        $start = 0;
-        $stop = 20;
-
-        $video_tag_create = new VideoTagCreate(
-            $youtube_id,
-            $tag_name,
-            $start,
-            $stop
-        );
-
-        $this->video_tag_repository->create($video_tag_create);
+        (new VideoTagBuilder())
+            ->youtube_id($youtube_id)
+            ->tag_name('tag')
+            ->start(0)
+            ->stop(20)
+            ->build();
 
         $video_tag = $this->video_tag_repository->find_all_for_video('Y1_VsyLAGuk');
 
@@ -76,7 +69,7 @@ class VideoTagRepositoryTest extends TestCase
     /**
      * @test
      */
-    public function clear_time()
+    public function delete()
     {
         $this->create_video_tag();
 

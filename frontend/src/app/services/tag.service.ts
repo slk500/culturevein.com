@@ -56,6 +56,11 @@ export class TagService {
         })
     }
 
+    deleteVideoTa(videoTagId: number) {
+        return this.http.delete('api/video/tags' + videoTagId);
+    }
+
+
     errorHandler(error: HttpErrorResponse) {
         return obervableThrowError(error.message || 'Server Error')
     }
