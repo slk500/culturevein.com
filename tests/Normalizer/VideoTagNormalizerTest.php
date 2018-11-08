@@ -21,65 +21,164 @@ class VideoTagNormalizerTest extends TestCase
     /**
      * @test
      */
-    public function convert_times()
+    public function normalize_one_video_tag()
     {
-        $input = '314-357-103,386-408-99';
-
-        $output = $this->video_tag_normalizer->convert_times($input);
-
-        $expectedOutput = [
+        $input = [
             [
-                'start' => 314,
-                'stop' => 357,
-                'video_tag_id' => 103
-            ],
-            [
-                'start' => 386,
-                'stop' => 408,
-                'video_tag_id' => 99
+                'video_tag_id' => 10,
+                'video_youtube_id' => 'HcXNPI-IPPM',
+                "tag_name" => "BMW",
+                "start" => 0,
+                "stop" => 20,
+                "tag_slug_id" => "bmw",
+                "complete" => 1
             ]
         ];
 
-        $this->assertSame($expectedOutput, $output);
+        $this->video_tag_normalizer->normalize($input);
+
+        $expectedOutput = [
+            [
+                'video_youtube_id' => 'HcXNPI-IPPM',
+                'tag_name' => 'BMW',
+                'tag_slug_id' => 'bmw',
+                'complete' => 1,
+                'video_tags' => [
+                    [
+                        'start' => 0,
+                        'stop' => 20,
+                        'video_tag_id' => 10
+                    ],
+                ]
+            ]
+        ];
+        $this->assertSame($expectedOutput, $input);
     }
 
     /**
      * @test
      */
-    public function normalize()
+    public function normalize_two_video_tag()
     {
         $input = [
             [
-                "name" => "BMW",
-                "times" => "314-357-10,386-408-20",
-                "slug" => "bmw",
+                'video_tag_id' => 10,
+                'video_youtube_id' => 'HcXNPI-IPPM',
+                "tag_name" => "BMW",
+                "start" => 0,
+                "stop" => 20,
+                "tag_slug_id" => "bmw",
                 "complete" => 1
+            ],
+            [
+                'video_tag_id' => 20,
+                'video_youtube_id' => 'HcXNPI-IPPM',
+                "tag_name" => "BMW",
+                "start" => 20,
+                "stop" => 40,
+                "tag_slug_id" => "bmw",
+                "complete" => 1
+            ],
+        ];
+
+        $this->video_tag_normalizer->normalize($input);
+
+        $expectedOutput = [
+            [
+                'video_youtube_id' => 'HcXNPI-IPPM',
+                'tag_name' => 'BMW',
+                'tag_slug_id' => 'bmw',
+                'complete' => 1,
+                'video_tags' => [
+                    [
+                        'start' => 0,
+                        'stop' => 20,
+                        'video_tag_id' => 10
+                    ],
+                    [
+                        'start' => 20,
+                        'stop' => 40,
+                        'video_tag_id' => 20
+                    ],
+                ]
+            ]
+        ];
+        $this->assertSame($expectedOutput, $input);
+    }
+
+
+    /**
+     * @test
+     */
+    public function normallize_two_same_one_diffrent_video_tag()
+    {
+        $input = [
+            [
+                'video_tag_id' => 10,
+                'video_youtube_id' => 'HcXNPI-IPPM',
+                "tag_name" => "BMW",
+                "start" => 0,
+                "stop" => 20,
+                "tag_slug_id" => "bmw",
+                "complete" => 1
+            ],
+            [
+                'video_tag_id' => 20,
+                'video_youtube_id' => 'HcXNPI-IPPM',
+                "tag_name" => "BMW",
+                "start" => 40,
+                "stop" => 60,
+                "tag_slug_id" => "bmw",
+                "complete" => 1
+            ],
+            [
+                'video_tag_id' => 30,
+                'video_youtube_id' => 'HcXNPI-IPPM',
+                "tag_name" => "Subaru",
+                "start" => 100,
+                "stop" => 120,
+                "tag_slug_id" => "subaru",
+                "complete" => 0
             ]
         ];
 
         $expectedResult = [
             [
-                'name' => 'BMW',
-                'times' => [
+                'video_youtube_id' => 'HcXNPI-IPPM',
+                'tag_name' => 'BMW',
+                'tag_slug_id' => 'bmw',
+                'complete' => 1,
+                'video_tags' => [
                     [
-                        'start' => 314,
-                        'stop' => 357,
+                        'start' => 0,
+                        'stop' => 20,
                         'video_tag_id' => 10
                     ],
                     [
-                        'start' => 386,
-                        'stop' => 408,
+                        'start' => 40,
+                        'stop' => 60,
                         'video_tag_id' => 20
                     ]
-                ],
-                'slug' => 'bmw',
-                'complete' => 1
-            ]
+                ]
+            ],
+            [
+                'video_youtube_id' => 'HcXNPI-IPPM',
+                'tag_name' => 'Subaru',
+                'tag_slug_id' => 'subaru',
+                'complete' => 0,
+                'video_tags' => [
+                    [
+                        'start' => 100,
+                        'stop' => 120,
+                        'video_tag_id' => 30
+                    ]
+                ]
+            ],
         ];
 
         $normalizer = new VideoTagNormalizer();
-        $normalizer->normalize($input);
+        $output = $normalizer->normalize($input);
 
-        $this->assertSame($expectedResult, $input);
+        $this->assertSame($expectedResult, $output);
     }
 }

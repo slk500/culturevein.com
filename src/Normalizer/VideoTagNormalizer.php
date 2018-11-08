@@ -6,31 +6,42 @@ namespace Normalizer;
 
 final class VideoTagNormalizer
 {
-    public function normalize(array &$array): void
+    //todo to complex -> make it simple
+    public function normalize(array &$array): array
     {
-        foreach ($array as &$ar) {
-            if (key_exists('times', $ar) && $ar['times']) {
-                $ar['times'] = $this->convert_times($ar['times']);
+        $last_tag_slug_id = '';
+
+        foreach ($array as $key => &$ar) {
+
+            if($last_tag_slug_id === $ar['tag_slug_id']){
+
+                $array[$key -1]['video_tags'] []=
+                    [
+                        'start' => $ar['start'],
+                        'stop' => $ar['stop'],
+                        'video_tag_id' => $ar['video_tag_id']
+                    ];
+
+                unset($array[$key]);
+
+            }else {
+
+                $ar['video_tags'] []=
+                    [
+                        'start' => $ar['start'],
+                        'stop' => $ar['stop'],
+                        'video_tag_id' => $ar['video_tag_id']
+                    ];
+
+                unset($ar['start']);
+                unset($ar['stop']);
+                unset($ar['video_tag_id']);
+
             }
-        }
-    }
 
-    public function convert_times(string $string)
-    {
-        $temps =  explode(',', $string);
-
-        $output = [];
-
-        foreach ($temps as $tmp){
-
-            $r = explode('-', $tmp);
-            $output []=  [
-                'start' => (int)$r[0],
-                'stop' => (int)$r[1],
-                'video_tag_id' => (int)$r[2]
-            ];
+            $last_tag_slug_id = $ar['tag_slug_id'];
         }
 
-        return $output;
+        return array_values($array);
     }
 }

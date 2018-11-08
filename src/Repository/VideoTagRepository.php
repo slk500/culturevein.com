@@ -36,6 +36,7 @@ final class VideoTagRepository
     {
         $stmt = $this->database->mysqli->prepare("
         SELECT 
+        vt.video_tag_id,
         tag.name as tag_name, 
         vt.video_youtube_id,
         start,
