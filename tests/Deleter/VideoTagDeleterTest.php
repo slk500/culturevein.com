@@ -6,6 +6,7 @@ namespace Tests\Deleter;
 
 use Factory\VideoFactory;
 use Factory\VideoTagFactory;
+use Model\Tag;
 use Repository\TagRepository;
 use Repository\VideoTagRepository;
 use Tests\Builder\VideoCreateBuilder;
@@ -50,10 +51,9 @@ class VideoTagDeleterTest extends TestCase
      */
     public function delete_would_set_start_and_stop_as_null_IF_video_tag_is_last_and_start_and_stop_is_not_null()
     {
-        $tag_name = 'tag name';
-        $tag_slug_id = 'tag-name';
+        $tag = new Tag('tag_name');
 
-        (new TagRepository())->create($tag_name, $tag_slug_id);
+        (new TagRepository())->create($tag);
 
         $video_create = (new VideoCreateBuilder())->build();
         (new VideoFactory())->create($video_create);

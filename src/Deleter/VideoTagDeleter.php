@@ -21,3 +21,4 @@ class VideoTagDeleter
         $this->video_tag_repository->set_start_and_stop_null($video_tag_id);
     }
 }
+

@@ -8,6 +8,7 @@ use DTO\VideoTagCreate;
 use Factory\VideoTagFactory;
 use Factory\VideoFactory;
 use DTO\VideoCreate;
+use Model\Tag;
 use PHPUnit\Framework\TestCase;
 use Repository\TagRepository;
 use Repository\VideoTagRepository;
@@ -27,10 +28,9 @@ class VideoTagFactoryTest extends TestCase
      */
     public function create()
     {
-        $tag_name = 'tag name';
-        $tag_slug_id = 'tag-name';
+        $tag = new Tag('tag name');
 
-        (new TagRepository())->create($tag_name, $tag_slug_id);
+        (new TagRepository())->create($tag);
 
         $video_create = (new VideoCreateBuilder())->build();
         (new VideoFactory())->create($video_create);

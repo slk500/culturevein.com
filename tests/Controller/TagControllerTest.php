@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Factory\VideoFactory;
 use DTO\VideoCreate;
+use Model\Tag;
 use PHPUnit\Framework\TestCase;
 use Repository\TagRepository;
 use Repository\VideoRepository;
@@ -60,10 +61,8 @@ class TagControllerTest extends TestCase
 
     private function create_video_tag(): \Psr\Http\Message\ResponseInterface
     {
-        $tag_name = 'chess';
-        $tag_slug_id = 'chess';
-
-        (new TagRepository())->create($tag_name, $tag_slug_id);
+        $tag = new Tag('tag name');
+        (new TagRepository())->create($tag);
 
         $artist_name = 'Burak Yeter';
         $video_name = 'Tuesday ft. Danelle Sandoval';
@@ -82,7 +81,7 @@ class TagControllerTest extends TestCase
             [
                 'json' => [
                     'youtube_id' => $youtube_id,
-                    'tag_name' => $tag_name,
+                    'tag_name' => $tag->tag_name,
                     'start' => 0,
                     'stop' => 25
                 ]

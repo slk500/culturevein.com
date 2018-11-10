@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Model\Tag;
 use PHPUnit\Framework\TestCase;
 use Repository\TagRepository;
 use Service\DatabaseHelper;
@@ -28,13 +29,12 @@ class TagRepositoryTest extends TestCase
      */
     public function create_and_find()
     {
-        $tag_name = 'chess';
-        $tag_slug_id = 'chess';
+        $tag = new Tag('tag name');
 
-        $this->tag_repository->create($tag_name, $tag_slug_id);
+        $this->tag_repository->create($tag);
 
-        $tag_slug_id_from_satabase = $this->tag_repository->find_slug_id_by_name($tag_name);
+        $tag_slug_id_from_database = $this->tag_repository->find_slug_id_by_name($tag->tag_name);
 
-        $this->assertSame($tag_slug_id, $tag_slug_id_from_satabase);
+        $this->assertSame($tag->tag_slug_id, $tag_slug_id_from_database);
     }
 }

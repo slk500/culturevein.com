@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Repository;
 
 use Cocur\Slugify\Slugify;
+use Model\Tag;
 use Repository\Base\Database;
 
 final class TagRepository
@@ -115,10 +116,10 @@ final class TagRepository
 //        "SELECT count(tag_id) FROM tag_user_subscribe WHERE tag_id = ?";
 //    }
 
-    public function create(string $tag_name, string $tag_slug_id): void
+    public function create(Tag $tag): void
     {
         $stmt = $this->database->mysqli->prepare("INSERT INTO tag (name, tag_slug_id) VALUES (?, ?)");
-        $stmt->bind_param("ss", $tag_name, $tag_slug_id);
+        $stmt->bind_param("ss", $tag->tag_name, $tag->tag_slug_id);
         $stmt->execute();
     }
 }

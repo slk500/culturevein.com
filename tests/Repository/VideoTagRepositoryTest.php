@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Factory\VideoFactory;
 use Factory\VideoTagFactory;
+use Model\Tag;
 use PHPUnit\Framework\TestCase;
 use Repository\TagRepository;
 use Repository\VideoTagRepository;
@@ -43,10 +44,8 @@ class VideoTagRepositoryTest extends TestCase
      */
     public function create_video_tag()
     {
-        $tag_name = 'tag name';
-        $tag_slug_id = 'tag-name';
-
-        (new TagRepository())->create($tag_name, $tag_slug_id);
+        $tag = new Tag('tag name');
+        (new TagRepository())->create($tag);
 
         $video_create = (new VideoCreateBuilder())->build();
         (new VideoFactory())->create($video_create);
