@@ -8,13 +8,13 @@ namespace Model;
 
 class Video
 {
+    public $video_youtube_id;
+
     public $video_name;
+
+    public $artist_name;
 
     public $release_date;
 
-    public $video_youtube_id;
-
     public $duration;
-
-    public $artist_name;
 }

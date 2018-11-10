@@ -7,24 +7,22 @@ namespace Tests\Builder;
 use DTO\VideoTagCreate;
 use Factory\VideoTagFactory;
 
-class VideoTagBuilder
+class VideoTagCreateBuilder
 {
 
-    private $youtube_id;
-    private $tag_name;
-    private $start;
-    private $stop;
+    private $youtube_id = 'Y1_VsyLAGuk';
+    private $tag_name = 'tag name';
+    private $start = 0;
+    private $stop = 20;
 
-    public function build(): void
+    public function build(): VideoTagCreate
     {
-        $video_create = new VideoTagCreate(
+        return new VideoTagCreate(
             $this->youtube_id,
             $this->tag_name,
             $this->start,
             $this->stop
         );
-
-        (new VideoTagFactory())->create($video_create);
     }
 
     public function youtube_id(string $youtube_id): self
@@ -50,6 +48,5 @@ class VideoTagBuilder
         $this->stop = $stop;
         return $this;
     }
-
-
 }
+

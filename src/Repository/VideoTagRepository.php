@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Repository;
 
 use DTO\VideoTagCreate;
+use Model\VideoTag;
 use Repository\Base\Database;
 
 final class VideoTagRepository
@@ -29,9 +30,11 @@ final class VideoTagRepository
                     $video_tag_create->stop
         );
         $stmt->execute();
-
     }
 
+    /**
+     * @return VideoTag[]
+     */
     public function find_all_for_video(string $youtubeId): array
     {
         $stmt = $this->database->mysqli->prepare("
@@ -55,14 +58,15 @@ final class VideoTagRepository
         $stmt->execute();
 
         $result = $stmt->get_result();
-        $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
-        $stmt->free_result();
-        $stmt->close();
 
-        return $data;
+        $results = [];
+        while ($obj=mysqli_fetch_object($result, VideoTag::class)){
+            $results[] = $obj;
+        }
+        return $results;
     }
 
-    public function clear_time(int $video_tag_id)
+    public function set_start_and_stop_null(int $video_tag_id)
     {
         $stmt = $this->database->mysqli->prepare(
             "UPDATE video_tag SET start = null, stop = null WHERE video_tag_id = ?"
@@ -70,10 +74,5 @@ final class VideoTagRepository
 
         $stmt->bind_param("i", $video_tag_id);
         $stmt->execute();
-    }
-
-    public function delete($video_tag_id)
-    {
-        $this->clear_time($video_tag_id);
     }
 }

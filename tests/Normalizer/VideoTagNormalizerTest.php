@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Model\VideoTag;
 use Normalizer\VideoTagNormalizer;
 use PHPUnit\Framework\TestCase;
 
@@ -22,19 +23,16 @@ class VideoTagNormalizerTest extends TestCase
      */
     public function normalize_one_video_tag()
     {
-        $input = [
-            [
-                'video_tag_id' => 10,
-                'video_youtube_id' => 'HcXNPI-IPPM',
-                "tag_name" => "BMW",
-                "start" => 0,
-                "stop" => 20,
-                "tag_slug_id" => "bmw",
-                "complete" => 1
-            ]
-        ];
+        $video_tag = new VideoTag();
+        $video_tag->video_tag_id = 10;
+        $video_tag->video_youtube_id = 'HcXNPI-IPPM';
+        $video_tag->tag_name = "BMW";
+        $video_tag->start = 0;
+        $video_tag->stop = 20;
+        $video_tag->tag_slug_id = 'bmw';
+        $video_tag->complete = 1;
 
-        $output = $this->video_tag_normalizer->normalize($input);
+        $output = $this->video_tag_normalizer->normalize([$video_tag]);
 
         $expectedOutput = [
             [
@@ -59,26 +57,25 @@ class VideoTagNormalizerTest extends TestCase
      */
     public function normalize_two_video_tag()
     {
-        $input = [
-            [
-                'video_tag_id' => 10,
-                'video_youtube_id' => 'HcXNPI-IPPM',
-                "tag_name" => "BMW",
-                "start" => 0,
-                "stop" => 20,
-                "tag_slug_id" => "bmw",
-                "complete" => 1
-            ],
-            [
-                'video_tag_id' => 20,
-                'video_youtube_id' => 'HcXNPI-IPPM',
-                "tag_name" => "BMW",
-                "start" => 20,
-                "stop" => 40,
-                "tag_slug_id" => "bmw",
-                "complete" => 1
-            ],
-        ];
+        $video_tag1 = new VideoTag();
+        $video_tag1->video_tag_id = 10;
+        $video_tag1->video_youtube_id = 'HcXNPI-IPPM';
+        $video_tag1->tag_name = "BMW";
+        $video_tag1->start = 0;
+        $video_tag1->stop = 20;
+        $video_tag1->tag_slug_id = 'bmw';
+        $video_tag1->complete = 1;
+
+        $video_tag2 = new VideoTag();
+        $video_tag2->video_tag_id = 20;
+        $video_tag2->video_youtube_id = 'HcXNPI-IPPM';
+        $video_tag2->tag_name = "BMW";
+        $video_tag2->start = 20;
+        $video_tag2->stop = 40;
+        $video_tag2->tag_slug_id = 'bmw';
+        $video_tag2->complete = 1;
+
+        $input = [$video_tag1, $video_tag2];
 
         $output = $this->video_tag_normalizer->normalize($input);
 
@@ -110,35 +107,36 @@ class VideoTagNormalizerTest extends TestCase
      */
     public function normalize_three_video_tag()
     {
-        $input = [
-            [
-                'video_tag_id' => 10,
-                'video_youtube_id' => 'HcXNPI-IPPM',
-                "tag_name" => "BMW",
-                "start" => 0,
-                "stop" => 20,
-                "tag_slug_id" => "bmw",
-                "complete" => 1
-            ],
-            [
-                'video_tag_id' => 20,
-                'video_youtube_id' => 'HcXNPI-IPPM',
-                "tag_name" => "BMW",
-                "start" => 20,
-                "stop" => 40,
-                "tag_slug_id" => "bmw",
-                "complete" => 1
-            ],
-            [
-                'video_tag_id' => 30,
-                'video_youtube_id' => 'HcXNPI-IPPM',
-                "tag_name" => "BMW",
-                "start" => 40,
-                "stop" => 60,
-                "tag_slug_id" => "bmw",
-                "complete" => 1
-            ],
-        ];
+
+        $video_tag1 = new VideoTag();
+        $video_tag1->video_tag_id = 10;
+        $video_tag1->video_youtube_id = 'HcXNPI-IPPM';
+        $video_tag1->tag_name = "BMW";
+        $video_tag1->start = 0;
+        $video_tag1->stop = 20;
+        $video_tag1->tag_slug_id = 'bmw';
+        $video_tag1->complete = 1;
+
+        $video_tag2 = new VideoTag();
+        $video_tag2->video_tag_id = 20;
+        $video_tag2->video_youtube_id = 'HcXNPI-IPPM';
+        $video_tag2->tag_name = "BMW";
+        $video_tag2->start = 20;
+        $video_tag2->stop = 40;
+        $video_tag2->tag_slug_id = 'bmw';
+        $video_tag2->complete = 1;
+
+        $video_tag3 = new VideoTag();
+        $video_tag3->video_tag_id = 30;
+        $video_tag3->video_youtube_id = 'HcXNPI-IPPM';
+        $video_tag3->tag_name = "BMW";
+        $video_tag3->start = 40;
+        $video_tag3->stop = 60;
+        $video_tag3->tag_slug_id = 'bmw';
+        $video_tag3->complete = 1;
+
+        $input = [$video_tag1, $video_tag2, $video_tag3];
+
 
         $output = $this->video_tag_normalizer->normalize($input);
 
@@ -174,37 +172,36 @@ class VideoTagNormalizerTest extends TestCase
     /**
      * @test
      */
-    public function normallize_two_same_one_diffrent_video_tag()
+    public function normalize_two_same_one_different_video_tag()
     {
-        $input = [
-            [
-                'video_tag_id' => 10,
-                'video_youtube_id' => 'HcXNPI-IPPM',
-                "tag_name" => "BMW",
-                "start" => 0,
-                "stop" => 20,
-                "tag_slug_id" => "bmw",
-                "complete" => 1
-            ],
-            [
-                'video_tag_id' => 20,
-                'video_youtube_id' => 'HcXNPI-IPPM',
-                "tag_name" => "BMW",
-                "start" => 40,
-                "stop" => 60,
-                "tag_slug_id" => "bmw",
-                "complete" => 1
-            ],
-            [
-                'video_tag_id' => 30,
-                'video_youtube_id' => 'HcXNPI-IPPM',
-                "tag_name" => "Subaru",
-                "start" => 100,
-                "stop" => 120,
-                "tag_slug_id" => "subaru",
-                "complete" => 0
-            ]
-        ];
+        $video_tag1 = new VideoTag();
+        $video_tag1->video_tag_id = 10;
+        $video_tag1->video_youtube_id = 'HcXNPI-IPPM';
+        $video_tag1->tag_name = "BMW";
+        $video_tag1->start = 0;
+        $video_tag1->stop = 20;
+        $video_tag1->tag_slug_id = 'bmw';
+        $video_tag1->complete = 1;
+
+        $video_tag2 = new VideoTag();
+        $video_tag2->video_tag_id = 20;
+        $video_tag2->video_youtube_id = 'HcXNPI-IPPM';
+        $video_tag2->tag_name = "BMW";
+        $video_tag2->start = 20;
+        $video_tag2->stop = 40;
+        $video_tag2->tag_slug_id = 'bmw';
+        $video_tag2->complete = 1;
+
+        $video_tag3 = new VideoTag();
+        $video_tag3->video_tag_id = 30;
+        $video_tag3->video_youtube_id = 'HcXNPI-IPPM';
+        $video_tag3->tag_name = "Subaru";
+        $video_tag3->start = 40;
+        $video_tag3->stop = 60;
+        $video_tag3->tag_slug_id = 'subaru';
+        $video_tag3->complete = 0;
+
+        $input = [$video_tag1, $video_tag2, $video_tag3];
 
         $expectedResult = [
             [
@@ -219,8 +216,8 @@ class VideoTagNormalizerTest extends TestCase
                         'video_tag_id' => 10
                     ],
                     [
-                        'start' => 40,
-                        'stop' => 60,
+                        'start' => 20,
+                        'stop' => 40,
                         'video_tag_id' => 20
                     ]
                 ]
@@ -232,8 +229,8 @@ class VideoTagNormalizerTest extends TestCase
                 'complete' => 0,
                 'video_tags' => [
                     [
-                        'start' => 100,
-                        'stop' => 120,
+                        'start' => 40,
+                        'stop' => 60,
                         'video_tag_id' => 30
                     ]
                 ]

@@ -12,6 +12,8 @@ use PHPUnit\Framework\TestCase;
 use Repository\TagRepository;
 use Repository\VideoTagRepository;
 use Service\DatabaseHelper;
+use Tests\Builder\VideoCreateBuilder;
+use Tests\Builder\VideoTagCreateBuilder;
 
 class VideoTagFactoryTest extends TestCase
 {
@@ -25,51 +27,26 @@ class VideoTagFactoryTest extends TestCase
      */
     public function create()
     {
-        $tag_name = $tag_slug_id = 'tag';
+        $tag_name = 'tag name';
+        $tag_slug_id = 'tag-name';
+
         (new TagRepository())->create($tag_name, $tag_slug_id);
 
-        $artist_name = 'Burak Yeter';
-        $video_name = 'Tuesday ft. Danelle Sandoval';
-        $youtube_id = 'Y1_VsyLAGuk';
-
-        $video_create = new VideoCreate(
-            $artist_name,
-            $video_name,
-            $youtube_id
-        );
-
+        $video_create = (new VideoCreateBuilder())->build();
         (new VideoFactory())->create($video_create);
 
-        $video_tag_factory = new VideoTagFactory();
-
-        $start = 0;
-        $stop = 20;
-
-        $video_tag_create = new VideoTagCreate(
-            $youtube_id,
-            $tag_name,
-            $start,
-            $stop
-        );
-
-        $video_tag_factory->create($video_tag_create);
+        $video_tag_create = (new VideoTagCreateBuilder())->build();
+        (new VideoTagFactory())->create($video_tag_create);
 
         $video_tag_repository = new VideoTagRepository();
 
-        $result = $video_tag_repository->find_all_for_video($youtube_id);
+        $result = $video_tag_repository->find_all_for_video($video_create->youtube_id);
 
         $video_tag = (end($result));
 
-        $expected = [
-            'video_tag_id' => 1,
-            'tag_name' => 'tag',
-            'video_youtube_id' => 'Y1_VsyLAGuk',
-            'start' => 0,
-            'stop' => 20,
-            'tag_slug_id' => 'tag',
-            'complete' => 0
-        ];
-
-        $this->assertSame($expected, $video_tag);
+        $this->assertSame('tag name', $video_tag->tag_name);
+        $this->assertSame(0, $video_tag->start);
+        $this->assertSame(20, $video_tag->stop);
+        $this->assertSame($video_create->youtube_id, $video_tag->video_youtube_id);
     }
 }
