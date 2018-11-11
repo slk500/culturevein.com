@@ -82,7 +82,7 @@ final class VideoTagRepository
         FROM video_tag vt
         LEFT JOIN tag USING (tag_slug_id)
         LEFT JOIN video USING (video_youtube_id)
-        LEFT JOIN video_tag_complete tvc USING (video_youtube_id)
+        LEFT JOIN video_tag_complete tvc USING (video_youtube_id, tag_slug_id)
         WHERE video.video_youtube_id = ?
         ORDER BY tag.name, vt.start
         ");
