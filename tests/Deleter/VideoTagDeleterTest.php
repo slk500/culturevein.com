@@ -22,6 +22,11 @@ class VideoTagDeleterTest extends TestCase
      */
     private $video_tag_repository;
 
+    /**
+     * @var VideoTagDeleter
+     */
+    private $video_tag_deleter;
+
     public static function setUpBeforeClass()
     {
         (new DatabaseHelper())->truncate_all_tables();
@@ -30,28 +35,74 @@ class VideoTagDeleterTest extends TestCase
     public function setUp()
     {
         $this->video_tag_repository = new VideoTagRepository();
+        $this->video_tag_deleter = new VideoTagDeleter();
+
+        (new DatabaseHelper())->truncate_all_tables();
     }
 
     /**
      * @test
      * @covers \Deleter\VideoTagDeleter::delete()
      */
-    public function delete_video_tag_IF_two_exist()
+    public function delete_ARCHIVE_one_video_tag_IF_two_with_time_range_exist()
     {
+        $tag = new Tag('tag name');
 
-    }
+        (new TagRepository())->create($tag);
 
-    public function delete_video_tag_IF_start_and_stop_are_null()
-    {
+        $video_create = (new VideoCreateBuilder())->build();
+        (new VideoFactory())->create($video_create);
+
+        $video_tag_create = (new VideoTagCreateBuilder())->build();
+        (new VideoTagFactory())->create($video_tag_create);
+
+        $video_tag_create = (new VideoTagCreateBuilder())->build();
+        (new VideoTagFactory())->create($video_tag_create);
+
+        $video_tags = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
+        $this->assertCount(2, $video_tags);
+
+        $this->video_tag_deleter->delete(1);
+
+        $video_tags = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
+        $this->assertCount(1, $video_tags);
+
 
     }
 
     /**
      * @test
+     * @covers \Deleter\VideoTagDeleter::delete()
      */
-    public function delete_would_set_start_and_stop_as_null_IF_video_tag_is_last_and_start_and_stop_is_not_null()
+    public function delete_ARCHIVE_video_tag_IF_only_one_video_tag_exist_and_time_range_is_null()
     {
-        $tag = new Tag('tag_name');
+        $tag = new Tag('tag name');
+
+        (new TagRepository())->create($tag);
+
+        $video_create = (new VideoCreateBuilder())->build();
+        (new VideoFactory())->create($video_create);
+
+        $video_tag_create = (new VideoTagCreateBuilder())
+            ->start(null)
+            ->stop(null)
+            ->build();
+        (new VideoTagFactory())->create($video_tag_create);
+
+        $this->video_tag_deleter->delete(1);
+
+        $video_tags = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
+
+        $this->assertCount(0, $video_tags);
+    }
+
+    /**
+     * @test
+     * @covers \Deleter\VideoTagDeleter::delete()
+     */
+    public function delete_SET_time_range_null_IF_only_one_video_tag_exist_and_time_range_is_not_null()
+    {
+        $tag = new Tag('tag name');
 
         (new TagRepository())->create($tag);
 
@@ -67,8 +118,7 @@ class VideoTagDeleterTest extends TestCase
         $this->assertSame(0, $video_tag->start);
         $this->assertSame(20, $video_tag->stop);
 
-        $videoTagDeleter = new VideoTagDeleter();
-        $videoTagDeleter->delete($video_tag->video_tag_id);
+        $this->video_tag_deleter->delete($video_tag->video_tag_id);
 
         $result = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
         $video_tag_after_delete = end($result);

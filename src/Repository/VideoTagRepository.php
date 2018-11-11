@@ -32,6 +32,39 @@ final class VideoTagRepository
         $stmt->execute();
     }
 
+    //todo should be one query
+    public function archive(int $video_tag_id): void
+    {
+        $stmt = $this->database->mysqli->prepare("INSERT INTO video_tag_history SELECT * FROM video_tag WHERE video_tag_id = ?");
+        $stmt->bind_param("i", $video_tag_id);
+        $stmt->execute();
+
+        $stmt = $this->database->mysqli->prepare("DELETE FROM video_tag where video_tag_id = ?");
+        $stmt->bind_param("i", $video_tag_id);
+        $stmt->execute();
+    }
+
+
+
+
+    public function is_only_one(int $video_tag_id): bool
+    {
+        $stmt = $this->database->mysqli->prepare(
+            "SELECT count(*) as count
+                    FROM video_tag
+                    WHERE ROW(video_youtube_id, tag_slug_id) = 
+                    (SELECT video_youtube_id, tag_slug_id FROM video_tag WHERE video_tag_id = ?);"
+        );
+
+        $stmt->bind_param("i", $video_tag_id);
+        $stmt->execute();
+
+        $result = $stmt->get_result()
+            ->fetch_object();
+
+        return $result->count === 1;
+    }
+
     /**
      * @return VideoTag[]
      */
@@ -60,13 +93,13 @@ final class VideoTagRepository
         $result = $stmt->get_result();
 
         $results = [];
-        while ($obj=mysqli_fetch_object($result, VideoTag::class)){
+        while ($obj = mysqli_fetch_object($result, VideoTag::class)){
             $results[] = $obj;
         }
         return $results;
     }
 
-    public function set_start_and_stop_null(int $video_tag_id)
+    public function set_start_and_stop_null(int $video_tag_id): void
     {
         $stmt = $this->database->mysqli->prepare(
             "UPDATE video_tag SET start = null, stop = null WHERE video_tag_id = ?"
@@ -74,5 +107,25 @@ final class VideoTagRepository
 
         $stmt->bind_param("i", $video_tag_id);
         $stmt->execute();
+    }
+
+    public function find(int $video_tag_id): VideoTag
+    {
+        $stmt = $this->database->mysqli->prepare("
+        SELECT *, t.name as tag_name
+        FROM video_tag vt
+        LEFT JOIN tag t on vt.tag_slug_id = t.tag_slug_id
+        WHERE vt.video_tag_id = ?
+        ");
+
+        $stmt->bind_param("i", $video_tag_id);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $video_tag = mysqli_fetch_object($result, VideoTag::class);
+        $stmt->free_result();
+        $stmt->close();
+
+        return $video_tag;
     }
 }

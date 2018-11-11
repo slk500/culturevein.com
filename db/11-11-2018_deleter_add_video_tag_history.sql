@@ -211,6 +211,34 @@ INSERT INTO `video_tag_complete` VALUES ('3K0RzZGpyds','chess'),('7-tNUur2YoU','
 UNLOCK TABLES;
 
 --
+-- Table structure for table `video_tag_history`
+--
+
+DROP TABLE IF EXISTS `video_tag_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `video_tag_history` (
+  `video_tag_id` int(11) DEFAULT NULL,
+  `start` smallint(6) DEFAULT NULL,
+  `stop` smallint(6) DEFAULT NULL,
+  `description` varchar(500) DEFAULT NULL,
+  `created_at` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `user_id` int(11) DEFAULT NULL,
+  `video_youtube_id` tinytext,
+  `tag_slug_id` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `video_tag_history`
+--
+
+LOCK TABLES `video_tag_history` WRITE;
+/*!40000 ALTER TABLE `video_tag_history` DISABLE KEYS */;
+/*!40000 ALTER TABLE `video_tag_history` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping routines for database 'test'
 --
 /*!50003 DROP FUNCTION IF EXISTS `clean_time` */;
@@ -252,4 +280,4 @@ ALTER DATABASE `test` CHARACTER SET utf8 COLLATE utf8_general_ci ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-06 21:47:49
+-- Dump completed on 2018-11-11 10:16:11

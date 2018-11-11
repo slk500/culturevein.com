@@ -5,7 +5,7 @@ declare(strict_types=1);
 
 namespace Model;
 
-
+//todo time_range -> start, stop
 class VideoTag
 {
     public $video_tag_id;

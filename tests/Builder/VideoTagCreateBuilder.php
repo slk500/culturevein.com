@@ -37,13 +37,13 @@ class VideoTagCreateBuilder
         return $this;
     }
 
-    public function start(int $start): self
+    public function start(?int $start): self
     {
         $this->start = $start;
         return $this;
     }
 
-    public function stop(int $stop): self
+    public function stop(?int $stop): self
     {
         $this->stop = $stop;
         return $this;

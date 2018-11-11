@@ -16,15 +16,7 @@ class DatabaseHelperTest extends TestCase
     {
         $databaseHelper = new DatabaseHelper();
 
-        $databaseHelper->truncate_tables([
-            'artist',
-            'artist_video',
-            'tag',
-            'user',
-            'video',
-            'video_tag',
-            'video_tag_complete'
-        ]);
+        $databaseHelper->truncate_all_tables();
 
         $result = $databaseHelper->are_tables_empty();
 
