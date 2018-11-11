@@ -38,7 +38,10 @@ final class VideoTagRepository
         $stmt = $this->database->mysqli->prepare("INSERT INTO video_tag_history SELECT * FROM video_tag WHERE video_tag_id = ?");
         $stmt->bind_param("i", $video_tag_id);
         $stmt->execute();
+    }
 
+    public function delete(int $video_tag_id): void
+    {
         $stmt = $this->database->mysqli->prepare("DELETE FROM video_tag where video_tag_id = ?");
         $stmt->bind_param("i", $video_tag_id);
         $stmt->execute();

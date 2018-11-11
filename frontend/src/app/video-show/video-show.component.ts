@@ -192,4 +192,13 @@ export class VideoShowComponent implements OnInit {
 
         return 'btn-warning'
     }
+
+    isVideoTagWithoutTime(tag) : boolean {
+
+        if (tag['video_tags'][0]['stop'] == null && tag['video_tags'][0]['start'] == null) {
+            return true;
+        }
+
+        return false;
+    }
 }

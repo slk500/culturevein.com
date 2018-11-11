@@ -16,7 +16,7 @@
                 <li *ngFor="let tag of videoTags"
                     [ngClass]="tagStyle(tag)">
                     <a [routerLink]="['/tags', tag.tag_slug_id]" style="color:white">{{ tag.tag_name }} </a>
-                    <span (click)="deleteTag(tag.slug)" class="glyphicon glyphicon-remove-circle button"></span>
+                    <span *ngIf="isVideoTagWithoutTime(tag)" (click)="deleteVideoTag(videoInfo.video_youtube_id, tag.video_tags[0].video_tag_id)" class="glyphicon glyphicon-remove-circle button"></span>
 
                     <ol *ngIf="tag.video_tags[0].start != null">
                         <li *ngFor="let video_tag of tag.video_tags">

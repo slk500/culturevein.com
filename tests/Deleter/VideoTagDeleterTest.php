@@ -44,7 +44,7 @@ class VideoTagDeleterTest extends TestCase
      * @test
      * @covers \Deleter\VideoTagDeleter::delete()
      */
-    public function delete_ARCHIVE_one_video_tag_IF_two_with_time_range_exist()
+    public function ARCHIVE_AND_DELETE_video_tag_IF_two_with_time_range_exist()
     {
         $tag = new Tag('tag name');
 
@@ -74,7 +74,7 @@ class VideoTagDeleterTest extends TestCase
      * @test
      * @covers \Deleter\VideoTagDeleter::delete()
      */
-    public function delete_ARCHIVE_video_tag_IF_only_one_video_tag_exist_and_time_range_is_null()
+    public function ARCHIVE_AND_DELETE_video_tag_IF_only_one_video_tag_exist_and_time_range_is_null()
     {
         $tag = new Tag('tag name');
 
@@ -100,7 +100,7 @@ class VideoTagDeleterTest extends TestCase
      * @test
      * @covers \Deleter\VideoTagDeleter::delete()
      */
-    public function delete_SET_time_range_null_IF_only_one_video_tag_exist_and_time_range_is_not_null()
+    public function ARCHIVE_AND_SET_time_range_null_IF_only_one_video_tag_exist_and_time_range_is_not_null()
     {
         $tag = new Tag('tag name');
 
