@@ -27,6 +27,31 @@ class UserController extends BaseController
 
     public function create(object $data)
     {
+        if(!property_exists($data, 'username')) {
+            $this->response_bad_request('You have to provide username!');
+            die;
+        }
+
+        if(!property_exists($data, 'email')) {
+            $this->response_bad_request('You have to provide email!');
+            die;
+        }
+
+        if(!property_exists($data, 'password')) {
+            $this->response_bad_request('You have to provide password!');
+            die;
+        }
+
+        if(!filter_var($data->email, FILTER_VALIDATE_EMAIL)){
+            $this->response_bad_request('Not a valid email!');
+            die;
+        };
+
+        if($this->user_repository->find($data->email)){
+            $this->response_bad_request('User with provided email address already exist!');
+            die;
+        };
+
         $password_encrypted = password_hash($data->password, PASSWORD_BCRYPT);
 
         $user = new User(

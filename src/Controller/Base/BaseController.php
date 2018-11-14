@@ -12,6 +12,12 @@ abstract class BaseController
         echo json_encode($data);
     }
 
+    protected function response_bad_request($data = null): void
+    {
+        http_response_code(400);
+        echo json_encode($data);
+    }
+
     protected function response_unauthorized($data = null): void
     {
         http_response_code(401);
