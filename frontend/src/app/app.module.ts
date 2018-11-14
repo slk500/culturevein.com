@@ -22,6 +22,9 @@ import {InputService} from "./services/input.service";
 import {APIInterceptor} from "./http-interceptor";
 import {SliderModule} from 'primeng/slider';
 import { AddComponent } from './add/add.component';
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
+import {AuthService} from "./auth.service";
 
 @NgModule({
   declarations: [
@@ -37,6 +40,8 @@ import { AddComponent } from './add/add.component';
     MinuteSecondsPipe,
     FilterPipe,
     AddComponent,
+    RegisterComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,7 +52,7 @@ import { AddComponent } from './add/add.component';
       FormsModule,
       SliderModule
   ],
-  providers: [TagService, InputService, {
+  providers: [AuthService, TagService, InputService, {
       provide: HTTP_INTERCEPTORS,
       useClass: APIInterceptor,
       multi: true,

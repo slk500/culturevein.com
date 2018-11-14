@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {Router} from "@angular/router";
 import {InputService} from "./services/input.service";
+import {AuthService} from "./auth.service";
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,7 @@ export class AppComponent {
 
     public href: string = "";
 
-    constructor(private router: Router, private inputService: InputService) {}
+    constructor(private router: Router, private inputService: InputService, private _authService: AuthService) {}
 
     updateValue(e){
         this.editUser = e.target.value;

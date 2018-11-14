@@ -22,14 +22,17 @@ final class VideoTagRepository
 
     public function create(VideoTagCreate $video_tag_create): void
     {
-        $stmt = $this->database->mysqli->prepare("INSERT INTO video_tag (video_youtube_id, tag_slug_id, start, stop) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssii",
+        $stmt = $this->database->mysqli->prepare("INSERT INTO video_tag (video_youtube_id, tag_slug_id, start, stop, user_id) VALUES (?, ?, ?, ?, ?)");
+
+        $stmt->bind_param("ssiii",
             $video_tag_create->video_youtube_id,
              $video_tag_create->tag_slug_id,
                     $video_tag_create->start,
-                    $video_tag_create->stop
+                    $video_tag_create->stop,
+                    $video_tag_create->user_id
         );
         $stmt->execute();
+
     }
 
     //todo should be one query

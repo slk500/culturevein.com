@@ -9,6 +9,8 @@ import {LinksComponent} from "./links/links.component";
 import {TagShowComponent} from "./tag-show/tag-show.component";
 import {VideoShowComponent} from "./video-show/video-show.component";
 import {AddComponent} from "./add/add.component";
+import {RegisterComponent} from "./register/register.component";
+import {LoginComponent} from "./login/login.component";
 
 const routes: Routes = [
     { path: '', component: TopTenComponent},
@@ -19,6 +21,8 @@ const routes: Routes = [
     { path: 'about', component: AboutComponent},
     { path: 'links', component: LinksComponent},
     { path: 'add', component: AddComponent},
+    { path: 'register', component: RegisterComponent},
+    { path: 'login', component: LoginComponent},
     { path: "**", component: PageNotFoundComponent}
 ];
 

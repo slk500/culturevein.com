@@ -5,9 +5,11 @@ declare(strict_types=1);
 use Factory\VideoFactory;
 use Factory\VideoTagFactory;
 use Model\Tag;
+use Model\User;
 use Model\VideoTag;
 use PHPUnit\Framework\TestCase;
 use Repository\TagRepository;
+use Repository\UserRepository;
 use Repository\VideoTagRepository;
 use Service\DatabaseHelper;
 use Tests\Builder\VideoCreateBuilder;
@@ -117,6 +119,12 @@ class VideoTagRepositoryTest extends TestCase
      */
     public function create_video_tag()
     {
+        $user = new User('mario@o2.pl','password', 'slk');
+
+        $user_repository = new UserRepository();
+        $user_repository->create($user);
+
+
         $tag = new Tag('tag name');
         (new TagRepository())->create($tag);
 

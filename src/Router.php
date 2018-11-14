@@ -24,7 +24,10 @@ final class Router
 
             ['route' => '/^\/api\/videos\/(?<youtubeId>[\w-]{11})\/tags\/(?<videoTagId>[\d-]+)*$/', 'controller' => 'VideoTagController', 'action' => 'delete', 'method' => 'GET'],
 
-            ['route' => '/^\/api\/youtube\/(?<youtubeId>[\w-]{11})\/*$/', 'controller' => 'YouTubeController', 'action' => 'get_artist_and_title', 'method' => 'GET']
+            ['route' => '/^\/api\/youtube\/(?<youtubeId>[\w-]{11})\/*$/', 'controller' => 'YouTubeController', 'action' => 'get_artist_and_title', 'method' => 'GET'],
+
+            ['route' => '/^\/api\/users\/*$/', 'controller' => 'UserController', 'action' => 'create', 'method' => 'POST'],
+            ['route' => '/^\/api\/users\/login\/*$/', 'controller' => 'UserController', 'action' => 'login', 'method' => 'POST']
         ];
 
     public const METHODS_WITH_INPUT = [

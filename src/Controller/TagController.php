@@ -9,6 +9,7 @@ use DTO\VideoTagCreate;
 use Factory\VideoTagFactory;
 use Repository\TagRepository;
 use Repository\VideoTagRepository;
+use Service\TokenService;
 
 class TagController extends BaseController
 {
@@ -18,20 +19,32 @@ class TagController extends BaseController
 
     private $video_tag_repository;
 
+    private $token_service;
+
+
     public function __construct()
     {
         $this->tag_repository = new TagRepository();
         $this->video_tag_repository = new VideoTagRepository();
         $this->video_tag_factory = new VideoTagFactory();
+        $this->token_service = new TokenService();
     }
 
     public function create(object $data): void
     {
+        $token = $this->getBearerToken();
+
+        $user_id = null;
+        if($token){
+           $user_id = $this->token_service->decode_user_id($token);
+        }
+
         $video_tag_create = new VideoTagCreate(
             $data->youtube_id,
             $data->tag_name,
             $data->start,
-            $data->stop
+            $data->stop,
+            $user_id
         );
 
         $this->video_tag_factory->create($video_tag_create);
@@ -65,5 +78,15 @@ class TagController extends BaseController
         $tags = $this->tag_repository->newest_ten();
 
         $this->response($tags);
+    }
+
+    function getBearerToken(): ?string {
+        $bearer_token = getallheaders()['Authorization'] ?? null;
+        if ($bearer_token) {
+            if (preg_match('/Bearer\s(\S+)/', $bearer_token, $matches)) {
+                return $matches[1];
+            }
+        }
+        return null;
     }
 }

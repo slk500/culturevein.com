@@ -20,6 +20,10 @@ class User
      * @var string
      */
     public $username;
+    /**
+     * @var int
+     */
+    public $user_id;
 
     public function __construct(string $email, string $password, string $username)
     {

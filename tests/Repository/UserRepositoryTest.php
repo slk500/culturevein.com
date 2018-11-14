@@ -35,12 +35,29 @@ class UserRepositoryTest extends TestCase
 
         $user = new User($email, 'password','slk500');
 
-        $this->user_repository->create($user);
+        $user_id = $this->user_repository->create($user);
 
         $user = $this->user_repository->find($email);
 
         $this->assertInstanceOf(User::class, $user);
         $this->assertSame($email, $user->email);
+        $this->assertSame(1, $user_id);
 
+    }
+
+    /**
+     * @test
+     */
+    public function find_when_email_not_in_database()
+    {
+        $email = 'slawomir.grochowski@gmail.com';
+
+        $user = new User($email, 'password','slk500');
+
+        $this->user_repository->create($user);
+
+        $user = $this->user_repository->find('other@email.com');
+
+        $this->assertNull($user);
     }
 }

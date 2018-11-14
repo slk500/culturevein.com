@@ -19,12 +19,15 @@ class VideoTagCreate
 
     public $stop;
 
-    public function __construct(string $video_youtube_id, string $tag_name, ?int $start, ?int $stop)
+    public $user_id;
+
+    public function __construct(string $video_youtube_id, string $tag_name, ?int $start, ?int $stop, ?int $user_id = null)
     {
         $this->video_youtube_id = $video_youtube_id;
         $this->tag_name = $tag_name;
         $this->tag_slug_id = (new Slugify())->slugify($tag_name);
         $this->start = $start;
         $this->stop = $stop;
+        $this->user_id = $user_id;
     }
 }
