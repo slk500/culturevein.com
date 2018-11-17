@@ -45,7 +45,10 @@ final class VideoTagRepository
     //todo should be one query
     public function archive(int $video_tag_id, ?int $user_id = null): void
     {
-        $stmt = $this->database->mysqli->prepare("INSERT INTO video_tag_history SELECT *, ? FROM video_tag WHERE video_tag_id = ?");
+        $stmt = $this->database->mysqli->prepare("
+        INSERT INTO video_tag_history (video_tag_id, video_youtube_id, tag_slug_id, user_id, start, stop, description, created_at, deleted_by)  
+        SELECT video_tag_id,video_youtube_id,tag_slug_id, user_id, start, stop, description, created_at, ? 
+        FROM video_tag WHERE video_tag_id = ?");
         if (!$stmt) {
             throw new \Exception($this->database->mysqli->error);
         }
