@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../auth.service";
 import {Router} from "@angular/router";
 
+class RegisterUserData implements IRegisterUserData {
+    email: string;
+    password: string;
+    username: string;
+}
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -10,7 +16,7 @@ import {Router} from "@angular/router";
 
 export class RegisterComponent implements OnInit {
 
-  public registerUserData: IRegisterUserData;
+  public registerUserData: IRegisterUserData = new RegisterUserData();
 
   public errors;
 

@@ -2,14 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../auth.service";
 import {Router} from "@angular/router";
 
+class LoginUserData implements ILoginUserData {
+    email: string;
+    password: string;
+}
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent implements OnInit {
 
-  public loginUserData: ILoginUserData;
+  public loginUserData: ILoginUserData = new LoginUserData();
 
   public errors;
 

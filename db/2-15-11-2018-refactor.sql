@@ -245,10 +245,10 @@ LOCK TABLES `video_tag_history` WRITE;
 UNLOCK TABLES;
 
 --
--- Dumping routines for database 'test'
+-- Dumping routines for database 'slk_culturevein'
 --
 /*!50003 DROP FUNCTION IF EXISTS `clean_time` */;
-ALTER DATABASE `test` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+ALTER DATABASE `slk_culturevein` CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -275,7 +275,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-ALTER DATABASE `test` CHARACTER SET utf8 COLLATE utf8_general_ci ;
+ALTER DATABASE `slk_culturevein` CHARACTER SET utf8 COLLATE utf8_general_ci ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
