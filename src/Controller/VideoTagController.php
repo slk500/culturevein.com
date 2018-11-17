@@ -28,11 +28,7 @@ class VideoTagController extends BaseController
     public function delete($video_tag_id)
     {
         $token = $this->getBearerToken();
-
-        $user_id = null;
-        if($token){
-            $user_id = $this->token_service->decode_user_id($token);
-        }
+        $user_id = $this->token_service->decode_user_id($token);
 
         $this->video_tag_deleter->delete((int) $video_tag_id, $user_id);
 

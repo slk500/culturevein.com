@@ -43,7 +43,7 @@ final class VideoTagRepository
     }
 
     //todo should be one query
-    public function archive(int $video_tag_id, ?int $user_id): void
+    public function archive(int $video_tag_id, ?int $user_id = null): void
     {
         $stmt = $this->database->mysqli->prepare("INSERT INTO video_tag_history SELECT *, ? FROM video_tag WHERE video_tag_id = ?");
         if (!$stmt) {

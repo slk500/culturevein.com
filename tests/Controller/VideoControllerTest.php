@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
+use Repository\VideoRepository;
 use Service\DatabaseHelper;
 
 class VideoControllerTest extends TestCase
@@ -12,15 +13,23 @@ class VideoControllerTest extends TestCase
      */
     private $client;
 
+    /**
+     * @var VideoRepository
+     */
+    private $video_repository;
+
     public static function setUpBeforeClass()
     {
         $databaseHelper = new DatabaseHelper();
+
         $databaseHelper->truncate_all_tables();
     }
 
 
     public function setUp()
     {
+        $this->video_repository = new VideoRepository();
+
         $this->client = new GuzzleHttp\Client([
             'base_uri' => 'http://localhost:8000',
         ]);
@@ -33,22 +42,25 @@ class VideoControllerTest extends TestCase
      */
     public function create_video()
     {
+        $json = [
+            'artist' => 'Burak Yeter',
+            'name' => 'Tuesday ft. Danelle Sandoval',
+            'youtube_id' => 'Y1_VsyLAGuk'
+        ];
+
         $response = $this->client->post(
             'api/videos',
             [
-                'json' => [
-                    'artist' => 'Burak Yeter',
-                    'name' => 'Tuesday ft. Danelle Sandoval',
-                    'youtube_id' => 'Y1_VsyLAGuk'
-                ]
+                'json' => $json
             ]
         );
 
-     //   $this->assertEquals(201,$response->getStatusCode());
+        $this->assertEquals(201,$response->getStatusCode());
 
-        $this->assertJsonStringEqualsJsonString($response->getBody()->getContents(),
-            '{"artist_name":"Burak Yeter","video_name":"Tuesday ft. Danelle Sandoval","youtube_id":"Y1_VsyLAGuk"}'
-            );
+        $video = $this->video_repository->find($json['youtube_id']);
+
+        $this->assertSame($json['name'], $video->video_name);
+        $this->assertSame($json['youtube_id'], $video->video_youtube_id);
     }
 }
 

@@ -11,6 +11,7 @@ use Normalizer\VideoTagNormalizer;
 use Repository\TagRepository;
 use Repository\VideoRepository;
 use Repository\VideoTagRepository;
+use Service\TokenService;
 
 class VideoController extends BaseController
 {
@@ -20,19 +21,27 @@ class VideoController extends BaseController
 
     private $video_factory;
 
+    private $token_service;
+
     public function __construct()
     {
         $this->video_repository = new VideoRepository();
         $this->video_tag_repository = new VideoTagRepository();
         $this->video_factory = new VideoFactory();
+        $this->token_service = new TokenService();
     }
 
     public function create(object $data)
     {
+        $token = $this->getBearerToken();
+
+        $user_id = $this->token_service->decode_user_id($token);
+
         $video_create = new VideoCreate(
             $data->artist,
             $data->name,
-            $data->youtube_id
+            $data->youtube_id,
+            $user_id
         );
 
         $this->video_factory->create($video_create);

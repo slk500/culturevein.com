@@ -44,13 +44,13 @@ final class TokenService
         return (string) $jwt;
     }
 
-    public function decode_user_id(string $token): ?int
+    public function decode_user_id(?string $token): ?int
     {
         try{
             $decoded = JWT::decode($token, $this->token_secret, array('HS256'));
         }catch (UnexpectedValueException $e) {
           if($e instanceof ExpiredException){
-              throw new \Exception('Token expired!');
+              throw $e;
           }
 
             return null;

@@ -16,12 +16,15 @@ class VideoCreateBuilder
 
     private $youtube_id = 'Y1_VsyLAGuk';
 
+    private $user_id = null;
+
     public function build(): VideoCreate
     {
         return new VideoCreate(
             $this->artist_name,
             $this->video_name,
-            $this->youtube_id
+            $this->youtube_id,
+            $this->user_id
         );
     }
 
@@ -40,6 +43,12 @@ class VideoCreateBuilder
     public function youtube_id(string $youtube_id): self
     {
         $this->youtube_id = $youtube_id;
+        return $this;
+    }
+
+    public function user_id(int $user_id): self
+    {
+        $this->user_id = $user_id;
         return $this;
     }
 }

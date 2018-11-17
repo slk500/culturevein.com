@@ -34,10 +34,7 @@ class TagController extends BaseController
     {
         $token = $this->getBearerToken();
 
-        $user_id = null;
-        if($token){
-           $user_id = $this->token_service->decode_user_id($token);
-        }
+        $user_id = $this->token_service->decode_user_id($token);
 
         $video_tag_create = new VideoTagCreate(
             $data->youtube_id,

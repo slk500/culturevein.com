@@ -10,6 +10,8 @@ class Video
 {
     public $video_youtube_id;
 
+    public $user_id;
+
     public $video_name;
 
     public $artist_name;

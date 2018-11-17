@@ -8,9 +8,11 @@ use Factory\VideoFactory;
 use DTO\VideoCreate;
 use PHPUnit\Framework\TestCase;
 use Repository\ArtistRepository;
+use Repository\UserRepository;
 use Repository\VideoRepository;
 use Repository\VideoTagRepository;
 use Service\DatabaseHelper;
+use Tests\Builder\UserBuilder;
 use Tests\Builder\VideoCreateBuilder;
 
 class VideoFactoryTest extends TestCase
@@ -20,17 +22,9 @@ class VideoFactoryTest extends TestCase
      */
     private $video_repository;
 
-    public static function setUpBeforeClass()
-    {
-        (new DatabaseHelper())->truncate_all_tables();
-    }
-
     public function setUp()
     {
-        (new DatabaseHelper())->truncate_tables([
-            'artist',
-            'video'
-        ]);
+        (new DatabaseHelper())->truncate_all_tables();
 
         $this->video_repository = new VideoRepository();
     }
@@ -40,7 +34,12 @@ class VideoFactoryTest extends TestCase
      */
     public function create_and_find()
     {
-        $video_create = (new VideoCreateBuilder())->build();
+        $user = (new UserBuilder())->build();
+        (new UserRepository())->create($user);
+
+        $video_create = (new VideoCreateBuilder())
+            ->user_id(1)
+            ->build();
 
         (new VideoFactory())->create($video_create);
 
@@ -49,6 +48,7 @@ class VideoFactoryTest extends TestCase
         $this->assertSame($video_create->video_name, $video->video_name);
         $this->assertSame($video_create->artist_name, $video->artist_name);
         $this->assertSame($video_create->youtube_id, $video->video_youtube_id);
+        $this->assertSame($video_create->user_id, $video->user_id);
     }
 }
 

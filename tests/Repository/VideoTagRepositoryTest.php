@@ -24,11 +24,6 @@ class VideoTagRepositoryTest extends TestCase
 
     private $youtube_id;
 
-    public static function setUpBeforeClass()
-    {
-        (new DatabaseHelper())->truncate_all_tables();
-    }
-
     public function setUp()
     {
         (new DatabaseHelper())->truncate_all_tables();

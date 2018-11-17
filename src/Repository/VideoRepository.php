@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Repository;
 
+use DTO\VideoCreate;
 use Model\Video;
 use Repository\Base\Database;
 use Service\YouTubeService;
@@ -27,13 +28,13 @@ final class VideoRepository
         $this->database = new Database();
     }
 
-    public function create(string $video_name, string $youtube_id): void
+    public function create(VideoCreate $video_create): void
     {
         //todo have to move out
-        $duration = $this->youtube->get_duration($youtube_id);
+        $duration = $this->youtube->get_duration($video_create->youtube_id);
 
-        $stmt = $this->database->mysqli->prepare("INSERT INTO video (video_youtube_id, name, duration) VALUES (?,?,?)");
-        $stmt->bind_param("ssi", $youtube_id, $video_name, $duration);
+        $stmt = $this->database->mysqli->prepare("INSERT INTO video (video_youtube_id, name, duration, user_id) VALUES (?,?,?,?)");
+        $stmt->bind_param("ssii", $video_create->youtube_id, $video_create->video_name, $duration, $video_create->user_id);
         $stmt->execute();
     }
 
@@ -44,7 +45,8 @@ final class VideoRepository
             video.name as video_name, 
             video.release_date, 
             video.video_youtube_id, 
-            video.duration, 
+            video.duration,
+            video.user_id,
             artist.name as artist_name
             FROM video
             LEFT JOIN artist_video USING (video_youtube_id)
