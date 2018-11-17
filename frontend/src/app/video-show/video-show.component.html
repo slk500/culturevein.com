@@ -16,12 +16,14 @@
                 <li *ngFor="let tag of videoTags"
                     [ngClass]="tagStyle(tag)">
                     <a [routerLink]="['/tags', tag.tag_slug_id]" style="color:white">{{ tag.tag_name }} </a>
-                    <span *ngIf="isVideoTagWithoutTime(tag)" (click)="deleteVideoTag(videoInfo.video_youtube_id, tag.video_tags[0].video_tag_id)" class="glyphicon glyphicon-remove-circle button"></span>
+                    <span *ngIf="isVideoTagWithoutTime(tag)" (click)="deleteVideoTag(videoInfo.video_youtube_id, tag.video_tags[0].video_tag_id)"
+                          class="glyphicon glyphicon-remove-circle button" style="cursor:pointer"></span>
 
                     <ol *ngIf="tag.video_tags[0].start != null">
                         <li *ngFor="let video_tag of tag.video_tags">
-                            <a (click)="playPart(video_tag.start, video_tag.stop)">{{ video_tag.start |minuteSeconds }} - {{ video_tag.stop |minuteSeconds }} </a>
-                            <span (click)="deleteVideoTag(videoInfo.video_youtube_id, video_tag.video_tag_id)" class="glyphicon glyphicon-remove-circle button"></span>
+                            <a (click)="playPart(video_tag.start, video_tag.stop)" style="cursor:pointer" >{{ video_tag.start |minuteSeconds }} - {{ video_tag.stop |minuteSeconds }} </a>
+                            <span (click)="deleteVideoTag(videoInfo.video_youtube_id, video_tag.video_tag_id)"
+                                  class="glyphicon glyphicon-remove-circle button" style="cursor:pointer"></span>
                         </li>
                     </ol>
 
@@ -29,7 +31,7 @@
             </ul>
         </div>
             <div>
-                <select2  [cssImport]=true [options]="select2Options" [width]="'50%'" (valueChanged)="changed($event)" [value]="selectedValue" >
+                <select2  [cssImport]=true [options]="select2Options" [width]="'50%'" (valueChanged)="changed($event)">
                     <option></option>
                     <option *ngFor="let tag of tags">{{ tag.tag_name }}</option>
                 </select2>

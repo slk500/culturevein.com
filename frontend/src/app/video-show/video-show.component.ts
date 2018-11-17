@@ -101,7 +101,7 @@ export class VideoShowComponent implements OnInit {
     public changed(e: any): void {
         this.isSelect2ChangedValue = true;
         this.selectedValue = e.value;
-        this.isTagVideoAlreadyExistWithNoTime = this.isSelectedTagWasAddedWithNoTime();
+        this.isTagVideoAlreadyExistWithNoTime = this.isSelectedVideoTagExist(this.selectedValue);
     }
 
     convertToFormat(data) {
@@ -115,14 +115,15 @@ export class VideoShowComponent implements OnInit {
         this.isExposureTime = answer;
     }
 
-    isSelectedTagWasAddedWithNoTime(): boolean {
+    isSelectedVideoTagExist(selected): boolean {
 
         for (let index = 0; index < this.videoTags.length; ++index) {
-            if (this.videoTags[index].name == this.selectedValue) {
+            if (this.videoTags[index].tag_name == selected) {
                 return true;
             }
         }
         return false;
+
     }
 
     addTag(): void {
