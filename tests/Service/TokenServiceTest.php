@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Service;
 
+use Firebase\JWT\ExpiredException;
+use Firebase\JWT\JWT;
 use PHPUnit\Framework\TestCase;
 use Service\TokenService;
+use Symfony\Component\Dotenv\Dotenv;
 
 class TokenServiceTest extends TestCase
 {
@@ -14,8 +17,17 @@ class TokenServiceTest extends TestCase
      */
     private $token_service;
 
+    /**
+     * @var string
+     */
+    private $token_secret;
+
     public function setUp()
     {
+        $dotenv = new Dotenv();
+        $dotenv->load(__DIR__.'/../../.env');
+
+        $this->token_secret = getenv('TOKEN_SECRET');
         $this->token_service = new TokenService();
     }
 
@@ -29,5 +41,24 @@ class TokenServiceTest extends TestCase
        $user_id = $this->token_service->decode_user_id($token);
 
        $this->assertSame(10, $user_id);
+    }
+
+    /**
+     * @test
+     */
+    public function token_expired()
+    {
+        $this->expectException(ExpiredException::class);
+
+        $payload = [
+            "user_id" => 1,
+            "exp" => time() - 100
+        ];
+
+
+        $token = JWT::encode($payload, $this->token_secret);
+
+        $decoded = JWT::decode($token, $this->token_secret, array('HS256'));
+
     }
 }
