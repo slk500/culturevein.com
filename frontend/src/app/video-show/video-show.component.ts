@@ -88,10 +88,6 @@ export class VideoShowComponent implements OnInit {
 
     }
 
-    public deleteTag(videoId: string, slug: string) {
-        console.log('deleteTag ' + slug + ' ' + videoId);
-    }
-
     public deleteVideoTag(youtube_id, video_tag_id) {
 
         this._tagService.deleteVideoTag(youtube_id, video_tag_id)

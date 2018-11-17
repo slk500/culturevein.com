@@ -9,7 +9,7 @@ import {Router} from "@angular/router";
 })
 export class LoginComponent implements OnInit {
 
-  loginUserData = {};
+  public loginUserData: ILoginUserData;
 
   public errors;
 

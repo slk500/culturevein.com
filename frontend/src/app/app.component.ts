@@ -15,7 +15,7 @@ export class AppComponent {
 
     public href: string = "";
 
-    constructor(private router: Router, private inputService: InputService, private _authService: AuthService) {}
+    constructor(private router: Router, private inputService: InputService, public _authService: AuthService) {}
 
     updateValue(e){
         this.editUser = e.target.value;
