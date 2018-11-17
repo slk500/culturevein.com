@@ -7,7 +7,10 @@ namespace Tests\Deleter;
 use Factory\VideoFactory;
 use Factory\VideoTagFactory;
 use Model\Tag;
+use Model\User;
+use Repository\History\VideoTagHistoryRepository;
 use Repository\TagRepository;
+use Repository\UserRepository;
 use Repository\VideoTagRepository;
 use Tests\Builder\VideoCreateBuilder;
 use Tests\Builder\VideoTagCreateBuilder;
@@ -27,15 +30,16 @@ class VideoTagDeleterTest extends TestCase
      */
     private $video_tag_deleter;
 
-    public static function setUpBeforeClass()
-    {
-        (new DatabaseHelper())->truncate_all_tables();
-    }
+    /**
+     * @var VideoTagHistoryRepository
+     */
+    private $video_tag_history_repository;
 
     public function setUp()
     {
         $this->video_tag_repository = new VideoTagRepository();
         $this->video_tag_deleter = new VideoTagDeleter();
+        $this->video_tag_history_repository= new VideoTagHistoryRepository();
 
         (new DatabaseHelper())->truncate_all_tables();
     }
@@ -46,6 +50,11 @@ class VideoTagDeleterTest extends TestCase
      */
     public function ARCHIVE_AND_DELETE_video_tag_IF_two_with_time_range_exist()
     {
+        $user = new User('mario@o2.pl','password', 'slk');
+
+        $user_repository = new UserRepository();
+        $user_repository->create($user);
+
         $tag = new Tag('tag name');
 
         (new TagRepository())->create($tag);
@@ -62,19 +71,17 @@ class VideoTagDeleterTest extends TestCase
         $video_tags = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
         $this->assertCount(2, $video_tags);
 
-        $this->video_tag_deleter->delete(1);
+        $this->video_tag_deleter->delete(1, 1);
 
         $video_tags = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
         $this->assertCount(1, $video_tags);
-
-
     }
 
     /**
      * @test
      * @covers \Deleter\VideoTagDeleter::delete()
      */
-    public function ARCHIVE_AND_DELETE_video_tag_IF_only_one_video_tag_exist_and_time_range_is_null()
+    public function ARCHIVE_AND_DELETE_video_tag_IF_only_one_video_tag_exist_AND_time_range_is_null_AND_user_exist()
     {
         $tag = new Tag('tag name');
 
@@ -89,11 +96,47 @@ class VideoTagDeleterTest extends TestCase
             ->build();
         (new VideoTagFactory())->create($video_tag_create);
 
-        $this->video_tag_deleter->delete(1);
+        $video_tags = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
+        $this->assertCount(1, $video_tags);
+
+        $this->video_tag_deleter->delete(1, 1);
 
         $video_tags = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
-
         $this->assertCount(0, $video_tags);
+
+        $video_tags_history = $this->video_tag_history_repository->find_all();
+        $this->assertCount(1, $video_tags_history);
+    }
+
+    /**
+     * @test
+     * @covers \Deleter\VideoTagDeleter::delete()
+     */
+    public function ARCHIVE_AND_DELETE_video_tag_IF_only_one_video_tag_exist_AND_time_range_is_null_AND_user_dosent_exist()
+    {
+        $tag = new Tag('tag name');
+
+        (new TagRepository())->create($tag);
+
+        $video_create = (new VideoCreateBuilder())->build();
+        (new VideoFactory())->create($video_create);
+
+        $video_tag_create = (new VideoTagCreateBuilder())
+            ->start(null)
+            ->stop(null)
+            ->build();
+        (new VideoTagFactory())->create($video_tag_create);
+
+        $video_tags = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
+        $this->assertCount(1, $video_tags);
+
+        $this->video_tag_deleter->delete(1, null);
+
+        $video_tags = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
+        $this->assertCount(0, $video_tags);
+
+        $video_tags_history = $this->video_tag_history_repository->find_all();
+        $this->assertCount(1, $video_tags_history);
     }
 
     /**
@@ -118,7 +161,7 @@ class VideoTagDeleterTest extends TestCase
         $this->assertSame(0, $video_tag->start);
         $this->assertSame(20, $video_tag->stop);
 
-        $this->video_tag_deleter->delete($video_tag->video_tag_id);
+        $this->video_tag_deleter->delete($video_tag->video_tag_id, 1);
 
         $result = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
         $video_tag_after_delete = end($result);

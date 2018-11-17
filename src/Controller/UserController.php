@@ -84,6 +84,8 @@ class UserController extends BaseController
             $this->response_unauthorized('Password Mismatch');die;
         }
 
-        $this->response();
+        $token = $this->token_service->create_token($user->user_id);
+
+        $this->response(['token' => $token]);
     }
 }

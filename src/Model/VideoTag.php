@@ -21,4 +21,6 @@ class VideoTag
     public $tag_slug_id;
 
     public $complete;
+
+    public $user_id;
 }

@@ -79,14 +79,4 @@ class TagController extends BaseController
 
         $this->response($tags);
     }
-
-    function getBearerToken(): ?string {
-        $bearer_token = getallheaders()['Authorization'] ?? null;
-        if ($bearer_token) {
-            if (preg_match('/Bearer\s(\S+)/', $bearer_token, $matches)) {
-                return $matches[1];
-            }
-        }
-        return null;
-    }
 }

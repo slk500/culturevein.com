@@ -34,13 +34,13 @@ class VideoTagRepositoryTest extends TestCase
         (new DatabaseHelper())->truncate_all_tables();
 
         $this->video_tag_repository = new VideoTagRepository();
-
     }
 
     /**
      * @test
+     * @covers \Repository\VideoTagRepository::is_only_one()
      */
-    public function archive_COPY_video_tag_to_another_table()
+    public function COPY_video_tag_to_another_table()
     {
         $this->markTestSkipped('Behaviour change, fix it later');
 
@@ -62,8 +62,9 @@ class VideoTagRepositoryTest extends TestCase
 
     /**
      * @test
+     * @covers \Repository\VideoTagRepository::is_only_one()
      */
-    public function is_only_one_RETURN_true_IF_only_one_tag_video_exist()
+    public function RETURN_true_IF_only_one_tag_video_exist()
     {
         $tag = new Tag('tag name');
         (new TagRepository())->create($tag);
@@ -87,6 +88,7 @@ class VideoTagRepositoryTest extends TestCase
 
     /**
      * @test
+     * @covers \Repository\VideoTagRepository::is_only_one()
      */
     public function is_only_one_RETURN_false_IF_more_tag_video_exist()
     {
@@ -116,6 +118,7 @@ class VideoTagRepositoryTest extends TestCase
 
     /**
      * @test
+     * @covers \Repository\VideoTagRepository::create()
      */
     public function create_video_tag()
     {
@@ -123,7 +126,6 @@ class VideoTagRepositoryTest extends TestCase
 
         $user_repository = new UserRepository();
         $user_repository->create($user);
-
 
         $tag = new Tag('tag name');
         (new TagRepository())->create($tag);
@@ -146,6 +148,7 @@ class VideoTagRepositoryTest extends TestCase
 
     /**
      * @test
+     * @covers \Repository\VideoTagRepository::find()
      */
     public function find()
     {

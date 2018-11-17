@@ -24,6 +24,10 @@ final class VideoTagRepository
     {
         $stmt = $this->database->mysqli->prepare("INSERT INTO video_tag (video_youtube_id, tag_slug_id, start, stop, user_id) VALUES (?, ?, ?, ?, ?)");
 
+        if (!$stmt) {
+            throw new \Exception($this->database->mysqli->error);
+        }
+
         $stmt->bind_param("ssiii",
             $video_tag_create->video_youtube_id,
              $video_tag_create->tag_slug_id,
@@ -31,27 +35,42 @@ final class VideoTagRepository
                     $video_tag_create->stop,
                     $video_tag_create->user_id
         );
-        $stmt->execute();
+
+        if (!$stmt->execute()) {
+            throw new \Exception($stmt->error);
+        }
 
     }
 
     //todo should be one query
-    public function archive(int $video_tag_id): void
+    public function archive(int $video_tag_id, ?int $user_id): void
     {
-        $stmt = $this->database->mysqli->prepare("INSERT INTO video_tag_history SELECT * FROM video_tag WHERE video_tag_id = ?");
-        $stmt->bind_param("i", $video_tag_id);
-        $stmt->execute();
+        $stmt = $this->database->mysqli->prepare("INSERT INTO video_tag_history SELECT *, ? FROM video_tag WHERE video_tag_id = ?");
+        if (!$stmt) {
+            throw new \Exception($this->database->mysqli->error);
+        }
+
+        $stmt->bind_param("ii", $user_id, $video_tag_id);
+        if (!$stmt->execute()) {
+            throw new \Exception($stmt->error);
+        }
     }
 
     public function delete(int $video_tag_id): void
     {
         $stmt = $this->database->mysqli->prepare("DELETE FROM video_tag where video_tag_id = ?");
+
+        if (!$stmt) {
+            throw new \Exception($this->database->mysqli->error);
+        }
+
         $stmt->bind_param("i", $video_tag_id);
-        $stmt->execute();
+
+        if (!$stmt->execute()) {
+            throw new \Exception($stmt->error);
+        }
+
     }
-
-
-
 
     public function is_only_one(int $video_tag_id): bool
     {
@@ -83,6 +102,7 @@ final class VideoTagRepository
         vt.video_youtube_id,
         start,
         stop,
+        vt.user_id,
         vt.tag_slug_id,
         tvc.video_youtube_id is not null as complete
         FROM video_tag vt

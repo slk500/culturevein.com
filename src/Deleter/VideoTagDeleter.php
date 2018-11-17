@@ -17,12 +17,12 @@ class VideoTagDeleter
         $this->video_tag_repository = new VideoTagRepository();
     }
 
-    public function delete(int $video_tag_id)
+    public function delete(int $video_tag_id, ?int $user_id)
     {
         $video_tag = $this->video_tag_repository->find($video_tag_id);
         $is_only_one = $this->video_tag_repository->is_only_one($video_tag_id);
 
-        $this->video_tag_repository->archive($video_tag_id);
+        $this->video_tag_repository->archive($video_tag_id, $user_id);
 
         if($is_only_one){
             if($this->is_time_range_null($video_tag)){
@@ -40,6 +40,5 @@ class VideoTagDeleter
     {
         return $video_tag->start === null && $video_tag->stop === null;
     }
-
 }
 
