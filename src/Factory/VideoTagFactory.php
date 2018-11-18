@@ -25,10 +25,17 @@ class VideoTagFactory
         $tag_slug_id = $this->tag_repository->find_slug_id_by_name($video_tag_create->tag_name);
 
         if (!$tag_slug_id) {
-            $this->tag_repository->create(
-                new Tag($video_tag_create->tag_name));
+            $tag = new Tag($video_tag_create->tag_name);
+            $this->tag_repository->create($tag);
         }
 
-        $this->video_tag_repository->create($video_tag_create);
+        $video_tag_id = $this->video_tag_repository->find_video_tag_id_without_time(
+            $video_tag_create->video_youtube_id, $video_tag_create->tag_slug_id);
+
+        if($video_tag_id){
+            $this->video_tag_repository->update_time($video_tag_id, $video_tag_create->start, $video_tag_create->stop);
+        }else{
+            $this->video_tag_repository->create($video_tag_create);
+        }
     }
 }

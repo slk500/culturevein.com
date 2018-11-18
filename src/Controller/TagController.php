@@ -33,7 +33,6 @@ class TagController extends BaseController
     public function create(object $data): void
     {
         $token = $this->getBearerToken();
-
         $user_id = $this->token_service->decode_user_id($token);
 
         $video_tag_create = new VideoTagCreate(

@@ -39,9 +39,6 @@ class VideoTagRepositoryTest extends TestCase
     {
         $this->markTestSkipped('Behaviour change, fix it later');
 
-        $tag = new Tag('tag name');
-        (new TagRepository())->create($tag);
-
         $video_create = (new VideoCreateBuilder())->build();
         (new VideoFactory())->create($video_create);
 
@@ -61,9 +58,6 @@ class VideoTagRepositoryTest extends TestCase
      */
     public function RETURN_true_IF_only_one_tag_video_exist()
     {
-        $tag = new Tag('tag name');
-        (new TagRepository())->create($tag);
-
         $video_create = (new VideoCreateBuilder())->build();
         (new VideoFactory())->create($video_create);
 
@@ -87,9 +81,6 @@ class VideoTagRepositoryTest extends TestCase
      */
     public function is_only_one_RETURN_false_IF_more_tag_video_exist()
     {
-        $tag = new Tag('tag name');
-        (new TagRepository())->create($tag);
-
         $video_create = (new VideoCreateBuilder())->build();
         (new VideoFactory())->create($video_create);
 
@@ -122,9 +113,6 @@ class VideoTagRepositoryTest extends TestCase
         $user_repository = new UserRepository();
         $user_repository->create($user);
 
-        $tag = new Tag('tag name');
-        (new TagRepository())->create($tag);
-
         $video_create = (new VideoCreateBuilder())->build();
         (new VideoFactory())->create($video_create);
 
@@ -147,9 +135,6 @@ class VideoTagRepositoryTest extends TestCase
      */
     public function find()
     {
-        $tag = new Tag('tag name');
-        (new TagRepository())->create($tag);
-
         $video_create = (new VideoCreateBuilder())->build();
         (new VideoFactory())->create($video_create);
 
@@ -159,5 +144,54 @@ class VideoTagRepositoryTest extends TestCase
         $video_tag = $this->video_tag_repository->find(1);
 
         $this->assertInstanceOf(VideoTag::class, $video_tag);
+    }
+
+    /**
+     * @test
+     */
+    public function FIND_video_tag_id_without_time()
+    {
+        $video_create = (new VideoCreateBuilder())->build();
+        (new VideoFactory())->create($video_create);
+
+        $video_tag_create = (new VideoTagCreateBuilder())
+            ->stop(null)
+            ->start(null)
+            ->build();
+        (new VideoTagFactory())->create($video_tag_create);
+
+        $video_tag_id = $this->video_tag_repository->find_video_tag_id_without_time(
+            $video_tag_create->video_youtube_id, $video_tag_create->tag_slug_id);
+
+        $this->assertSame(1, $video_tag_id);
+    }
+
+
+    /**
+     * @test
+     */
+    public function update_time()
+    {
+        $video_create = (new VideoCreateBuilder())->build();
+        (new VideoFactory())->create($video_create);
+
+        $video_tag_create = (new VideoTagCreateBuilder())
+            ->stop(null)
+            ->start(null)
+            ->build();
+        (new VideoTagFactory())->create($video_tag_create);
+
+        $video_tag = $this->video_tag_repository->find(1);
+
+        $this->assertNull($video_tag->start);
+        $this->assertNull($video_tag->stop);
+
+        $this->video_tag_repository->update_time(1,20, 40);
+
+        $video_tag = $this->video_tag_repository->find(1);
+
+        $this->assertSame(20, $video_tag->start);
+        $this->assertSame(40, $video_tag->stop);
+
     }
 }

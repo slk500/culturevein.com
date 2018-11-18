@@ -157,4 +157,38 @@ final class VideoTagRepository
 
         return $video_tag;
     }
+
+    public function find_video_tag_id_without_time(string $youtube_id, string $tag_slug_id): ?int
+    {
+        $stmt = $this->database->mysqli->prepare(
+            "SELECT video_tag_id
+                    FROM video_tag
+                    WHERE video_youtube_id = ? AND tag_slug_id = ? AND start is NULL AND stop is NULL 
+         ");
+
+        $stmt->bind_param("ss", $youtube_id, $tag_slug_id);
+        $stmt->execute();
+
+        $result = $stmt->get_result()
+            ->fetch_object();
+
+        $video_tag_id = $result->video_tag_id ?? null;
+
+        return $video_tag_id;
+    }
+
+    public function update_time(int $video_tag_id, int $start, int $stop)
+    {
+        $stmt = $this->database->mysqli->prepare(
+            "UPDATE video_tag SET start = ?, stop = ? WHERE video_tag_id = ?"
+        );
+        if (!$stmt) {
+            throw new \Exception($this->database->mysqli->error);
+        }
+
+        $stmt->bind_param('iii', $start, $stop, $video_tag_id);
+        if (!$stmt->execute()) {
+            throw new \Exception($stmt->error);
+        }
+    }
 }
