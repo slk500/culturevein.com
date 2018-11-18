@@ -2,11 +2,8 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {VideoService} from "../services/video.service";
 import {TagService} from "../services/tag.service";
-import {NgxY2PlayerComponent, NgxY2PlayerOptions} from "ngx-y2-player";
-import {Select2OptionData} from "ng2-select2";
-import {SliderModule} from 'primeng/slider';
+import {NgxY2PlayerComponent} from "ngx-y2-player";
 import {Ivideo} from "../interfaces/video";
-import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
     selector: 'app-video-show',
@@ -38,9 +35,9 @@ export class VideoShowComponent implements OnInit {
 
     public isSelect2ChangedValue = false;
 
-    public isTagVideoAlreadyExistWithNoTime = false;
+    public isVideoTagExist = false;
 
-    public rangeValues: number[] = [0, 0];
+    public timeRange: number[] = [0, 0];
 
     public selectedValue;
 
@@ -62,8 +59,8 @@ export class VideoShowComponent implements OnInit {
         this._videoService.getVideo(this.youtubeId)
             .subscribe(data => {
                     this.videoInfo = data[0];
-                    this.rangeValues[1] = data[0].duration;
-                    this.rangeValues[0] = 0;
+                    this.timeRange[1] = data[0].duration;
+                    this.timeRange[0] = 0;
                 },
                 error => this.errorMsg = error);
 
@@ -93,15 +90,22 @@ export class VideoShowComponent implements OnInit {
         this._tagService.deleteVideoTag(youtube_id, video_tag_id)
             .subscribe((data: any) => {
                 this._tagService.getVideoTags(this.youtubeId)
-                    .subscribe(data => this.videoTags = data,
+                    .subscribe(data => {
+                        this.videoTags = data;
+                        this.isVideoTagExist = this.isSelectedVideoTagExist(this.selectedValue);
+                        if(!this.isVideoTagExist){
+                            this.setExposureTime(null);
+                        }},
                         error => this.errorMsg = error);
             });
+
     }
 
     public changed(e: any): void {
         this.isSelect2ChangedValue = true;
+        this.isExposureTime = null;
         this.selectedValue = e.value;
-        this.isTagVideoAlreadyExistWithNoTime = this.isSelectedVideoTagExist(this.selectedValue);
+        this.isVideoTagExist = this.isSelectedVideoTagExist(this.selectedValue);
     }
 
     convertToFormat(data) {
@@ -111,7 +115,7 @@ export class VideoShowComponent implements OnInit {
         });
     }
 
-    setExposureTime(answer): void {
+    setExposureTime(answer: boolean): void {
         this.isExposureTime = answer;
     }
 
@@ -126,23 +130,14 @@ export class VideoShowComponent implements OnInit {
 
     }
 
-    addTag(): void {
-
-        let start = null;
-        let stop = null;
-
-        if (this.isExposureTime == true) {
-            start = this.rangeValues[0];
-            stop = this.rangeValues[1];
-        }
-
+    addTag(start, stop): void {
         this._tagService.addVideoTag(this.videoInfo.video_youtube_id, start, stop, this.selectedValue).subscribe((data: any) => {
             this._tagService.getVideoTags(this.youtubeId)
                 .subscribe(data => this.videoTags = data,
                     error => this.errorMsg = error);
         });
         this.tagWasAddedText = true;
-        this.isTagVideoAlreadyExistWithNoTime = true;
+        this.isVideoTagExist = true;
         this.isExposureTime = true;
 
         setTimeout(() => {
@@ -192,10 +187,7 @@ export class VideoShowComponent implements OnInit {
 
     isVideoTagWithoutTime(tag) : boolean {
 
-        if (tag['video_tags'][0]['stop'] == null && tag['video_tags'][0]['start'] == null) {
-            return true;
-        }
+        return tag['video_tags'][0]['stop'] == null && tag['video_tags'][0]['start'] == null;
 
-        return false;
     }
 }
