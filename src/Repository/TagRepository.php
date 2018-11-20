@@ -34,7 +34,7 @@ final class TagRepository
     public function find_all():?array
     {
         $query = "SELECT tag.name as tag_name, tag.tag_slug_id
-                  FROM video_tag
+                  FROM video_tag_time
                   LEFT JOIN tag USING (tag_slug_id)
                   GROUP BY tag_name
                   ORDER BY tag_name";
@@ -48,7 +48,7 @@ final class TagRepository
     {
         $query = "SELECT tag.name as tag_name, count(distinct video.video_youtube_id) AS count, tag.tag_slug_id
                 FROM tag
-                JOIN video_tag USING (tag_slug_id)
+                JOIN video_tag_time USING (tag_slug_id)
                 JOIN video USING (video_youtube_id) 
                 GROUP BY tag.name, tag.tag_slug_id
                 ORDER BY `count` DESC
@@ -62,13 +62,13 @@ final class TagRepository
     public function newest_ten()
     {
         $query = "SELECT video.video_youtube_id, tag.name as tag_name, artist.name as artist_name, video.name AS video_name,
-                tag.tag_slug_id, artist.artist_slug_id as artist_slug, video_tag.created_at
-                FROM video_tag
+                tag.tag_slug_id, artist.artist_slug_id as artist_slug, video_tag_time.created_at
+                FROM video_tag_time
                 JOIN video USING (video_youtube_id) 
                 JOIN tag USING (tag_slug_id)
                 LEFT JOIN artist_video USING (video_youtube_id)
                 LEFT JOIN artist USING (artist_slug_id) 
-                ORDER BY video_tag.created_at DESC
+                ORDER BY video_tag_time.created_at DESC
                 LIMIT 10";
 
         $data = $this->database->fetch($query);
@@ -79,9 +79,9 @@ final class TagRepository
     public function find(string $slug)
     {
         $stmt = $this->database->mysqli->prepare("SELECT video.video_youtube_id, artist.name as artist_name, video.name as video_name,
-                                        clean_time(SUM(video_tag.stop)-SUM(video_tag.start)) AS expose,
+                                        clean_time(SUM(video_tag_time.stop)-SUM(video_tag_time.start)) AS expose,
                                         tag.name, tag.tag_slug_id
-                                        FROM video_tag 
+                                        FROM video_tag_time 
                                         LEFT JOIN video USING (video_youtube_id)
                                         LEFT JOIN tag USING (tag_slug_id)
                                         LEFT JOIN artist_video USING (video_youtube_id)

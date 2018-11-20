@@ -88,7 +88,7 @@ final class VideoRepository
         $query = "SELECT artist.name as artist_name, video.name as video_name, count(DISTINCT tag.tag_slug_id) AS count,
               video.video_youtube_id
               FROM tag
-              JOIN video_tag USING (tag_slug_id)
+              JOIN video_tag_time USING (tag_slug_id)
               JOIN video USING (video_youtube_id)
               LEFT JOIN artist_video USING (video_youtube_id)
               LEFT JOIN artist USING (artist_slug_id)

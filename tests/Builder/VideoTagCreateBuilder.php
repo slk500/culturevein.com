@@ -5,23 +5,18 @@ declare(strict_types=1);
 namespace Tests\Builder;
 
 use DTO\VideoTagCreate;
-use Factory\VideoTagFactory;
 
 class VideoTagCreateBuilder
 {
 
     private $youtube_id = 'Y1_VsyLAGuk';
-    private $tag_name = 'tag name';
-    private $start = 0;
-    private $stop = 20;
+    private $tag_name = 'video game';
 
     public function build(): VideoTagCreate
     {
         return new VideoTagCreate(
             $this->youtube_id,
-            $this->tag_name,
-            $this->start,
-            $this->stop
+            $this->tag_name
         );
     }
 
@@ -34,18 +29,6 @@ class VideoTagCreateBuilder
     public function tag_name(string $tag_name): self
     {
         $this->tag_name = $tag_name;
-        return $this;
-    }
-
-    public function start(?int $start): self
-    {
-        $this->start = $start;
-        return $this;
-    }
-
-    public function stop(?int $stop): self
-    {
-        $this->stop = $stop;
         return $this;
     }
 }

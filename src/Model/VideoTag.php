@@ -10,9 +10,9 @@ class VideoTag
 {
     public $video_tag_id;
 
-    public $tag_name;
-
     public $video_youtube_id;
+
+    public $tag_name;
 
     public $start;
 
