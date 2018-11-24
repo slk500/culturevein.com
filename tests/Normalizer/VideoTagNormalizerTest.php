@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-use Model\VideoTag;
 use Normalizer\VideoTagNormalizer;
 use PHPUnit\Framework\TestCase;
-use Tests\Builder\VideoTagBuilder;
+use Tests\Builder\VideoTag\VideoTagRawBuilder;
 
 class VideoTagNormalizerTest extends TestCase
 {
@@ -24,21 +23,21 @@ class VideoTagNormalizerTest extends TestCase
      */
     public function normalize_one_video_tag()
     {
-        $video_tag = (new VideoTagBuilder())->build();
+        $video_tag_raw = (new VideoTagRawBuilder())->build();
 
-        $output = $this->video_tag_normalizer->normalize([$video_tag]);
+        $output = $this->video_tag_normalizer->normalize([$video_tag_raw]);
 
         $expectedOutput = [
-            [
+            [   'video_tag_id' => 1,
                 'video_youtube_id' => 'HcXNPI-IPPM',
-                'tag_name' => 'BMW',
-                'tag_slug_id' => 'bmw',
-                'complete' => 1,
-                'video_tags' => [
+                'tag_name' => 'video game',
+                'tag_slug_id' => 'video-game',
+                'is_complete' => true,
+                'video_tags_time' => [
                     [
+                        'video_tag_time_id' => 1,
                         'start' => 0,
-                        'stop' => 20,
-                        'video_tag_id' => 10
+                        'stop' => 10,
                     ],
                 ]
             ]
@@ -51,12 +50,12 @@ class VideoTagNormalizerTest extends TestCase
      */
     public function normalize_two_video_tag()
     {
-        $video_tag1 = (new VideoTagBuilder())->build();
+        $video_tag1 = (new VideoTagRawBuilder())->build();
 
-        $video_tag2 = (new VideoTagBuilder())
-            ->video_tag_id(20)
-            ->start(20)
-            ->stop(40)
+        $video_tag2 = (new VideoTagRawBuilder())
+            ->video_tag_time_id(2)
+            ->start(10)
+            ->stop(20)
             ->build();
 
         $input = [$video_tag1, $video_tag2];
@@ -65,20 +64,21 @@ class VideoTagNormalizerTest extends TestCase
 
         $expectedOutput = [
             [
+                'video_tag_id' => 1,
                 'video_youtube_id' => 'HcXNPI-IPPM',
-                'tag_name' => 'BMW',
-                'tag_slug_id' => 'bmw',
-                'complete' => 1,
-                'video_tags' => [
+                'tag_name' => 'video game',
+                'tag_slug_id' => 'video-game',
+                'is_complete' => true,
+                'video_tags_time' => [
                     [
+                        'video_tag_time_id' => 1,
                         'start' => 0,
-                        'stop' => 20,
-                        'video_tag_id' => 10
+                        'stop' => 10,
                     ],
                     [
-                        'start' => 20,
-                        'stop' => 40,
-                        'video_tag_id' => 20
+                        'video_tag_time_id' => 2,
+                        'start' => 10,
+                        'stop' => 20
                     ],
                 ]
             ]
@@ -91,18 +91,18 @@ class VideoTagNormalizerTest extends TestCase
      */
     public function normalize_three_video_tag()
     {
-        $video_tag1 = (new VideoTagBuilder())->build();
+        $video_tag1 = (new VideoTagRawBuilder())->build();
 
-        $video_tag2 = (new VideoTagBuilder())
-            ->video_tag_id(20)
-            ->start(20)
-            ->stop(40)
+        $video_tag2 = (new VideoTagRawBuilder())
+            ->video_tag_time_id(2)
+            ->start(10)
+            ->stop(20)
             ->build();
 
-        $video_tag3 = (new VideoTagBuilder())
-            ->video_tag_id(30)
-            ->start(40)
-            ->stop(60)
+        $video_tag3 = (new VideoTagRawBuilder())
+            ->video_tag_time_id(3)
+            ->start(20)
+            ->stop(30)
             ->build();
 
         $input = [$video_tag1, $video_tag2, $video_tag3];
@@ -111,25 +111,26 @@ class VideoTagNormalizerTest extends TestCase
 
         $expectedOutput = [
             [
+                'video_tag_id' => 1,
                 'video_youtube_id' => 'HcXNPI-IPPM',
-                'tag_name' => 'BMW',
-                'tag_slug_id' => 'bmw',
-                'complete' => 1,
-                'video_tags' => [
+                'tag_name' => 'video game',
+                'tag_slug_id' => 'video-game',
+                'is_complete' => true,
+                'video_tags_time' => [
                     [
+                        'video_tag_time_id' => 1,
                         'start' => 0,
-                        'stop' => 20,
-                        'video_tag_id' => 10
+                        'stop' => 10,
                     ],
                     [
+                        'video_tag_time_id' => 2,
+                        'start' => 10,
+                        'stop' => 20
+                    ],
+                    [
+                        'video_tag_time_id' => 3,
                         'start' => 20,
-                        'stop' => 40,
-                        'video_tag_id' => 20
-                    ],
-                    [
-                        'start' => 40,
-                        'stop' => 60,
-                        'video_tag_id' => 30
+                        'stop' => 30
                     ],
                 ]
             ]
@@ -143,64 +144,59 @@ class VideoTagNormalizerTest extends TestCase
      */
     public function normalize_two_same_one_different_video_tag()
     {
-        $video_tag1 = new VideoTag();
-        $video_tag1->video_tag_id = 10;
-        $video_tag1->video_youtube_id = 'HcXNPI-IPPM';
-        $video_tag1->tag_name = "BMW";
-        $video_tag1->start = 0;
-        $video_tag1->stop = 20;
-        $video_tag1->tag_slug_id = 'bmw';
-        $video_tag1->complete = 1;
+        $video_tag1 = (new VideoTagRawBuilder())->build();
 
-        $video_tag2 = new VideoTag();
-        $video_tag2->video_tag_id = 20;
-        $video_tag2->video_youtube_id = 'HcXNPI-IPPM';
-        $video_tag2->tag_name = "BMW";
-        $video_tag2->start = 20;
-        $video_tag2->stop = 40;
-        $video_tag2->tag_slug_id = 'bmw';
-        $video_tag2->complete = 1;
+        $video_tag2 = (new VideoTagRawBuilder())
+            ->video_tag_time_id(2)
+            ->start(10)
+            ->stop(20)
+            ->build();
 
-        $video_tag3 = new VideoTag();
-        $video_tag3->video_tag_id = 30;
-        $video_tag3->video_youtube_id = 'HcXNPI-IPPM';
-        $video_tag3->tag_name = "Subaru";
-        $video_tag3->start = 40;
-        $video_tag3->stop = 60;
-        $video_tag3->tag_slug_id = 'subaru';
-        $video_tag3->complete = 0;
+
+        $video_tag1 = (new VideoTagRawBuilder())->build();
+
+        $video_tag3 = (new VideoTagRawBuilder())
+            ->video_tag_id(2)
+            ->video_tag_time_id(1)
+            ->tag_name('Subaru')
+            ->start(0)
+            ->stop(10)
+            ->build();
+
 
         $input = [$video_tag1, $video_tag2, $video_tag3];
 
         $expectedResult = [
             [
+                'video_tag_id' => 1,
                 'video_youtube_id' => 'HcXNPI-IPPM',
-                'tag_name' => 'BMW',
-                'tag_slug_id' => 'bmw',
-                'complete' => 1,
-                'video_tags' => [
+                'tag_name' => 'video game',
+                'tag_slug_id' => 'video-game',
+                'is_complete' => true,
+                'video_tags_time' => [
                     [
+                        'video_tag_time_id' => 1,
                         'start' => 0,
-                        'stop' => 20,
-                        'video_tag_id' => 10
+                        'stop' => 10,
                     ],
                     [
-                        'start' => 20,
-                        'stop' => 40,
-                        'video_tag_id' => 20
-                    ]
+                        'video_tag_time_id' => 2,
+                        'start' => 10,
+                        'stop' => 20
+                    ],
                 ]
             ],
             [
+                'video_tag_id' => 2,
                 'video_youtube_id' => 'HcXNPI-IPPM',
                 'tag_name' => 'Subaru',
                 'tag_slug_id' => 'subaru',
-                'complete' => 0,
-                'video_tags' => [
+                'is_complete' => true,
+                'video_tags_time' => [
                     [
-                        'start' => 40,
-                        'stop' => 60,
-                        'video_tag_id' => 30
+                        'video_tag_time_id' => 1,
+                        'start' => 0,
+                        'stop' => 10,
                     ]
                 ]
             ],

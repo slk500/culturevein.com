@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Builder;
+namespace Tests\Builder\VideoTag;
 
 use DTO\VideoTagCreate;
 

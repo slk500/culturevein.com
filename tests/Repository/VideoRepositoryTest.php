@@ -6,8 +6,8 @@ use PHPUnit\Framework\TestCase;
 use Repository\UserRepository;
 use Repository\VideoRepository;
 use Service\DatabaseHelper;
-use Tests\Builder\UserBuilder;
-use Tests\Builder\VideoCreateBuilder;
+use Tests\Builder\User\UserBuilder;
+use Tests\Builder\Video\VideoCreateBuilder;
 
 class VideoRepositoryTest extends TestCase
 {
@@ -31,7 +31,7 @@ class VideoRepositoryTest extends TestCase
         $video_create = (new VideoCreateBuilder())
             ->build();
 
-        $this->video_repository->create($video_create);
+        $this->video_repository->save($video_create);
 
         $video = $this->video_repository->find($video_create->youtube_id);
 
@@ -46,13 +46,13 @@ class VideoRepositoryTest extends TestCase
     public function create_video_with_user_id()
     {
         $user = (new UserBuilder())->build();
-        (new UserRepository())->create($user);
+        (new UserRepository())->save($user);
 
         $video_create = (new VideoCreateBuilder())
             ->user_id(1)
             ->build();
 
-        $this->video_repository->create($video_create);
+        $this->video_repository->save($video_create);
 
         $video = $this->video_repository->find($video_create->youtube_id);
 

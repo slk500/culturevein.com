@@ -60,7 +60,7 @@ class UserController extends BaseController
             $data->username
         );
 
-        $user_id = $this->user_repository->create($user);
+        $user_id = $this->user_repository->save($user);
 
         $token = $this->token_service->create_token($user_id);
 

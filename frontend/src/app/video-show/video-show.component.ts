@@ -130,20 +130,29 @@ export class VideoShowComponent implements OnInit {
 
     }
 
-    addTag(start, stop): void {
-        this._tagService.addVideoTag(this.videoInfo.video_youtube_id, start, stop, this.selectedValue).subscribe((data: any) => {
+    addVideoTag(): void {
+        this._tagService.addVideoTag(this.videoInfo.video_youtube_id, this.selectedValue).subscribe((data: any) => {
             this._tagService.getVideoTags(this.youtubeId)
                 .subscribe(data => this.videoTags = data,
                     error => this.errorMsg = error);
         });
-        this.tagWasAddedText = true;
-        this.isVideoTagExist = true;
-        this.isExposureTime = true;
 
         setTimeout(() => {
             this.tagWasAddedText = false
         }, 3000);
     }
+
+    // addVideoTagTime(start, stop): void {
+    //     this._tagService.addVideoTag(this.videoInfo.video_youtube_id, start, stop, this.selectedValue).subscribe((data: any) => {
+    //         this._tagService.getVideoTags(this.youtubeId)
+    //             .subscribe(data => this.videoTags = data,
+    //                 error => this.errorMsg = error);
+    //     });
+    //
+    //     setTimeout(() => {
+    //         this.tagWasAddedText = false
+    //     }, 3000);
+    // }
 
     stopAt(stop) {
 
@@ -169,25 +178,25 @@ export class VideoShowComponent implements OnInit {
 
     tagStyle(tag): string {
 
-        if (tag['video_tags'][0]['stop'] == null && tag['video_tags'][0]['start'] == null) {
+        if (tag['video_tags_time'] == null) {
             return 'btn-default';
         }
 
-        if (tag.complete) {
+        if (tag.is_complete) {
             return 'btn-success';
         }
 
-        let arr = tag.video_tags[0];
-        if (arr.start == 0 && arr.stop == this.videoInfo.duration) {
-            return 'btn-danger'
-        }
+        // let arr = tag.video_tags[0];
+        // if (arr.start == 0 && arr.stop == this.videoInfo.duration) {
+        //     return 'btn-danger'
+        // }
 
         return 'btn-warning'
     }
 
     isVideoTagWithoutTime(tag) : boolean {
 
-        return tag['video_tags'][0]['stop'] == null && tag['video_tags'][0]['start'] == null;
+     //   return tag['video_tags'][0]['stop'] == null && tag['video_tags'][0]['start'] == null;
 
     }
 }

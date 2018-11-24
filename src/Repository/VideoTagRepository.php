@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Repository;
 
 use DTO\VideoTagCreate;
+use DTO\VideoTagRaw;
 use Model\VideoTag;
 use Repository\Base\Database;
 
@@ -20,9 +21,9 @@ final class VideoTagRepository
         $this->database = new Database();
     }
 
-    public function create(VideoTagCreate $video_tag_create): void
+    public function save(VideoTagCreate $video_tag_create): ?int
     {
-        $stmt = $this->database->mysqli->prepare("INSERT INTO video_tag_time (video_youtube_id, tag_slug_id, user_id) VALUES (?, ?, ?)");
+        $stmt = $this->database->mysqli->prepare("INSERT INTO video_tag (video_youtube_id, tag_slug_id, user_id) VALUES (?, ?, ?)");
 
         if (!$stmt) {
             throw new \Exception($this->database->mysqli->error);
@@ -38,24 +39,10 @@ final class VideoTagRepository
             throw new \Exception($stmt->error);
         }
 
+        return $stmt->insert_id;
     }
 
-    //todo should be one query
-    public function archive(int $video_tag_id, ?int $user_id = null): void
-    {
-        $stmt = $this->database->mysqli->prepare("
-        INSERT INTO video_tag_history (video_tag_id, video_youtube_id, tag_slug_id, user_id, start, stop, description, created_at, deleted_by)  
-        SELECT video_tag_time_id,video_youtube_id,tag_slug_id, user_id, start, stop, description, created_at, ? 
-        FROM video_tag_time WHERE video_tag_time_id = ?");
-        if (!$stmt) {
-            throw new \Exception($this->database->mysqli->error);
-        }
 
-        $stmt->bind_param("ii", $user_id, $video_tag_id);
-        if (!$stmt->execute()) {
-            throw new \Exception($stmt->error);
-        }
-    }
 
     public function delete(int $video_tag_id): void
     {
@@ -79,20 +66,22 @@ final class VideoTagRepository
     public function find_all_for_video(string $youtubeId): array
     {
         $stmt = $this->database->mysqli->prepare("
-        SELECT 
+    SELECT
+        vt.video_tag_id,
         vt.video_youtube_id,
         vt.tag_slug_id,
-        vtt.video_tag_time_id,
         vt.user_id,
-        tag.name as tag_name, 
+        vt.is_complete,
+        vtt.video_tag_time_id,
+        tag.name as tag_name,
         start,
         stop
-        FROM video_tag_time vtt
-        LEFT JOIN video_tag vt using (video_tag_id)
+    FROM video_tag vt
+        LEFT JOIN video_tag_time vtt using (video_tag_id)
         LEFT JOIN tag USING (tag_slug_id)
         LEFT JOIN video USING (video_youtube_id)
---        WHERE video.video_youtube_id = ?
---        ORDER BY tag.name, vt.start
+        WHERE video.video_youtube_id = ?
+        ORDER BY tag.name, start
         ");
 
         $stmt->bind_param("s", $youtubeId);
@@ -101,29 +90,9 @@ final class VideoTagRepository
         $result = $stmt->get_result();
 
         $results = [];
-        while ($obj = mysqli_fetch_object($result, VideoTag::class)){
+        while ($obj = mysqli_fetch_object($result, VideoTagRaw::class)){
             $results[] = $obj;
         }
         return $results;
-    }
-
-    public function find(int $video_tag_id): VideoTag
-    {
-        $stmt = $this->database->mysqli->prepare("
-        SELECT *, t.name as tag_name
-        FROM video_tag_time vt
-        LEFT JOIN tag t on vt.tag_slug_id = t.tag_slug_id
-        WHERE vt.video_tag_time_id = ?
-        ");
-
-        $stmt->bind_param("i", $video_tag_id);
-        $stmt->execute();
-
-        $result = $stmt->get_result();
-        $video_tag = mysqli_fetch_object($result, VideoTag::class);
-        $stmt->free_result();
-        $stmt->close();
-
-        return $video_tag;
     }
 }

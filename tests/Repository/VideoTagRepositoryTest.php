@@ -6,14 +6,15 @@ use Factory\VideoFactory;
 use Factory\VideoTagFactory;
 use Model\Tag;
 use Model\User;
-use Model\VideoTag;
 use PHPUnit\Framework\TestCase;
 use Repository\TagRepository;
 use Repository\UserRepository;
 use Repository\VideoTagRepository;
+use Repository\VideoTagTimeRepository;
 use Service\DatabaseHelper;
-use Tests\Builder\VideoCreateBuilder;
-use Tests\Builder\VideoTagCreateBuilder;
+use Tests\Builder\Video\VideoCreateBuilder;
+use Tests\Builder\VideoTag\VideoTagCreateBuilder;
+use Tests\Builder\VideoTagTime\VideoTagTimeCreateBuilder;
 
 class VideoTagRepositoryTest extends TestCase
 {
@@ -33,22 +34,25 @@ class VideoTagRepositoryTest extends TestCase
 
     /**
      * @test
-     * @covers \Repository\VideoTagRepository::create()
+     * @covers \Repository\VideoTagRepository::save()
      */
     public function create_video_tag()
     {
-        $user = new User('mario@o2.pl','password', 'slk');
+        $user = new User('slawomir.grochowski@gmail.com','password', 'slk');
 
-        (new UserRepository())->create($user);
+        (new UserRepository())->save($user);
 
         $video_create = (new VideoCreateBuilder())->build();
         (new VideoFactory())->create($video_create);
 
         $tag = new Tag('video game');
-        (new TagRepository())->create($tag);
+        (new TagRepository())->save($tag);
 
         $video_tag_create = (new VideoTagCreateBuilder())->build();
-        $this->video_tag_repository->create($video_tag_create);
+        $this->video_tag_repository->save($video_tag_create);
+
+        $video_tag_time_create = (new VideoTagTimeCreateBuilder())->build();
+        (new VideoTagTimeRepository())->save($video_tag_time_create);
 
         $video_tag = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
 
@@ -56,50 +60,7 @@ class VideoTagRepositoryTest extends TestCase
 
         $this->assertSame('video game', $video_tag->tag_name);
         $this->assertSame(0, $video_tag->start);
-        $this->assertSame(20, $video_tag->stop);
+        $this->assertSame(10, $video_tag->stop);
         $this->assertSame($video_create->youtube_id, $video_tag->video_youtube_id);
-    }
-
-
-
-
-    /**
-     * @test
-     * @covers \Repository\VideoTagRepository::is_only_one()
-     */
-    public function COPY_video_tag_to_another_table()
-    {
-        $this->markTestSkipped('Behaviour change, fix it later');
-
-        $video_create = (new VideoCreateBuilder())->build();
-        (new VideoFactory())->create($video_create);
-
-        $video_tag_create = (new VideoTagCreateBuilder())->build();
-        (new VideoTagFactory())->create($video_tag_create);
-
-        $this->video_tag_repository->archive(1);
-
-        $video_tags = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
-
-        $this->assertCount(0, $video_tags);
-    }
-
-
-
-    /**
-     * @test
-     * @covers \Repository\VideoTagRepository::find()
-     */
-    public function find()
-    {
-        $video_create = (new VideoCreateBuilder())->build();
-        (new VideoFactory())->create($video_create);
-
-        $video_tag_create = (new VideoTagCreateBuilder())->build();
-        (new VideoTagFactory())->create($video_tag_create);
-
-        $video_tag = $this->video_tag_repository->find(1);
-
-        $this->assertInstanceOf(VideoTag::class, $video_tag);
     }
 }

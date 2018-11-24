@@ -46,13 +46,11 @@ export class TagService {
 
     }
 
-    addVideoTag(videoId, start, stop, name) {
+    addVideoTag(videoId, name) {
 
        return this.http.post<IVideoTag>('api/tags', {
             youtube_id: videoId,
             tag_name: name,
-            start: start,
-            stop: stop
         })
     }
 

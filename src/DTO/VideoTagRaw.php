@@ -3,10 +3,15 @@
 declare(strict_types=1);
 
 
-namespace Model;
+namespace DTO;
 
-class VideoTag
+
+class VideoTagRaw
 {
+    public $video_tag_time_id;
+
+    public $video_tag_id;
+
     public $video_youtube_id;
 
     public $tag_slug_id;
@@ -15,7 +20,9 @@ class VideoTag
 
     public $is_complete;
 
-    public $video_tag_times;
+    public $start;
+
+    public $stop;
 
     public $user_id;
 }

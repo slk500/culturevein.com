@@ -15,16 +15,17 @@
             <ul class="tag">
                 <li *ngFor="let tag of videoTags"
                     [ngClass]="tagStyle(tag)">
+
                     <a [routerLink]="['/tags', tag.tag_slug_id]" style="color:white">{{ tag.tag_name }} </a>
                     <span *ngIf="isVideoTagWithoutTime(tag)"
-                          (click)="deleteVideoTag(videoInfo.video_youtube_id, tag.video_tags[0].video_tag_id)"
+                          (click)="deleteVideoTag(videoInfo.video_youtube_id, tag.video_tag_id)"
                           class="glyphicon glyphicon-remove-circle button" style="cursor:pointer"></span>
 
-                    <ol *ngIf="tag.video_tags[0].start != null">
-                        <li *ngFor="let video_tag of tag.video_tags">
-                            <a (click)="playPart(video_tag.start, video_tag.stop)" style="cursor:pointer">{{
-                                video_tag.start |minuteSeconds }} - {{ video_tag.stop |minuteSeconds }} </a>
-                            <span (click)="deleteVideoTag(videoInfo.video_youtube_id, video_tag.video_tag_id)"
+                    <ol *ngIf="tag.video_tags_time">
+                        <li *ngFor="let video_tag_time of tag.video_tags_time">
+                            <a (click)="playPart(video_tag_time.start, video_tag_time.stop)" style="cursor:pointer">{{
+                                video_tag_time.start |minuteSeconds }} - {{ video_tag_time.stop |minuteSeconds }} </a>
+                            <span (click)="deleteVideoTag(videoInfo.video_youtube_id, video_tag_time.video_tag_id)"
                                   class="glyphicon glyphicon-remove-circle button" style="cursor:pointer"></span>
                         </li>
                     </ol>
@@ -52,7 +53,7 @@
                     </button>
                     <br>
                     <button type='button' class='btn btn-primary center-block'
-                            (click)="addTag(timeRange[0],timeRange[1])">Add TAG
+                            (click)="addVideoTag(timeRange[0],timeRange[1])">Add TAG
                     </button>
                 </div>
             </div>
@@ -81,7 +82,7 @@
                 </div>
 
                 <button *ngIf="isExposureTime == false" type='button' class='btn btn-primary center-block'
-                        (click)='addTag(null, null)'>Add TAG
+                        (click)="addVideoTag()">Add TAG
                 </button>
             </div>
         </div>

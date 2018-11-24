@@ -12,11 +12,11 @@ use Repository\History\VideoTagHistoryRepository;
 use Repository\TagRepository;
 use Repository\UserRepository;
 use Repository\VideoTagRepository;
-use Tests\Builder\VideoCreateBuilder;
-use Tests\Builder\VideoTagCreateBuilder;
 use Deleter\VideoTagDeleter;
 use PHPUnit\Framework\TestCase;
 use Service\DatabaseHelper;
+use Tests\Builder\Video\VideoCreateBuilder;
+use Tests\Builder\VideoTag\VideoTagCreateBuilder;
 
 class VideoTagDeleterTest extends TestCase
 {
@@ -53,11 +53,11 @@ class VideoTagDeleterTest extends TestCase
         $user = new User('mario@o2.pl','password', 'slk');
 
         $user_repository = new UserRepository();
-        $user_repository->create($user);
+        $user_repository->save($user);
 
         $tag = new Tag('tag name');
 
-        (new TagRepository())->create($tag);
+        (new TagRepository())->save($tag);
 
         $video_create = (new VideoCreateBuilder())->build();
         (new VideoFactory())->create($video_create);
@@ -85,7 +85,7 @@ class VideoTagDeleterTest extends TestCase
     {
         $tag = new Tag('tag name');
 
-        (new TagRepository())->create($tag);
+        (new TagRepository())->save($tag);
 
         $video_create = (new VideoCreateBuilder())->build();
         (new VideoFactory())->create($video_create);
@@ -116,7 +116,7 @@ class VideoTagDeleterTest extends TestCase
     {
         $tag = new Tag('tag name');
 
-        (new TagRepository())->create($tag);
+        (new TagRepository())->save($tag);
 
         $video_create = (new VideoCreateBuilder())->build();
         (new VideoFactory())->create($video_create);
@@ -147,7 +147,7 @@ class VideoTagDeleterTest extends TestCase
     {
         $tag = new Tag('tag name');
 
-        (new TagRepository())->create($tag);
+        (new TagRepository())->save($tag);
 
         $video_create = (new VideoCreateBuilder())->build();
         (new VideoFactory())->create($video_create);

@@ -2,19 +2,16 @@
 
 declare(strict_types=1);
 
-use Controller\TagController;
 use Factory\VideoFactory;
 use DTO\VideoCreate;
 use Model\Tag;
-use Model\VideoTag;
 use PHPUnit\Framework\TestCase;
 use Repository\TagRepository;
 use Repository\UserRepository;
-use Repository\VideoRepository;
 use Repository\VideoTagRepository;
 use Service\DatabaseHelper;
 use Service\TokenService;
-use Tests\Builder\UserBuilder;
+use Tests\Builder\User\UserBuilder;
 
 class TagControllerTest extends TestCase
 {
@@ -50,7 +47,7 @@ class TagControllerTest extends TestCase
     public function CREATE_video_tag_WHEN_user_login()
     {
         $tag = new Tag('tag name');
-        (new TagRepository())->create($tag);
+        (new TagRepository())->save($tag);
 
         $artist_name = 'Burak Yeter';
         $video_name = 'Tuesday ft. Danelle Sandoval';
@@ -65,7 +62,7 @@ class TagControllerTest extends TestCase
 
         $user = (new UserBuilder())->build();
 
-        $user_id = (new UserRepository())->create($user);
+        $user_id = (new UserRepository())->save($user);
 
         $token = (new TokenService())->create_token($user_id);
 
@@ -89,8 +86,6 @@ class TagControllerTest extends TestCase
         $video_tag = (end($result));
 
         $this->assertSame('tag name', $video_tag->tag_name);
-        $this->assertSame(0, $video_tag->start);
-        $this->assertSame(25, $video_tag->stop);
         $this->assertSame($video_create->youtube_id, $video_tag->video_youtube_id);
         $this->assertSame($video_tag->user_id, 1);
     }
@@ -138,7 +133,7 @@ class TagControllerTest extends TestCase
     private function create_video_tag(): \Psr\Http\Message\ResponseInterface
     {
         $tag = new Tag('tag name');
-        (new TagRepository())->create($tag);
+        (new TagRepository())->save($tag);
 
         $artist_name = 'Burak Yeter';
         $video_name = 'Tuesday ft. Danelle Sandoval';

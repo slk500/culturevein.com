@@ -21,7 +21,7 @@ class UserRepository
         $this->database = new Database();
     }
 
-    public function create(User $user): ?int
+    public function save(User $user): ?int
     {
         $stmt = $this->database->mysqli->prepare("INSERT INTO user (email, password, username) VALUES (?, ?, ?)");
         $stmt->bind_param('sss', $user->email, $user->password, $user->username);

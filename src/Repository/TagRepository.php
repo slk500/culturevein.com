@@ -31,11 +31,11 @@ final class TagRepository
         return $tag_slug_id;
     }
 
-    public function find_all():?array
+    public function find_all(): ?array
     {
         $query = "SELECT tag.name as tag_name, tag.tag_slug_id
-                  FROM video_tag_time
-                  LEFT JOIN tag USING (tag_slug_id)
+                  FROM video_tag
+                  JOIN tag USING (tag_slug_id)
                   GROUP BY tag_name
                   ORDER BY tag_name";
 
@@ -48,7 +48,7 @@ final class TagRepository
     {
         $query = "SELECT tag.name as tag_name, count(distinct video.video_youtube_id) AS count, tag.tag_slug_id
                 FROM tag
-                JOIN video_tag_time USING (tag_slug_id)
+                JOIN video_tag USING (tag_slug_id)
                 JOIN video USING (video_youtube_id) 
                 GROUP BY tag.name, tag.tag_slug_id
                 ORDER BY `count` DESC
@@ -62,13 +62,13 @@ final class TagRepository
     public function newest_ten()
     {
         $query = "SELECT video.video_youtube_id, tag.name as tag_name, artist.name as artist_name, video.name AS video_name,
-                tag.tag_slug_id, artist.artist_slug_id as artist_slug, video_tag_time.created_at
-                FROM video_tag_time
+                tag.tag_slug_id, artist.artist_slug_id as artist_slug, video_tag.created_at
+                FROM video_tag
                 JOIN video USING (video_youtube_id) 
                 JOIN tag USING (tag_slug_id)
                 LEFT JOIN artist_video USING (video_youtube_id)
                 LEFT JOIN artist USING (artist_slug_id) 
-                ORDER BY video_tag_time.created_at DESC
+                ORDER BY video_tag.created_at DESC
                 LIMIT 10";
 
         $data = $this->database->fetch($query);
@@ -116,7 +116,7 @@ final class TagRepository
 //        "SELECT count(tag_id) FROM tag_user_subscribe WHERE tag_id = ?";
 //    }
 
-    public function create(Tag $tag): void
+    public function save(Tag $tag): void
     {
         $stmt = $this->database->mysqli->prepare("INSERT INTO tag (name, tag_slug_id) VALUES (?, ?)");
         $stmt->bind_param("ss", $tag->tag_name, $tag->tag_slug_id);

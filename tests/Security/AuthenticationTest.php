@@ -48,7 +48,7 @@ class AuthenticationTest extends TestCase
             'mario'
         );
 
-        (new UserRepository())->create($userData);
+        (new UserRepository())->save($userData);
 
         $user = (new UserRepository())->find('mario@o2.pl');
     }
@@ -60,7 +60,7 @@ class AuthenticationTest extends TestCase
     {
         $tag = new Tag('tag name');
 
-        (new TagRepository())->create($tag);
+        (new TagRepository())->save($tag);
 
         $video_create = (new VideoCreateBuilder())->build();
         (new VideoFactory())->create($video_create);

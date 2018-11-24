@@ -15,37 +15,9 @@ class TagController extends BaseController
 {
     private $tag_repository;
 
-    private $video_tag_factory;
-
-    private $video_tag_repository;
-
-    private $token_service;
-
-
     public function __construct()
     {
         $this->tag_repository = new TagRepository();
-        $this->video_tag_repository = new VideoTagRepository();
-        $this->video_tag_factory = new VideoTagFactory();
-        $this->token_service = new TokenService();
-    }
-
-    public function create(object $data): void
-    {
-        $token = $this->getBearerToken();
-        $user_id = $this->token_service->decode_user_id($token);
-
-        $video_tag_create = new VideoTagCreate(
-            $data->youtube_id,
-            $data->tag_name,
-            $data->start,
-            $data->stop,
-            $user_id
-        );
-
-        $this->video_tag_factory->create($video_tag_create);
-
-        $this->response_created();
     }
 
     public function list()

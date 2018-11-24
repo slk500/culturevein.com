@@ -5,15 +5,12 @@ declare(strict_types=1);
 namespace Tests\Factory;
 
 use Factory\VideoFactory;
-use DTO\VideoCreate;
 use PHPUnit\Framework\TestCase;
-use Repository\ArtistRepository;
 use Repository\UserRepository;
 use Repository\VideoRepository;
-use Repository\VideoTagRepository;
 use Service\DatabaseHelper;
-use Tests\Builder\UserBuilder;
-use Tests\Builder\VideoCreateBuilder;
+use Tests\Builder\User\UserBuilder;
+use Tests\Builder\Video\VideoCreateBuilder;
 
 class VideoFactoryTest extends TestCase
 {
@@ -35,7 +32,7 @@ class VideoFactoryTest extends TestCase
     public function create_and_find()
     {
         $user = (new UserBuilder())->build();
-        (new UserRepository())->create($user);
+        (new UserRepository())->save($user);
 
         $video_create = (new VideoCreateBuilder())
             ->user_id(1)
