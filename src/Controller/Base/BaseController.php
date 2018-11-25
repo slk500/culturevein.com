@@ -27,12 +27,13 @@ abstract class BaseController
     protected function response_created($data = null): void
     {
         http_response_code(201);
-        if($data) {
+        if ($data) {
             echo json_encode($data);
         }
     }
 
-    function getBearerToken(): ?string {
+    function get_bearer_token(): ?string
+    {
         $bearer_token = getallheaders()['Authorization'] ?? null;
         if ($bearer_token) {
             if (preg_match('/Bearer\s(\S+)/', $bearer_token, $matches)) {
@@ -40,5 +41,11 @@ abstract class BaseController
             }
         }
         return null;
+    }
+
+    public function get_body(): \stdClass
+    {
+        $body = file_get_contents('php://input');
+        return json_decode($body);
     }
 }

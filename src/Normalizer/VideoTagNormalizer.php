@@ -40,14 +40,16 @@ final class VideoTagNormalizer
                     'tag_name' => $video_tag->tag_name,
                     'tag_slug_id' => $video_tag->tag_slug_id,
                     'is_complete' => $video_tag->is_complete,
-                    'video_tags_time' => [
-                        [
-                            'video_tag_time_id' => $video_tag->video_tag_time_id,
-                            'start' => $video_tag->start,
-                            'stop' => $video_tag->stop
-                        ],
-                    ]
+                    'video_tags_time' => []
                 ];
+
+                if($video_tag->video_tag_time_id) {
+                    $video_tag_normalize['video_tags_time'][] = [
+                        'video_tag_time_id' => $video_tag->video_tag_time_id,
+                        'start' => $video_tag->start,
+                        'stop' => $video_tag->stop
+                    ];
+                }
 
                 $previous_tag_slug_id = $video_tag->tag_slug_id;
                 $previous_key_array = $key;
@@ -56,4 +58,6 @@ final class VideoTagNormalizer
         }
         return array_values($result); //have to do this -> angular will throw error otherwise
     }
+
+
 }

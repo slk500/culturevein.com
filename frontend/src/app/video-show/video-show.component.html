@@ -17,7 +17,7 @@
                     [ngClass]="tagStyle(tag)">
 
                     <a [routerLink]="['/tags', tag.tag_slug_id]" style="color:white">{{ tag.tag_name }} </a>
-                    <span *ngIf="isVideoTagWithoutTime(tag)"
+                    <span *ngIf="!tag.video_tags_time.length"
                           (click)="deleteVideoTag(videoInfo.video_youtube_id, tag.video_tag_id)"
                           class="glyphicon glyphicon-remove-circle button" style="cursor:pointer"></span>
 

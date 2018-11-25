@@ -95,4 +95,16 @@ final class VideoTagRepository
         }
         return $results;
     }
+
+    public function find(string $youtube_id, string $tag_slug_id)
+    {
+        $stmt = $this->database->mysqli->prepare(
+            "SELECT video_tag_id FROM video_tag WHERE video_tag_id = ? AND video_youtube_id = ?");
+        $stmt->bind_param('ss', $youtube_id, $tag_slug_id);
+        $stmt->execute();
+        $stmt->bind_result($video_tag_id);
+        $stmt->fetch();
+
+        return $video_tag_id;
+    }
 }

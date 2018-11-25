@@ -35,13 +35,16 @@ class VideoTagController extends BaseController
         $this->video_tag_time_repository = new VideoTagTimeRepository();
     }
 
-    public function create(object $body, object $query): void
+    //todo what if tag dosent exist?
+    public function create(string $youtube_id): void
     {
-        $token = $this->getBearerToken();
+        $body = $this->get_body();
+
+        $token = $this->get_bearer_token();
         $user_id = $this->token_service->decode_user_id($token);
 
         $video_tag_create = new VideoTagCreate(
-            $query->youtube_id,
+            $youtube_id,
             $body->tag_name,
             $user_id
         );
@@ -61,7 +64,7 @@ class VideoTagController extends BaseController
 
     public function delete(int $video_tag_id)
     {
-        $token = $this->getBearerToken();
+        $token = $this->get_bearer_token();
         $user_id = $this->token_service->decode_user_id($token);
 
         $this->video_tag_deleter->delete((int) $video_tag_id, $user_id);

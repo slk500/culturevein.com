@@ -36,15 +36,19 @@ class VideoTagTimeController extends BaseController
         $this->video_tag_time_repository = new VideoTagTimeRepository();
     }
 
-    public function create(object $data): void
+    public function create(string $youtube_id, string $tag_slug_id): void
     {
-        $token = $this->getBearerToken();
+        $body = $this->get_body();
+
+        $token = $this->get_bearer_token();
         $user_id = $this->token_service->decode_user_id($token);
 
+        $video_tag_id = $this->video_tag_repository->find($youtube_id, $tag_slug_id);
+
         $video_tag_create = new VideoTagTimeCreate(
-            $data->video_tag_id,
-            $data->start,
-            $data->stop,
+            $video_tag_id,
+            $body->start,
+            $body->stop,
             $user_id
         );
 
@@ -55,7 +59,7 @@ class VideoTagTimeController extends BaseController
 
     public function delete(int $video_tag_id)
     {
-        $token = $this->getBearerToken();
+        $token = $this->get_bearer_token();
         $user_id = $this->token_service->decode_user_id($token);
 
         $this->video_tag_deleter->delete((int) $video_tag_id, $user_id);

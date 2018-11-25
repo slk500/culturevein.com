@@ -178,7 +178,7 @@ export class VideoShowComponent implements OnInit {
 
     tagStyle(tag): string {
 
-        if (tag['video_tags_time'] == null) {
+        if (!tag['video_tags_time'].length) {
             return 'btn-default';
         }
 
@@ -194,9 +194,4 @@ export class VideoShowComponent implements OnInit {
         return 'btn-warning'
     }
 
-    isVideoTagWithoutTime(tag) : boolean {
-
-     //   return tag['video_tags'][0]['stop'] == null && tag['video_tags'][0]['start'] == null;
-
-    }
 }

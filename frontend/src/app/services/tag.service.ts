@@ -46,10 +46,9 @@ export class TagService {
 
     }
 
-    addVideoTag(videoId, name) {
+    addVideoTag(youtubeId, name) {
 
-       return this.http.post<IVideoTag>('api/tags', {
-            youtube_id: videoId,
+       return this.http.post<IVideoTag>('api/videos/' + youtubeId + '/tags', {
             tag_name: name,
         })
     }

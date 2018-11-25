@@ -25,8 +25,10 @@ class UserController extends BaseController
         $this->token_service = new TokenService();
     }
 
-    public function create(object $data)
+    public function create()
     {
+        $data = $this->get_body();
+
         if(!property_exists($data, 'username')) {
             $this->response_bad_request('You have to provide username!');
             die;

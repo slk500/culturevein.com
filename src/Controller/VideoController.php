@@ -31,9 +31,11 @@ class VideoController extends BaseController
         $this->token_service = new TokenService();
     }
 
-    public function create(object $data)
+    public function create()
     {
-        $token = $this->getBearerToken();
+        $data = $this->get_body();
+
+        $token = $this->get_bearer_token();
 
         $user_id = $this->token_service->decode_user_id($token);
 
