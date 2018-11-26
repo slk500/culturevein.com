@@ -139,7 +139,8 @@ export class VideoShowComponent implements OnInit {
                 .subscribe(data => {
                     this.videoTags = data;
                     this.isVideoTagExist = true;
-                        },
+                    this.tagWasAddedText = true;
+                    },
                     error => this.errorMsg = error);
         });
 
@@ -152,12 +153,15 @@ export class VideoShowComponent implements OnInit {
 
         this._tagService.addVideoTagTime(this.videoInfo.video_youtube_id, this.selectedTagSlugId, start, stop).subscribe((data: any) => {
             this._tagService.getVideoTags(this.youtubeId)
-                .subscribe(data => this.videoTags = data,
+                .subscribe(data => {
+                    this.videoTags = data;
+                    this.tagWasAddedText = true;
+                    },
                     error => this.errorMsg = error);
         });
 
         setTimeout(() => {
-            this.tagWasAddedText = false
+            this.tagWasAddedText = false;
         }, 3000);
     }
 

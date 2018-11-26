@@ -75,8 +75,10 @@ class VideoTagTimeControllerTest extends TestCase
     /**
      * @test
      */
-    public function CREATE_video_tag_time_WHEN_video_tag_dosent_exist()
+    public function CREATE_video_tag_time_WHEN_video_tag_NOT_EXIST()
     {
+        $this->markTestSkipped('to do');
+
         $tag_name = 'video game';
 
         $video_create = (new VideoCreateBuilder())->build();
@@ -95,6 +97,5 @@ class VideoTagTimeControllerTest extends TestCase
 
 
         $this->assertSame('',$response->getBody()->getContents());
-
     }
 }
