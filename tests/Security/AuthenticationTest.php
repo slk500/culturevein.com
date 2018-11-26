@@ -20,8 +20,6 @@ class AuthenticationTest extends TestCase
 {
     public function setUp()
     {
-        $this->markTestSkipped();
-
         (new DatabaseHelper())->truncate_all_tables();
     }
 
@@ -48,28 +46,11 @@ class AuthenticationTest extends TestCase
             'mario'
         );
 
-        (new UserRepository())->create($userData);
+        (new UserRepository())->save($userData);
 
         $user = (new UserRepository())->find('mario@o2.pl');
-    }
 
-    /**
-     * @test
-     */
-    public function create_video_tag()
-    {
-        $tag = new Tag('tag name');
-
-        (new TagRepository())->create($tag);
-
-        $video_create = (new VideoCreateBuilder())->build();
-        (new VideoFactory())->create($video_create);
-
-        $video_tag_create = (new VideoTagCreateBuilder())->build();
-        (new VideoTagFactory())->create($video_tag_create);
-
-        $video_tag_repository = new VideoTagRepository();
-
-        $result = $video_tag_repository->find_all_for_video($video_create->youtube_id);
+        $this->assertInstanceOf(User::class, $user);
     }
 }
+

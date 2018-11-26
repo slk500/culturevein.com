@@ -19,7 +19,7 @@ final class ArtistRepository
         $this->database = new Database();
     }
 
-    public function create(string $artist_name, string $artist_slug_id)
+    public function save(string $artist_name, string $artist_slug_id)
     {
         $stmt = $this->database->mysqli->prepare("INSERT INTO artist (name, artist_slug_id) VALUES (?,?)");
         $stmt->bind_param("ss", $artist_name, $artist_slug_id);

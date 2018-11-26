@@ -28,7 +28,7 @@ final class VideoRepository
         $this->database = new Database();
     }
 
-    public function create(VideoCreate $video_create): void
+    public function save(VideoCreate $video_create): void
     {
         //todo have to move out
         $duration = $this->youtube->get_duration($video_create->youtube_id);

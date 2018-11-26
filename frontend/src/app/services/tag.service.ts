@@ -46,15 +46,21 @@ export class TagService {
 
     }
 
-    addVideoTag(videoId, start, stop, name) {
+    addVideoTag(youtubeId, name) {
 
-       return this.http.post<IVideoTag>('api/tags', {
-            youtube_id: videoId,
+       return this.http.post<IVideoTag>('api/videos/' + youtubeId + '/tags', {
             tag_name: name,
+        })
+    }
+
+    addVideoTagTime(youtubeId : string, tagSlugId: string, start: number, stop: number) {
+
+        return this.http.post<any>('api/videos/' + youtubeId + '/tags/' + tagSlugId, {
             start: start,
             stop: stop
         })
     }
+
 
     deleteVideoTag(youtubeId: string, videoTagId: number): Observable<Itag> {
         return this.http.get<Itag>('api/videos/' + youtubeId + '/tags/' + videoTagId)

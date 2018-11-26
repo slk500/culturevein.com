@@ -39,11 +39,13 @@ export class VideoShowComponent implements OnInit {
 
     public timeRange: number[] = [0, 0];
 
-    public selectedValue;
+    public selectedTagSlugId: string;
 
     public tagWasAddedText: boolean;
 
     public interval;
+
+    public selectedTagName: string;
 
     constructor(private route: ActivatedRoute, private router: Router,
                 private _videoService: VideoService,
@@ -92,7 +94,7 @@ export class VideoShowComponent implements OnInit {
                 this._tagService.getVideoTags(this.youtubeId)
                     .subscribe(data => {
                         this.videoTags = data;
-                        this.isVideoTagExist = this.isSelectedVideoTagExist(this.selectedValue);
+                        this.isVideoTagExist = this.isSelectedVideoTagExist(this.selectedTagSlugId);
                         if(!this.isVideoTagExist){
                             this.setExposureTime(null);
                         }},
@@ -104,8 +106,9 @@ export class VideoShowComponent implements OnInit {
     public changed(e: any): void {
         this.isSelect2ChangedValue = true;
         this.isExposureTime = null;
-        this.selectedValue = e.value;
-        this.isVideoTagExist = this.isSelectedVideoTagExist(this.selectedValue);
+        this.selectedTagSlugId = e.value;
+        this.selectedTagName = e.data[0].text;
+        this.isVideoTagExist = this.isSelectedVideoTagExist(this.selectedTagName);
     }
 
     convertToFormat(data) {
@@ -119,7 +122,7 @@ export class VideoShowComponent implements OnInit {
         this.isExposureTime = answer;
     }
 
-    isSelectedVideoTagExist(selected): boolean {
+    isSelectedVideoTagExist(selected: string): boolean {
 
         for (let index = 0; index < this.videoTags.length; ++index) {
             if (this.videoTags[index].tag_name == selected) {
@@ -130,20 +133,35 @@ export class VideoShowComponent implements OnInit {
 
     }
 
-    addTag(start, stop): void {
-        this._tagService.addVideoTag(this.videoInfo.video_youtube_id, start, stop, this.selectedValue).subscribe((data: any) => {
+    addVideoTag(): void {
+        this._tagService.addVideoTag(this.videoInfo.video_youtube_id, this.selectedTagName).subscribe((data: any) => {
             this._tagService.getVideoTags(this.youtubeId)
-                .subscribe(data => this.videoTags = data,
+                .subscribe(data => {
+                    this.videoTags = data;
+                    this.isVideoTagExist = true;
+                        },
                     error => this.errorMsg = error);
         });
-        this.tagWasAddedText = true;
-        this.isVideoTagExist = true;
-        this.isExposureTime = true;
 
         setTimeout(() => {
             this.tagWasAddedText = false
         }, 3000);
     }
+
+    addVideoTagTime(start: number, stop: number) {
+
+        this._tagService.addVideoTagTime(this.videoInfo.video_youtube_id, this.selectedTagSlugId, start, stop).subscribe((data: any) => {
+            this._tagService.getVideoTags(this.youtubeId)
+                .subscribe(data => this.videoTags = data,
+                    error => this.errorMsg = error);
+        });
+
+        setTimeout(() => {
+            this.tagWasAddedText = false
+        }, 3000);
+    }
+
+
 
     stopAt(stop) {
 
@@ -169,25 +187,21 @@ export class VideoShowComponent implements OnInit {
 
     tagStyle(tag): string {
 
-        if (tag['video_tags'][0]['stop'] == null && tag['video_tags'][0]['start'] == null) {
+        if (!tag['video_tags_time'].length) {
             return 'btn-default';
         }
 
-        if (tag.complete) {
+        if (tag.is_complete) {
             return 'btn-success';
         }
 
-        let arr = tag.video_tags[0];
-        if (arr.start == 0 && arr.stop == this.videoInfo.duration) {
-            return 'btn-danger'
-        }
+        // let arr = tag.video_tags[0];
+        // if (arr.start == 0 && arr.stop == this.videoInfo.duration) {
+        //     return 'btn-danger'
+        // }
 
         return 'btn-warning'
     }
 
-    isVideoTagWithoutTime(tag) : boolean {
 
-        return tag['video_tags'][0]['stop'] == null && tag['video_tags'][0]['start'] == null;
-
-    }
 }

@@ -31,9 +31,11 @@ class VideoController extends BaseController
         $this->token_service = new TokenService();
     }
 
-    public function create(object $data)
+    public function create()
     {
-        $token = $this->getBearerToken();
+        $data = $this->get_body();
+
+        $token = $this->get_bearer_token();
 
         $user_id = $this->token_service->decode_user_id($token);
 
@@ -75,13 +77,5 @@ class VideoController extends BaseController
         $videos = $this->video_repository->newest_ten();
 
         $this->response($videos);
-    }
-
-    public function tags(string $youtube_id)
-    {
-        $tags = $this->video_tag_repository->find_all_for_video($youtube_id);
-        $tags = (new VideoTagNormalizer())->normalize($tags);
-
-        $this->response($tags);
     }
 }

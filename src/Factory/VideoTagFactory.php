@@ -20,22 +20,15 @@ class VideoTagFactory
         $this->video_tag_repository = new VideoTagRepository();
     }
 
-    public function create(VideoTagCreate $video_tag_create): void
+    public function create(VideoTagCreate $video_tag_create): ?int
     {
         $tag_slug_id = $this->tag_repository->find_slug_id_by_name($video_tag_create->tag_name);
 
         if (!$tag_slug_id) {
             $tag = new Tag($video_tag_create->tag_name);
-            $this->tag_repository->create($tag);
+            $this->tag_repository->save($tag);
         }
 
-        $video_tag_id = $this->video_tag_repository->find_video_tag_id_without_time(
-            $video_tag_create->video_youtube_id, $video_tag_create->tag_slug_id);
-
-        if($video_tag_id){
-            $this->video_tag_repository->update_time($video_tag_id, $video_tag_create->start, $video_tag_create->stop);
-        }else{
-            $this->video_tag_repository->create($video_tag_create);
-        }
+        return $this->video_tag_repository->save($video_tag_create);
     }
 }

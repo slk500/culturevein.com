@@ -8,13 +8,14 @@ namespace Controller;
 use Controller\Base\BaseController;
 use Deleter\VideoTagDeleter;
 use DTO\VideoTagCreate;
+use DTO\VideoTagTimeCreate;
 use Factory\VideoTagFactory;
 use Normalizer\VideoTagNormalizer;
 use Repository\VideoTagRepository;
 use Repository\VideoTagTimeRepository;
 use Service\TokenService;
 
-class VideoTagController extends BaseController
+class VideoTagTimeController extends BaseController
 {
     private $video_tag_repository;
 
@@ -35,31 +36,26 @@ class VideoTagController extends BaseController
         $this->video_tag_time_repository = new VideoTagTimeRepository();
     }
 
-    //todo what if tag dosent exist?
-    public function create(string $youtube_id): void
+    //todo what if video_tag dosent exist?
+    public function create(string $youtube_id, string $tag_slug_id): void
     {
         $body = $this->get_body();
 
         $token = $this->get_bearer_token();
         $user_id = $this->token_service->decode_user_id($token);
 
-        $video_tag_create = new VideoTagCreate(
-            $youtube_id,
-            $body->tag_name,
+        $video_tag_id = $this->video_tag_repository->find($youtube_id, $tag_slug_id);
+
+        $video_tag_create = new VideoTagTimeCreate(
+            $video_tag_id,
+            $body->start,
+            $body->stop,
             $user_id
         );
 
-        $this->video_tag_factory->create($video_tag_create);
+        $this->video_tag_time_repository->save($video_tag_create);
 
-        $this->response_created();
-    }
-
-    public function list(string $youtube_id)
-    {
-        $tags = $this->video_tag_repository->find_all_for_video($youtube_id);
-        $tags = (new VideoTagNormalizer())->normalize($tags);
-
-        $this->response($tags);
+        $this->response_created($body);
     }
 
     public function delete(int $video_tag_id)

@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Builder;
+namespace Tests\Builder\Video;
 
 
 use DTO\VideoCreate;
-use Factory\VideoFactory;
 
 class VideoCreateBuilder
 {

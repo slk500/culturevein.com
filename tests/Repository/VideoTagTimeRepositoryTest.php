@@ -2,26 +2,28 @@
 
 declare(strict_types=1);
 
+use DTO\VideoTagTimeCreate;
 use Factory\VideoFactory;
-use Factory\VideoTagFactory;
 use Model\Tag;
-use Model\User;
 use PHPUnit\Framework\TestCase;
 use Repository\TagRepository;
-use Repository\UserRepository;
 use Repository\VideoTagRepository;
 use Repository\VideoTagTimeRepository;
 use Service\DatabaseHelper;
 use Tests\Builder\Video\VideoCreateBuilder;
 use Tests\Builder\VideoTag\VideoTagCreateBuilder;
-use Tests\Builder\VideoTagTime\VideoTagTimeCreateBuilder;
 
-class VideoTagRepositoryTest extends TestCase
+class VideoTagTimeRepositoryTest extends TestCase
 {
     /**
      * @var VideoTagRepository
      */
     private $video_tag_repository;
+
+    /**
+     * @var VideoTagTimeRepository
+     */
+    private $video_tag_time_repository;
 
     private $youtube_id;
 
@@ -30,18 +32,15 @@ class VideoTagRepositoryTest extends TestCase
         (new DatabaseHelper())->truncate_all_tables();
 
         $this->video_tag_repository = new VideoTagRepository();
+        $this->video_tag_time_repository = new VideoTagTimeRepository();
     }
 
     /**
      * @test
-     * @covers \Repository\VideoTagRepository::save()
+     * @covers \Repository\VideoTagTimeRepository::save()
      */
-    public function create_video_tag()
+    public function save()
     {
-        $user = new User('slawomir.grochowski@gmail.com','password', 'slk');
-
-        (new UserRepository())->save($user);
-
         $video_create = (new VideoCreateBuilder())->build();
         (new VideoFactory())->create($video_create);
 
@@ -51,8 +50,9 @@ class VideoTagRepositoryTest extends TestCase
         $video_tag_create = (new VideoTagCreateBuilder())->build();
         $this->video_tag_repository->save($video_tag_create);
 
-        $video_tag_time_create = (new VideoTagTimeCreateBuilder())->build();
-        (new VideoTagTimeRepository())->save($video_tag_time_create);
+        $video_tag_time_create = new VideoTagTimeCreate(1,0,10);
+
+        $this->video_tag_time_repository->save($video_tag_time_create);
 
         $video_tag = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
 

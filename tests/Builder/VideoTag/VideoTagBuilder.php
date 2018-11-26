@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Builder;
+namespace Tests\Builder\VideoTag;
 
 
 use Cocur\Slugify\Slugify;
@@ -10,36 +10,34 @@ use Model\VideoTag;
 
 class VideoTagBuilder
 {
-    private $video_tag_id = 10;
     private $video_youtube_id = 'HcXNPI-IPPM';
-    private $tag_name = "BMW";
+    private $tag_name = "video game";
     private $start = 0;
     private $stop = 20;
-    private $complete = 1;
+    private $is_complete = 1;
+    private $video_tag_times = [];
 
     public function build(): VideoTag
     {
         $video_tag = new VideoTag();
-        $video_tag->video_tag_id = $this->video_tag_id;
         $video_tag->video_youtube_id = $this->video_youtube_id;
         $video_tag->tag_name = $this->tag_name;
-        $video_tag->start = $this->start;
-        $video_tag->stop = $this->stop;
         $video_tag->tag_slug_id = (new Slugify())->slugify($this->tag_name);
-        $video_tag->complete = $this->complete;
+        $video_tag->is_complete = $this->is_complete;
+        $video_tag->video_tag_times = $this->video_tag_times;
 
         return $video_tag;
     }
 
-    public function complete(bool $complete): self
+    public function video_tag_times(VideoTagTime $video_tag_time): self
     {
-        $this->complete = $complete;
+        $this->is_complete = $complete;
         return $this;
     }
 
-    public function video_tag_id(int $video_tag_id): self
+    public function is_complete(bool $complete): self
     {
-        $this->video_tag_id = $video_tag_id;
+        $this->is_complete = $complete;
         return $this;
     }
 

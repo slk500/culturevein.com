@@ -42,7 +42,7 @@ class UserControllerTest extends TestCase
         );
 
         $this->assertEquals(201,$response->getStatusCode());
-
+        
         $content = $response->getBody()->getContents();
         $result = json_decode($content, true);
         $this->assertArrayHasKey('token', $result);

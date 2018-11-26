@@ -29,13 +29,13 @@ class VideoFactory
     //todo add transaction
     public function create(VideoCreate $video_create): void
     {
-        $this->video_repository->create($video_create);
+        $this->video_repository->save($video_create);
 
         $artist_slug_id = $this->artist_repository->find_slug_id_by_name($video_create->artist_name);
 
         if(!$artist_slug_id){
             $artist_slug_id = (new Slugify())->slugify($video_create->artist_name);
-            $this->artist_repository->create(
+            $this->artist_repository->save(
                 $video_create->artist_name,
                 $artist_slug_id
             );

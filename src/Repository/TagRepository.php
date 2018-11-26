@@ -31,11 +31,11 @@ final class TagRepository
         return $tag_slug_id;
     }
 
-    public function find_all():?array
+    public function find_all(): ?array
     {
         $query = "SELECT tag.name as tag_name, tag.tag_slug_id
                   FROM video_tag
-                  LEFT JOIN tag USING (tag_slug_id)
+                  JOIN tag USING (tag_slug_id)
                   GROUP BY tag_name
                   ORDER BY tag_name";
 
@@ -79,9 +79,10 @@ final class TagRepository
     public function find(string $slug)
     {
         $stmt = $this->database->mysqli->prepare("SELECT video.video_youtube_id, artist.name as artist_name, video.name as video_name,
-                                        clean_time(SUM(video_tag.stop)-SUM(video_tag.start)) AS expose,
+                                        clean_time(SUM(video_tag_time.stop)-SUM(video_tag_time.start)) AS expose,
                                         tag.name, tag.tag_slug_id
-                                        FROM video_tag 
+                                        FROM video_tag_time 
+                                        LEFT JOIN video_tag USING (video_tag_id)
                                         LEFT JOIN video USING (video_youtube_id)
                                         LEFT JOIN tag USING (tag_slug_id)
                                         LEFT JOIN artist_video USING (video_youtube_id)
@@ -116,7 +117,7 @@ final class TagRepository
 //        "SELECT count(tag_id) FROM tag_user_subscribe WHERE tag_id = ?";
 //    }
 
-    public function create(Tag $tag): void
+    public function save(Tag $tag): void
     {
         $stmt = $this->database->mysqli->prepare("INSERT INTO tag (name, tag_slug_id) VALUES (?, ?)");
         $stmt->bind_param("ss", $tag->tag_name, $tag->tag_slug_id);

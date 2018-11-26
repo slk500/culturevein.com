@@ -31,7 +31,7 @@ class TagRepositoryTest extends TestCase
     {
         $tag = new Tag('tag name');
 
-        $this->tag_repository->create($tag);
+        $this->tag_repository->save($tag);
 
         $tag_slug_id_from_database = $this->tag_repository->find_slug_id_by_name($tag->tag_name);
 
