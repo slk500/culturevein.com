@@ -8,7 +8,7 @@ namespace Repository\Archiver;
 
 use Repository\Base\Database;
 
-class ArchiverRepository
+final class ArchiverRepository
 {
     /**
      * @var Database

@@ -9,7 +9,7 @@ namespace Repository;
 use Model\User;
 use Repository\Base\Database;
 
-class UserRepository
+final class UserRepository
 {
     /**
      * @var Database

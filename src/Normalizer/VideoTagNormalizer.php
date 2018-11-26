@@ -13,7 +13,7 @@ final class VideoTagNormalizer
     public function normalize(array $array): array
     {
         $previous_tag_slug_id = '';
-        $previous_key_array = null;
+        $lastKey = null;
         $result = [];
 
         /**
@@ -23,14 +23,14 @@ final class VideoTagNormalizer
 
             if($previous_tag_slug_id === $video_tag->tag_slug_id){
 
-                $result[$previous_key_array]['video_tags_time'][]=[
+                $result[$lastKey]['video_tags_time'][]=[
                     'video_tag_time_id' => $video_tag->video_tag_time_id,
                     'start' => $video_tag->start,
                     'stop' => $video_tag->stop
                 ];
 
                 $previous_tag_slug_id = $video_tag->tag_slug_id;
-                $previous_key_array = $previous_key_array;
+
             }
 
             else {
@@ -52,9 +52,9 @@ final class VideoTagNormalizer
                 }
 
                 $previous_tag_slug_id = $video_tag->tag_slug_id;
-                $previous_key_array = $key;
                 $result [] = $video_tag_normalize;
             }
+            $lastKey = count($result)-1; //array_key_last -> waiting for PHP 7.3 :D
         }
         return array_values($result); //have to do this -> angular will throw error otherwise
     }
