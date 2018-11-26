@@ -35,12 +35,18 @@
         <div>
             <select2 [cssImport]=true [options]="select2Options" [width]="'50%'" (valueChanged)="changed($event)">
                 <option></option>
-                <option  *ngFor="let tag of tags" [value]="tag.tag_slug_id">{{ tag.tag_name }}</option>
+                <option *ngFor="let tag of tags" [value]="tag.tag_slug_id">{{ tag.tag_name }}</option>
             </select2>
         </div>
         <br>
 
         <div *ngIf="isSelect2ChangedValue">
+
+            <div *ngIf="isVideoTagExist == false">
+                <button type='button' class='btn btn-primary center-block'
+                        (click)="addVideoTag()">Add TAG
+                </button>
+            </div>
 
             <div *ngIf="isVideoTagExist == true">
 
@@ -58,38 +64,6 @@
                 </div>
             </div>
 
-            <div *ngIf="isVideoTagExist == false">
-
-                <div>
-                    Are you able to set exposure time?
-                    <button type='button' class='btn btn-success center-block' (click)="setExposureTime(true)">Yes
-                    </button>
-                    <br>
-                    <button type='button' class='btn btn-danger center-block' (click)="setExposureTime(false)">No
-                    </button>
-                    <br>
-                </div>
-
-                <div *ngIf="isExposureTime">
-                    <div> Start {{ timeRange[0] | minuteSeconds }} End {{ timeRange[1] | minuteSeconds }}</div>
-                    <p-slider [(ngModel)]="timeRange" [range]="true" [max]="videoInfo?.duration"></p-slider>
-                    <br>
-                    <button type='button' class='btn btn-primary center-block'
-                            (click)="playPart(timeRange[0],timeRange[1])"> Test
-                    </button>
-                    <br>
-                    <button type='button' class='btn btn-primary center-block'
-                            (click)='addVideoTagTime(timeRange[0],timeRange[1])'>Add TAG Time
-                    </button>
-                </div>
-
-                <div *ngIf="isExposureTime == false">
-                    <button type='button' class='btn btn-primary center-block'
-                            (click)="addVideoTag()">Add TAG
-                    </button>
-                </div>
-
-            </div>
         </div>
 
         <p *ngIf="tagWasAddedText">Great! Tag was added</p>
