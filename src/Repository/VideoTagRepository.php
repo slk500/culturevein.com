@@ -23,7 +23,9 @@ final class VideoTagRepository
 
     public function save(VideoTagCreate $video_tag_create): ?int
     {
-        $stmt = $this->database->mysqli->prepare("INSERT INTO video_tag (video_youtube_id, tag_slug_id, user_id) VALUES (?, ?, ?)");
+        $stmt = $this->database->mysqli->prepare(
+            "INSERT INTO video_tag (video_youtube_id, tag_slug_id, user_id) VALUES (?, ?, ?)"
+        );
 
         if (!$stmt) {
             throw new \Exception($this->database->mysqli->error);
@@ -42,22 +44,21 @@ final class VideoTagRepository
         return $stmt->insert_id;
     }
 
-
-
-    public function delete(int $video_tag_id): void
+    public function delete(string $video_youtube_id, string $tag_slug_id): void
     {
-        $stmt = $this->database->mysqli->prepare("DELETE FROM video_tag_time where video_tag_time_id = ?");
+        $stmt = $this->database->mysqli->prepare(
+            "DELETE FROM video_tag WHERE video_youtube_id = ? AND tag_slug_id = ?"
+        );
 
         if (!$stmt) {
             throw new \Exception($this->database->mysqli->error);
         }
 
-        $stmt->bind_param("i", $video_tag_id);
+        $stmt->bind_param('ss',$video_youtube_id,$tag_slug_id);
 
         if (!$stmt->execute()) {
             throw new \Exception($stmt->error);
         }
-
     }
 
     /**

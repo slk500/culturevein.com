@@ -167,6 +167,7 @@ CREATE TABLE `video_tag` (
   `is_complete` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`video_tag_id`),
+  UNIQUE KEY `video_tag_video_youtube_id_tag_slug_id_pk` (`video_youtube_id`,`tag_slug_id`),
   KEY `video_tag_user_user_id_fk_2` (`user_id`),
   KEY `video_tag_video_video_youtube_id_fk` (`video_youtube_id`),
   KEY `video_tag_tag_tag_slug_id_fk` (`tag_slug_id`),
@@ -258,4 +259,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-26 21:28:33
+-- Dump completed on 2018-11-26 23:48:49

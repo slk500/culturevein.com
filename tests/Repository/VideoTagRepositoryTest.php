@@ -63,4 +63,34 @@ class VideoTagRepositoryTest extends TestCase
         $this->assertSame(10, $video_tag->stop);
         $this->assertSame($video_create->youtube_id, $video_tag->video_youtube_id);
     }
+
+    /**
+     * @test
+     * @covers \Repository\VideoTagRepository::delete()
+     */
+    public function DELETE_video_tag()
+    {
+        $user = new User('slawomir.grochowski@gmail.com','password', 'slk');
+
+        (new UserRepository())->save($user);
+
+        $video_create = (new VideoCreateBuilder())->build();
+        (new VideoFactory())->create($video_create);
+
+        $tag = new Tag('video game');
+        (new TagRepository())->save($tag);
+
+        $video_tag_create = (new VideoTagCreateBuilder())->build();
+        $this->video_tag_repository->save($video_tag_create);
+
+        $result = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
+
+        $this->assertNotEmpty($result);
+
+        $this->video_tag_repository->delete($video_create->youtube_id, $tag->tag_slug_id);
+
+        $result = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
+
+        $this->assertEmpty($result);
+    }
 }

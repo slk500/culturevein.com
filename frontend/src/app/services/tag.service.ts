@@ -61,12 +61,10 @@ export class TagService {
         })
     }
 
-
     deleteVideoTag(youtubeId: string, videoTagId: number): Observable<Itag> {
-        return this.http.get<Itag>('api/videos/' + youtubeId + '/tags/' + videoTagId)
+        return this.http.delete<Itag>('api/videos/' + youtubeId + '/tags/' + videoTagId)
             .pipe(catchError(this.errorHandler))
     }
-
 
     errorHandler(error: HttpErrorResponse) {
         return obervableThrowError(error.message || 'Server Error')

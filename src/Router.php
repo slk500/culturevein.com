@@ -8,8 +8,6 @@ final class Router
         [
             ['/^\/api\/artists\/*$/', 'ArtistController', 'list', 'GET'],
 
-           // ['/^\/api\/video-tags\/*$/', 'VideoTagController', 'create', 'POST'],
-
             ['/^\/api\/tags\/*$/', 'TagController', 'list', 'GET'],
 
             ['/^\/api\/tags-top\/*$/', 'TagController', 'top_ten', 'GET'],
@@ -26,13 +24,13 @@ final class Router
 
             ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/*$/', 'VideoTagController', 'list', 'GET'],
 
-            ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/(?<video_tag_id>[\d-]+)*$/', 'VideoTagController', 'DELETE', 'GET'],
+            ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/(?<tag_slug_id>[\w-]+)*$/', 'VideoTagController', 'delete', 'DELETE'],
 
             ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/*$/', 'VideoTagController', 'create', 'POST'],
 
             ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/(?<tag_slug_id>[\w-]+)\/*$/', 'VideoTagTimeController', 'create', 'POST'],
 
-      //      ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/(?<video_tag_time_id>[\w-]+)\/*$/', 'VideoTagTimeController', 'delete', 'DELETE'],
+            ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/(?<video_tag_time_id>[\w-]+)\/*$/', 'VideoTagTimeController', 'delete', 'DELETE'],
 
             ['/^\/api\/youtube\/(?<youtube_id>[\w-]{11})\/*$/', 'YouTubeController', 'get_artist_and_title', 'GET'],
 
@@ -63,7 +61,7 @@ final class Router
 
                 $this->controller = $route[1];
                 $this->action = $route[2];
-                $this->param = $this->remove_first_element($matches);
+                $this->param = $matches;
 
                 return true;
             }
@@ -78,17 +76,10 @@ final class Router
             $controller = new $controllerName();
             $actionName = $this->action;
 
-            $param1 = $this->param[0] ?? null;
-            $param2 = $this->param[1] ?? null;
+            $param1 = $this->param[1] ?? null;
+            $param2 = $this->param[2] ?? null;
 
             $controller->$actionName($param1, $param2);
         }
-    }
-
-    public function remove_first_element(array $matches)
-    {
-        array_shift($matches);
-
-        return $matches;
     }
 }

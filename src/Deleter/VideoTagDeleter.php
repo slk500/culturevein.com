@@ -8,7 +8,7 @@ namespace Deleter;
 use Model\VideoTag;
 use Repository\VideoTagRepository;
 
-class VideoTagDeleter
+final class VideoTagDeleter
 {
     private $video_tag_repository;
 
@@ -17,21 +17,9 @@ class VideoTagDeleter
         $this->video_tag_repository = new VideoTagRepository();
     }
 
-    public function delete(int $video_tag_id, ?int $user_id)
+    public function delete(string $video_youtube_id, string $tag_slug_id, ?int $user_id)
     {
-        $video_tag = $this->video_tag_repository->find($video_tag_id);
-
-        $this->video_tag_repository->archive($video_tag_id, $user_id);
-
-        if($is_only_one){
-            if($this->is_time_range_null($video_tag)){
-                $this->video_tag_repository->delete($video_tag_id);
-            }else{
-            }
-        }else{
-            //todo should check if time_range is not null for all video_tags
-            $this->video_tag_repository->delete($video_tag_id);
-        }
+        $this->video_tag_repository->delete($video_youtube_id, $tag_slug_id);
     }
 }
 

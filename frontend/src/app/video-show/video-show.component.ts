@@ -84,7 +84,6 @@ export class VideoShowComponent implements OnInit {
             placeholder: 'Select TAG or type a new one',
             tags: true
         };
-
     }
 
     public deleteVideoTag(youtube_id, video_tag_id) {
@@ -100,7 +99,6 @@ export class VideoShowComponent implements OnInit {
                         }},
                         error => this.errorMsg = error);
             });
-
     }
 
     public changed(e: any): void {
@@ -208,4 +206,7 @@ export class VideoShowComponent implements OnInit {
     }
 
 
+    deleteVideoTagTime(video_youtube_id: string, video_tag_id: number) {
+
+    }
 }

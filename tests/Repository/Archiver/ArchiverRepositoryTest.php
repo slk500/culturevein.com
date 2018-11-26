@@ -30,7 +30,7 @@ class ArchiverRepositoryTest extends TestCase
 
     /**
      * @test
-     * @covers \Repository\VideoTagRepository::is_only_one()
+     * @covers \Repository\VideoTagRepository
      */
     public function COPY_video_tag_to_another_table()
     {
