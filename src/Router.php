@@ -26,10 +26,13 @@ final class Router
 
             ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/*$/', 'VideoTagController', 'list', 'GET'],
 
-            ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/(?<video_tag_id>[\d-]+)*$/', 'VideoTagController', 'delete', 'GET'],
+            ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/(?<video_tag_id>[\d-]+)*$/', 'VideoTagController', 'DELETE', 'GET'],
 
             ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/*$/', 'VideoTagController', 'create', 'POST'],
+
             ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/(?<tag_slug_id>[\w-]+)\/*$/', 'VideoTagTimeController', 'create', 'POST'],
+
+      //      ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/(?<video_tag_time_id>[\w-]+)\/*$/', 'VideoTagTimeController', 'delete', 'DELETE'],
 
             ['/^\/api\/youtube\/(?<youtube_id>[\w-]{11})\/*$/', 'YouTubeController', 'get_artist_and_title', 'GET'],
 

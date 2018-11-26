@@ -62,42 +62,5 @@ class VideoControllerTest extends TestCase
         $this->assertSame($json['name'], $video->video_name);
         $this->assertSame($json['youtube_id'], $video->video_youtube_id);
     }
-
-
-    /**
-     * @test
-     * @covers VideoController::create()
-     */
-    public function create_video_WHEN_token_expired()
-    {
-        $this->markTestSkipped('to do');
-
-        $json = [
-            'artist' => 'Burak Yeter',
-            'name' => 'Tuesday ft. Danelle Sandoval',
-            'youtube_id' => 'Y1_VsyLAGuk'
-        ];
-
-        $response = $this->client->post(
-            'api/videos',
-            [
-                'json' => $json,
-                'headers' =>
-                    ['Authorization' => 'Bearer ' . $token]
-            ]
-        );
-
-        $this->assertEquals(201,$response->getStatusCode());
-
-        var_dump($response->getBody()->getContents());
-
-//        $video = $this->video_repository->find($json['youtube_id']);
-//
-//        $this->assertNotNull($video);
-
-    //    $this->assertSame($json['name'], $video->video_name);
-//        $this->assertSame($json['youtube_id'], $video->video_youtube_id);
-    }
 }
-
 

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Builder\VideoTagTime;
 
-use Cocur\Slugify\Slugify;
 use DTO\VideoTagTimeCreate;
 
 class VideoTagTimeCreateBuilder
@@ -15,7 +14,7 @@ class VideoTagTimeCreateBuilder
 
     public $stop = 10;
 
-    public $user_id;
+    public $user_id = null;
 
     public function build(): VideoTagTimeCreate
     {

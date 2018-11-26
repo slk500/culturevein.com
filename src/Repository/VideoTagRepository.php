@@ -61,7 +61,7 @@ final class VideoTagRepository
     }
 
     /**
-     * @return VideoTag[]
+     * @return VideoTagRaw[]
      */
     public function find_all_for_video(string $youtubeId): array
     {
@@ -99,7 +99,7 @@ final class VideoTagRepository
     public function find(string $youtube_id, string $tag_slug_id)
     {
         $stmt = $this->database->mysqli->prepare(
-            "SELECT video_tag_id FROM video_tag WHERE video_tag_id = ? AND video_youtube_id = ?");
+            "SELECT video_tag_id FROM video_tag WHERE video_youtube_id = ? AND tag_slug_id = ?");
         $stmt->bind_param('ss', $youtube_id, $tag_slug_id);
         $stmt->execute();
         $stmt->bind_result($video_tag_id);

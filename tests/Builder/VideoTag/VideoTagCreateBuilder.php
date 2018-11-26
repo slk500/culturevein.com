@@ -8,7 +8,6 @@ use DTO\VideoTagCreate;
 
 class VideoTagCreateBuilder
 {
-
     private $youtube_id = 'Y1_VsyLAGuk';
     private $tag_name = 'video game';
 

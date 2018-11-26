@@ -35,7 +35,7 @@
         <div>
             <select2 [cssImport]=true [options]="select2Options" [width]="'50%'" (valueChanged)="changed($event)">
                 <option></option>
-                <option *ngFor="let tag of tags">{{ tag.tag_name }}</option>
+                <option  *ngFor="let tag of tags" [value]="tag.tag_slug_id">{{ tag.tag_name }}</option>
             </select2>
         </div>
         <br>
@@ -53,7 +53,7 @@
                     </button>
                     <br>
                     <button type='button' class='btn btn-primary center-block'
-                            (click)="addVideoTag(timeRange[0],timeRange[1])">Add TAG
+                            (click)="addVideoTagTime(timeRange[0],timeRange[1])">Add TAG Time
                     </button>
                 </div>
             </div>
@@ -78,12 +78,17 @@
                             (click)="playPart(timeRange[0],timeRange[1])"> Test
                     </button>
                     <br>
-                    <button type='button' class='btn btn-primary center-block' (click)='addTag(timeRange[0],timeRange[1])'>Add TAG</button>
+                    <button type='button' class='btn btn-primary center-block'
+                            (click)='addVideoTagTime(timeRange[0],timeRange[1])'>Add TAG Time
+                    </button>
                 </div>
 
-                <button *ngIf="isExposureTime == false" type='button' class='btn btn-primary center-block'
-                        (click)="addVideoTag()">Add TAG
-                </button>
+                <div *ngIf="isExposureTime == false">
+                    <button type='button' class='btn btn-primary center-block'
+                            (click)="addVideoTag()">Add TAG
+                    </button>
+                </div>
+
             </div>
         </div>
 

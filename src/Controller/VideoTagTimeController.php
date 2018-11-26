@@ -36,6 +36,7 @@ class VideoTagTimeController extends BaseController
         $this->video_tag_time_repository = new VideoTagTimeRepository();
     }
 
+    //todo what if video_tag dosent exist?
     public function create(string $youtube_id, string $tag_slug_id): void
     {
         $body = $this->get_body();
@@ -54,7 +55,7 @@ class VideoTagTimeController extends BaseController
 
         $this->video_tag_time_repository->save($video_tag_create);
 
-        $this->response_created();
+        $this->response_created($body);
     }
 
     public function delete(int $video_tag_id)
