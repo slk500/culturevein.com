@@ -61,8 +61,13 @@ export class TagService {
         })
     }
 
-    deleteVideoTag(youtubeId: string, videoTagId: number): Observable<Itag> {
-        return this.http.delete<Itag>('api/videos/' + youtubeId + '/tags/' + videoTagId)
+    deleteVideoTag(youtubeId: string, tagSlugId: string): Observable<Itag> {
+        return this.http.delete<Itag>('api/videos/' + youtubeId + '/tags/' + tagSlugId)
+            .pipe(catchError(this.errorHandler))
+    }
+
+    deleteVideoTagTime(video_youtube_id: string, tag_slug_id: string, video_tag_time_id: number): Observable<Itag> {
+        return this.http.delete<any>('api/videos/' + video_youtube_id + '/tags/' + tag_slug_id + '/' + video_tag_time_id)
             .pipe(catchError(this.errorHandler))
     }
 

@@ -30,7 +30,7 @@ final class Router
 
             ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/(?<tag_slug_id>[\w-]+)\/*$/', 'VideoTagTimeController', 'create', 'POST'],
 
-            ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/(?<video_tag_time_id>[\w-]+)\/*$/', 'VideoTagTimeController', 'delete', 'DELETE'],
+            ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/(?<tag_slug_id>[\w-]+)\/(?<video_tag_time_id>\d+)\/*$/', 'VideoTagTimeController', 'delete', 'DELETE'],
 
             ['/^\/api\/youtube\/(?<youtube_id>[\w-]{11})\/*$/', 'YouTubeController', 'get_artist_and_title', 'GET'],
 
@@ -78,8 +78,9 @@ final class Router
 
             $param1 = $this->param[1] ?? null;
             $param2 = $this->param[2] ?? null;
+            $param3 = $this->param[3] ?? null;
 
-            $controller->$actionName($param1, $param2);
+            $controller->$actionName($param1, $param2, (int) $param3);
         }
     }
 }

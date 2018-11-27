@@ -31,8 +31,6 @@ export class VideoShowComponent implements OnInit {
 
     public select2Options: Select2Options;
 
-    public isExposureTime = null;
-
     public isSelect2ChangedValue = false;
 
     public isVideoTagExist = false;
@@ -86,24 +84,33 @@ export class VideoShowComponent implements OnInit {
         };
     }
 
-    public deleteVideoTag(youtube_id, video_tag_id) {
+    public deleteVideoTag(youtube_id: string, tag_slug_id: string) {
 
-        this._tagService.deleteVideoTag(youtube_id, video_tag_id)
+        this._tagService.deleteVideoTag(youtube_id, tag_slug_id)
             .subscribe((data: any) => {
                 this._tagService.getVideoTags(this.youtubeId)
                     .subscribe(data => {
                         this.videoTags = data;
-                        this.isVideoTagExist = this.isSelectedVideoTagExist(this.selectedTagSlugId);
-                        if(!this.isVideoTagExist){
-                            this.setExposureTime(null);
-                        }},
+                        this.isVideoTagExist = false;
+                        },
+                        error => this.errorMsg = error);
+            });
+    }
+
+    public deleteVideoTagTime(video_youtube_id: string, tag_slug_id: string, video_tag_time_id: number) {
+        this._tagService.deleteVideoTagTime(video_youtube_id, tag_slug_id, video_tag_time_id)
+            .subscribe((data: any) => {
+                this._tagService.getVideoTags(this.youtubeId)
+                    .subscribe(data => {
+                            this.videoTags = data;
+                            this.isVideoTagExist = false;
+                        },
                         error => this.errorMsg = error);
             });
     }
 
     public changed(e: any): void {
         this.isSelect2ChangedValue = true;
-        this.isExposureTime = null;
         this.selectedTagSlugId = e.value;
         this.selectedTagName = e.data[0].text;
         this.isVideoTagExist = this.isSelectedVideoTagExist(this.selectedTagName);
@@ -114,10 +121,6 @@ export class VideoShowComponent implements OnInit {
             obj.text = obj.text || obj.name;
             return obj;
         });
-    }
-
-    setExposureTime(answer: boolean): void {
-        this.isExposureTime = answer;
     }
 
     isSelectedVideoTagExist(selected: string): boolean {
@@ -206,7 +209,5 @@ export class VideoShowComponent implements OnInit {
     }
 
 
-    deleteVideoTagTime(video_youtube_id: string, video_tag_id: number) {
 
-    }
 }

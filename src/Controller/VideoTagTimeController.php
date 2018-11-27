@@ -7,6 +7,7 @@ namespace Controller;
 
 use Controller\Base\BaseController;
 use Deleter\VideoTagDeleter;
+use Deleter\VideoTagTimeDeleter;
 use DTO\VideoTagCreate;
 use DTO\VideoTagTimeCreate;
 use Factory\VideoTagFactory;
@@ -19,7 +20,7 @@ class VideoTagTimeController extends BaseController
 {
     private $video_tag_repository;
 
-    private $video_tag_deleter;
+    private $video_tag_time_deleter;
 
     private $video_tag_factory;
 
@@ -30,7 +31,7 @@ class VideoTagTimeController extends BaseController
     public function __construct()
     {
         $this->token_service = new TokenService();
-        $this->video_tag_deleter = new VideoTagDeleter();
+        $this->video_tag_time_deleter = new VideoTagTimeDeleter();
         $this->video_tag_factory = new VideoTagFactory();
         $this->video_tag_repository = new VideoTagRepository();
         $this->video_tag_time_repository = new VideoTagTimeRepository();
@@ -58,12 +59,12 @@ class VideoTagTimeController extends BaseController
         $this->response_created($body);
     }
 
-    public function delete(int $video_tag_id)
+    public function delete(string $youtube_id, string $tag_slug_id, int $video_tag_id)
     {
         $token = $this->get_bearer_token();
         $user_id = $this->token_service->decode_user_id($token);
 
-        $this->video_tag_deleter->delete((int) $video_tag_id, $user_id);
+        $this->video_tag_time_deleter->delete($video_tag_id, $user_id);
 
         $this->response();
     }
