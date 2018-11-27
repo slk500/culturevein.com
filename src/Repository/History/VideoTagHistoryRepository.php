@@ -20,7 +20,7 @@ final class VideoTagHistoryRepository
         $this->database = new Database();
     }
 
-    public function find_all():?array
+    public function find_all(): ?array
     {
         $query = "SELECT *
                   FROM video_tag_history

@@ -37,8 +37,6 @@ class VideoTagDeleterTest extends TestCase
 
     public function setUp()
     {
-        $this->markTestSkipped('to do');
-
         $this->video_tag_repository = new VideoTagRepository();
         $this->video_tag_deleter = new VideoTagDeleter();
         $this->video_tag_history_repository= new VideoTagHistoryRepository();
@@ -50,15 +48,12 @@ class VideoTagDeleterTest extends TestCase
      * @test
      * @covers \Deleter\VideoTagDeleter::delete()
      */
-    public function ARCHIVE_AND_DELETE_video_tag_IF_two_with_time_range_exist()
+    public function ARCHIVE_AND_DELETE_video_tag()
     {
-        $user = new User('mario@o2.pl','password', 'slk');
+        $user = new User('slawomir.grochowski@gmail.com','password', 'slk500');
+        (new UserRepository())->save($user);
 
-        $user_repository = new UserRepository();
-        $user_repository->save($user);
-
-        $tag = new Tag('tag name');
-
+        $tag = new Tag('video game');
         (new TagRepository())->save($tag);
 
         $video_create = (new VideoCreateBuilder())->build();
@@ -67,108 +62,15 @@ class VideoTagDeleterTest extends TestCase
         $video_tag_create = (new VideoTagCreateBuilder())->build();
         (new VideoTagFactory())->create($video_tag_create);
 
-        $video_tag_create = (new VideoTagCreateBuilder())->build();
-        (new VideoTagFactory())->create($video_tag_create);
-
-        $video_tags = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
-        $this->assertCount(2, $video_tags);
-
-        $this->video_tag_deleter->delete(1, 1);
-
-        $video_tags = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
-        $this->assertCount(1, $video_tags);
-    }
-
-    /**
-     * @test
-     * @covers \Deleter\VideoTagDeleter::delete()
-     */
-    public function ARCHIVE_AND_DELETE_video_tag_IF_only_one_video_tag_exist_AND_time_range_is_null_AND_user_exist()
-    {
-        $tag = new Tag('tag name');
-
-        (new TagRepository())->save($tag);
-
-        $video_create = (new VideoCreateBuilder())->build();
-        (new VideoFactory())->create($video_create);
-
-        $video_tag_create = (new VideoTagCreateBuilder())
-            ->start(null)
-            ->stop(null)
-            ->build();
-        (new VideoTagFactory())->create($video_tag_create);
-
         $video_tags = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
         $this->assertCount(1, $video_tags);
 
-        $this->video_tag_deleter->delete(1, 1);
+        $this->video_tag_deleter->delete($video_tag_create->video_youtube_id, $video_tag_create->tag_slug_id);
 
         $video_tags = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
-        $this->assertCount(0, $video_tags);
+        $this->assertEmpty($video_tags);
 
-        $video_tags_history = $this->video_tag_history_repository->find_all();
-        $this->assertCount(1, $video_tags_history);
-    }
-
-    /**
-     * @test
-     * @covers \Deleter\VideoTagDeleter::delete()
-     */
-    public function ARCHIVE_AND_DELETE_video_tag_IF_only_one_video_tag_exist_AND_time_range_is_null_AND_user_dosent_exist()
-    {
-        $tag = new Tag('tag name');
-
-        (new TagRepository())->save($tag);
-
-        $video_create = (new VideoCreateBuilder())->build();
-        (new VideoFactory())->create($video_create);
-
-        $video_tag_create = (new VideoTagCreateBuilder())
-            ->start(null)
-            ->stop(null)
-            ->build();
-        (new VideoTagFactory())->create($video_tag_create);
-
-        $video_tags = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
+        $video_tags = $this->video_tag_history_repository->find_all();
         $this->assertCount(1, $video_tags);
-
-        $this->video_tag_deleter->delete(1, null);
-
-        $video_tags = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
-        $this->assertCount(0, $video_tags);
-
-        $video_tags_history = $this->video_tag_history_repository->find_all();
-        $this->assertCount(1, $video_tags_history);
-    }
-
-    /**
-     * @test
-     * @covers \Deleter\VideoTagDeleter::delete()
-     */
-    public function ARCHIVE_AND_SET_time_range_null_IF_only_one_video_tag_exist_and_time_range_is_not_null()
-    {
-        $tag = new Tag('tag name');
-
-        (new TagRepository())->save($tag);
-
-        $video_create = (new VideoCreateBuilder())->build();
-        (new VideoFactory())->create($video_create);
-
-        $video_tag_create = (new VideoTagCreateBuilder())->build();
-        (new VideoTagFactory())->create($video_tag_create);
-
-        $result = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
-        $video_tag = end($result);
-
-        $this->assertSame(0, $video_tag->start);
-        $this->assertSame(20, $video_tag->stop);
-
-        $this->video_tag_deleter->delete($video_tag->video_tag_id, 1);
-
-        $result = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
-        $video_tag_after_delete = end($result);
-
-        $this->assertNull($video_tag_after_delete->start);
-        $this->assertNull($video_tag_after_delete->stop);
     }
 }
