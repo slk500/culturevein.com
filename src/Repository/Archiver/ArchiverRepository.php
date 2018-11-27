@@ -31,9 +31,11 @@ final class ArchiverRepository
             throw new \Exception($this->database->mysqli->error);
         }
 
-        $stmt->bind_param('ssi', $user_id, $video_youtube_id, $tag_slug_id);
+        $stmt->bind_param('iss', $user_id, $video_youtube_id, $tag_slug_id);
         if (!$stmt->execute()) {
             throw new \Exception($stmt->error);
         }
     }
+
+
 }

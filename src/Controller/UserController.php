@@ -69,8 +69,10 @@ class UserController extends BaseController
         $this->response_created(['token' => $token]);
     }
 
-    public function login(object $data)
+    public function login()
     {
+        $data = $this->get_body();
+
         if(!property_exists($data, 'email') ||
             !property_exists($data, 'password')){
             $this->response_unauthorized('Wrong credentials');die;
