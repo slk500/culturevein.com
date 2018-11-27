@@ -6,7 +6,7 @@ namespace Repository\History;
 
 use Repository\Base\Database;
 
-final class VideoTagHistoryRepository
+final class VideoTagTimeHistoryRepository
 {
     /**
      * @var Database
@@ -21,7 +21,7 @@ final class VideoTagHistoryRepository
     public function find_all(): ?array
     {
         $query = "SELECT *
-                  FROM video_tag_history
+                  FROM video_tag_time_history
          ";
 
         $data = $this->database->fetch($query);
