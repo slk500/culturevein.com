@@ -10,7 +10,7 @@ export class InputService {
     constructor() {
     }
 
-    editUser(input) {
+    search(input) {
         this.input.next(input);
     }
 

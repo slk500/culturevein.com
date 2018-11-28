@@ -10,20 +10,18 @@ import {AuthService} from "./auth.service";
 })
 export class AppComponent {
   title = 'app';
-    user:string;
-    editUser:string;
 
     public href: string = "";
 
     constructor(private router: Router, private inputService: InputService, public _authService: AuthService) {}
 
     updateValue(e){
-        this.editUser = e.target.value;
-        this.editTheUser();
+        let inputText = e.target.value;
+        this.passInputText(inputText);
     }
 
-    editTheUser(){
-        this.inputService.editUser(this.editUser);
+    passInputText(inputText: string){
+        this.inputService.search(inputText);
     }
 }
 
