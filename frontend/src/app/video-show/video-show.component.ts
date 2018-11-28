@@ -103,7 +103,7 @@ export class VideoShowComponent implements OnInit {
                 this._tagService.getVideoTags(this.youtubeId)
                     .subscribe(data => {
                             this.videoTags = data;
-                            this.isVideoTagExist = false;
+                            this.isVideoTagExist = this.isSelectedVideoTagExist(this.selectedTagName);
                         },
                         error => this.errorMsg = error);
             });
@@ -200,10 +200,10 @@ export class VideoShowComponent implements OnInit {
             return 'btn-success';
         }
 
-        // let arr = tag.video_tags[0];
-        // if (arr.start == 0 && arr.stop == this.videoInfo.duration) {
-        //     return 'btn-danger'
-        // }
+        let arr = tag.video_tags_time[0];
+        if (arr.start == 0 && arr.stop == this.videoInfo.duration) {
+            return 'btn-danger'
+        }
 
         return 'btn-warning'
     }
