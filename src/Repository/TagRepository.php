@@ -81,8 +81,8 @@ final class TagRepository
         $stmt = $this->database->mysqli->prepare("SELECT video.video_youtube_id, artist.name as artist_name, video.name as video_name,
                                         clean_time(SUM(video_tag_time.stop)-SUM(video_tag_time.start)) AS expose,
                                         tag.name, tag.tag_slug_id
-                                        FROM video_tag_time 
-                                        LEFT JOIN video_tag USING (video_tag_id)
+                                        FROM video_tag
+                                        LEFT JOIN video_tag_time USING (video_tag_id)
                                         LEFT JOIN video USING (video_youtube_id)
                                         LEFT JOIN tag USING (tag_slug_id)
                                         LEFT JOIN artist_video USING (video_youtube_id)
