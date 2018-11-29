@@ -9,19 +9,25 @@ abstract class BaseController
     protected function response($data = null): void
     {
         http_response_code(200);
-        echo json_encode($data);
+        if ($data) {
+            echo json_encode($data);
+        }
     }
 
     protected function response_bad_request($data = null): void
     {
         http_response_code(400);
-        echo json_encode($data);
+        if ($data) {
+            echo json_encode($data);
+        }
     }
 
     protected function response_unauthorized($data = null): void
     {
         http_response_code(401);
-        echo json_encode($data);
+        if ($data) {
+            echo json_encode($data);
+        }
     }
 
     protected function response_created($data = null): void
