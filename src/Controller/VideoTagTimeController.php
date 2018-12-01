@@ -5,36 +5,27 @@ declare(strict_types=1);
 namespace Controller;
 
 
+use Container;
 use Controller\Base\BaseController;
-use Deleter\VideoTagDeleter;
 use Deleter\VideoTagTimeDeleter;
-use DTO\VideoTagCreate;
 use DTO\VideoTagTimeCreate;
-use Factory\VideoTagFactory;
-use Normalizer\VideoTagNormalizer;
 use Repository\VideoTagRepository;
 use Repository\VideoTagTimeRepository;
 use Service\TokenService;
 
 class VideoTagTimeController extends BaseController
 {
-    private $video_tag_repository;
-
-    private $video_tag_time_deleter;
-
-    private $video_tag_factory;
-
     private $token_service;
 
-    private $video_tag_time_repository;
+    /**
+     * @var Container
+     */
+    private $container;
 
     public function __construct()
     {
         $this->token_service = new TokenService();
-        $this->video_tag_time_deleter = new VideoTagTimeDeleter();
-        $this->video_tag_factory = new VideoTagFactory();
-        $this->video_tag_repository = new VideoTagRepository();
-        $this->video_tag_time_repository = new VideoTagTimeRepository();
+        $this->container = new Container();
     }
 
     //todo what if video_tag dosent exist?
@@ -45,7 +36,8 @@ class VideoTagTimeController extends BaseController
         $token = $this->get_bearer_token();
         $user_id = $this->token_service->decode_user_id($token);
 
-        $video_tag_id = $this->video_tag_repository->find($youtube_id, $tag_slug_id);
+        $video_tag_id = $this->container->get(VideoTagRepository::class)
+            ->find($youtube_id, $tag_slug_id);
 
         $video_tag_create = new VideoTagTimeCreate(
             $video_tag_id,
@@ -54,7 +46,8 @@ class VideoTagTimeController extends BaseController
             $user_id
         );
 
-        $this->video_tag_time_repository->save($video_tag_create);
+        $this->container->get(VideoTagTimeRepository::class)
+            ->save($video_tag_create);
 
         $this->response_created($body);
     }
@@ -64,7 +57,7 @@ class VideoTagTimeController extends BaseController
         $token = $this->get_bearer_token();
         $user_id = $this->token_service->decode_user_id($token);
 
-        $this->video_tag_time_deleter->delete($video_tag_id, $user_id);
+        $this->container->get(VideoTagTimeDeleter::class)->delete($video_tag_id, $user_id);
 
         $this->response();
     }

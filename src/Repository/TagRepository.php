@@ -15,9 +15,9 @@ final class TagRepository
      */
     private $database;
 
-    public function __construct()
+    public function __construct(Database $database)
     {
-        $this->database = new Database();
+        $this->database = $database;
     }
 
     public function find_slug_id_by_name(string $name): ?string
@@ -44,7 +44,7 @@ final class TagRepository
         return $data;
     }
 
-    public function top()
+    public function top(): array
     {
         $query = "SELECT tag.name as tag_name, count(distinct video.video_youtube_id) AS count, tag.tag_slug_id
                 FROM tag
@@ -59,7 +59,7 @@ final class TagRepository
         return $data;
     }
 
-    public function newest_ten()
+    public function newest_ten(): array
     {
         $query = "SELECT video.video_youtube_id, tag.name as tag_name, artist.name as artist_name, video.name AS video_name,
                 tag.tag_slug_id, artist.artist_slug_id as artist_slug, video_tag.created_at

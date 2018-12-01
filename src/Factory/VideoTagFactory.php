@@ -14,10 +14,10 @@ class VideoTagFactory
     private $video_tag_repository;
     private $tag_repository;
 
-    public function __construct()
+    public function __construct(TagRepository $tag_repository, VideoTagRepository $video_tag_repository)
     {
-        $this->tag_repository = new TagRepository();
-        $this->video_tag_repository = new VideoTagRepository();
+        $this->tag_repository = $tag_repository;
+        $this->video_tag_repository = $video_tag_repository;
     }
 
     public function create(VideoTagCreate $video_tag_create): ?int

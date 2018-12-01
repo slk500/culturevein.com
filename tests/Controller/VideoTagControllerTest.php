@@ -6,6 +6,7 @@ use Factory\VideoFactory;
 use DTO\VideoCreate;
 use Model\Tag;
 use PHPUnit\Framework\TestCase;
+use Repository\Base\Database;
 use Repository\TagRepository;
 use Repository\VideoTagRepository;
 use Service\DatabaseHelper;
@@ -22,11 +23,25 @@ class VideoTagControllerTest extends TestCase
      */
     private $video_tag_repository;
 
+    /**
+     * @var TagRepository
+     */
+    private $tag_repository;
+
+    /**
+     * @var VideoFactory
+     */
+    private $video_factory;
+
     public function setUp()
     {
-        (new DatabaseHelper())->truncate_all_tables();
+        $container = new \Container();
+        (new DatabaseHelper($container->get(Database::class)))
+            ->truncate_all_tables();
 
-        $this->video_tag_repository = new VideoTagRepository();
+        $this->video_tag_repository = $container->get(VideoTagRepository::class);
+        $this->tag_repository = $container->get(TagRepository::class);
+        $this->video_factory = $container->get(VideoFactory::class);
 
         $this->client = new GuzzleHttp\Client([
             'base_uri' => 'http://localhost:8000',
@@ -35,11 +50,12 @@ class VideoTagControllerTest extends TestCase
 
     /**
      * @test
+     * @covers VideoTagController::create()
      */
     public function create_video_tag()
     {
         $tag = new Tag('video game');
-        (new TagRepository())->save($tag);
+        $this->tag_repository->save($tag);
 
         $artist_name = 'Burak Yeter';
         $video_name = 'Tuesday ft. Danelle Sandoval';
@@ -50,7 +66,7 @@ class VideoTagControllerTest extends TestCase
             $video_name,
             $youtube_id
         );
-        (new VideoFactory())->create($video_create);
+        $this->video_factory->create($video_create);
 
         $response = $this->client->post(
             'api/videos/' . $youtube_id . '/tags',
@@ -61,7 +77,7 @@ class VideoTagControllerTest extends TestCase
             ]
         );
 
-        $result = (new VideoTagRepository())
+        $result = $this->video_tag_repository
             ->find_all_for_video($video_create->youtube_id);
 
         $this->assertNotEmpty($result);

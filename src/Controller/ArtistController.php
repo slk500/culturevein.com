@@ -4,21 +4,26 @@ declare(strict_types=1);
 
 namespace Controller;
 
+use Container;
 use Controller\Base\BaseController;
 use Repository\ArtistRepository;
 
 class ArtistController extends BaseController
 {
-    private $artist_repository;
+    /**
+     * @var Container
+     */
+    private $container;
 
     public function __construct()
     {
-        $this->artist_repository = new ArtistRepository();
+        $this->container = new Container();
     }
 
     public function list()
     {
-        $artists = $this->artist_repository->find_all();
+        $artists = $this->container->get(ArtistRepository::class)
+            ->find_all();
 
         $this->response($artists);
     }

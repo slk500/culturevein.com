@@ -22,10 +22,10 @@ final class VideoRepository
     private $youtube;
 
 
-    public function __construct()
+    public function __construct(Database $database)
     {
         $this->youtube = new YouTubeService();
-        $this->database = new Database();
+        $this->database = $database;
     }
 
     public function save(VideoCreate $video_create): void

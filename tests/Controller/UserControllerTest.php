@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
+use Repository\Base\Database;
 use Service\DatabaseHelper;
 
 class UserControllerTest extends TestCase
@@ -14,7 +15,9 @@ class UserControllerTest extends TestCase
 
     public static function setUpBeforeClass()
     {
-        (new DatabaseHelper())->truncate_all_tables();
+        $container = new \Container();
+        (new DatabaseHelper($container->get(Database::class)))
+            ->truncate_all_tables();
     }
 
     public function setUp()

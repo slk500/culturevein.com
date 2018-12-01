@@ -15,9 +15,9 @@ final class ArchiverRepository
      */
     private $database;
 
-    public function __construct()
+    public function __construct(Database $database)
     {
-        $this->database = new Database();
+        $this->database = $database;
     }
 
     public function archive_video_tag(string $video_youtube_id, string $tag_slug_id, ?int $user_id = null): void

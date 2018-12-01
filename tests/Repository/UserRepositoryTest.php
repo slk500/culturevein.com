@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Repository;
 
+use Container;
 use Model\User;
 use PHPUnit\Framework\TestCase;
+use Repository\Base\Database;
 use Repository\UserRepository;
 use Service\DatabaseHelper;
 
@@ -16,14 +18,13 @@ class UserRepositoryTest extends TestCase
      */
     private $user_repository;
 
-    public static function setUpBeforeClass()
-    {
-        (new DatabaseHelper())->truncate_all_tables();
-    }
-
     public function setUp()
     {
-        $this->user_repository = new UserRepository();
+        $container = new Container();
+        (new DatabaseHelper($container->get(Database::class)))
+            ->truncate_all_tables();
+
+        $this->user_repository = $container->get(UserRepository::class);
     }
 
     /**

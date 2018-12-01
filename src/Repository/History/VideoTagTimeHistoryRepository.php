@@ -13,9 +13,9 @@ final class VideoTagTimeHistoryRepository
      */
     private $database;
 
-    public function __construct()
+    public function __construct(Database $database)
     {
-        $this->database = new Database();
+        $this->database = $database;
     }
 
     public function find_all(): ?array

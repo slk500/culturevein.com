@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace Controller;
 
+use Container;
 use Controller\Base\BaseController;
-use DTO\VideoTagCreate;
-use Factory\VideoTagFactory;
 use Repository\TagRepository;
-use Repository\VideoTagRepository;
-use Service\TokenService;
 
 class TagController extends BaseController
 {
@@ -17,7 +14,8 @@ class TagController extends BaseController
 
     public function __construct()
     {
-        $this->tag_repository = new TagRepository();
+        $container = new Container();
+        $this->tag_repository = $container->get(TagRepository::class);
     }
 
     public function list()

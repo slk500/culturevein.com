@@ -15,10 +15,10 @@ final class VideoTagDeleter
 
     private $archiver_repository;
 
-    public function __construct()
+    public function __construct(VideoTagRepository $video_tag_repository, ArchiverRepository $archiver_repository)
     {
-        $this->video_tag_repository = new VideoTagRepository();
-        $this->archiver_repository = new ArchiverRepository();
+        $this->video_tag_repository = $video_tag_repository;
+        $this->archiver_repository = $archiver_repository;
     }
 
     public function delete(string $video_youtube_id, string $tag_slug_id, ?int $user_id = null)

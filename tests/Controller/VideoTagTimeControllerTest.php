@@ -7,6 +7,7 @@ use DTO\VideoCreate;
 use Factory\VideoTagFactory;
 use Model\Tag;
 use PHPUnit\Framework\TestCase;
+use Repository\Base\Database;
 use Repository\TagRepository;
 use Repository\VideoTagRepository;
 use Service\DatabaseHelper;
@@ -25,11 +26,26 @@ class VideoTagTimeControllerTest extends TestCase
      */
     private $video_tag_repository;
 
+    /**
+     * @var VideoFactory
+     */
+    private $video_factory;
+
+    /**
+     * @var VideoTagFactory
+     */
+    private $video_tag_factory;
+
     public function setUp()
     {
-        (new DatabaseHelper())->truncate_all_tables();
+        $container = new \Container();
+        (new DatabaseHelper($container->get(Database::class)))
+            ->truncate_all_tables();
 
-        $this->video_tag_repository = new VideoTagRepository();
+        $this->video_tag_repository = $container->get(VideoTagRepository::class);
+        $this->video_tag_factory = $container->get(VideoTagFactory::class);
+        $this->video_factory = $container->get(VideoFactory::class);
+
 
         $this->client = new GuzzleHttp\Client([
             'base_uri' => 'http://localhost:8000',
@@ -38,18 +54,17 @@ class VideoTagTimeControllerTest extends TestCase
 
     /**
      * @test
+     * @covers VideoTagTimeController::create()
      */
     public function CREATE_video_tag_time()
     {
         $video_create = (new VideoCreateBuilder())->build();
-        (new VideoFactory())->create($video_create);
+        $this->video_factory->create($video_create);
 
         $video_tag_create = (new VideoTagCreateBuilder())->build();
-        (new VideoTagFactory())->create($video_tag_create);
+        $this->video_tag_factory->create($video_tag_create);
 
-
-
-        $response = $this->client->post(
+        $this->client->post(
             'api/videos/' . $video_tag_create->video_youtube_id . '/tags/' . $video_tag_create->tag_slug_id,
             [
                 'json' => [
@@ -59,7 +74,7 @@ class VideoTagTimeControllerTest extends TestCase
             ]
         );
 
-        $result = (new VideoTagRepository())
+        $result = $this->video_tag_repository
             ->find_all_for_video($video_create->youtube_id);
 
         $this->assertNotEmpty($result);
@@ -79,10 +94,8 @@ class VideoTagTimeControllerTest extends TestCase
     {
         $this->markTestSkipped('to do - throw some error or something');
 
-        $tag_name = 'video game';
-
         $video_create = (new VideoCreateBuilder())->build();
-        (new VideoFactory())->create($video_create);
+        $this->video_factory->create($video_create);
 
 
         $response = $this->client->post(

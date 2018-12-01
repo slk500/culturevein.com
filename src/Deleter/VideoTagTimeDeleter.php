@@ -16,10 +16,11 @@ final class VideoTagTimeDeleter
 
     private $archiver_repository;
 
-    public function __construct()
+
+    public function __construct(VideoTagTimeRepository $video_tag_time_repository, ArchiverRepository $archiver_repository)
     {
-        $this->video_tag_time_repository = new VideoTagTimeRepository();
-        $this->archiver_repository = new ArchiverRepository();
+        $this->video_tag_time_repository = $video_tag_time_repository;
+        $this->archiver_repository = $archiver_repository;
     }
 
     public function delete(int $video_tag_time_id, ?int $user_id= null)

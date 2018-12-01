@@ -14,9 +14,9 @@ final class ArtistRepository
      */
     private $database;
 
-    public function __construct()
+    public function __construct(Database $database)
     {
-        $this->database = new Database();
+        $this->database = $database;
     }
 
     public function save(string $artist_name, string $artist_slug_id)
@@ -44,5 +44,12 @@ final class ArtistRepository
         $data = $this->database->fetch($query);
 
         return $data;
+    }
+
+    public function assign_video_to_artist(string $artist_slug_id, string $video_id)
+    {
+        $stmt = $this->database->mysqli->prepare("INSERT INTO artist_video (artist_slug_id, video_youtube_id) VALUES (?,?)");
+        $stmt->bind_param("ss", $artist_slug_id, $video_id);
+        $stmt->execute();
     }
 }

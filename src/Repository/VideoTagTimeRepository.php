@@ -16,9 +16,9 @@ final class VideoTagTimeRepository
      */
     private $database;
 
-    public function __construct()
+    public function __construct(Database $database)
     {
-        $this->database = new Database();
+        $this->database = $database;
     }
 
     public function save(VideoTagTimeCreate $video_tag_time_create): ?int

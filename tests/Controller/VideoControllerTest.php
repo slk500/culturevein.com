@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
+use Repository\Base\Database;
 use Repository\VideoRepository;
 use Service\DatabaseHelper;
 
@@ -18,17 +19,13 @@ class VideoControllerTest extends TestCase
      */
     private $video_repository;
 
-    public static function setUpBeforeClass()
-    {
-        $databaseHelper = new DatabaseHelper();
-
-        $databaseHelper->truncate_all_tables();
-    }
-
-
     public function setUp()
     {
-        $this->video_repository = new VideoRepository();
+        $container = new \Container();
+        (new DatabaseHelper($container->get(Database::class)))
+            ->truncate_all_tables();
+
+        $this->video_repository = $container->get(VideoRepository::class);
 
         $this->client = new GuzzleHttp\Client([
             'base_uri' => 'http://localhost:8000',

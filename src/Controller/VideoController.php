@@ -4,30 +4,22 @@ declare(strict_types=1);
 
 namespace Controller;
 
+use Container;
 use Controller\Base\BaseController;
 use Factory\VideoFactory;
 use DTO\VideoCreate;
-use Normalizer\VideoTagNormalizer;
-use Repository\TagRepository;
 use Repository\VideoRepository;
-use Repository\VideoTagRepository;
 use Service\TokenService;
 
 class VideoController extends BaseController
 {
-    private $video_repository;
-
-    private $video_tag_repository;
-
-    private $video_factory;
-
     private $token_service;
+
+    private $container;
 
     public function __construct()
     {
-        $this->video_repository = new VideoRepository();
-        $this->video_tag_repository = new VideoTagRepository();
-        $this->video_factory = new VideoFactory();
+        $this->container = new Container();
         $this->token_service = new TokenService();
     }
 
@@ -46,35 +38,45 @@ class VideoController extends BaseController
             $user_id
         );
 
-        $this->video_factory->create($video_create);
+        $video_factory = $this->container->get(VideoFactory::class);
+
+        $video_factory->create($video_create);
 
         $this->response_created($video_create);
     }
 
     public function list()
     {
-        $videos = $this->video_repository->find_all();
+        $video_repository = $this->container->get(VideoRepository::class);
+
+        $videos = $video_repository->find_all();
 
         $this->response($videos);
     }
 
     public function show(string $youtube_id)
     {
-        $video = $this->video_repository->find($youtube_id);
+        $video_repository = $this->container->get(VideoRepository::class);
+
+        $video = $video_repository->find($youtube_id);
 
         $this->response([$video]);
     }
 
     public function highest_number_of_tags()
     {
-        $videos = $this->video_repository->with_highest_number_of_tags();
+        $video_repository = $this->container->get(VideoRepository::class);
+
+        $videos = $video_repository->with_highest_number_of_tags();
 
         $this->response($videos);
     }
 
     public function newest_ten()
     {
-        $videos = $this->video_repository->newest_ten();
+        $video_repository = $this->container->get(VideoRepository::class);
+
+        $videos = $video_repository->newest_ten();
 
         $this->response($videos);
     }

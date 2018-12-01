@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Repository;
 
+use Container;
 use PHPUnit\Framework\TestCase;
 use Repository\ArtistRepository;
+use Repository\Base\Database;
 use Service\DatabaseHelper;
 
 class ArtistRepositoryTest extends TestCase
@@ -15,14 +17,13 @@ class ArtistRepositoryTest extends TestCase
      */
     private $artist_repository;
 
-    public static function setUpBeforeClass()
-    {
-        (new DatabaseHelper())->truncate_all_tables();
-    }
-
     public function setUp()
     {
-        $this->artist_repository = new ArtistRepository();
+        $container = new Container();
+        (new DatabaseHelper($container->get(Database::class)))
+            ->truncate_all_tables();
+
+        $this->artist_repository = $container->get(ArtistRepository::class);
     }
 
     /**

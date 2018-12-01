@@ -7,6 +7,7 @@ use Factory\VideoTagFactory;
 use Model\Tag;
 use Model\User;
 use PHPUnit\Framework\TestCase;
+use Repository\Base\Database;
 use Repository\TagRepository;
 use Repository\UserRepository;
 use Repository\VideoTagRepository;
@@ -23,13 +24,39 @@ class VideoTagRepositoryTest extends TestCase
      */
     private $video_tag_repository;
 
+    /**
+     * @var UserRepository
+     */
+    private $user_repository;
+
+    /**
+     * @var TagRepository
+     */
+    private $tag_repository;
+
+    /**
+     * @var VideoFactory
+     */
+    private $video_factory;
+
+    /**
+     * @var VideoTagTimeRepository
+     */
+    private $video_tag_time_repository;
+
     private $youtube_id;
 
     public function setUp()
     {
-        (new DatabaseHelper())->truncate_all_tables();
+        $container = new Container();
+        (new DatabaseHelper($container->get(Database::class)))
+            ->truncate_all_tables();
 
-        $this->video_tag_repository = new VideoTagRepository();
+        $this->video_tag_repository = $container->get(VideoTagRepository::class);
+        $this->user_repository = $container->get(UserRepository::class);
+        $this->video_factory = $container->get(VideoFactory::class);
+        $this->tag_repository = $container->get(TagRepository::class);
+        $this->video_tag_time_repository = $container->get(VideoTagTimeRepository::class);
     }
 
     /**
@@ -40,19 +67,19 @@ class VideoTagRepositoryTest extends TestCase
     {
         $user = new User('slawomir.grochowski@gmail.com','password', 'slk');
 
-        (new UserRepository())->save($user);
+        $this->user_repository->save($user);
 
         $video_create = (new VideoCreateBuilder())->build();
-        (new VideoFactory())->create($video_create);
+        $this->video_factory->create($video_create);
 
         $tag = new Tag('video game');
-        (new TagRepository())->save($tag);
+        $this->tag_repository->save($tag);
 
         $video_tag_create = (new VideoTagCreateBuilder())->build();
         $this->video_tag_repository->save($video_tag_create);
 
         $video_tag_time_create = (new VideoTagTimeCreateBuilder())->build();
-        (new VideoTagTimeRepository())->save($video_tag_time_create);
+        $this->video_tag_time_repository->save($video_tag_time_create);
 
         $video_tag = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
 
@@ -72,13 +99,13 @@ class VideoTagRepositoryTest extends TestCase
     {
         $user = new User('slawomir.grochowski@gmail.com','password', 'slk');
 
-        (new UserRepository())->save($user);
+       $this->user_repository->save($user);
 
         $video_create = (new VideoCreateBuilder())->build();
-        (new VideoFactory())->create($video_create);
+        $this->video_factory->create($video_create);
 
         $tag = new Tag('video game');
-        (new TagRepository())->save($tag);
+        $this->tag_repository->save($tag);
 
         $video_tag_create = (new VideoTagCreateBuilder())->build();
         $this->video_tag_repository->save($video_tag_create);

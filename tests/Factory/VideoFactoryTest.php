@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Factory;
 
+use Container;
 use Factory\VideoFactory;
 use PHPUnit\Framework\TestCase;
+use Repository\Base\Database;
 use Repository\UserRepository;
 use Repository\VideoRepository;
 use Service\DatabaseHelper;
@@ -19,11 +21,26 @@ class VideoFactoryTest extends TestCase
      */
     private $video_repository;
 
+    /**
+     * @var UserRepository
+     */
+    private $user_repository;
+
+    /**
+     * @var VideoFactory
+     */
+    private $video_factory;
+
     public function setUp()
     {
-        (new DatabaseHelper())->truncate_all_tables();
+        $container = new Container();
 
-        $this->video_repository = new VideoRepository();
+        (new DatabaseHelper($container->get(Database::class)))
+            ->truncate_all_tables();
+
+        $this->video_repository = $container->get(VideoRepository::class);
+        $this->video_factory = $container->get(VideoFactory::class);
+        $this->user_repository = $container->get(UserRepository::class);
     }
 
     /**
@@ -32,13 +49,13 @@ class VideoFactoryTest extends TestCase
     public function create_and_find()
     {
         $user = (new UserBuilder())->build();
-        (new UserRepository())->save($user);
+        $this->user_repository->save($user);
 
         $video_create = (new VideoCreateBuilder())
             ->user_id(1)
             ->build();
 
-        (new VideoFactory())->create($video_create);
+        $this->video_factory->create($video_create);
 
         $video = $this->video_repository->find($video_create->youtube_id);
 

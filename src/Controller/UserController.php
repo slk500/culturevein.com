@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Controller;
 
 
+use Container;
 use Controller\Base\BaseController;
 use Model\User;
 use Repository\UserRepository;
@@ -12,6 +13,9 @@ use Service\TokenService;
 
 class UserController extends BaseController
 {
+    /**
+     * @var UserRepository
+     */
     private $user_repository;
 
     /**
@@ -21,7 +25,8 @@ class UserController extends BaseController
 
     public function __construct()
     {
-        $this->user_repository = new UserRepository();
+        $container = new Container();
+        $this->user_repository = $container->get(UserRepository::class);
         $this->token_service = new TokenService();
     }
 

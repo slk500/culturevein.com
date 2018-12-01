@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
+use Repository\Base\Database;
 use Repository\UserRepository;
 use Repository\VideoRepository;
 use Service\DatabaseHelper;
@@ -16,11 +17,19 @@ class VideoRepositoryTest extends TestCase
      */
     private $video_repository;
 
+    /**
+     * @var UserRepository
+     */
+    private $user_repository;
+
     public function setUp()
     {
-        (new DatabaseHelper())->truncate_all_tables();
+        $container = new Container();
+        (new DatabaseHelper($container->get(Database::class)))
+            ->truncate_all_tables();
 
-        $this->video_repository = new VideoRepository();
+        $this->video_repository = $container->get(VideoRepository::class);
+        $this->user_repository = $container->get(UserRepository::class);
     }
 
     /**
@@ -46,7 +55,7 @@ class VideoRepositoryTest extends TestCase
     public function create_video_with_user_id()
     {
         $user = (new UserBuilder())->build();
-        (new UserRepository())->save($user);
+        $this->user_repository->save($user);
 
         $video_create = (new VideoCreateBuilder())
             ->user_id(1)

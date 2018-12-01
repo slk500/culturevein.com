@@ -6,6 +6,7 @@ use DTO\VideoTagTimeCreate;
 use Factory\VideoFactory;
 use Model\Tag;
 use PHPUnit\Framework\TestCase;
+use Repository\Base\Database;
 use Repository\TagRepository;
 use Repository\VideoTagRepository;
 use Repository\VideoTagTimeRepository;
@@ -25,14 +26,28 @@ class VideoTagTimeRepositoryTest extends TestCase
      */
     private $video_tag_time_repository;
 
+    /**
+     * @var VideoFactory
+     */
+    private $video_factory;
+
+    /**
+     * @var TagRepository
+     */
+    private $tag_repository;
+
     private $youtube_id;
 
     public function setUp()
     {
-        (new DatabaseHelper())->truncate_all_tables();
+        $container = new Container();
+        (new DatabaseHelper($container->get(Database::class)))
+            ->truncate_all_tables();
 
-        $this->video_tag_repository = new VideoTagRepository();
-        $this->video_tag_time_repository = new VideoTagTimeRepository();
+        $this->video_tag_repository = $container->get(VideoTagRepository::class);
+        $this->video_factory = $container->get(VideoFactory::class);
+        $this->tag_repository = $container->get(TagRepository::class);
+        $this->video_tag_time_repository = $container->get(VideoTagTimeRepository::class);
     }
 
     /**
@@ -42,10 +57,10 @@ class VideoTagTimeRepositoryTest extends TestCase
     public function save()
     {
         $video_create = (new VideoCreateBuilder())->build();
-        (new VideoFactory())->create($video_create);
+        $this->video_factory->create($video_create);
 
         $tag = new Tag('video game');
-        (new TagRepository())->save($tag);
+        $this->tag_repository->save($tag);
 
         $video_tag_create = (new VideoTagCreateBuilder())->build();
         $this->video_tag_repository->save($video_tag_create);

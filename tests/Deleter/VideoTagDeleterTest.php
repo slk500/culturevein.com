@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Deleter;
 
+use Container;
 use Factory\VideoFactory;
 use Factory\VideoTagFactory;
 use Model\Tag;
 use Model\User;
+use Repository\Base\Database;
 use Repository\History\VideoTagHistoryRepository;
 use Repository\TagRepository;
 use Repository\UserRepository;
@@ -35,13 +37,39 @@ class VideoTagDeleterTest extends TestCase
      */
     private $video_tag_history_repository;
 
+    /**
+     * @var UserRepository
+     */
+    private $user_repository;
+
+    /**
+     * @var TagRepository
+     */
+    private $tag_repository;
+
+    /**
+     * @var VideoFactory
+     */
+    private $video_factory;
+
+    /**
+     * @var VideoTagFactory
+     */
+    private $video_tag_factory;
+
     public function setUp()
     {
-        $this->video_tag_repository = new VideoTagRepository();
-        $this->video_tag_deleter = new VideoTagDeleter();
-        $this->video_tag_history_repository= new VideoTagHistoryRepository();
+        $container = new Container();
+        (new DatabaseHelper($container->get(Database::class)))
+            ->truncate_all_tables();
 
-        (new DatabaseHelper())->truncate_all_tables();
+        $this->video_tag_repository = $container->get(VideoTagRepository::class);
+        $this->video_tag_deleter = $container->get(VideoTagDeleter::class);
+        $this->video_tag_history_repository = $container->get(VideoTagHistoryRepository::class);
+        $this->user_repository = $container->get(UserRepository::class);
+        $this->tag_repository = $container->get(TagRepository::class);
+        $this->video_factory = $container->get(VideoFactory::class);
+        $this->video_tag_factory = $container->get(VideoTagFactory::class);
     }
 
     /**
@@ -51,16 +79,16 @@ class VideoTagDeleterTest extends TestCase
     public function ARCHIVE_AND_DELETE_video_tag()
     {
         $user = new User('slawomir.grochowski@gmail.com','password', 'slk500');
-        (new UserRepository())->save($user);
+        $this->user_repository->save($user);
 
         $tag = new Tag('video game');
-        (new TagRepository())->save($tag);
+        $this->tag_repository->save($tag);
 
         $video_create = (new VideoCreateBuilder())->build();
-        (new VideoFactory())->create($video_create);
+        $this->video_factory->create($video_create);
 
         $video_tag_create = (new VideoTagCreateBuilder())->build();
-        (new VideoTagFactory())->create($video_tag_create);
+        $this->video_tag_factory->create($video_tag_create);
 
         $video_tags = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
         $this->assertCount(1, $video_tags);

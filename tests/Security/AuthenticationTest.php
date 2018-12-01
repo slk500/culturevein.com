@@ -4,23 +4,28 @@ declare(strict_types=1);
 
 namespace Tests\Security;
 
-use Factory\VideoFactory;
-use Factory\VideoTagFactory;
-use Model\Tag;
+use Container;
 use Model\User;
 use PHPUnit\Framework\TestCase;
-use Repository\TagRepository;
+use Repository\Base\Database;
 use Repository\UserRepository;
-use Repository\VideoTagRepository;
 use Service\DatabaseHelper;
-use Tests\Builder\VideoCreateBuilder;
-use Tests\Builder\VideoTagCreateBuilder;
 
 class AuthenticationTest extends TestCase
 {
+
+    /**
+     * @var UserRepository
+     */
+    private $user_repository;
+
     public function setUp()
     {
-        (new DatabaseHelper())->truncate_all_tables();
+        $container = new Container();
+        (new DatabaseHelper($container->get(Database::class)))
+            ->truncate_all_tables();
+
+        $this->user_repository = $container->get(UserRepository::class);
     }
 
     /**
@@ -46,9 +51,9 @@ class AuthenticationTest extends TestCase
             'mario'
         );
 
-        (new UserRepository())->save($userData);
+        $this->user_repository->save($userData);
 
-        $user = (new UserRepository())->find('mario@o2.pl');
+        $user = $this->user_repository->find('mario@o2.pl');
 
         $this->assertInstanceOf(User::class, $user);
     }

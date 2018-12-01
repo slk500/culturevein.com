@@ -17,13 +17,10 @@ class VideoFactory
 
     private $artist_repository;
 
-    private $database;
-
-    public function __construct()
+    public function __construct(VideoRepository $video_repository, ArtistRepository $artist_repository)
     {
-        $this->database = new Database();
-        $this->video_repository = new VideoRepository();
-        $this->artist_repository = new ArtistRepository();
+        $this->video_repository = $video_repository;
+        $this->artist_repository = $artist_repository;
     }
 
     //todo add transaction
@@ -41,13 +38,6 @@ class VideoFactory
             );
         }
 
-        $this->assign_video_to_artist($artist_slug_id, $video_create->youtube_id);
-    }
-
-    public function assign_video_to_artist(string $artist_slug_id, string $video_id)
-    {
-        $stmt = $this->database->mysqli->prepare("INSERT INTO artist_video (artist_slug_id, video_youtube_id) VALUES (?,?)");
-        $stmt->bind_param("ss", $artist_slug_id, $video_id);
-        $stmt->execute();
+        $this->artist_repository->assign_video_to_artist($artist_slug_id, $video_create->youtube_id);
     }
 }

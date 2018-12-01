@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Factory;
 
+use Container;
 use Factory\VideoTagFactory;
 use Factory\VideoFactory;
 use PHPUnit\Framework\TestCase;
+use Repository\Base\Database;
 use Repository\VideoTagRepository;
 use Service\DatabaseHelper;
 use Tests\Builder\Video\VideoCreateBuilder;
@@ -15,9 +17,30 @@ use Tests\Builder\VideoTag\VideoTagCreateBuilder;
 
 class VideoTagFactoryTest extends TestCase
 {
+    /**
+     * @var VideoTagRepository
+     */
+    private $video_tag_repository;
+
+    /**
+     * @var VideoFactory
+     */
+    private $video_factory;
+
+    /**
+     * @var VideoTagFactory
+     */
+    private $video_tag_factory;
+
     public function setUp()
     {
-        (new DatabaseHelper())->truncate_all_tables();
+        $container = new Container();
+        (new DatabaseHelper($container->get(Database::class)))
+            ->truncate_all_tables();
+
+        $this->video_tag_repository = $container->get(VideoTagRepository::class);
+        $this->video_factory = $container->get(VideoFactory::class);
+        $this->video_tag_factory = $container->get(VideoTagFactory::class);
     }
 
     /**
@@ -26,12 +49,12 @@ class VideoTagFactoryTest extends TestCase
     public function create()
     {
         $video_create = (new VideoCreateBuilder())->build();
-        (new VideoFactory())->create($video_create);
+        $this->video_factory->create($video_create);
 
         $video_tag_create = (new VideoTagCreateBuilder())->build();
-        (new VideoTagFactory())->create($video_tag_create);
+        $this->video_tag_factory->create($video_tag_create);
 
-        $result = (new VideoTagRepository())
+        $result = $this->video_tag_repository
             ->find_all_for_video($video_create->youtube_id);
 
         $video_tag = (end($result));

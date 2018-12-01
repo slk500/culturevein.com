@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Model\Tag;
 use PHPUnit\Framework\TestCase;
+use Repository\Base\Database;
 use Repository\TagRepository;
 use Service\DatabaseHelper;
 
@@ -14,14 +15,13 @@ class TagRepositoryTest extends TestCase
      */
     private $tag_repository;
 
-    public static function setUpBeforeClass()
-    {
-        (new DatabaseHelper())->truncate_all_tables();
-    }
-
     public function setUp()
     {
-        $this->tag_repository = new TagRepository();
+        $container = new Container();
+        (new DatabaseHelper($container->get(Database::class)))
+            ->truncate_all_tables();
+
+        $this->tag_repository = $container->get(TagRepository::class);
     }
 
     /**
