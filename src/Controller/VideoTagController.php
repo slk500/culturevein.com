@@ -12,7 +12,6 @@ use DTO\VideoTagCreate;
 use Factory\VideoTagFactory;
 use Normalizer\VideoTagNormalizer;
 use Repository\VideoTagRepository;
-use Repository\VideoTagTimeRepository;
 use Service\TokenService;
 
 class VideoTagController extends BaseController

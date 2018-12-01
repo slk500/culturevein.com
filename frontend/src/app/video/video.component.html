@@ -1,8 +1,8 @@
 {{ errorMsg }}
-<div class='col-xs-10 col-xs-offset-1 num_of_rows'>{{ (videos |filter : searchText : 'video_name').length }}</div>
+<div class='col-xs-10 col-xs-offset-1 num_of_rows'>{{ (videos |filter : searchText : 'artist_name' :'video_name').length }}</div>
 <div class="col-xs-10 col-xs-offset-1 white_container">
   <ul class='list-unstyled'>
-    <li *ngFor="let video of videos |filter : searchText : 'video_name'" class='col-xs-12 col-sm-6 col-md-4 col-lg-4'>
+    <li *ngFor="let video of videos |filter : searchText : 'artist_name' : 'video_name'" class='col-xs-12 col-sm-6 col-md-4 col-lg-4'>
       <a [routerLink]="['/videos', video.video_youtube_id]"> {{ video.artist_name }} - {{ video.video_name }}  </a>
     </li>
   </ul>
