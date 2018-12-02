@@ -58,13 +58,26 @@
                             (click)="playPart(timeRange[0],timeRange[1])"> Test
                     </button>
                     <br>
-                    <button *ngIf="isVideoTagTimeExistForSelectedVideoTag" type='button' class='btn btn-primary center-block'
-                            (click)="toggleVideoTagComplete()">Set Tag As Completed
-                    </button>
-                    <br>
-                    <button type='button' class='btn btn-primary center-block'
-                            (click)="addVideoTagTime(timeRange[0],timeRange[1])">Add TAG Time
-                    </button>
+
+                    <div *ngIf="isVideoTagTimeExistForSelectedVideoTag && isTagComplete == false">
+                        <button type='button' class='btn btn-primary center-block'
+                                (click)="toggleVideoTagComplete()">Mark Tag As Completed
+                        </button>
+                        <br>
+                    </div>
+
+                    <div *ngIf="isTagComplete" >
+                        <button type='button' class='btn btn-primary center-block'
+                                (click)="toggleVideoTagComplete()">Mark Tag As Uncompleted
+                        </button>
+                        <br>
+                    </div>
+
+                    <div>
+                        <button type='button' class='btn btn-primary center-block'
+                                (click)="addVideoTagTime(timeRange[0],timeRange[1])">Add TAG Time
+                        </button>
+                    </div>
                 </div>
             </div>
 

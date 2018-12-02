@@ -47,6 +47,8 @@ export class VideoShowComponent implements OnInit {
 
     public isVideoTagTimeExistForSelectedVideoTag: boolean;
 
+    public isTagComplete: boolean;
+
     constructor(private route: ActivatedRoute, private router: Router,
                 private _videoService: VideoService,
                 private _tagService: TagService) {
@@ -113,6 +115,8 @@ export class VideoShowComponent implements OnInit {
 
     public changed(e: any): void {
         this.isSelect2ChangedValue = true;
+        this.isVideoTagTimeExistForSelectedVideoTag = false;
+        this.isTagComplete = false;
         this.selectedTagSlugId = e.value;
         this.selectedTagName = e.data[0].text;
         this.isVideoTagExist = this.isSelectedVideoTagExist(this.selectedTagName);
@@ -126,10 +130,10 @@ export class VideoShowComponent implements OnInit {
     }
 
     isSelectedVideoTagExist(selected: string): boolean {
-
         for (let index = 0; index < this.videoTags.length; ++index) {
             if (this.videoTags[index].tag_name == selected) {
                 this.isVideoTagTimeExistForSelectedVideoTag = this.videoTags[index].video_tags_time.length > 0;
+                this.isTagComplete = this.videoTags[index].is_complete;
                 return true;
             }
         }
@@ -137,7 +141,11 @@ export class VideoShowComponent implements OnInit {
     }
 
 
-    toggleVideoTagComplete(video_tag_id: number) {
+    markVideoTagAsCompleted(video_tag_id: number) {
+
+    }
+
+    markVideoTagAsUncompleted(video_tag_id: number) {
 
     }
 
