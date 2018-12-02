@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Controller;
 
-
 use Container;
 use Controller\Base\BaseController;
 use Deleter\VideoTagDeleter;
@@ -66,6 +65,20 @@ class VideoTagController extends BaseController
         $video_tag_deleter = $this->container->get(VideoTagDeleter::class);
 
         $video_tag_deleter->delete($video_youtube_id, $tag_slug_id, $user_id);
+
+        $this->response();
+    }
+
+    public function update(string $video_youtube_id, string $tag_slug_id)
+    {
+        $body = $this->get_body();
+
+        /**
+         * @var $video_tag_repository VideoTagRepository
+         */
+        $video_tag_repository = $this->container->get(VideoTagRepository::class);
+
+        $video_tag_repository->set_is_complete($video_youtube_id, $tag_slug_id, $body->is_complete);
 
         $this->response();
     }

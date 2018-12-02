@@ -108,4 +108,21 @@ final class VideoTagRepository
 
         return $video_tag_id;
     }
+
+    public function set_is_complete(string $video_youtube_id, string $tag_slug_id, bool $is_complete): void
+    {
+        $stmt = $this->database->mysqli->prepare(
+            "UPDATE video_tag SET is_complete = ? WHERE video_youtube_id = ? AND tag_slug_id = ?"
+        );
+
+        if (!$stmt) {
+            throw new \Exception($this->database->mysqli->error);
+        }
+
+        $stmt->bind_param('sss', $is_complete, $video_youtube_id, $tag_slug_id);
+
+        if (!$stmt->execute()) {
+            throw new \Exception($stmt->error);
+        }
+    }
 }

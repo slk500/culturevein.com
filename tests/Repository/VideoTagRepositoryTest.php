@@ -120,4 +120,33 @@ class VideoTagRepositoryTest extends TestCase
 
         $this->assertEmpty($result);
     }
+
+    /**
+     * @test
+     */
+    public function update_is_complete()
+    {
+        $video_create = (new VideoCreateBuilder())->build();
+        $this->video_factory->create($video_create);
+
+        $tag = new Tag('video game');
+        $this->tag_repository->save($tag);
+
+        $video_tag_create = (new VideoTagCreateBuilder())->build();
+        $this->video_tag_repository->save($video_tag_create);
+
+        $video_tag = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
+
+        $video_tag = end($video_tag);
+
+        $this->assertSame(0, $video_tag->is_complete);
+
+        $this->video_tag_repository->set_is_complete($video_create->youtube_id, $video_tag_create->tag_slug_id, true);
+
+        $video_tag = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
+
+        $video_tag = end($video_tag);
+
+        $this->assertSame(1, $video_tag->is_complete);
+    }
 }
