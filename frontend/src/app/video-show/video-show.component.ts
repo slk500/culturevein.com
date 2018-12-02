@@ -45,6 +45,8 @@ export class VideoShowComponent implements OnInit {
 
     public selectedTagName: string;
 
+    public isVideoTagTimeExistForSelectedVideoTag: boolean;
+
     constructor(private route: ActivatedRoute, private router: Router,
                 private _videoService: VideoService,
                 private _tagService: TagService) {
@@ -90,8 +92,8 @@ export class VideoShowComponent implements OnInit {
             .subscribe((data: any) => {
                 this._tagService.getVideoTags(this.youtubeId)
                     .subscribe(data => {
-                        this.videoTags = data;
-                        this.isVideoTagExist = false;
+                            this.videoTags = data;
+                            this.isVideoTagExist = false;
                         },
                         error => this.errorMsg = error);
             });
@@ -127,10 +129,15 @@ export class VideoShowComponent implements OnInit {
 
         for (let index = 0; index < this.videoTags.length; ++index) {
             if (this.videoTags[index].tag_name == selected) {
+                this.isVideoTagTimeExistForSelectedVideoTag = this.videoTags[index].video_tags_time.length > 0;
                 return true;
             }
         }
         return false;
+    }
+
+
+    toggleVideoTagComplete(video_tag_id: number) {
 
     }
 
@@ -138,9 +145,9 @@ export class VideoShowComponent implements OnInit {
         this._tagService.addVideoTag(this.videoInfo.video_youtube_id, this.selectedTagName).subscribe((data: any) => {
             this._tagService.getVideoTags(this.youtubeId)
                 .subscribe(data => {
-                    this.videoTags = data;
-                    this.isVideoTagExist = true;
-                    this.tagWasAddedText = true;
+                        this.videoTags = data;
+                        this.isVideoTagExist = true;
+                        this.tagWasAddedText = true;
                     },
                     error => this.errorMsg = error);
         });
@@ -155,8 +162,8 @@ export class VideoShowComponent implements OnInit {
         this._tagService.addVideoTagTime(this.videoInfo.video_youtube_id, this.selectedTagSlugId, start, stop).subscribe((data: any) => {
             this._tagService.getVideoTags(this.youtubeId)
                 .subscribe(data => {
-                    this.videoTags = data;
-                    this.tagWasAddedText = true;
+                        this.videoTags = data;
+                        this.tagWasAddedText = true;
                     },
                     error => this.errorMsg = error);
         });
@@ -165,7 +172,6 @@ export class VideoShowComponent implements OnInit {
             this.tagWasAddedText = false;
         }, 3000);
     }
-
 
 
     stopAt(stop) {
@@ -207,7 +213,6 @@ export class VideoShowComponent implements OnInit {
 
         return 'btn-warning'
     }
-
 
 
 }

@@ -58,6 +58,10 @@
                             (click)="playPart(timeRange[0],timeRange[1])"> Test
                     </button>
                     <br>
+                    <button *ngIf="isVideoTagTimeExistForSelectedVideoTag" type='button' class='btn btn-primary center-block'
+                            (click)="toggleVideoTagComplete()">Set Tag As Completed
+                    </button>
+                    <br>
                     <button type='button' class='btn btn-primary center-block'
                             (click)="addVideoTagTime(timeRange[0],timeRange[1])">Add TAG Time
                     </button>

@@ -16,6 +16,7 @@ final class Container
     public function get(string $name): object
     {
         $this->service_store[$name] = $this->service_store[$name] ??  $this->create_service($name);
+
         return $this->service_store[$name];
     }
 
@@ -29,3 +30,4 @@ final class Container
         return new $name(...$dependencies);
     }
 }
+
