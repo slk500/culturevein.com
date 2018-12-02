@@ -134,6 +134,11 @@ export class VideoShowComponent implements OnInit {
             if (this.videoTags[index].tag_name == selected) {
                 this.isVideoTagTimeExistForSelectedVideoTag = this.videoTags[index].video_tags_time.length > 0;
                 this.isTagComplete = this.videoTags[index].is_complete;
+
+                if(this.videoTags[index].video_tags_time.length == 0){
+                    this.setVideoTagAsUncompleted(this.videoInfo.video_youtube_id, this.videoTags[index].tag_slug_id)
+                }
+
                 return true;
             }
         }
@@ -141,12 +146,28 @@ export class VideoShowComponent implements OnInit {
     }
 
 
-    markVideoTagAsCompleted(video_tag_id: number) {
-
+    setVideoTagAsCompleted(video_youtube_id: string, tag_slug_id: string) {
+        this._tagService.setIsComplete(video_youtube_id, tag_slug_id, true)
+            .subscribe((data: any) => {
+                this._tagService.getVideoTags(this.youtubeId)
+                    .subscribe(data => {
+                            this.videoTags = data;
+                            this.isTagComplete = true;
+                        },
+                        error => this.errorMsg = error);
+            });
     }
 
-    markVideoTagAsUncompleted(video_tag_id: number) {
-
+    setVideoTagAsUncompleted(video_youtube_id: string, tag_slug_id: string) {
+        this._tagService.setIsComplete(video_youtube_id, tag_slug_id, false)
+            .subscribe((data: any) => {
+                this._tagService.getVideoTags(this.youtubeId)
+                    .subscribe(data => {
+                            this.videoTags = data;
+                            this.isTagComplete = false;
+                        },
+                        error => this.errorMsg = error);
+            });
     }
 
     addVideoTag(): void {
@@ -172,6 +193,8 @@ export class VideoShowComponent implements OnInit {
                 .subscribe(data => {
                         this.videoTags = data;
                         this.tagWasAddedText = true;
+                        this.isVideoTagTimeExistForSelectedVideoTag = true;
+
                     },
                     error => this.errorMsg = error);
         });

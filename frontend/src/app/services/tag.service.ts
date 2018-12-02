@@ -61,6 +61,14 @@ export class TagService {
         })
     }
 
+    setIsComplete(youtubeId : string, tagSlugId: string, isComplete: boolean) {
+
+        return this.http.patch<any>('api/videos/' + youtubeId + '/tags/' + tagSlugId, {
+            is_complete: isComplete
+        })
+    }
+
+
     deleteVideoTag(youtubeId: string, tagSlugId: string): Observable<Itag> {
         return this.http.delete<Itag>('api/videos/' + youtubeId + '/tags/' + tagSlugId)
             .pipe(catchError(this.errorHandler))

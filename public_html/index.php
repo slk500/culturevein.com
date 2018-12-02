@@ -6,7 +6,7 @@ ini_set('display_errors','1');
 error_reporting(-1);
 
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+header("Access-Control-Allow-Methods: GET, PATCH, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: *");
 
 if($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {

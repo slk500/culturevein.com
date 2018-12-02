@@ -59,30 +59,34 @@
                     </button>
                     <br>
 
-                    <div *ngIf="isVideoTagTimeExistForSelectedVideoTag && isTagComplete == false">
+                    <div *ngIf="isVideoTagTimeExistForSelectedVideoTag" >
+                    <div *ngIf="isTagComplete == false">
                         <button type='button' class='btn btn-primary center-block'
-                                (click)="toggleVideoTagComplete()">Mark Tag As Completed
+                                (click)="setVideoTagAsCompleted(videoInfo.video_youtube_id, selectedTagSlugId)">Mark Tag
+                            As Completed
                         </button>
                         <br>
                     </div>
 
-                    <div *ngIf="isTagComplete" >
+                    <div *ngIf="isTagComplete">
                         <button type='button' class='btn btn-primary center-block'
-                                (click)="toggleVideoTagComplete()">Mark Tag As Uncompleted
+                                (click)="setVideoTagAsUncompleted(videoInfo.video_youtube_id, selectedTagSlugId)">Mark Tag
+                            As Uncompleted
                         </button>
                         <br>
-                    </div>
-
-                    <div>
-                        <button type='button' class='btn btn-primary center-block'
-                                (click)="addVideoTagTime(timeRange[0],timeRange[1])">Add TAG Time
-                        </button>
                     </div>
                 </div>
-            </div>
 
-            <p *ngIf="tagWasAddedText">Great! Tag was added</p>
+                <div>
+                    <button type='button' class='btn btn-primary center-block'
+                            (click)="addVideoTagTime(timeRange[0],timeRange[1])">Add TAG Time
+                    </button>
+                </div>
+            </div>
         </div>
 
+        <p *ngIf="tagWasAddedText">Great! Tag was added</p>
     </div>
+
+</div>
 </div>
