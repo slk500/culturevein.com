@@ -179,7 +179,16 @@ export class VideoShowComponent implements OnInit {
                         this.tagWasAddedText = true;
                     },
                     error => this.errorMsg = error);
+
+            //refresh tags in select because we don't know tag_slug_id
+            this._tagService.getTags()
+                .subscribe(data => {
+                        this.tags = data;
+                    },
+                    error => this.errorMsg = error);
         });
+
+
 
         setTimeout(() => {
             this.tagWasAddedText = false
@@ -244,6 +253,5 @@ export class VideoShowComponent implements OnInit {
 
         return 'btn-warning'
     }
-
-
 }
+
