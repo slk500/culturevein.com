@@ -33,9 +33,9 @@
             </ul>
         </div>
         <div>
-            <select2 [cssImport]=true [options]="select2Options" [width]="'50%'" (valueChanged)="changed($event)">
+            <select2 [cssImport]=true [data]="tags" [options]="select2Options" [width]="'50%'" (valueChanged)="changed($event)"
+                     [value]="startValue" id="tags_select">
                 <option></option>
-                <option *ngFor="let tag of tags" [value]="tag.tag_slug_id">{{ tag.tag_name }}</option>
             </select2>
         </div>
         <br>

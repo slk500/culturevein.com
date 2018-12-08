@@ -49,6 +49,10 @@ export class VideoShowComponent implements OnInit {
 
     public isTagComplete: boolean;
 
+    public startValue = '';
+
+    public temp = '';
+
     constructor(private route: ActivatedRoute, private router: Router,
                 private _videoService: VideoService,
                 private _tagService: TagService) {
@@ -73,7 +77,9 @@ export class VideoShowComponent implements OnInit {
                 error => this.errorMsg = error);
 
         this._tagService.getTags()
-            .subscribe(data => this.tags = this.convertToFormat(data),
+            .subscribe(data => {
+                this.tags = this.convertToFormat(data);
+                },
                 error => this.errorMsg = error);
 
         this.playerOptions = {
@@ -83,7 +89,7 @@ export class VideoShowComponent implements OnInit {
         };
 
         this.select2Options = {
-            placeholder: 'Select TAG or type a new one',
+            placeholder: { id: '', text: 'Select TAG or type a new one' },
             tags: true
         };
     }
@@ -123,10 +129,16 @@ export class VideoShowComponent implements OnInit {
     }
 
     convertToFormat(data) {
-        return $.map(data, function (obj) {
-            obj.text = obj.text || obj.name;
-            return obj;
+
+        data.unshift({tag_slug_id: '', tag_name: 'Empty'}); //placeholder select2
+
+        return data.map(tag => {
+            return {
+                id: tag.tag_slug_id,
+                text: tag.tag_name
+            };
         });
+
     }
 
     isSelectedVideoTagExist(selected: string): boolean {
@@ -171,7 +183,12 @@ export class VideoShowComponent implements OnInit {
     }
 
     addVideoTag(): void {
-        this._tagService.addVideoTag(this.videoInfo.video_youtube_id, this.selectedTagName).subscribe((data: any) => {
+        this._tagService.addVideoTag(this.videoInfo.video_youtube_id, this.selectedTagName)
+            .subscribe((data: any) => {
+
+            //shitfix
+            this.temp = data.tag_slug_id;
+
             this._tagService.getVideoTags(this.youtubeId)
                 .subscribe(data => {
                         this.videoTags = data;
@@ -183,7 +200,10 @@ export class VideoShowComponent implements OnInit {
             //refresh tags in select because we don't know tag_slug_id
             this._tagService.getTags()
                 .subscribe(data => {
-                        this.tags = data;
+                        this.tags = this.convertToFormat(data);
+
+                        //shitfix
+                        this.startValue = this.temp;
                     },
                     error => this.errorMsg = error);
         });
