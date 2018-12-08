@@ -33,9 +33,10 @@ final class TagRepository
 
     public function find_all(): ?array
     {
-        $query = "SELECT tag.name as tag_name, tag.tag_slug_id
-                  FROM video_tag
-                  JOIN tag USING (tag_slug_id)
+        $query = "SELECT 
+                  tag.name AS tag_name, 
+                  tag.tag_slug_id AS tag_slug_id
+                  FROM tag
                   ORDER BY tag_name";
 
         $data = $this->database->fetch($query);
