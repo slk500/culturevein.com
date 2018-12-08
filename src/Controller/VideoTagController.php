@@ -45,7 +45,7 @@ class VideoTagController extends BaseController
         $video_tag_factory = $this->container->get(VideoTagFactory::class);
         $video_tag_factory->create($video_tag_create);
 
-        $this->response_created();
+        $this->response_created($video_tag_create);
     }
 
     public function list(string $youtube_id)
