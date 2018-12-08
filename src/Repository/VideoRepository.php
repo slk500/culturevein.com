@@ -85,16 +85,20 @@ final class VideoRepository
 
     public function with_highest_number_of_tags()
     {
-        $query = "SELECT artist.name as artist_name, video.name as video_name, count(DISTINCT tag.tag_slug_id) AS count,
+        $query = "SELECT 
+               artist.name AS artist_name, 
+               video.name AS video_name,  
+               count(tag.tag_slug_id) AS count,
               video.video_youtube_id
-              FROM tag
-              JOIN video_tag USING (tag_slug_id)
+              FROM video_tag
+              JOIN tag USING (tag_slug_id)
               JOIN video USING (video_youtube_id)
               LEFT JOIN artist_video USING (video_youtube_id)
               LEFT JOIN artist USING (artist_slug_id)
-              GROUP BY video.video_youtube_id
-              ORDER BY `count` DESC
-              LIMIT 10";
+              GROUP BY video.video_youtube_id, artist.name
+              ORDER BY count DESC
+              LIMIT 10
+              ";
 
         $data = $this->database->fetch($query);
 
@@ -103,8 +107,10 @@ final class VideoRepository
 
     public function newest_ten()
     {
-        $query = "SELECT video.video_youtube_id,
-                artist.name as artist_name, video.name as video_name
+        $query = "SELECT 
+                video.video_youtube_id,
+                artist.name AS artist_name, 
+                video.name AS video_name
                 FROM video
                 LEFT JOIN artist_video USING (video_youtube_id)
                 LEFT JOIN artist USING (artist_slug_id)
