@@ -36,7 +36,6 @@ final class TagRepository
         $query = "SELECT tag.name as tag_name, tag.tag_slug_id
                   FROM video_tag
                   JOIN tag USING (tag_slug_id)
-                  GROUP BY tag_name
                   ORDER BY tag_name";
 
         $data = $this->database->fetch($query);
