@@ -25,7 +25,7 @@ class ContainerTest extends TestCase
     /**
      * @test
      */
-    public function konstruktor()
+    public function constructor()
     {
        $database = [new Database()];
 

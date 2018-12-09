@@ -104,11 +104,11 @@ final class DatabaseHelper
     {
         $sql = "SHOW TABLES";
 
-        $tablesNames = $this->database->fetch($sql);
+        $tables_names = $this->database->fetch($sql);
 
         $result = [];
-        foreach ($tablesNames as $tableName) {
-            $result [] = $tableName['Tables_in_test']; //todo chagne name
+        foreach ($tables_names as $key => $table_name) {
+            $result [] = array_shift($table_name);
         }
 
         return $result;
