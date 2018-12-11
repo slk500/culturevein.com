@@ -20,7 +20,6 @@ export class TagService {
     getTags(): Observable<Itag[]> {
         return this.http.get<Itag[]>('api/tags')
             .pipe(catchError(this.errorHandler))
-
     }
 
     getTag(tagSlug): Observable<ITagShow[]> {
@@ -31,19 +30,21 @@ export class TagService {
     getTagsNew(): Observable<INewtTag[]> {
         return this.http.get<INewtTag[]>('api/tags-new')
             .pipe(catchError(this.errorHandler))
-
     }
 
     getTagsTop(): Observable<ITagTop[]> {
         return this.http.get<ITagTop[]>('api/tags-top')
             .pipe(catchError(this.errorHandler))
-
     }
 
-    getVideoTags(youtubeId): Observable<IVideoTag[]> {
+    getVideoTags(): Observable<any[]> {
+        return this.http.get<any[]>('api/videos-tags')
+            .pipe(catchError(this.errorHandler))
+    }
+
+    getVideoTagsForVideo(youtubeId): Observable<IVideoTag[]> {
         return this.http.get<IVideoTag[]>('api/videos/' + youtubeId + '/tags')
             .pipe(catchError(this.errorHandler))
-
     }
 
     addVideoTag(youtubeId, name) {
@@ -67,7 +68,6 @@ export class TagService {
             is_complete: isComplete
         })
     }
-
 
     deleteVideoTag(youtubeId: string, tagSlugId: string): Observable<Itag> {
         return this.http.delete<Itag>('api/videos/' + youtubeId + '/tags/' + tagSlugId)

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Controller\ArtistController;
+use Controller\StatisticController;
 use Controller\TagController;
 use Controller\UserController;
 use Controller\VideoController;
@@ -22,12 +23,13 @@ return  [
 
     ['/^\/api\/videos\/*$/', VideoController::class, 'create', 'POST'],
     ['/^\/api\/videos\/*$/', VideoController::class, 'list', 'GET'],
+    ['/^\/api\/videos-tags\/*$/', VideoTagController::class, 'list', 'GET'],
     ['/^\/api\/videos-tags-top\/*$/', VideoController::class, 'highest_number_of_tags', 'GET'],
     ['/^\/api\/videos-new\/*$/', VideoController::class, 'newest_ten', 'GET'],
 
     ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/*$/', VideoController::class, 'show', 'GET'],
 
-    ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/*$/', VideoTagController::class, 'list', 'GET'],
+    ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/*$/', VideoTagController::class, 'list_for_video', 'GET'],
 
     ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/(?<tag_slug_id>[\w-]+)*$/', VideoTagController::class, 'delete', 'DELETE'],
 
@@ -42,6 +44,8 @@ return  [
     ['/^\/api\/youtube\/(?<youtube_id>[\w-]{11})\/*$/', YouTubeController::class, 'get_artist_and_title', 'GET'],
 
     ['/^\/api\/users\/*$/', UserController::class, 'create', 'POST'],
-    ['/^\/api\/users\/login\/*$/', UserController::class, 'login', 'POST']
+    ['/^\/api\/users\/login\/*$/', UserController::class, 'login', 'POST'],
+
+    ['/^\/api\/users\/statistics\/*$/', StatisticController::class, 'user', 'GET']
 ];
 

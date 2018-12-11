@@ -1,0 +1,53 @@
+<div class='col-xs-12 '>
+
+    <table class='table table-hover white_container'>
+        <caption><strong>Users</strong></caption>
+        <thead>
+        <tr>
+            <th></th>
+            <th>Username</th>
+            <th> no. of added videos</th>
+            <th> no. of added video tags</th>
+            <th> no. of added video tags time</th>
+        </tr>
+        </thead>
+        <tr *ngFor="let user of users; let i=index">
+
+            <td class='text-center'> {{ i + 1 }} </td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.video_count}}</td>
+            <td>{{ user.video_tag_count }}</td>
+            <td>{{ user.video_tag_time_count}}</td>
+        </tr>
+
+    </table>
+
+</div>
+
+<div class='col-xs-12 '>
+    <table class='table table-hover white_container'>
+        <caption><strong>Video Tags</strong></caption>
+        <thead>
+        <tr>
+            <th></th>
+            <th>Video</th>
+            <th>Tag</th>
+            <th>Time</th>
+            <th>User</th>
+            <th>Created At</th>
+        </tr>
+        </thead>
+        <tr *ngFor="let videoTag of videoTags; let i=index">
+
+            <td class='text-center'> {{ i + 1 }} </td>
+            <td><a [routerLink]="['/videos', videoTag.video_youtube_id]"> {{ videoTag.artist_name }}
+                - {{ videoTag.video_name }}  </a></td>
+            <td><a [routerLink]="['/tags', videoTag.tag_slug_id]"> {{ videoTag.tag_name }} </a></td>
+            <td> <span *ngIf="videoTag.start">{{ videoTag.start | minuteSeconds }} - {{ videoTag.stop | minuteSeconds }} </span> </td>
+            <td>{{ videoTag.username }}</td>
+            <td>{{ videoTag.created_at}}</td>
+        </tr>
+    </table>
+
+</div>
+

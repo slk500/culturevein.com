@@ -97,6 +97,33 @@ final class VideoTagRepository
         return $results;
     }
 
+    public function find_all(): array
+    {
+        $query =
+            "SELECT
+              vt.video_youtube_id,
+              v.name   AS video_name,
+              a.name AS artist_name,
+              tag.name AS tag_name,
+              start,
+              stop,
+              vt.user_id,
+              u.username,
+              vt.created_at
+            FROM video_tag vt
+                   LEFT JOIN video_tag_time vtt using (video_tag_id)
+                   LEFT JOIN tag USING (tag_slug_id)
+                   LEFT JOIN video v USING (video_youtube_id)
+                   LEFT JOIN artist_video USING (video_youtube_id)
+                   LEFT JOIN artist a USING (artist_slug_id)
+                   LEFT JOIN user u ON vt.user_id = u.user_id
+            ORDER BY vtt.created_at";
+
+        $data = $this->database->fetch($query);
+
+        return $data;
+    }
+
     public function find(string $youtube_id, string $tag_slug_id)
     {
         $stmt = $this->database->mysqli->prepare(

@@ -32,6 +32,26 @@ final class UserRepository
         return $user_id;
     }
 
+    public function find_statistics()
+    {
+        $query =
+            "SELECT user_id, username, vt.video_tag_count, vtt.video_tag_time_count, v.video_count
+FROM user
+LEFT JOIN
+  (SELECT user_id, COUNT(user_id) AS video_tag_count
+  FROM video_tag GROUP BY user_id) vt USING (user_id)
+LEFT JOIN
+  (SELECT user_id, COUNT(user_id) AS video_tag_time_count
+           FROM video_tag_time GROUP BY user_id) vtt USING (user_id)
+LEFT JOIN
+     (SELECT user_id, COUNT(user_id) AS video_count
+      FROM video GROUP BY user_id) v USING (user_id)";
+
+        $data = $this->database->fetch($query);
+
+        return $data;
+    }
+
     public function find(string $email): ?User
     {
         $stmt = $this->database->mysqli->prepare("
@@ -47,7 +67,7 @@ final class UserRepository
         $user_data = mysqli_fetch_object($result);
 
         $user = null;
-        if($user_data){
+        if ($user_data) {
             $user = new User(
                 $user_data->email,
                 $user_data->password,

@@ -48,7 +48,15 @@ class VideoTagController extends BaseController
         $this->response_created($video_tag_create);
     }
 
-    public function list(string $youtube_id)
+    public function list()
+    {
+        $video_tag_repository = $this->container->get(VideoTagRepository::class);
+        $tags = $video_tag_repository->find_all();
+
+        $this->response($tags);
+    }
+
+    public function list_for_video(string $youtube_id)
     {
         $video_tag_repository = $this->container->get(VideoTagRepository::class);
         $tags = $video_tag_repository->find_all_for_video($youtube_id);

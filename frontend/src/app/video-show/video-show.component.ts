@@ -72,7 +72,7 @@ export class VideoShowComponent implements OnInit {
                 },
                 error => this.errorMsg = error);
 
-        this._tagService.getVideoTags(this.youtubeId)
+        this._tagService.getVideoTagsForVideo(this.youtubeId)
             .subscribe(data => this.videoTags = data,
                 error => this.errorMsg = error);
 
@@ -99,7 +99,7 @@ export class VideoShowComponent implements OnInit {
 
         this._tagService.deleteVideoTag(youtube_id, tag_slug_id)
             .subscribe((data: any) => {
-                this._tagService.getVideoTags(this.youtubeId)
+                this._tagService.getVideoTagsForVideo(this.youtubeId)
                     .subscribe(data => {
                             this.videoTags = data;
                             this.isVideoTagExist = false;
@@ -111,7 +111,7 @@ export class VideoShowComponent implements OnInit {
     public deleteVideoTagTime(video_youtube_id: string, tag_slug_id: string, video_tag_time_id: number) {
         this._tagService.deleteVideoTagTime(video_youtube_id, tag_slug_id, video_tag_time_id)
             .subscribe((data: any) => {
-                this._tagService.getVideoTags(this.youtubeId)
+                this._tagService.getVideoTagsForVideo(this.youtubeId)
                     .subscribe(data => {
                             this.videoTags = data;
                             this.isVideoTagExist = this.isSelectedVideoTagExist(this.selectedTagName);
@@ -167,7 +167,7 @@ export class VideoShowComponent implements OnInit {
     setVideoTagAsCompleted(video_youtube_id: string, tag_slug_id: string) {
         this._tagService.setIsComplete(video_youtube_id, tag_slug_id, true)
             .subscribe((data: any) => {
-                this._tagService.getVideoTags(this.youtubeId)
+                this._tagService.getVideoTagsForVideo(this.youtubeId)
                     .subscribe(data => {
                             this.videoTags = data;
                             this.isTagComplete = true;
@@ -179,7 +179,7 @@ export class VideoShowComponent implements OnInit {
     setVideoTagAsUncompleted(video_youtube_id: string, tag_slug_id: string) {
         this._tagService.setIsComplete(video_youtube_id, tag_slug_id, false)
             .subscribe((data: any) => {
-                this._tagService.getVideoTags(this.youtubeId)
+                this._tagService.getVideoTagsForVideo(this.youtubeId)
                     .subscribe(data => {
                             this.videoTags = data;
                             this.isTagComplete = false;
@@ -195,7 +195,7 @@ export class VideoShowComponent implements OnInit {
             //shitfix
             this.temp = data.tag_slug_id;
 
-            this._tagService.getVideoTags(this.youtubeId)
+            this._tagService.getVideoTagsForVideo(this.youtubeId)
                 .subscribe(data => {
                         this.videoTags = data;
                         this.isVideoTagExist = true;
@@ -224,7 +224,7 @@ export class VideoShowComponent implements OnInit {
     addVideoTagTime(start: number, stop: number) {
 
         this._tagService.addVideoTagTime(this.videoInfo.video_youtube_id, this.selectedTagSlugId, start, stop).subscribe((data: any) => {
-            this._tagService.getVideoTags(this.youtubeId)
+            this._tagService.getVideoTagsForVideo(this.youtubeId)
                 .subscribe(data => {
                         this.videoTags = data;
                         this.tagWasAddedText = true;
