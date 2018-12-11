@@ -33,14 +33,14 @@
             </ul>
         </div>
         <div>
-            <select2 [cssImport]=true [data]="tags" [options]="select2Options" [width]="'50%'" (valueChanged)="changed($event)"
-                     [value]="startValue" id="tags_select">
-                <option></option>
+            <select2
+                    [cssImport]=true [data]="tags" [options]="select2Options"
+                    [width]="'50%'" (valueChanged)="changed($event)">
             </select2>
         </div>
         <br>
 
-        <div *ngIf="isSelect2ChangedValue">
+        <div *ngIf="isSelect2ChangedValue == true">
 
             <div *ngIf="isVideoTagExist == false">
                 <button type='button' class='btn btn-primary center-block'

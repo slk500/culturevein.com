@@ -79,6 +79,7 @@ export class VideoShowComponent implements OnInit {
         this._tagService.getTags()
             .subscribe(data => {
                 this.tags = this.convertToFormat(data);
+                    //this.tags = data;
                 },
                 error => this.errorMsg = error);
 
@@ -120,17 +121,22 @@ export class VideoShowComponent implements OnInit {
     }
 
     public changed(e: any): void {
-        this.isSelect2ChangedValue = true;
-        this.isVideoTagTimeExistForSelectedVideoTag = false;
-        this.isTagComplete = false;
         this.selectedTagSlugId = e.value;
         this.selectedTagName = e.data[0].text;
+
+        if(this.selectedTagSlugId){
+            this.isSelect2ChangedValue = true;
+        }
+
+        this.isVideoTagTimeExistForSelectedVideoTag = false;
+        this.isTagComplete = false;
+
         this.isVideoTagExist = this.isSelectedVideoTagExist(this.selectedTagName);
     }
 
     convertToFormat(data) {
 
-        data.unshift({tag_slug_id: '', tag_name: 'Empty'}); //placeholder select2
+        data.unshift({tag_slug_id: '', tag_name: ''}); //placeholder select2
 
         return data.map(tag => {
             return {
