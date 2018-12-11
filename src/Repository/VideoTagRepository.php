@@ -109,7 +109,7 @@ final class VideoTagRepository
               stop,
               vt.user_id,
               u.username,
-              vt.created_at
+              vtt.created_at
             FROM video_tag vt
                    LEFT JOIN video_tag_time vtt using (video_tag_id)
                    LEFT JOIN tag USING (tag_slug_id)
@@ -117,7 +117,7 @@ final class VideoTagRepository
                    LEFT JOIN artist_video USING (video_youtube_id)
                    LEFT JOIN artist a USING (artist_slug_id)
                    LEFT JOIN user u ON vt.user_id = u.user_id
-            ORDER BY vtt.created_at";
+            ORDER BY vtt.created_at DESC";
 
         $data = $this->database->fetch($query);
 
