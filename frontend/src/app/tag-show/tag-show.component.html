@@ -14,7 +14,7 @@
       <td>
         <a [routerLink]="['/videos', tag.video_youtube_id]"> {{ tag.artist_name }} - {{ tag.video_name }} </a>
       </td>
-      <td>{{ tag.expose }}</td>
+      <td>{{ tag.expose | minuteSeconds }}</td>
 
     </tr>
 

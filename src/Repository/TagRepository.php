@@ -84,7 +84,7 @@ final class TagRepository
     public function find(string $slug)
     {
         $stmt = $this->database->mysqli->prepare("SELECT video.video_youtube_id, artist.name AS artist_name, video.name as video_name,
-                                        clean_time(SUM(video_tag_time.stop)-SUM(video_tag_time.start)) AS expose,
+                                        SUM(video_tag_time.stop)-SUM(video_tag_time.start) AS expose,
                                         tag.name, tag.tag_slug_id
                                         FROM video_tag
                                         LEFT JOIN video_tag_time USING (video_tag_id)
