@@ -163,7 +163,6 @@ export class VideoShowComponent implements OnInit {
         return false;
     }
 
-
     setVideoTagAsCompleted(video_youtube_id: string, tag_slug_id: string) {
         this._tagService.setIsComplete(video_youtube_id, tag_slug_id, true)
             .subscribe((data: any) => {

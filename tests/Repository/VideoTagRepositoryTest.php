@@ -97,9 +97,9 @@ class VideoTagRepositoryTest extends TestCase
      */
     public function DELETE_video_tag()
     {
-        $user = new User('slawomir.grochowski@gmail.com','password', 'slk');
+        $user = new User('slawomir.grochowski@gmail.com', 'password', 'slk');
 
-       $this->user_repository->save($user);
+        $this->user_repository->save($user);
 
         $video_create = (new VideoCreateBuilder())->build();
         $this->video_factory->create($video_create);

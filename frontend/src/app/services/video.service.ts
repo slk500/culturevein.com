@@ -5,8 +5,6 @@ import { throwError as obervableThrowError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import {IVideoTagTop} from "../interfaces/video_tag_top";
 import {IVideoNew} from "../interfaces/video_new";
-import {ITagShow} from "../interfaces/tag_show";
-import {IVideoTag} from "../interfaces/video_tag";
 
 
 @Injectable({

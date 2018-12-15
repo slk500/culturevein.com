@@ -105,6 +105,7 @@ final class VideoTagRepository
               v.name   AS video_name,
               a.name AS artist_name,
               tag.name AS tag_name,
+              tag.tag_slug_id AS tag_slug_id,
               start,
               stop,
               vt.user_id,

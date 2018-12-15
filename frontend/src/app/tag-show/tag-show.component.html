@@ -1,43 +1,58 @@
-<div id="tags" class="col-md-9 col-lg-9 ">
-  <table class='table table-hover white_container'>
-    <thead>
-    <tr>
-      <th>no.</th>
-      <th>Title</th>
-      <th>Exposure Time</th>
-    </tr>
-    </thead>
+<div class='col-xs-12 white_container'>
+    <h1 class='text-center'>{{ tag?.name }}</h1>
 
-    <tr *ngFor="let tag of tag; let i=index">
-
-      <td class='text-center'> {{ i+1 }} </td>
-      <td>
-        <a [routerLink]="['/videos', tag.video_youtube_id]"> {{ tag.artist_name }} - {{ tag.video_name }} </a>
-      </td>
-      <td>{{ tag.expose | minuteSeconds }}</td>
-
-    </tr>
-
-  </table>
+    <div *ngIf="_authService.loggedIn()">
 
 
-  <!--<div class='col-md-3 col-lg-3 white_container'>-->
-    <!--<h1 class='text-center'>{{ db_data[0].tag_title }}</h1>-->
+        <button *ngIf="isTagSubscribedByUser" class="btn btn-default" type="button" style="display: block; margin: 0 auto;"
+               (click)='unsubscribe( tag.id )'>
+            Unsubscribe
+            <span class="badge"> {{ tag?.subscribers }}</span>
+        </button>
 
-    <!--<div class="col-xs-6 col-xs-offset-3" id="subscribe" >-->
-      <!--{% if session.valid %}-->
-      <!--{% if subscribe %}-->
-      <!--<button class="btn btn-default" id='BUTTON_unsubscribe' type="button"-->
-              <!--onclick='unsubscribe({{ session.user_id }},{{ tag_id }})'>Unsubscribe-->
-        <!--<span class="badge"> {{ subscribers_number }}</span></button>-->
-      <!--{% else %}-->
-      <!--<button class="btn btn-danger" id='BUTTON_subscribe' type="button"-->
-              <!--onclick='subscribe({{ session.user_id }},{{ tag_id }})'>Subscribe-->
-        <!--<span class="badge"> {{ subscribers_number }}</span></button>-->
-    <!--</div>-->
-    <!--{% endif %}-->
-    <!--{% else %}-->
-    <!--<a href="login/" class="btn btn-danger">Subscribe-->
-      <!--<span class="badge"> {{ subscribers_number }}</span></a>-->
-    <!--{% endif %}-->
-  <!--</div>-->
+
+        <button *ngIf="!isTagSubscribedByUser" class="btn btn-danger" type="button" style="display: block; margin: 0 auto;"
+                (click)='subscribe( tag.id )'>
+            Subscribe
+            <span class="badge"> {{ tag?.subscribers }}</span>
+        </button>
+
+
+    </div>
+
+    <button *ngIf="!_authService.loggedIn()" routerLink="/login" class="btn btn-danger" type="button" style="display: block; margin: 0 auto;">
+        Subscribe
+        <span class="badge"> {{ tag?.subscribers }}</span>
+    </button>
+
+</div>
+
+
+
+<div id="tags" class="col-xs-12">
+    <table class='table table-hover white_container'>
+        <thead>
+        <tr>
+            <th>no.</th>
+            <th>Title</th>
+            <th class="text-center">Exposure Time</th>
+        </tr>
+        </thead>
+
+        <tr *ngFor="let video of tag?.videos; let i=index">
+
+            <td class='text-center'> {{ i + 1 }} </td>
+            <td>
+                <a [routerLink]="['/videos', video.youtube_id]"> {{ video.artist.name }} - {{ video.name }} </a>
+            </td>
+            <td class="text-center">
+                <span *ngIf="video.expose"> {{ video.expose | minuteSeconds }} </span>
+            </td>
+
+        </tr>
+
+    </table>
+</div>
+
+
+

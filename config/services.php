@@ -11,6 +11,7 @@ use Repository\ArtistRepository;
 use Repository\Base\Database;
 use Repository\History\VideoTagHistoryRepository;
 use Repository\History\VideoTagTimeHistoryRepository;
+use Repository\SubscribeRepository;
 use Repository\TagRepository;
 use Repository\UserRepository;
 use Repository\VideoRepository;
@@ -21,6 +22,7 @@ return array(
         ArchiverRepository::class => [Database::class],
         ArtistRepository::class => [Database::class],
         Database::class => [],
+        SubscribeRepository::class => [Database::class],
         TagRepository::class => [Database::class],
         UserRepository::class => [Database::class],
         VideoFactory::class => [VideoRepository::class, ArtistRepository::class],

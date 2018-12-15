@@ -5,7 +5,6 @@ import {throwError as obervableThrowError, Observable} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {INewtTag} from "../interfaces/tag_new";
 import {ITagTop} from "../interfaces/tag_top";
-import {ITagShow} from "../interfaces/tag_show";
 import {IVideoTag} from "../interfaces/video_tag";
 
 
@@ -22,8 +21,8 @@ export class TagService {
             .pipe(catchError(this.errorHandler))
     }
 
-    getTag(tagSlug): Observable<ITagShow[]> {
-        return this.http.get<ITagShow[]>('api/tags/' + tagSlug)
+    getTag(tagSlug): Observable<any> {
+        return this.http.get<any>('api/tags/' + tagSlug)
             .pipe(catchError(this.errorHandler))
     }
 
@@ -55,7 +54,6 @@ export class TagService {
     }
 
     addVideoTagTime(youtubeId : string, tagSlugId: string, start: number, stop: number) {
-
         return this.http.post<any>('api/videos/' + youtubeId + '/tags/' + tagSlugId, {
             start: start,
             stop: stop
@@ -63,7 +61,6 @@ export class TagService {
     }
 
     setIsComplete(youtubeId : string, tagSlugId: string, isComplete: boolean) {
-
         return this.http.patch<any>('api/videos/' + youtubeId + '/tags/' + tagSlugId, {
             is_complete: isComplete
         })
