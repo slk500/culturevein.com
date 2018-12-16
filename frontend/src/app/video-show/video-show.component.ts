@@ -21,7 +21,7 @@ export class VideoShowComponent implements OnInit {
 
     public errorMsg;
 
-    public videoTags;
+    public videoTags = [];
 
     public tags;
 
@@ -251,6 +251,10 @@ export class VideoShowComponent implements OnInit {
 
     playPart(start, stop): void {
 
+        if (this.interval) {
+            clearInterval(this.interval);
+        }
+
         this.video.videoPlayer.seekTo(start, true);
         if (this.video.videoPlayer.getPlayerState() != YT.PlayerState.PLAYING) {
             this.video.videoPlayer.playVideo();
@@ -272,8 +276,10 @@ export class VideoShowComponent implements OnInit {
         }
 
         let arr = tag.video_tags_time[0];
-        if (arr.start == 0 && arr.stop == this.videoInfo.duration) {
-            return 'btn-danger'
+        if(arr) {
+            if (arr.start == 0 && arr.stop == this.videoInfo.duration) {
+                return 'btn-danger'
+            }
         }
 
         return 'btn-warning'
