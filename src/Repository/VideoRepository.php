@@ -64,8 +64,6 @@ final class VideoRepository
 
         $result = $stmt->get_result();
         $data = mysqli_fetch_object($result, Video::class);
-        $stmt->free_result();
-        $stmt->close();
 
         return $data;
     }

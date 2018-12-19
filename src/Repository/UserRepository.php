@@ -76,9 +76,6 @@ LEFT JOIN
             $user->user_id = $user_data->user_id;
         }
 
-        $stmt->free_result();
-        $stmt->close();
-
         return $user;
     }
 }

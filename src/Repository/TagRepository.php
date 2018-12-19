@@ -106,8 +106,6 @@ final class TagRepository
 
         $result = $stmt->get_result();
         $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
-        $stmt->free_result();
-        $stmt->close();
 
         return $data;
     }
