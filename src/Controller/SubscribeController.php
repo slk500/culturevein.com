@@ -34,22 +34,22 @@ class SubscribeController extends BaseController
 
     public function is_tag_subscribed_by_user(string $tag_slug_id)
     {
-        $result = $this->subscribe_repository->is_tag_subscribed_by_user($tag_slug_id, $this->user_id);
-
-        $this->response(['data' => $result]);
+        return $this->response([
+            'data' => $this->subscribe_repository->is_tag_subscribed_by_user($tag_slug_id, $this->user_id)
+        ]);
     }
 
 
     public function subscribe_tag(string $tag_slug_id)
     {
         $this->subscribe_repository->subscribe_tag($tag_slug_id, $this->user_id);
-        $this->response_created();
+        return $this->response_created();
     }
 
     public function unsubscribe_tag(string $tag_slug_id)
     {
         $this->subscribe_repository->unsubscribe_tag($tag_slug_id, $this->user_id);
-        $this->response('skawoswane');
+        $this->response();
     }
 }
 

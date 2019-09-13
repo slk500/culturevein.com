@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Repository\Base\Database;
 use Repository\VideoRepository;
 use Service\DatabaseHelper;
+use Tests\Builder\Video\VideoCreateBuilder;
 
 class VideoControllerTest extends TestCase
 {
@@ -37,7 +38,7 @@ class VideoControllerTest extends TestCase
      * @test
      * @covers VideoController::create()
      */
-    public function create_video()
+    public function create()
     {
         $json = [
             'artist' => 'Burak Yeter',
@@ -58,6 +59,25 @@ class VideoControllerTest extends TestCase
 
         $this->assertSame($json['name'], $video->video_name);
         $this->assertSame($json['youtube_id'], $video->video_youtube_id);
+    }
+
+    /**
+     * @test
+     * @covers VideoController::show()
+     */
+    public function show()
+    {
+        $video_create = (new VideoCreateBuilder())->build();
+        $this->video_repository->save($video_create);
+
+        $response = $this->client->get(
+            'api/videos/Y1_VsyLAGuk',
+            );
+
+        $result = json_decode($response->getBody()
+            ->getContents(),true);
+
+       $this->assertSame($result[0]['video_youtube_id'], 'Y1_VsyLAGuk');
     }
 }
 

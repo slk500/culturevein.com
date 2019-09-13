@@ -42,7 +42,7 @@ class VideoController extends BaseController
 
         $video_factory->create($video_create);
 
-        $this->response_created($video_create);
+        return $this->response_created($video_create);
     }
 
     public function list()
@@ -51,7 +51,7 @@ class VideoController extends BaseController
 
         $videos = $video_repository->find_all();
 
-        $this->response($videos);
+        return $this->response($videos);
     }
 
     public function show(string $youtube_id)
@@ -60,7 +60,7 @@ class VideoController extends BaseController
 
         $video = $video_repository->find($youtube_id);
 
-        $this->response([$video]);
+        return $this->response([$video]);
     }
 
     public function highest_number_of_tags()
@@ -69,7 +69,7 @@ class VideoController extends BaseController
 
         $videos = $video_repository->with_highest_number_of_tags();
 
-        $this->response($videos);
+        return $this->response($videos);
     }
 
     public function newest_ten()
@@ -78,6 +78,6 @@ class VideoController extends BaseController
 
         $videos = $video_repository->newest_ten();
 
-        $this->response($videos);
+        return $this->response($videos);
     }
 }

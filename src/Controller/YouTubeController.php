@@ -21,7 +21,7 @@ class YouTubeController extends BaseController
 
     public function get_artist_and_title(string $id)
     {
-        $this->response(
+        return $this->response(
             $this->youtube->get_artist_and_title($id)
         );
     }

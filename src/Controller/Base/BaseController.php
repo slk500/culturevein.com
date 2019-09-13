@@ -6,35 +6,35 @@ namespace Controller\Base;
 
 abstract class BaseController
 {
-    protected function response($data = null): void
+    protected function response($data = null): string
     {
         http_response_code(200);
         if ($data) {
-            echo json_encode($data);
+            return json_encode($data);
         }
     }
 
-    protected function response_bad_request($data = null): void
+    protected function response_bad_request($data = null): string
     {
         http_response_code(400);
         if ($data) {
-            echo json_encode($data);
+            return json_encode($data);
         }
     }
 
-    protected function response_unauthorized($data = null): void
+    protected function response_unauthorized($data = null): string
     {
         http_response_code(401);
         if ($data) {
-            echo json_encode($data);
+            return json_encode($data);
         }
     }
 
-    protected function response_created($data = null): void
+    protected function response_created($data = null): string
     {
         http_response_code(201);
         if ($data) {
-            echo json_encode($data);
+            return json_encode($data);
         }
     }
 

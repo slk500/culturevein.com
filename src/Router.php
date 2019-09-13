@@ -56,7 +56,7 @@ final class Router
             $param2 = $this->param[2] ?? null;
             $param3 = $this->param[3] ?? null;
 
-            $controller->$actionName($param1, $param2, (int) $param3);
+           echo $controller->$actionName($param1, $param2, (int) $param3);
         }
     }
 }

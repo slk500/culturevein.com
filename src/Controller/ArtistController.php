@@ -25,6 +25,6 @@ class ArtistController extends BaseController
         $artists = $this->container->get(ArtistRepository::class)
             ->find_all();
 
-        $this->response($artists);
+        return $this->response($artists);
     }
 }

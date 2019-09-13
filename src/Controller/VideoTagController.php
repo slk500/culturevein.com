@@ -29,7 +29,7 @@ class VideoTagController extends BaseController
     }
 
     //todo what if tag dosent exist?
-    public function create(string $youtube_id): void
+    public function create(string $youtube_id): string
     {
         $body = $this->get_body();
 
@@ -45,7 +45,7 @@ class VideoTagController extends BaseController
         $video_tag_factory = $this->container->get(VideoTagFactory::class);
         $video_tag_factory->create($video_tag_create);
 
-        $this->response_created($video_tag_create);
+        return $this->response_created($video_tag_create);
     }
 
     public function list()
@@ -53,7 +53,7 @@ class VideoTagController extends BaseController
         $video_tag_repository = $this->container->get(VideoTagRepository::class);
         $tags = $video_tag_repository->find_all();
 
-        $this->response($tags);
+        return $this->response($tags);
     }
 
     public function list_for_video(string $youtube_id)
@@ -62,7 +62,7 @@ class VideoTagController extends BaseController
         $tags = $video_tag_repository->find_all_for_video($youtube_id);
         $tags = (new VideoTagNormalizer())->normalize($tags);
 
-        $this->response($tags);
+        return $this->response($tags);
     }
 
     public function delete(string $video_youtube_id, string $tag_slug_id)
@@ -74,7 +74,7 @@ class VideoTagController extends BaseController
 
         $video_tag_deleter->delete($video_youtube_id, $tag_slug_id, $user_id);
 
-        $this->response();
+        return $this->response();
     }
 
     public function update(string $video_youtube_id, string $tag_slug_id)
@@ -88,7 +88,7 @@ class VideoTagController extends BaseController
 
         $video_tag_repository->set_is_complete($video_youtube_id, $tag_slug_id, $body->is_complete);
 
-        $this->response();
+        return $this->response();
     }
 }
 

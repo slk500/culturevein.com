@@ -30,44 +30,45 @@ class TagController extends BaseController
 
     public function list()
     {
-        $tags = $this->tag_repository->find_all();
-
-        $this->response($tags);
+        return $this->response(
+            $this->tag_repository->find_all()
+        );
     }
 
     public function show(string $slug)
     {
-        $tag_raw = $this->tag_repository->find($slug);
-        $tag = $this->tag_normalizer->normalize($tag_raw);
-
-        $this->response($tag);
+        return $this->response(
+            $this->tag_normalizer->normalize(
+                $this->tag_repository->find($slug)
+            )
+        );
     }
 
     public function top_ten()
     {
-        $tags = $this->tag_repository->top();
-
-        $this->response($tags);
+        return $this->response(
+            $this->tag_repository->top()
+        );
     }
 
     public function newest_ten()
     {
-        $tags = $this->tag_repository->newest_ten();
-
-        $this->response($tags);
+        return $this->response(
+            $this->tag_repository->newest_ten()
+        );
     }
 
     public function subscribe()
     {
         $this->tag_repository->subscribe();
 
-        $this->response_created();
+        return $this->response_created();
     }
 
     public function unsubscribe()
     {
         $this->tag_repository->usubscribe();
 
-        $this->response_created();
+        return $this->response_created();
     }
 }

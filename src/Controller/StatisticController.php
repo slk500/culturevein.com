@@ -23,8 +23,8 @@ class StatisticController extends BaseController
 
     public function user()
     {
-        $statistics = $this->user_repository->find_statistics();
-
-        $this->response($statistics);
+        return $this->response(
+            $this->user_repository->find_statistics()
+        );
     }
 }

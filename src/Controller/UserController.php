@@ -35,28 +35,23 @@ class UserController extends BaseController
         $data = $this->get_body();
 
         if(!property_exists($data, 'username')) {
-            $this->response_bad_request('You have to provide username!');
-            die;
+            return $this->response_bad_request('You have to provide username!');
         }
 
         if(!property_exists($data, 'email')) {
-            $this->response_bad_request('You have to provide email!');
-            die;
+            return $this->response_bad_request('You have to provide email!');
         }
 
         if(!property_exists($data, 'password')) {
-            $this->response_bad_request('You have to provide password!');
-            die;
+            return $this->response_bad_request('You have to provide password!');
         }
 
         if(!filter_var($data->email, FILTER_VALIDATE_EMAIL)){
-            $this->response_bad_request('Not a valid email!');
-            die;
+            return $this->response_bad_request('Not a valid email!');
         };
 
         if($this->user_repository->find($data->email)){
-            $this->response_bad_request('User with provided email address already exist!');
-            die;
+            return $this->response_bad_request('User with provided email address already exist!');
         };
 
         $password_encrypted = password_hash($data->password, PASSWORD_BCRYPT);
@@ -71,7 +66,7 @@ class UserController extends BaseController
 
         $token = $this->token_service->create_token($user_id);
 
-        $this->response_created(['token' => $token]);
+        return $this->response_created(['token' => $token]);
     }
 
     public function login()
@@ -80,21 +75,21 @@ class UserController extends BaseController
 
         if(!property_exists($data, 'email') ||
             !property_exists($data, 'password')){
-            $this->response_unauthorized('Wrong credentials');die;
+            return $this->response_unauthorized('Wrong credentials');
         }
 
         $user = $this->user_repository->find($data->email);
 
         if(!$user) {
-            $this->response_unauthorized('Wrong credentials');die;
+            return $this->response_unauthorized('Wrong credentials');
         }
 
         if (!password_verify($data->password, $user->password)) {
-            $this->response_unauthorized('Password Mismatch');die;
+            return $this->response_unauthorized('Password Mismatch');
         }
 
         $token = $this->token_service->create_token($user->user_id);
 
-        $this->response(['token' => $token]);
+        return $this->response(['token' => $token]);
     }
 }
