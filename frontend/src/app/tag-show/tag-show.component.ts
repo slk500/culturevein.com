@@ -17,6 +17,8 @@ export class TagShowComponent implements OnInit {
 
   public errorMsg;
 
+  public descendents = [];
+
   public isTagSubscribedByUser = false;
 
   constructor(private route: ActivatedRoute, private router: Router,
@@ -33,6 +35,10 @@ export class TagShowComponent implements OnInit {
           .subscribe(data => this.tag = data.data,
               error => this.errorMsg = error);
 
+      this._tagService.getDescendents(this.tagSlug)
+          .subscribe(data => this.descendents = data.data,
+              error => this.errorMsg = error);
+
     this._subscribeService.isTagSubscribedByUser(this.tagSlug)
         .subscribe(data => this.isTagSubscribedByUser = data.data,
             error => this.errorMsg = error);
@@ -47,7 +53,7 @@ export class TagShowComponent implements OnInit {
               error => this.errorMsg = error);
   }
 
-  unsubscribe(tagId: string){
+  public unsubscribe(tagId: string){
     this._subscribeService.unsubscribe(this.tagSlug)
         .subscribe(data => {
               this.isTagSubscribedByUser = false;

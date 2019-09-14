@@ -20,6 +20,21 @@ final class TagRepository
         $this->database = $database;
     }
 
+    public function find_descendents(string $slug)
+    {
+        $stmt = $this->database->mysqli->prepare(
+             "SELECT c.* FROM tag AS c
+                    JOIN tag_tree_path AS t ON c.tag_slug_id = t.descendant
+                    WHERE t.ancestor = ?;"
+        );
+
+        $stmt->bind_param('s', $slug);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
+
     public function find_slug_id_by_name(string $name): ?string
     {
         $stmt = $this->database->mysqli->prepare("SELECT tag_slug_id FROM tag WHERE name = ?");
@@ -31,6 +46,17 @@ final class TagRepository
         return $tag_slug_id;
     }
 
+    public function find_id_by_slug(string $slug): ?int
+    {
+        $stmt = $this->database->mysqli->prepare("SELECT tag_id FROM tag WHERE tag_slug_id = ?");
+        $stmt->bind_param("s", $slug);
+        $stmt->execute();
+        $stmt->bind_result($tag_id);
+        $stmt->fetch();
+
+        return $tag_id;
+    }
+
     public function find_all(): ?array
     {
         $query = "SELECT 
@@ -39,9 +65,7 @@ final class TagRepository
                   FROM tag
                   ORDER BY tag_name";
 
-        $data = $this->database->fetch($query);
-
-        return $data;
+        return $this->database->fetch($query);
     }
 
     public function top(): array
@@ -54,9 +78,7 @@ final class TagRepository
                 ORDER BY `count` DESC
                 LIMIT 10";
 
-        $data = $this->database->fetch($query);
-
-        return $data;
+        return $this->database->fetch($query);
     }
 
     public function newest_ten(): array
@@ -105,9 +127,7 @@ final class TagRepository
         $stmt->execute();
 
         $result = $stmt->get_result();
-        $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-        return $data;
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
 
     public function save(Tag $tag): void

@@ -4,30 +4,37 @@
     <div *ngIf="_authService.loggedIn()">
 
 
-        <button *ngIf="isTagSubscribedByUser" class="btn btn-default" type="button" style="display: block; margin: 0 auto;"
-               (click)='unsubscribe( tag.id )'>
+        <button *ngIf="isTagSubscribedByUser" class="btn btn-default" type="button"
+                style="display: block; margin: 0 auto;"
+                (click)='unsubscribe( tag.id )'>
             Unsubscribe
             <span class="badge"> {{ tag?.subscribers }}</span>
         </button>
 
 
-        <button *ngIf="!isTagSubscribedByUser" class="btn btn-danger" type="button" style="display: block; margin: 0 auto;"
+        <button *ngIf="!isTagSubscribedByUser" class="btn btn-danger" type="button"
+                style="display: block; margin: 0 auto;"
                 (click)='subscribe( tag.id )'>
             Subscribe
             <span class="badge"> {{ tag?.subscribers }}</span>
         </button>
 
-
     </div>
 
-    <button *ngIf="!_authService.loggedIn()" routerLink="/login" class="btn btn-danger" type="button" style="display: block; margin: 0 auto;">
+    <button *ngIf="!_authService.loggedIn()" routerLink="/login" class="btn btn-danger" type="button"
+            style="display: block; margin: 0 auto;">
         Subscribe
         <span class="badge"> {{ tag?.subscribers }}</span>
     </button>
+    <br>
+
+        <ul>
+            <li *ngFor="let descendent of descendents;">
+                <a [routerLink]="['/tags', descendent.tag_slug_id]"> {{ descendent.name }} </a>
+            </li>
+        </ul>
 
 </div>
-
-
 
 <div id="tags" class="col-xs-12">
     <table class='table table-hover white_container'>

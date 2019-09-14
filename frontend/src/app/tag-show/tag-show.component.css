@@ -2,3 +2,7 @@
 .table th {
     text-align: center;
 }
+
+.list-unstyled li {
+    display:inline;
+}

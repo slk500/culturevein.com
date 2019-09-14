@@ -22,6 +22,8 @@ return  [
 
     ['/^\/api\/tags\/(?<tag_slug_id>[\w-]+)\/*$/', TagController::class, 'show', 'GET'],
 
+    ['/^\/api\/tags\/(?<tag_slug_id>[\w-]+)\/descendents\/*$/', TagController::class, 'descendents', 'GET'],
+
     ['/^\/api\/videos\/*$/', VideoController::class, 'create', 'POST'],
     ['/^\/api\/videos\/*$/', VideoController::class, 'list', 'GET'],
     ['/^\/api\/videos-tags\/*$/', VideoTagController::class, 'list', 'GET'],
