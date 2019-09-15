@@ -112,10 +112,10 @@ final class TagRepository
                                         tag.name, 
                                         tag.tag_slug_id,
       (SELECT COUNT(*) FROM subscribe_user_tag WHERE tag_slug_id = ?) AS subscribers
-                                        FROM video_tag
+                                        FROM tag
+                                        LEFT JOIN video_tag USING (tag_slug_id)
                                         LEFT JOIN video_tag_time USING (video_tag_id)
                                         LEFT JOIN video USING (video_youtube_id)
-                                        LEFT JOIN tag USING (tag_slug_id)
                                         LEFT JOIN artist_video USING (video_youtube_id)
                                         LEFT JOIN artist USING (artist_slug_id)
                                         WHERE tag.tag_slug_id = ?

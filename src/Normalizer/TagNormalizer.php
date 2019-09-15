@@ -19,15 +19,17 @@ final class TagNormalizer
             ]
         ];
 
-        foreach ($array as $ar) {
-            $result['data']['videos'] [] = [
-                'youtube_id' => $ar['video_youtube_id'],
-                'artist' => [
-                    'name' => $ar['artist_name']
-                ],
-                'name' => $ar['video_name'],
-                'expose' => $ar['expose']
-            ];
+        if($array[0]['video_youtube_id']) {
+            foreach ($array as $ar) {
+                $result['data']['videos'] [] = [
+                    'youtube_id' => $ar['video_youtube_id'],
+                    'artist' => [
+                        'name' => $ar['artist_name']
+                    ],
+                    'name' => $ar['video_name'],
+                    'expose' => $ar['expose']
+                ];
+            }
         }
 
         return $result;
