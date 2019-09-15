@@ -28,7 +28,7 @@
     </button>
     <br>
 
-        <ul>
+        <ul class='list-unstyled'>
             <li *ngFor="let descendent of descendents;">
                 <a [routerLink]="['/tags', descendent.tag_slug_id]"> {{ descendent.name }} </a>
             </li>

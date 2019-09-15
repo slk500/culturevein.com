@@ -23,7 +23,9 @@ export class TagShowComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router,
               private _tagService: TagService, public _authService: AuthService,
-              private _subscribeService: SubscribeService) { }
+              private _subscribeService: SubscribeService) {
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  }
 
   ngOnInit() {
 
