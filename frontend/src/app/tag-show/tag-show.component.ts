@@ -41,9 +41,11 @@ export class TagShowComponent implements OnInit {
           .subscribe(data => this.descendents = data.data,
               error => this.errorMsg = error);
 
-    this._subscribeService.isTagSubscribedByUser(this.tagSlug)
-        .subscribe(data => this.isTagSubscribedByUser = data.data,
-            error => this.errorMsg = error);
+      if(this._authService.loggedIn()){
+          this._subscribeService.isTagSubscribedByUser(this.tagSlug)
+              .subscribe(data => this.isTagSubscribedByUser = data.data,
+                  error => this.errorMsg = error);
+      }
   }
 
   public subscribe(tagId: string){
