@@ -19,6 +19,8 @@ export class TagShowComponent implements OnInit {
 
   public descendents = [];
 
+  public ancestors = [];
+
   public isTagSubscribedByUser = false;
 
   constructor(private route: ActivatedRoute, private router: Router,
@@ -39,6 +41,10 @@ export class TagShowComponent implements OnInit {
 
       this._tagService.getDescendents(this.tagSlug)
           .subscribe(data => this.descendents = data.data,
+              error => this.errorMsg = error);
+
+      this._tagService.getAncestors(this.tagSlug)
+          .subscribe(data => this.ancestors = data.data,
               error => this.errorMsg = error);
 
       if(this._authService.loggedIn()){

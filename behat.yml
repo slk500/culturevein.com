@@ -1,0 +1,13 @@
+default:
+  extensions:
+    Behat\MinkExtension:
+      base_url:  'http://localhost:8000/api'
+      sessions:
+        default:
+          goutte:
+
+  suites:
+    my_suite:
+      contexts:
+        - FeatureContext
+        - FeatureMyRestContext

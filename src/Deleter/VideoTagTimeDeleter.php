@@ -23,11 +23,13 @@ final class VideoTagTimeDeleter
         $this->archiver_repository = $archiver_repository;
     }
 
-    public function delete(int $video_tag_time_id, ?int $user_id= null)
+    public function delete(int $video_tag_time_id, ?int $user_id = null)
     {
         $this->archiver_repository->archive_video_tag_time($video_tag_time_id, $user_id);
 
         $this->video_tag_time_repository->delete($video_tag_time_id);
+
+        //todo delete video_tag if deleted video_tag_time was last in DB
     }
 }
 

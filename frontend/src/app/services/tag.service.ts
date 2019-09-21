@@ -31,6 +31,11 @@ export class TagService {
             .pipe(catchError(this.errorHandler))
     }
 
+    getAncestors(tagSlug): Observable<any> {
+        return this.http.get<any>('api/tags/' + tagSlug + '/ancestors')
+            .pipe(catchError(this.errorHandler))
+    }
+
     getTagsNew(): Observable<INewtTag[]> {
         return this.http.get<INewtTag[]>('api/tags-new')
             .pipe(catchError(this.errorHandler))

@@ -9,6 +9,7 @@ use Container;
 use Controller\Base\BaseController;
 use Deleter\VideoTagTimeDeleter;
 use DTO\VideoTagTimeCreate;
+use Repository\VideoRepository;
 use Repository\VideoTagRepository;
 use Repository\VideoTagTimeRepository;
 use Service\TokenService;
@@ -28,9 +29,14 @@ class VideoTagTimeController extends BaseController
         $this->container = new Container();
     }
 
-    //todo what if video_tag dosent exist?
     public function create(string $youtube_id, string $tag_slug_id): string
     {
+        $video = $this->container->get(VideoRepository::class)->find($youtube_id);
+
+        if(!$video){
+            return $this->response_not_found('Video: ' . $youtube_id . ' not found');
+        }
+
         $body = $this->get_body();
 
         $token = $this->get_bearer_token();
@@ -52,12 +58,12 @@ class VideoTagTimeController extends BaseController
         return $this->response_created($body);
     }
 
-    public function delete(string $youtube_id, string $tag_slug_id, int $video_tag_id)
+    public function delete(string $youtube_id, string $tag_slug_id, int $video_tag_time_id)
     {
         $token = $this->get_bearer_token();
         $user_id = $this->token_service->decode_user_id($token);
 
-        $this->container->get(VideoTagTimeDeleter::class)->delete($video_tag_id, $user_id);
+        $this->container->get(VideoTagTimeDeleter::class)->delete($video_tag_time_id, $user_id);
 
         return $this->response();
     }

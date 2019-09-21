@@ -1,4 +1,11 @@
 <div class='col-xs-12 white_container'>
+<strong>Ancestors: </strong>
+    <ul class='list-unstyled'>
+        <li *ngFor="let ancestor of ancestors;">
+            <a [routerLink]="['/tags', ancestor.tag_slug_id]"> {{ ancestor.name }} </a>
+        </li>
+    </ul>
+
     <h1 class='text-center'>{{ tag?.name }}</h1>
 
     <div *ngIf="_authService.loggedIn()">
@@ -27,7 +34,7 @@
         <span class="badge"> {{ tag?.subscribers }}</span>
     </button>
     <br>
-
+    <strong>Descendants: </strong>
         <ul class='list-unstyled'>
             <li *ngFor="let descendent of descendents;">
                 <a [routerLink]="['/tags', descendent.tag_slug_id]"> {{ descendent.name }} </a>

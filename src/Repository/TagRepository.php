@@ -20,12 +20,27 @@ final class TagRepository
         $this->database = $database;
     }
 
-    public function find_descendents(string $slug)
+    public function find_descendents_simple(string $slug)
     {
         $stmt = $this->database->mysqli->prepare(
              "SELECT c.* FROM tag AS c
                     JOIN tag_tree_path AS t ON c.tag_slug_id = t.descendant
                     WHERE t.ancestor = ?;"
+        );
+
+        $stmt->bind_param('s', $slug);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
+
+    public function find_ancestors(string $slug)
+    {
+        $stmt = $this->database->mysqli->prepare(
+            "SELECT c.* FROM tag AS c
+                    JOIN tag_tree_path AS t ON c.tag_slug_id = t.ancestor
+                    WHERE t.descendant = ?;"
         );
 
         $stmt->bind_param('s', $slug);
@@ -124,6 +139,33 @@ final class TagRepository
                                         ");
 
         $stmt->bind_param('ss', $slug,$slug);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
+
+    public function find_descendants(string $slug)
+    {
+        $stmt = $this->database->mysqli->prepare("SELECT video.video_youtube_id, artist.name AS artist_name,
+         video.name AS video_name,
+         SUM(video_tag_time.stop)-SUM(video_tag_time.start) AS expose,
+         tag.name,
+         tag.tag_slug_id,
+(SELECT COUNT(*) FROM subscribe_user_tag WHERE tag_slug_id = ?) AS subscribers
+                      FROM tag
+                      LEFT JOIN tag_tree_path AS ttp ON tag.tag_slug_id = ttp.descendant
+                      LEFT JOIN video_tag USING (tag_slug_id)
+                      LEFT JOIN video_tag_time USING (video_tag_id)
+                      LEFT JOIN video USING (video_youtube_id)
+                      LEFT JOIN artist_video USING (video_youtube_id)
+                      LEFT JOIN artist USING (artist_slug_id)
+                      WHERE ttp.ancestor = ?
+                      GROUP BY video_name
+                      ORDER BY expose DESC
+                      ");
+
+        $stmt->bind_param('ss', $slug, $slug);
         $stmt->execute();
 
         $result = $stmt->get_result();

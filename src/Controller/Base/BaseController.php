@@ -6,12 +6,22 @@ namespace Controller\Base;
 
 abstract class BaseController
 {
-    protected function response($data = null): string
+    protected function response($data = null): ?string
     {
         http_response_code(200);
         if ($data) {
             return json_encode($data);
         }
+        return null;
+    }
+
+    protected function response_not_found($data = null): ?string
+    {
+        http_response_code(404);
+        if ($data) {
+            return json_encode(['errors' => $data]);
+        }
+        return null;
     }
 
     protected function response_bad_request($data = null): string
