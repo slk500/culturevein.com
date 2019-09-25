@@ -16,12 +16,6 @@ final class VideoRepository
      */
     private $database;
 
-    /**
-     * @var YouTubeService
-     */
-    private $youtube;
-
-
     public function __construct(Database $database)
     {
         $this->youtube = new YouTubeService();
@@ -30,15 +24,13 @@ final class VideoRepository
 
     public function save(VideoCreate $video_create): void
     {
-        //todo have to move out
-        $duration = $this->youtube->get_duration($video_create->youtube_id);
-
         $stmt = $this->database->mysqli->prepare("INSERT INTO video (video_youtube_id, name, duration, user_id) VALUES (?,?,?,?)");
         if (!$stmt) {
             throw new \Exception($this->database->mysqli->error);
         }
 
-        $stmt->bind_param("ssii", $video_create->youtube_id, $video_create->video_name, $duration, $video_create->user_id);
+        $stmt->bind_param("ssii",
+            $video_create->youtube_id, $video_create->video_name, $video_create->duration, $video_create->user_id);
         if (!$stmt->execute()) {
             throw new \Exception($stmt->error);
         }

@@ -19,9 +19,13 @@ final class YouTubeService
 
     public function get_duration(string $id)
     {
-        $result = json_decode(
-            file_get_contents('https://www.googleapis.com/youtube/v3/videos' .
-                '?part=contentDetails&id=' . $id . '&key=' . getenv('YT_API_KEY')));
+        try {
+            $result = json_decode(
+                file_get_contents('https://www.googleapis.com/youtube/v3/videos' .
+                    '?part=contentDetails&id=' . $id . '&key=' . getenv('YT_API_KEY')));
+        } catch (\Exception $e){
+            throw new \Exception($e->getMessage());
+        }
 
         $start = new DateTime('@0');
         $youtube = new DateTime('@0');

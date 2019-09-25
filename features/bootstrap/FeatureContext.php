@@ -19,14 +19,25 @@ class FeatureContext implements Context
      */
     private $tag_repository;
 
+    /**
+     * @var DatabaseHelper
+     */
+    private $database_helper;
+
 
     public function __construct()
     {
         $container = new Container();
-        (new DatabaseHelper($container->get(Database::class)))
-            ->truncate_all_tables();
-
         $this->tag_repository = $container->get(TagRepository::class);
+        $this->database_helper = (new DatabaseHelper($container->get(Database::class)));
+    }
+
+    /**
+     * @BeforeScenario
+     */
+    public function cleanDatabase()
+    {
+        $this->database_helper->truncate_all_tables();
     }
 
     /**

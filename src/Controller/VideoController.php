@@ -10,6 +10,7 @@ use Factory\VideoFactory;
 use DTO\VideoCreate;
 use Repository\VideoRepository;
 use Service\TokenService;
+use Service\YouTubeService;
 
 class VideoController extends BaseController
 {
@@ -17,15 +18,23 @@ class VideoController extends BaseController
 
     private $container;
 
+    /**
+     * @var YouTubeService
+     */
+    private $youtube_service;
+
     public function __construct()
     {
         $this->container = new Container();
         $this->token_service = new TokenService();
+        $this->youtube_service = new YouTubeService();
     }
 
     public function create()
     {
         $data = $this->get_body();
+
+        $duration = $this->youtube_service->get_duration($data->youtube_id);
 
         $token = $this->get_bearer_token();
 
@@ -35,6 +44,7 @@ class VideoController extends BaseController
             $data->artist,
             $data->name,
             $data->youtube_id,
+            $duration,
             $user_id
         );
 

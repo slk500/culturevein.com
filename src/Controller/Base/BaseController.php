@@ -59,7 +59,7 @@ abstract class BaseController
         return null;
     }
 
-    public function get_body(): \stdClass
+    public function get_body(): ?\stdClass
     {
         $body = file_get_contents('php://input');
         return json_decode($body);

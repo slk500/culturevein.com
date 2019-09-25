@@ -35,10 +35,18 @@ class FeatureMyRestContext implements Context, \Behat\Behat\Context\SnippetAccep
      */
     public function iHaveThePayload(PyStringNode $requestPayload)
     {
-        $json = $requestPayload->getRaw();
-        $this->requestPayload = json_decode($json,true);
+        if(!$this->isJson($requestPayload)){
+            throw new Exception('Not Json');
+        }
+
+        $this->requestPayload = $requestPayload;
     }
 
+
+    public function isJson($string) {
+        json_decode($string);
+        return (json_last_error() == JSON_ERROR_NONE);
+    }
 
     /**
      * @When I send a :method request to :uri
@@ -49,7 +57,7 @@ class FeatureMyRestContext implements Context, \Behat\Behat\Context\SnippetAccep
 
         $this->response = $this->client->send($request,
             [
-                'json' => $this->requestPayload
+                'body' => $this->requestPayload
             ]);
 
         $this->content = $this->response->getBody()->getContents();

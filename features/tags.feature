@@ -37,3 +37,15 @@ Feature: Tags
               }
     }
     """
+
+  Scenario: SHOW when dosen't exist
+    When I send a "GET" request to "tags/basketball"
+    Then the response status code should be 404
+    And the response "Content-Type" header should be "application/json"
+    And the response should be in JSON
+    And the response should be
+    """
+    {
+      "errors": "Tag: basketball not found"
+    }
+    """

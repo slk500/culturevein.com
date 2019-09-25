@@ -37,6 +37,12 @@ class TagController extends BaseController
 
     public function show(string $slug)
     {
+        $tag = $this->tag_repository->find($slug);
+
+        if(!$tag){
+            return $this->response_not_found('Tag: ' . $slug . ' not found');
+        }
+
         $a = $this->tag_repository->find($slug);
         $b = $this->tag_repository->find_descendants($slug);
 
