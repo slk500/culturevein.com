@@ -59,12 +59,14 @@ class VideoTagControllerTest extends TestCase
 
         $artist_name = 'Burak Yeter';
         $video_name = 'Tuesday ft. Danelle Sandoval';
+        $duration = 10;
         $youtube_id = 'Y1_VsyLAGuk';
 
         $video_create = new VideoCreate(
             $artist_name,
             $video_name,
-            $youtube_id
+            $youtube_id,
+            $duration
         );
         $this->video_factory->create($video_create);
 

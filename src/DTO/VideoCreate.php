@@ -12,9 +12,9 @@ class VideoCreate
 
     public $youtube_id;
 
-    public $user_id = null;
-
     public $duration = 0;
+
+    public $user_id = null;
 
     public function __construct(string $artist_name, string $video_name, string $youtube_id, int $duration, ?int $user_id = null)
     {

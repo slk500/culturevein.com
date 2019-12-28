@@ -52,13 +52,16 @@ final class DatabaseHelper
 
     public function are_tables_empty(): bool
     {
-        $sql = "SHOW TABLE STATUS WHERE Rows > 0;";
+//        $sql = "SHOW TABLE STATUS WHERE Rows > 0;"; //mysql
+
+        $sql = "SELECT * FROM  `information_schema`.`TABLES` WHERE  `TABLE_ROWS` > 0"; //mariadb
 
         $result = $this->database->fetch($sql);
 
         $tablesNames = [];
         foreach ($result as $res) {
-            $tablesNames [] = $res['Name'];
+//            $tablesNames [] = $res['Name']; //mysql
+              $tablesNames [] = $res['TABLE_NAME']; //mariadb
         }
 
         if ($tablesNames) {

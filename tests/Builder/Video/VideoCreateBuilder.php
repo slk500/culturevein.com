@@ -17,12 +17,15 @@ class VideoCreateBuilder
 
     private $user_id = null;
 
+    private $duration = 10;
+
     public function build(): VideoCreate
     {
         return new VideoCreate(
             $this->artist_name,
             $this->video_name,
             $this->youtube_id,
+            $this->duration,
             $this->user_id
         );
     }
