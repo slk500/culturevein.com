@@ -27,7 +27,6 @@ return array(
         UserRepository::class => [Database::class],
         VideoFactory::class => [VideoRepository::class, ArtistRepository::class],
         VideoRepository::class => [Database::class],
-        VideoRepository::class => [Database::class],
         VideoTagDeleter::class => [VideoTagRepository::class, ArchiverRepository::class],
         VideoTagFactory::class => [TagRepository::class, VideoTagRepository::class],
         VideoTagHistoryRepository::class => [Database::class],

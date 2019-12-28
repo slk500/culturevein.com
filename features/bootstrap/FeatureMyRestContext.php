@@ -151,12 +151,20 @@ class FeatureMyRestContext implements Context, \Behat\Behat\Context\SnippetAccep
     }
 
     /**
-     * @Given /^the response should be$/
+     * @Then /^the response should be$/
      */
     public function theResponseShouldBe(PyStringNode $string)
     {
         TestCase::assertJsonStringEqualsJsonString(
          $this->content, $string->getRaw()
         );
+    }
+
+    /**
+     * @Given /^there is a user "([^"]*)"$/
+     */
+    public function thereIsAUser($arg1)
+    {
+        throw new \Behat\Behat\Tester\Exception\PendingException();
     }
 }
