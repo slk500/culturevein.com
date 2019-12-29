@@ -36,8 +36,8 @@
     <br>
     <strong>Descendants: </strong>
         <ul class='list-unstyled'>
-            <li *ngFor="let descendent of descendents;">
-                <a [routerLink]="['/tags', descendent.tag_slug_id]"> {{ descendent.name }} </a>
+            <li *ngFor="let descendant of descendants;">
+                <a [routerLink]="['/tags', descendant.tag_slug_id]"> {{ descendant.name }} </a>
             </li>
         </ul>
 

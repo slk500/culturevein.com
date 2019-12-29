@@ -64,16 +64,6 @@ class TagController extends BaseController
         return $this->response($d);
     }
 
-    public function descendents(string $slug)
-    {
-        return $this->response(['data' => $this->tag_repository->find_descendents_simple($slug)]);
-    }
-
-    public function ancestors(string $slug)
-    {
-        return $this->response(['data' => $this->tag_repository->find_ancestors($slug)]);
-    }
-
     public function top_ten()
     {
         return $this->response(

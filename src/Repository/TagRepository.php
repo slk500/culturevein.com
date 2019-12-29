@@ -20,11 +20,11 @@ final class TagRepository
         $this->database = $database;
     }
 
-    public function find_descendents_simple(string $slug)
+    public function find_descendants_simple(string $slug)
     {
         $stmt = $this->database->mysqli->prepare(
-             "SELECT c.* FROM tag AS c
-                    JOIN tag_tree_path AS t ON c.tag_slug_id = t.descendant
+             "SELECT tag_slug_id, name FROM tag AS c
+                    JOIN tag_descendant AS t ON c.tag_slug_id = t.descendant
                     WHERE t.ancestor = ?;"
         );
 
@@ -39,7 +39,7 @@ final class TagRepository
     {
         $stmt = $this->database->mysqli->prepare(
             "SELECT c.* FROM tag AS c
-                    JOIN tag_tree_path AS t ON c.tag_slug_id = t.ancestor
+                    JOIN tag_descendant AS t ON c.tag_slug_id = t.ancestor
                     WHERE t.descendant = ?;"
         );
 
@@ -154,7 +154,7 @@ final class TagRepository
          tag.tag_slug_id,
 (SELECT COUNT(*) FROM subscribe_user_tag WHERE tag_slug_id = ?) AS subscribers
                       FROM tag
-                      LEFT JOIN tag_tree_path AS ttp ON tag.tag_slug_id = ttp.descendant
+                      LEFT JOIN tag_descendant AS ttp ON tag.tag_slug_id = ttp.descendant
                       LEFT JOIN video_tag USING (tag_slug_id)
                       LEFT JOIN video_tag_time USING (video_tag_id)
                       LEFT JOIN video USING (video_youtube_id)

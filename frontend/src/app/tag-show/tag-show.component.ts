@@ -17,7 +17,7 @@ export class TagShowComponent implements OnInit {
 
   public errorMsg;
 
-  public descendents = [];
+  public descendants = [];
 
   public ancestors = [];
 
@@ -39,8 +39,8 @@ export class TagShowComponent implements OnInit {
           .subscribe(data => this.tag = data.data,
               error => this.errorMsg = error);
 
-      this._tagService.getDescendents(this.tagSlug)
-          .subscribe(data => this.descendents = data.data,
+      this._tagService.getDescendants(this.tagSlug)
+          .subscribe(data => this.descendants = data.data,
               error => this.errorMsg = error);
 
       this._tagService.getAncestors(this.tagSlug)

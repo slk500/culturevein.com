@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Czas generowania: 28 Gru 2019, 14:08
+-- Czas generowania: 29 Gru 2019, 09:03
 -- Wersja serwera: 5.6.46-86.2-cll-lve
 -- Wersja PHP: 7.2.25
 
@@ -1557,19 +1557,19 @@ INSERT INTO `tag` (`tag_id`, `tag_slug_id`, `name`, `created_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `tag_tree_path`
+-- Struktura tabeli dla tabeli `tag_descendant`
 --
 
-CREATE TABLE `tag_tree_path` (
+CREATE TABLE `tag_descendant` (
   `descendant` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `ancestor` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Zrzut danych tabeli `tag_tree_path`
+-- Zrzut danych tabeli `tag_descendant`
 --
 
-INSERT INTO `tag_tree_path` (`descendant`, `ancestor`) VALUES
+INSERT INTO `tag_descendant` (`descendant`, `ancestor`) VALUES
 ('angry-birds', 'video-game'),
 ('borderlands', 'video-game'),
 ('dig-dug', 'video-game'),
@@ -3998,9 +3998,9 @@ ALTER TABLE `tag`
   ADD UNIQUE KEY `tag_id` (`tag_id`);
 
 --
--- Indeksy dla tabeli `tag_tree_path`
+-- Indeksy dla tabeli `tag_descendant`
 --
-ALTER TABLE `tag_tree_path`
+ALTER TABLE `tag_descendant`
   ADD PRIMARY KEY (`ancestor`,`descendant`),
   ADD KEY `descendant` (`descendant`);
 
@@ -4095,11 +4095,11 @@ ALTER TABLE `subscribe_user_tag`
   ADD CONSTRAINT `subscribe_user_tag_user_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
 
 --
--- Ograniczenia dla tabeli `tag_tree_path`
+-- Ograniczenia dla tabeli `tag_descendant`
 --
-ALTER TABLE `tag_tree_path`
-  ADD CONSTRAINT `tag_tree_path_ibfk_1` FOREIGN KEY (`ancestor`) REFERENCES `tag` (`tag_slug_id`),
-  ADD CONSTRAINT `tag_tree_path_ibfk_2` FOREIGN KEY (`descendant`) REFERENCES `tag` (`tag_slug_id`);
+ALTER TABLE `tag_descendant`
+  ADD CONSTRAINT `tag_descendant_ibfk_1` FOREIGN KEY (`ancestor`) REFERENCES `tag` (`tag_slug_id`),
+  ADD CONSTRAINT `tag_descendant_ibfk_2` FOREIGN KEY (`descendant`) REFERENCES `tag` (`tag_slug_id`);
 
 --
 -- Ograniczenia dla tabeli `video`

@@ -23,7 +23,7 @@ return  [
 
     ['/^\/api\/tags\/(?<tag_slug_id>[\w-]+)\/*$/', TagController::class, 'show', 'GET'],
 
-    ['/^\/api\/tags\/(?<tag_slug_id>[\w-]+)\/descendents\/*$/', VideoTagDescendantControllerAlias::class, 'descendents', 'GET'],
+    ['/^\/api\/tags\/(?<tag_slug_id>[\w-]+)\/descendants\/*$/', VideoTagDescendantControllerAlias::class, 'descendants', 'GET'],
     ['/^\/api\/tags\/(?<tag_slug_id>[\w-]+)\/ancestors\/*$/', VideoTagDescendantControllerAlias::class, 'ancestors', 'GET'],
 
     ['/^\/api\/videos\/*$/', VideoController::class, 'create', 'POST'],

@@ -26,8 +26,8 @@ export class TagService {
             .pipe(catchError(this.errorHandler))
     }
 
-    getDescendents(tagSlug): Observable<any> {
-        return this.http.get<any>('api/tags/' + tagSlug + '/descendents')
+    getDescendants(tagSlug): Observable<any> {
+        return this.http.get<any>('api/tags/' + tagSlug + '/descendants')
             .pipe(catchError(this.errorHandler))
     }
 
