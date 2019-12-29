@@ -15,19 +15,14 @@ final class Container
 
     public function get(string $name): object
     {
-        $this->service_store[$name] = $this->service_store[$name] ??  $this->create_service($name);
-
-        return $this->service_store[$name];
+       return $this->service_store[$name] = $this->service_store[$name] ?? $this->create_service($name);
     }
 
     private function create_service(string $name): object
     {
-        $dependencies = [];
-        foreach ($this->config[$name] as $dependencie){
-            $dependencies []= $this->get($dependencie);
-        }
-
-        return new $name(...$dependencies);
+        return new $name(...array_map(function (string $dependency){
+            return $this->get($dependency);
+        }, $this->config[$name]));
     }
 }
 

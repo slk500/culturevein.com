@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Controller\Base;
 
+//todo remove
 abstract class BaseController
 {
     protected function response($data = null): ?string
     {
-        http_response_code(200);
         if ($data) {
             return json_encode($data);
         }
@@ -42,10 +42,7 @@ abstract class BaseController
 
     protected function response_created($data = null): string
     {
-        http_response_code(201);
-        if ($data) {
-            return json_encode($data);
-        }
+        return json_encode($data);
     }
 
     function get_bearer_token(): ?string

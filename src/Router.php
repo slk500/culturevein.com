@@ -24,6 +24,11 @@ final class Router
      */
     private $routes;
 
+    /**
+     * @var string
+     */
+    private $method;
+
     public function __construct(array $routes)
     {
         $this->routes = $routes;
@@ -37,6 +42,7 @@ final class Router
 
                 $this->controller = $route[1];
                 $this->action = $route[2];
+                $this->method = $route[3];
                 $this->param = $matches;
 
                 return true;
@@ -56,7 +62,20 @@ final class Router
             $param2 = $this->param[2] ?? null;
             $param3 = $this->param[3] ?? null;
 
-           echo $controller->$actionName($param1, $param2, (int) $param3);
+            $this->set_status_code($this->method);
+            echo $controller->$actionName($param1, $param2, (int)$param3);
+        }
+    }
+
+    public function set_status_code(string $method): void
+    {
+        switch ($method) {
+            case 'GET':
+                http_response_code(200);
+                break;
+            case 'POST':
+                http_response_code(201);
+                break;
         }
     }
 }
