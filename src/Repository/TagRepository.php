@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Repository;
 
-use Cocur\Slugify\Slugify;
+use DTO\Database\DatabaseTagFind;
+use DTO\Database\DatabaseTagVideo;
 use Model\Tag;
 use Repository\Base\Database;
 
@@ -23,7 +24,7 @@ final class TagRepository
     public function find_descendants_simple(string $slug)
     {
         $stmt = $this->database->mysqli->prepare(
-             "SELECT tag_slug_id, name FROM tag AS c
+            "SELECT tag_slug_id, name FROM tag AS c
                     JOIN tag_descendant AS t ON c.tag_slug_id = t.descendant
                     WHERE t.ancestor = ?;"
         );
@@ -118,41 +119,59 @@ final class TagRepository
         return $data;
     }
 
-    public function find(string $slug)
+    public function find(string $slug): ?DatabaseTagFind
+    {
+        $stmt = $this->database->mysqli->prepare("SELECT name, tag_slug_id as slug_id FROM tag WHERE tag.tag_slug_id = ?");
+
+        $stmt->bind_param('s', $slug);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        return mysqli_fetch_object($result, DatabaseTagFind::class);
+    }
+
+    public function find_videos(string $slug): array
     {
         $stmt = $this->database->mysqli->prepare("SELECT 
-                                        video.video_youtube_id, artist.name AS artist_name, 
-                                        video.name AS video_name,
-                                        SUM(video_tag_time.stop)-SUM(video_tag_time.start) AS expose,
-                                        tag.name, 
-                                        tag.tag_slug_id,
-      (SELECT COUNT(*) FROM subscribe_user_tag WHERE tag_slug_id = ?) AS subscribers
+                                        video.video_youtube_id                              AS video_slug, 
+                                        artist.name                                         AS artist_name, 
+                                        SUM(video_tag_time.stop)-SUM(video_tag_time.start)  AS tag_duration,
+                                        tag.name                                            AS tag_name,
+                                        tag.tag_slug_id                                     AS tag_slug,                            
+                                        video.duration                                      AS video_duration,
+                                        video.name                                          AS video_name
                                         FROM tag
+                                        LEFT JOIN tag_descendant AS ttp ON tag.tag_slug_id = ttp.descendant
                                         LEFT JOIN video_tag USING (tag_slug_id)
                                         LEFT JOIN video_tag_time USING (video_tag_id)
                                         LEFT JOIN video USING (video_youtube_id)
                                         LEFT JOIN artist_video USING (video_youtube_id)
                                         LEFT JOIN artist USING (artist_slug_id)
                                         WHERE tag.tag_slug_id = ?
-                                        GROUP BY video_name
-                                        ORDER BY expose DESC
+                                        OR ttp.ancestor = ?
+                                        GROUP BY video_youtube_id, tag_slug_id 
                                         ");
 
-        $stmt->bind_param('ss', $slug,$slug);
+        $stmt->bind_param('ss', $slug, $slug);
         $stmt->execute();
 
         $result = $stmt->get_result();
-        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+        $objects = [];
+        while ($obj = mysqli_fetch_object($result, DatabaseTagVideo::class)) {
+            $objects[] = $obj;
+        }
+
+        return $objects;
     }
 
-    public function find_descendants(string $slug)
+    public function find_descendants(string $slug): array
     {
         $stmt = $this->database->mysqli->prepare("SELECT video.video_youtube_id, artist.name AS artist_name,
          video.name AS video_name,
-         SUM(video_tag_time.stop)-SUM(video_tag_time.start) AS expose,
          tag.name,
          tag.tag_slug_id,
-(SELECT COUNT(*) FROM subscribe_user_tag WHERE tag_slug_id = ?) AS subscribers
+          SUM(video_tag_time.stop)-SUM(video_tag_time.start) AS expose
                       FROM tag
                       LEFT JOIN tag_descendant AS ttp ON tag.tag_slug_id = ttp.descendant
                       LEFT JOIN video_tag USING (tag_slug_id)
@@ -161,15 +180,20 @@ final class TagRepository
                       LEFT JOIN artist_video USING (video_youtube_id)
                       LEFT JOIN artist USING (artist_slug_id)
                       WHERE ttp.ancestor = ?
-                      GROUP BY video_name
-                      ORDER BY expose DESC
+                      GROUP BY video_youtube_id, tag_slug_id 
                       ");
 
-        $stmt->bind_param('ss', $slug, $slug);
+        $stmt->bind_param('s', $slug);
         $stmt->execute();
 
         $result = $stmt->get_result();
-        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+        $objects = [];
+        while ($obj = mysqli_fetch_object($result, DatabaseTagVideo::class)) {
+            $objects[] = $obj;
+        }
+
+        return $objects;
     }
 
     public function save(Tag $tag): void
@@ -177,5 +201,17 @@ final class TagRepository
         $stmt = $this->database->mysqli->prepare("INSERT INTO tag (name, tag_slug_id) VALUES (?, ?)");
         $stmt->bind_param("ss", $tag->tag_name, $tag->tag_slug_id);
         $stmt->execute();
+    }
+
+    public function get_number_of_subscribers(string $tag_slug_id): int
+    {
+        $stmt = $this->database->mysqli->prepare("SELECT COUNT(*) FROM subscribe_user_tag WHERE tag_slug_id = ?");
+        $stmt->bind_param("s", $tag_slug_id);
+        $stmt->execute();
+        $stmt->bind_result($number_of_subscribers);
+        $stmt->fetch();
+
+        return $number_of_subscribers;
+
     }
 }

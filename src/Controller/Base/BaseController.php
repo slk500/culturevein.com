@@ -10,7 +10,7 @@ abstract class BaseController
     protected function response($data = null): ?string
     {
         if ($data) {
-            return json_encode($data);
+            return json_encode(['data' => $data]);
         }
         return null;
     }

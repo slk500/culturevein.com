@@ -55,9 +55,7 @@ final class VideoRepository
         $stmt->execute();
 
         $result = $stmt->get_result();
-        $data = mysqli_fetch_object($result, Video::class);
-
-        return $data;
+        return mysqli_fetch_object($result, Video::class);
     }
 
     public function find_all()
@@ -68,9 +66,7 @@ final class VideoRepository
                 LEFT JOIN artist USING (artist_slug_id)
                 ORDER BY artist_name";
 
-        $data = $this->database->fetch($query);
-
-        return $data;
+        return $this->database->fetch($query);
     }
 
     public function with_highest_number_of_tags()
@@ -90,9 +86,7 @@ final class VideoRepository
               LIMIT 10
               ";
 
-        $data = $this->database->fetch($query);
-
-        return $data;
+        return  $this->database->fetch($query);
     }
 
     public function newest_ten()
@@ -107,8 +101,6 @@ final class VideoRepository
                 ORDER BY video.created_at DESC
                 LIMIT 10";
 
-        $data = $this->database->fetch($query);
-
-        return $data;
+        return $this->database->fetch($query);
     }
 }

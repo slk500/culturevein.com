@@ -43,11 +43,10 @@ final class YouTubeService
             preg_split('/-/',
                 $result->items[0]->snippet->title, -1, PREG_SPLIT_NO_EMPTY));
 
-        $result = [
+        return [
           'artist' => $artistAndTitle[0] ?? null,
           'title' => $artistAndTitle[1] ?? null
         ];
 
-        return $result;
     }
 }

@@ -6,7 +6,8 @@ namespace Controller;
 
 use Container;
 use Controller\Base\BaseController;
-use Normalizer\TagNormalizer;
+use DTO\Database\DatabaseTagVideo;
+use Normalizer\DatabaseTagVideoNormalizer;
 use Repository\TagRepository;
 
 class TagController extends BaseController
@@ -17,7 +18,7 @@ class TagController extends BaseController
     private $tag_repository;
 
     /**
-     * @var TagNormalizer
+     * @var DatabaseTagVideoNormalizer
      */
     private $tag_normalizer;
 
@@ -25,7 +26,7 @@ class TagController extends BaseController
     {
         $container = new Container();
         $this->tag_repository = $container->get(TagRepository::class);
-        $this->tag_normalizer = new TagNormalizer();
+        $this->tag_normalizer = new DatabaseTagVideoNormalizer();
     }
 
     public function list()
@@ -39,29 +40,58 @@ class TagController extends BaseController
     {
         $tag = $this->tag_repository->find($slug);
 
-        if(!$tag){
+        if (!$tag) {
             return $this->response_not_found('Tag: ' . $slug . ' not found');
         }
 
-        $a = $this->tag_repository->find($slug);
-        $b = $this->tag_repository->find_descendants($slug);
+        $tagVideos = $this->tag_repository->find_videos($tag->slug_id);
 
-        $c = array_merge($a,$b);
 
-        foreach($c as $element) {
-            $hash = $element['video_name'];
-            $unique_array[$hash] = $element;
+        $sortedTagVideos = $this->tag_normalizer->sort_by_video_slug($tagVideos, $tag);
+
+
+        $result = [];
+        foreach ($sortedTagVideos as $tagVideo) {
+
+            if(!array_key_exists('ancestors',$tagVideo)) $tagVideo['ancestors'] = [];
+            if(!array_key_exists('descendants',$tagVideo)) $tagVideo['descendants'] = [];
+
+            /**
+             * @var DatabaseTagVideo
+             */
+            $first = $tagVideo['ancestors'][0] ?? $tagVideo['descendants'][0];
+
+            $ancestorsTime = array_reduce($tagVideo['ancestors'], fn ($carry, $tagVideo) => $carry + $tagVideo->tag_duration, null);
+            $descendantsTime = array_reduce($tagVideo['descendants'], fn ($carry, $tagVideo) => $carry + $tagVideo->tag_duration, null);
+            $totalTime = $ancestorsTime + $descendantsTime;
+
+            $totalTimeTag = ($totalTime > $first->video_duration) ? $first->video_duration : $totalTime;
+            $totalTimeTag = ($totalTimeTag === 0) ? null : $totalTimeTag;
+
+            $descendants = array_map(fn (DatabaseTagVideo $databaseTagVideo) => [
+                'slug' => $databaseTagVideo->tag_slug,
+                'name' => $databaseTagVideo->tag_name,
+                'duration' => $databaseTagVideo->tag_duration
+            ]
+                , $tagVideo['descendants']);
+
+            $result [] = [
+                'slug' => $first->video_slug,
+                'name' => $first->video_name,
+                'duration' => $first->video_duration,
+                'artist' => $first->artist_name,
+                'tags' => [
+                    [
+                        'slug' => $tag->slug_id,
+                        'name' => $tag->name,
+                        'duration' => $totalTimeTag,
+                        'tags' => $descendants
+                    ]
+                ]
+            ];
         }
 
-        usort($unique_array, function ($item1, $item2) {
-            return $item2['expose'] <=> $item1['expose'];
-        });
-
-        $d = $this->tag_normalizer->normalize(
-            $unique_array
-        );
-
-        return $this->response($d);
+        return $this->response($result);
     }
 
     public function top_ten()

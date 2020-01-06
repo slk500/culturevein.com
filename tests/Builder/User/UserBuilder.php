@@ -16,7 +16,6 @@ class UserBuilder
 
     private $password = 'password';
 
-
     public function build(): User
     {
         $password_encrypted = password_hash($this->password, PASSWORD_BCRYPT);

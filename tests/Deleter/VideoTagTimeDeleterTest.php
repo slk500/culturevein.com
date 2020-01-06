@@ -7,6 +7,7 @@ namespace Tests\Deleter;
 use Container;
 use Deleter\VideoTagTimeDeleter;
 use DTO\VideoTagRaw;
+use DTO\VideoTagTimeCreate;
 use Factory\VideoFactory;
 use Factory\VideoTagFactory;
 use Model\Tag;
@@ -99,7 +100,11 @@ class VideoTagTimeDeleterTest extends TestCase
         $video_tag_create = (new VideoTagCreateBuilder())->build();
         $this->video_tag_factory->create($video_tag_create);
 
-        $video_tag_time_create = (new VideoTagTimeCreateBuilder())->build();
+        $video_tag_time_create = new VideoTagTimeCreate(
+            1,
+            0,
+            10
+        );
 
         $this->video_tag_time_repository->save($video_tag_time_create);
 
