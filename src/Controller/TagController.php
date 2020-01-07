@@ -91,7 +91,12 @@ class TagController extends BaseController
             ];
         }
 
-        return $this->response($result);
+        $final = [
+            'name' => $tag->name,
+            'videos' => $result
+        ];
+
+        return $this->response($final);
     }
 
     public function top_ten()

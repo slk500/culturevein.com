@@ -36,20 +36,20 @@ export class TagShowComponent implements OnInit {
     });
 
       this._tagService.getTag(this.tagSlug)
-          .subscribe(data => this.tag = data.data,
+          .subscribe(data => this.tag = data,
               error => this.errorMsg = error);
 
       this._tagService.getDescendants(this.tagSlug)
-          .subscribe(data => this.descendants = data.data,
+          .subscribe(data => this.descendants = data,
               error => this.errorMsg = error);
 
       this._tagService.getAncestors(this.tagSlug)
-          .subscribe(data => this.ancestors = data.data,
+          .subscribe(data => this.ancestors = data,
               error => this.errorMsg = error);
 
       if(this._authService.loggedIn()){
           this._subscribeService.isTagSubscribedByUser(this.tagSlug)
-              .subscribe(data => this.isTagSubscribedByUser = data.data,
+              .subscribe(data => this.isTagSubscribedByUser = data,
                   error => this.errorMsg = error);
       }
   }

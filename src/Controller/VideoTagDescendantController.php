@@ -54,12 +54,12 @@ class VideoTagDescendantController extends BaseController
 
     public function descendants(string $slug)
     {
-        return $this->response(['data' => $this->tag_repository->find_descendants_simple($slug)]);
+        return $this->response($this->tag_repository->find_descendants_simple($slug));
     }
 
     public function ancestors(string $slug)
     {
-        return $this->response(['data' => $this->tag_repository->find_ancestors($slug)]);
+        return $this->response($this->tag_repository->find_ancestors($slug));
     }
 }
 

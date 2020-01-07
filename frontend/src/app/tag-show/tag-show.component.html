@@ -9,8 +9,6 @@
     <h1 class='text-center'>{{ tag?.name }}</h1>
 
     <div *ngIf="_authService.loggedIn()">
-
-
         <button *ngIf="isTagSubscribedByUser" class="btn btn-default" type="button"
                 style="display: block; margin: 0 auto;"
                 (click)='unsubscribe( tag.id )'>
@@ -18,14 +16,12 @@
             <span class="badge"> {{ tag?.subscribers }}</span>
         </button>
 
-
         <button *ngIf="!isTagSubscribedByUser" class="btn btn-danger" type="button"
                 style="display: block; margin: 0 auto;"
                 (click)='subscribe( tag.id )'>
             Subscribe
             <span class="badge"> {{ tag?.subscribers }}</span>
         </button>
-
     </div>
 
     <button *ngIf="!_authService.loggedIn()" routerLink="/login" class="btn btn-danger" type="button"
@@ -49,6 +45,7 @@
         <tr>
             <th>no.</th>
             <th>Title</th>
+            <th class="text-center">Tags</th>
             <th class="text-center">Exposure Time</th>
         </tr>
         </thead>
@@ -57,12 +54,18 @@
 
             <td class='text-center'> {{ i + 1 }} </td>
             <td>
-                <a [routerLink]="['/videos', video.youtube_id]"> {{ video.artist.name }} - {{ video.name }} </a>
+                <a [routerLink]="['/videos', video.slug]"> {{ video.artist }} - {{ video.name }} </a>
             </td>
-            <td class="text-center">
-                <span *ngIf="video.expose"> {{ video.expose | minuteSeconds }} </span>
+            <td>
+                  <ul class='list-unstyled'>
+                      <li *ngFor="let tag of video.tags[0].tags">
+                          <a [routerLink]="['/tags', tag.slug]"> {{ tag.name }} </a>
+                      </li>
+                  </ul>
             </td>
-
+          <td class="text-center">
+            <span *ngIf="video.tags[0].duration"> {{ video.tags[0].duration | minuteSeconds }} </span>
+          </td>
         </tr>
 
     </table>
