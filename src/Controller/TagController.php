@@ -110,18 +110,4 @@ class TagController extends BaseController
             $this->tag_repository->newest_ten()
         );
     }
-
-    public function subscribe()
-    {
-        $this->tag_repository->subscribe();
-
-        return $this->response_created();
-    }
-
-    public function unsubscribe()
-    {
-        $this->tag_repository->usubscribe();
-
-        return $this->response_created();
-    }
 }

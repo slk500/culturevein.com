@@ -34,9 +34,7 @@ class SubscribeController extends BaseController
 
     public function is_tag_subscribed_by_user(string $tag_slug_id)
     {
-        return $this->response([
-            'data' => $this->subscribe_repository->is_tag_subscribed_by_user($tag_slug_id, $this->user_id)
-        ]);
+        return $this->response($this->subscribe_repository->is_tag_subscribed_by_user($tag_slug_id, $this->user_id));
     }
 
 
