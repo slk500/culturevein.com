@@ -12,15 +12,9 @@ use Repository\TagRepository;
 
 class TagController extends BaseController
 {
-    /**
-     * @var TagRepository
-     */
-    private $tag_repository;
+    private TagRepository $tag_repository;
 
-    /**
-     * @var DatabaseTagVideoNormalizer
-     */
-    private $tag_normalizer;
+    private DatabaseTagVideoNormalizer $tag_normalizer;
 
     public function __construct()
     {
@@ -90,6 +84,10 @@ class TagController extends BaseController
                 ]
             ];
         }
+
+        usort($result, function ($a, $b) {
+            return $b['tags'][0]['duration'] <=> $a['tags'][0]['duration'];
+        });
 
         $final = [
             'name' => $tag->name,
