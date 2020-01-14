@@ -120,7 +120,7 @@ class VideoTagRepositoryTest extends TestCase
 
         $this->assertNotEmpty($result);
 
-        $this->video_tag_repository->delete($video_create->youtube_id, $tag->tag_slug_id);
+        $this->video_tag_repository->delete($video_create->youtube_id, $tag->slug_id);
 
         $result = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
 

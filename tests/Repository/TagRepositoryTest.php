@@ -33,8 +33,8 @@ class TagRepositoryTest extends TestCase
 
         $this->tag_repository->save($tag);
 
-        $tag_slug_id_from_database = $this->tag_repository->find_slug_id_by_name($tag->tag_name);
+        $tag_slug_id_from_database = $this->tag_repository->find_slug_id_by_name($tag->name);
 
-        $this->assertSame($tag->tag_slug_id, $tag_slug_id_from_database);
+        $this->assertSame($tag->slug_id, $tag_slug_id_from_database);
     }
 }

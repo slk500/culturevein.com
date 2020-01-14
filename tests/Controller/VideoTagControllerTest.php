@@ -74,7 +74,7 @@ class VideoTagControllerTest extends TestCase
             'api/videos/' . $youtube_id . '/tags',
             [
                 'json' => [
-                    'tag_name' => $tag->tag_name
+                    'tag_name' => $tag->name
                 ]
             ]
         );
@@ -86,7 +86,7 @@ class VideoTagControllerTest extends TestCase
 
         $video_tag = (end($result));
 
-        $this->assertSame('video game', $tag->tag_name);
+        $this->assertSame('video game', $tag->name);
         $this->assertSame($video_create->youtube_id, $video_tag->video_youtube_id);
 
     }

@@ -77,7 +77,7 @@ class VideoControllerTest extends TestCase
         $result = json_decode($response->getBody()
             ->getContents(),true);
 
-       $this->assertSame($result[0]['video_youtube_id'], 'Y1_VsyLAGuk');
+       $this->assertSame($result['data'][0]['video_youtube_id'], 'Y1_VsyLAGuk');
     }
 }
 

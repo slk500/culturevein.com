@@ -81,9 +81,9 @@ class SubscribeRepositoryTest extends TestCase
 
         $this->assertNotEmpty($result);
 
-        $this->subscribe_repository->subscribe_tag($tag->tag_slug_id, 1);
+        $this->subscribe_repository->subscribe_tag($tag->slug_id, 1);
 
-        $result = $this->subscribe_repository->is_tag_subscribed_by_user($tag->tag_slug_id, 1);
+        $result = $this->subscribe_repository->is_tag_subscribed_by_user($tag->slug_id, 1);
 
         $this->assertTrue($result);
     }
@@ -110,13 +110,13 @@ class SubscribeRepositoryTest extends TestCase
 
         $this->assertNotEmpty($result);
 
-        $this->subscribe_repository->subscribe_tag($tag->tag_slug_id, 1);
+        $this->subscribe_repository->subscribe_tag($tag->slug_id, 1);
 
-        $result = $this->subscribe_repository->is_tag_subscribed_by_user($tag->tag_slug_id, 1);
+        $result = $this->subscribe_repository->is_tag_subscribed_by_user($tag->slug_id, 1);
 
         $this->assertTrue($result);
 
-        $this->subscribe_repository->unsubscribe_tag($tag->tag_slug_id, 1);
+        $this->subscribe_repository->unsubscribe_tag($tag->slug_id, 1);
 
 
     }

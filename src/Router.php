@@ -4,30 +4,15 @@ declare(strict_types=1);
 
 final class Router
 {
-    /**
-     * @var string
-     */
-    private $param;
+    private array $routes;
 
-    /**
-     * @var string
-     */
-    private $controller;
+    private array $param;
 
-    /**
-     * @var string
-     */
-    private $action;
+    private string $controller;
 
-    /**
-     * @var array
-     */
-    private $routes;
+    private string $action;
 
-    /**
-     * @var string
-     */
-    private $method;
+    private string $method;
 
     public function __construct(array $routes)
     {

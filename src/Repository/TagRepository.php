@@ -88,8 +88,9 @@ final class TagRepository
     {
         $query = "SELECT tag.name as tag_name, count(distinct video.video_youtube_id) AS count, tag.tag_slug_id
                 FROM tag
-                JOIN video_tag USING (tag_slug_id)
-                JOIN video USING (video_youtube_id) 
+                LEFT JOIN video_tag USING (tag_slug_id)
+                LEFT JOIN video USING (video_youtube_id)
+                LEFT JOIN tag_descendant td on tag.tag_slug_id = td.ancestor
                 GROUP BY tag.name, tag.tag_slug_id
                 ORDER BY `count` DESC
                 LIMIT 10";
@@ -199,7 +200,7 @@ final class TagRepository
     public function save(Tag $tag): void
     {
         $stmt = $this->database->mysqli->prepare("INSERT INTO tag (name, tag_slug_id) VALUES (?, ?)");
-        $stmt->bind_param("ss", $tag->tag_name, $tag->tag_slug_id);
+        $stmt->bind_param("ss", $tag->name, $tag->slug_id);
         $stmt->execute();
     }
 
