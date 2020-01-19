@@ -85,27 +85,13 @@ final class TagRepository
 
     public function top(): array
     {
-        $query = "
-                WITH RECURSIVE
-                    cte_path(parent, child, level, query, tag_name)
-                        AS (
-                        SELECT parent_slug_id, tag_slug_id, 1, tag_slug_id, tag.name
-                        FROM tag
-                        UNION ALL
-                        SELECT
-                            t.parent_slug_id, t.tag_slug_id,  p.level + 1, p.query, tag_name
-                        FROM
-                            cte_path p, tag t
-                        WHERE t.parent_slug_id = p.child
-                    )
-                SELECT cte_path.query as tag_slug_id, tag_name, count(distinct (video_tag.video_youtube_id)) AS count
-                FROM
-                    cte_path, video_tag
-                WHERE video_tag.tag_slug_id = cte_path.child
-                GROUP BY query
-                ORDER BY count desc
-                LIMIT 10 
-                ";
+        $query = "SELECT tag.name as tag_name, count(distinct video.video_youtube_id) AS count, tag.tag_slug_id
+                FROM tag
+                JOIN video_tag USING (tag_slug_id)
+                JOIN video USING (video_youtube_id) 
+                GROUP BY tag.name, tag.tag_slug_id
+                ORDER BY `count` DESC
+                LIMIT 10";
 
         return $this->database->fetch($query);
     }
