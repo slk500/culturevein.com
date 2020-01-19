@@ -7,21 +7,13 @@ namespace Controller\Base;
 //todo remove
 abstract class BaseController
 {
-    protected function response($data = null): ?string
-    {
-        if ($data) {
-            return json_encode(['data' => $data]);
-        }
-        return null;
-    }
-
     protected function response_not_found($data = null): ?string
     {
         http_response_code(404);
         if ($data) {
             return json_encode(['errors' => $data]);
         }
-        return null;
+        die();
     }
 
     protected function response_bad_request($data = null): string
@@ -30,6 +22,7 @@ abstract class BaseController
         if ($data) {
             return json_encode($data);
         }
+        die();
     }
 
     protected function response_unauthorized($data = null): string
@@ -38,11 +31,7 @@ abstract class BaseController
         if ($data) {
             return json_encode($data);
         }
-    }
-
-    protected function response_created($data = null): string
-    {
-        return json_encode($data);
+        die();
     }
 
     function get_bearer_token(): ?string

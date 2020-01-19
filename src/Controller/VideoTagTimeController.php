@@ -16,12 +16,9 @@ use Service\TokenService;
 
 class VideoTagTimeController extends BaseController
 {
-    private $token_service;
+    private TokenService $token_service;
 
-    /**
-     * @var Container
-     */
-    private $container;
+    private Container $container;
 
     public function __construct()
     {
@@ -29,7 +26,7 @@ class VideoTagTimeController extends BaseController
         $this->container = new Container();
     }
 
-    public function create(string $youtube_id, string $tag_slug_id): string
+    public function create(string $youtube_id, string $tag_slug_id)
     {
         $video = $this->container->get(VideoRepository::class)->find($youtube_id);
 
@@ -55,7 +52,7 @@ class VideoTagTimeController extends BaseController
         $this->container->get(VideoTagTimeRepository::class)
             ->save($video_tag_create);
 
-        return $this->response_created($body);
+        return $body;
     }
 
     public function delete(string $youtube_id, string $tag_slug_id, int $video_tag_time_id)
@@ -64,7 +61,5 @@ class VideoTagTimeController extends BaseController
         $user_id = $this->token_service->decode_user_id($token);
 
         $this->container->get(VideoTagTimeDeleter::class)->delete($video_tag_time_id, $user_id);
-
-        return $this->response();
     }
 }

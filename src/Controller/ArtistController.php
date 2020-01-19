@@ -10,10 +10,7 @@ use Repository\ArtistRepository;
 
 class ArtistController extends BaseController
 {
-    /**
-     * @var Container
-     */
-    private $container;
+    private Container $container;
 
     public function __construct()
     {
@@ -22,9 +19,7 @@ class ArtistController extends BaseController
 
     public function list()
     {
-        $artists = $this->container->get(ArtistRepository::class)
+        return $this->container->get(ArtistRepository::class)
             ->find_all();
-
-        return $this->response($artists);
     }
 }

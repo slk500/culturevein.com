@@ -32,5 +32,6 @@ class SmokeTest extends TestCase
     {
         yield ['/api/tags'];
         yield ['/api/videos'];
+        yield ['/api/users/statistics'];
     }
 }

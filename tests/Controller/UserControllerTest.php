@@ -2,16 +2,14 @@
 
 declare(strict_types=1);
 
+use GuzzleHttp\Client;
 use PHPUnit\Framework\TestCase;
 use Repository\Base\Database;
 use Service\DatabaseHelper;
 
 class UserControllerTest extends TestCase
 {
-    /**
-     * @var \GuzzleHttp\Client
-     */
-    private $client;
+    private Client $client;
 
     public static function setUpBeforeClass()
     {
@@ -48,8 +46,7 @@ class UserControllerTest extends TestCase
         
         $content = $response->getBody()->getContents();
         $result = json_decode($content, true);
-        $this->assertArrayHasKey('token', $result);
-        $this->assertNotEmpty($result['token']);
+        $this->assertNotEmpty($result['data']['token']);
     }
 }
 

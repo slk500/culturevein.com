@@ -13,15 +13,9 @@ use Service\TokenService;
 
 class UserController extends BaseController
 {
-    /**
-     * @var UserRepository
-     */
-    private $user_repository;
+    private UserRepository $user_repository;
 
-    /**
-     * @var TokenService
-     */
-    private $token_service;
+    private TokenService $token_service;
 
     public function __construct()
     {
@@ -66,7 +60,7 @@ class UserController extends BaseController
 
         $token = $this->token_service->create_token($user_id);
 
-        return $this->response_created(['token' => $token]);
+        return ['token' => $token];
     }
 
     public function login()
@@ -90,6 +84,6 @@ class UserController extends BaseController
 
         $token = $this->token_service->create_token($user->user_id);
 
-        return $this->response(['token' => $token]);
+        return ['token' => $token];
     }
 }

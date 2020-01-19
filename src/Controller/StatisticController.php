@@ -10,10 +10,7 @@ use Repository\UserRepository;
 
 class StatisticController extends BaseController
 {
-    /**
-     * @var $user_repository UserRepository
-     */
-    private $user_repository;
+    private UserRepository $user_repository;
 
     public function __construct()
     {
@@ -23,8 +20,6 @@ class StatisticController extends BaseController
 
     public function user()
     {
-        return $this->response(
-            $this->user_repository->find_statistics()
-        );
+        return $this->user_repository->find_statistics();
     }
 }

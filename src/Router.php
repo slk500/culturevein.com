@@ -48,7 +48,9 @@ final class Router
             $param3 = $this->param[3] ?? null;
 
             $this->set_status_code($this->method);
-            echo $controller->$actionName($param1, $param2, (int)$param3);
+            $result = $controller->$actionName($param1, $param2, (int)$param3);
+
+            echo json_encode(['data' => $result]);
         }
     }
 

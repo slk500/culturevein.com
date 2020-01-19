@@ -11,17 +11,11 @@ use Service\TokenService;
 
 class VideoTagDescendantController extends BaseController
 {
-    private $token_service;
+    private TokenService $token_service;
 
-    /**
-     * @var Container
-     */
-    private $container;
+    private Container $container;
 
-    /**
-     * @var TagRepository
-     */
-    private $tag_repository;
+    private TagRepository $tag_repository;
 
     public function __construct()
     {
@@ -32,12 +26,12 @@ class VideoTagDescendantController extends BaseController
 
     public function descendants(string $slug)
     {
-        return $this->response($this->tag_repository->find_descendants_simple($slug));
+        return $this->tag_repository->find_descendants_simple($slug);
     }
 
     public function ancestors(string $slug)
     {
-        return $this->response($this->tag_repository->find_ancestors($slug));
+        return $this->tag_repository->find_ancestors($slug);
     }
 }
 

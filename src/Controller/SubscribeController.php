@@ -11,17 +11,11 @@ use Service\TokenService;
 
 class SubscribeController extends BaseController
 {
-    private $user_id;
+    private ?int $user_id;
 
-    /**
-     * @var Container
-     */
-    private $container;
+    private Container $container;
 
-    /**
-     * @var SubscribeRepository
-     */
-    private $subscribe_repository;
+    private SubscribeRepository $subscribe_repository;
 
     public function __construct()
     {
@@ -34,20 +28,17 @@ class SubscribeController extends BaseController
 
     public function is_tag_subscribed_by_user(string $tag_slug_id)
     {
-        return $this->response($this->subscribe_repository->is_tag_subscribed_by_user($tag_slug_id, $this->user_id));
+        return $this->subscribe_repository->is_tag_subscribed_by_user($tag_slug_id, $this->user_id);
     }
-
 
     public function subscribe_tag(string $tag_slug_id)
     {
         $this->subscribe_repository->subscribe_tag($tag_slug_id, $this->user_id);
-        return $this->response_created();
     }
 
     public function unsubscribe_tag(string $tag_slug_id)
     {
         $this->subscribe_repository->unsubscribe_tag($tag_slug_id, $this->user_id);
-        $this->response();
     }
 }
 

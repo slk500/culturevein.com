@@ -14,14 +14,11 @@ use Service\YouTubeService;
 
 class VideoController extends BaseController
 {
-    private $token_service;
+    private TokenService $token_service;
 
-    private $container;
+    private Container $container;
 
-    /**
-     * @var YouTubeService
-     */
-    private $youtube_service;
+    private YouTubeService $youtube_service;
 
     public function __construct()
     {
@@ -52,7 +49,7 @@ class VideoController extends BaseController
 
         $video_factory->create($video_create);
 
-        return $this->response_created($video_create);
+        return $video_create;
     }
 
     public function list()
@@ -61,7 +58,7 @@ class VideoController extends BaseController
 
         $videos = $video_repository->find_all();
 
-        return $this->response($videos);
+        return $videos;
     }
 
     public function show(string $youtube_id)
@@ -70,7 +67,7 @@ class VideoController extends BaseController
 
         $video = $video_repository->find($youtube_id);
 
-        return $this->response([$video]);
+        return [$video];
     }
 
     public function highest_number_of_tags()
@@ -79,7 +76,7 @@ class VideoController extends BaseController
 
         $videos = $video_repository->with_highest_number_of_tags();
 
-        return $this->response($videos);
+        return $videos;
     }
 
     public function newest_ten()
@@ -88,6 +85,6 @@ class VideoController extends BaseController
 
         $videos = $video_repository->newest_ten();
 
-        return $this->response($videos);
+        return $videos;
     }
 }

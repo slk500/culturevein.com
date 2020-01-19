@@ -25,9 +25,7 @@ class TagController extends BaseController
 
     public function list()
     {
-        return $this->response(
-            $this->tag_repository->find_all()
-        );
+        return $this->tag_repository->find_all();
     }
 
     public function show(string $slug)
@@ -94,20 +92,17 @@ class TagController extends BaseController
             'videos' => $result
         ];
 
-        return $this->response($final);
+        return $final;
     }
 
     public function top_ten()
     {
-        return $this->response(
-            $this->tag_repository->top()
-        );
+        return $this->tag_repository->top();
+
     }
 
     public function newest_ten()
     {
-        return $this->response(
-            $this->tag_repository->newest_ten()
-        );
+        return $this->tag_repository->newest_ten();
     }
 }
