@@ -139,14 +139,14 @@ final class TagRepository
                                         tag.tag_slug_id                                     AS tag_slug,                            
                                         video.duration                                      AS video_duration,
                                         video.name                                          AS video_name
-                                        FROM tag
-                                        LEFT JOIN video_tag USING (tag_slug_id)
+                                        FROM video_tag
+                                        LEFT JOIN tag USING (tag_slug_id)
                                         LEFT JOIN video_tag_time USING (video_tag_id)
                                         LEFT JOIN video USING (video_youtube_id)
                                         LEFT JOIN artist_video USING (video_youtube_id)
                                         LEFT JOIN artist USING (artist_slug_id)
                                         WHERE tag.tag_slug_id = ?
-                                        OR tag.parent_slug_id = ?
+                                        OR tag.parent_slug_id = ?             
                                         GROUP BY video_youtube_id, tag_slug_id 
                                         ");
 
