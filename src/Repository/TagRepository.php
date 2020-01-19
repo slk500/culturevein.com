@@ -24,9 +24,8 @@ final class TagRepository
     public function find_descendants_simple(string $slug)
     {
         $stmt = $this->database->mysqli->prepare(
-            "SELECT tag_slug_id, name FROM tag AS c
-                    JOIN tag_descendant AS t ON c.tag_slug_id = t.descendant
-                    WHERE t.ancestor = ?;"
+            "SELECT tag_slug_id, name FROM tag 
+                    WHERE parent_slug_id = ?;"
         );
 
         $stmt->bind_param('s', $slug);
@@ -39,9 +38,9 @@ final class TagRepository
     public function find_ancestors(string $slug)
     {
         $stmt = $this->database->mysqli->prepare(
-            "SELECT c.* FROM tag AS c
-                    JOIN tag_descendant AS t ON c.tag_slug_id = t.ancestor
-                    WHERE t.descendant = ?;"
+            "SELECT tag.tag_slug_id, tag.name FROM tag
+                    LEFT JOIN tag tag2 ON tag.tag_slug_id = tag2.parent_slug_id 
+                    WHERE tag2.tag_slug_id = ? ;"
         );
 
         $stmt->bind_param('s', $slug);
@@ -86,14 +85,27 @@ final class TagRepository
 
     public function top(): array
     {
-        $query = "SELECT tag.name as tag_name, count(distinct video.video_youtube_id) AS count, tag.tag_slug_id
-                FROM tag
-                LEFT JOIN video_tag USING (tag_slug_id)
-                LEFT JOIN video USING (video_youtube_id)
-                LEFT JOIN tag_descendant td on tag.tag_slug_id = td.ancestor
-                GROUP BY tag.name, tag.tag_slug_id
-                ORDER BY `count` DESC
-                LIMIT 10";
+        $query = "
+                WITH RECURSIVE
+                    cte_path(parent, child, level, query, tag_name)
+                        AS (
+                        SELECT parent_slug_id, tag_slug_id, 1, tag_slug_id, tag.name
+                        FROM tag
+                        UNION ALL
+                        SELECT
+                            t.parent_slug_id, t.tag_slug_id,  p.level + 1, p.query, tag_name
+                        FROM
+                            cte_path p, tag t
+                        WHERE t.parent_slug_id = p.child
+                    )
+                SELECT cte_path.query as tag_slug_id, tag_name, count(distinct (video_tag.video_youtube_id)) AS count
+                FROM
+                    cte_path, video_tag
+                WHERE video_tag.tag_slug_id = cte_path.child
+                GROUP BY query
+                ORDER BY count desc
+                LIMIT 10 
+                ";
 
         return $this->database->fetch($query);
     }
@@ -142,14 +154,13 @@ final class TagRepository
                                         video.duration                                      AS video_duration,
                                         video.name                                          AS video_name
                                         FROM tag
-                                        LEFT JOIN tag_descendant AS ttp ON tag.tag_slug_id = ttp.descendant
                                         LEFT JOIN video_tag USING (tag_slug_id)
                                         LEFT JOIN video_tag_time USING (video_tag_id)
                                         LEFT JOIN video USING (video_youtube_id)
                                         LEFT JOIN artist_video USING (video_youtube_id)
                                         LEFT JOIN artist USING (artist_slug_id)
                                         WHERE tag.tag_slug_id = ?
-                                        OR ttp.ancestor = ?
+                                        OR tag.parent_slug_id = ?
                                         GROUP BY video_youtube_id, tag_slug_id 
                                         ");
 
@@ -174,13 +185,12 @@ final class TagRepository
          tag.tag_slug_id,
           SUM(video_tag_time.stop)-SUM(video_tag_time.start) AS expose
                       FROM tag
-                      LEFT JOIN tag_descendant AS ttp ON tag.tag_slug_id = ttp.descendant
                       LEFT JOIN video_tag USING (tag_slug_id)
                       LEFT JOIN video_tag_time USING (video_tag_id)
                       LEFT JOIN video USING (video_youtube_id)
                       LEFT JOIN artist_video USING (video_youtube_id)
                       LEFT JOIN artist USING (artist_slug_id)
-                      WHERE ttp.ancestor = ?
+                      WHERE tag.parent_slug_id = ?
                       GROUP BY video_youtube_id, tag_slug_id 
                       ");
 
