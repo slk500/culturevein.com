@@ -28,7 +28,6 @@
                 <li><a routerLink="/about">ABOUT</a></li>
                 <li><a class="nav-link" style="cursor:pointer" *ngIf="_authService.loggedIn()" (click)="_authService.logoutUser()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                 <li><a routerLink="/login" *ngIf="!_authService.loggedIn()"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                <li><a href="https://www.facebook.com/CultureVein"><span class="fa fa-facebook-official" style="font-size:30px"></span></a></li>
             </ul>
         </div>
     </div>

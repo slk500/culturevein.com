@@ -38,6 +38,7 @@
                 <a [routerLink]="['/tags', descendant.tag_slug_id]"> {{ descendant.name }} </a>
             </li>
         </ul>
+  <span *ngIf="ancestors.length == 0">none</span>
 
 </div>
 
