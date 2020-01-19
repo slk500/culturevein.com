@@ -13,9 +13,7 @@ footer {
     width: 100%;
     /* Set the fixed height of the footer here */
     height: 20px;
-    background-color: #e7e7e7;
     text-align: center;
-    background: white;
 }
 
 #myNavbar {
@@ -25,10 +23,6 @@ footer {
 
 .navbar-default .navbar-brand  {
     color:#CE2227;
-}
-
-body {
-    background: #ededed
 }
 
 .num_of_rows {
