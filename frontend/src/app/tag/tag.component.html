@@ -1,9 +1,25 @@
 {{ errorMsg }}
-<div class='col-xs-10 col-xs-offset-1 num_of_rows'>{{ (tags |filter : searchText : 'tag_name').length }}</div>
-<div class="col-xs-10 col-xs-offset-1 white_container">
-    <ul class='list-unstyled'>
-        <li *ngFor="let tag of tags |filter : searchText : 'tag_name'" class='col-xs-12 col-sm-6 col-md-4 col-lg-4'>
-            <a [routerLink]="['/tags', tag.tag_slug_id]"> {{ tag.tag_name }} </a>
-        </li>
+<div class='col-xs-12 num_of_rows'>{{ (tags |filter : searchText : 'name').length }}</div>
+<div class="col-xs-12 white_container">
+
+  <ul class='list-unstyled' style="  -webkit-column-count: 3;
+    -moz-column-count: 3;
+    column-count: 3;">
+  <li *ngFor="let tag of tags |filter : searchText : 'name'">
+    <a [routerLink]="['/tags', tag.slug]"> {{ tag.name }} </a>
+    <ul *ngIf="tag.childrens.length" style="list-style-type:none">
+      <li *ngFor="let tag of tag.childrens" >
+        <a [routerLink]="['/tags', tag.slug]"> {{ tag.name }} </a>
+      </li>
     </ul>
+  </li>
+    </ul>
+
+<!--  <ul class='list-unstyled'>-->
+<!--    <li *ngFor="let tag of tags |filter : searchText : 'name'" class='col-xs-12 col-sm-6 col-md-4 col-lg-4'>-->
+<!--      <a [routerLink]="['/tags', tag.slug_id]"> {{ tag.name }} </a>-->
+<!--    </li>-->
+<!--  </ul>-->
+
+
 </div>

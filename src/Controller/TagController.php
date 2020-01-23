@@ -8,6 +8,7 @@ use Container;
 use Controller\Base\BaseController;
 use DTO\Database\DatabaseTagVideo;
 use Normalizer\DatabaseTagVideoNormalizer;
+use Normalizer\TagListWithChildren;
 use Repository\TagRepository;
 
 class TagController extends BaseController
@@ -25,8 +26,13 @@ class TagController extends BaseController
 
     public function list()
     {
-        return $this->tag_repository->find_all();
+        $tags = $this->tag_repository->find_all_with_parent();
+
+      // return  $tags = $this->tag_repository->find_all();
+
+        return (new TagListWithChildren())->normalize($tags);
     }
+
 
     public function show(string $slug)
     {

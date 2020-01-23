@@ -75,13 +75,26 @@ final class TagRepository
     public function find_all(): ?array
     {
         $query = "SELECT 
-                  tag.name AS tag_name, 
-                  tag.tag_slug_id AS tag_slug_id
+                  tag.name AS name, 
+                  tag.tag_slug_id AS slug
                   FROM tag
-                  ORDER BY tag_name";
+                  ORDER BY name";
 
         return $this->database->fetch($query);
     }
+
+    public function find_all_with_parent(): ?array
+    {
+        $query = "SELECT 
+                  tag.name AS name, 
+                  tag.tag_slug_id AS slug,
+                  tag.parent_slug_id AS parent_slug
+                  FROM tag
+                  ORDER BY name";
+
+        return $this->database->fetch($query);
+    }
+
 
     public function top(): array
     {
