@@ -10,7 +10,7 @@ export class FilterPipe implements PipeTransform {
 
       return items.filter( item => {
         return item[fieldName].toLowerCase().includes(searchText)
-          || items[fieldName]['childrens'].filter( item => {
+          || items[fieldName]['children'].filter( item => {
             return item[fieldName].toLowerCase().includes(searchText)
           })
       });

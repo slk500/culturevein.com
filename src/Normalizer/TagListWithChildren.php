@@ -8,17 +8,17 @@ class TagListWithChildren
 {
     public function normalize(array $tags): array
     {
-        $input_with_childrens_field = $this->add_childrens_field($tags);
-        $input_slug_as_key = $this->set_slug_as_key($input_with_childrens_field);
+        $input_with_children_field = $this->add_children_field($tags);
+        $input_slug_as_key = $this->set_slug_as_key($input_with_children_field);
         $input_with_relations = $this->set_relations($input_slug_as_key);
 
         return array_values($input_with_relations);
     }
 
-    public function add_childrens_field(array $array): array
+    public function add_children_field(array $array): array
     {
         return array_map(function (array $item) {
-            $item['childrens'] = [];
+            $item['children'] = [];
             return $item;
         }, $array);
     }
@@ -39,7 +39,7 @@ class TagListWithChildren
         foreach ($input as $item) {
             if ($parent = $item['parent_slug']) {
                 if (array_key_exists($parent, $input)) {
-                    $input[$parent]['childrens'][] = $item;
+                    $input[$parent]['children'][] = $item;
                     unset($input[$item['slug']]);
                 }else{
                     $deeper[$item['slug']]= $item;
@@ -57,9 +57,9 @@ class TagListWithChildren
     {
         foreach ($deepers as $deep) {
             foreach ($tags as &$tag) {
-                foreach ($tag['childrens'] as &$children) {
+                foreach ($tag['children'] as &$children) {
                     if ($children['slug'] === $deep['parent_slug']) {
-                        $children['childrens'] [] = $deep;
+                        $children['children'] [] = $deep;
                         unset($deepers[$deep['slug']]);
                     }
                 }

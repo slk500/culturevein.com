@@ -27,20 +27,20 @@ class TagListWithChildrenTest extends TestCase
                 'parent_slug' => null]
         ];
 
-        $input_with_childrens_field = $this->normalizer->add_childrens_field($input);
-        $input_slug_as_key = $this->normalizer->set_slug_as_key($input_with_childrens_field);
+        $input_with_children_field = $this->normalizer->add_children_field($input);
+        $input_slug_as_key = $this->normalizer->set_slug_as_key($input_with_children_field);
         $input_with_relations = $this->normalizer->set_relations($input_slug_as_key);
 
         $expected = ['sport' =>
             [
                 'slug' => 'sport',
                 'parent_slug' => null,
-                'childrens' =>
+                'children' =>
                     [
                         [
                             'slug' => 'boxing',
                             'parent_slug' => 'sport',
-                            "childrens" => []
+                            "children" => []
                         ]
                     ]
             ]];
@@ -66,12 +66,12 @@ class TagListWithChildrenTest extends TestCase
             [
                 'slug' => 'sport',
                 'parent_slug' => null,
-                'childrens' =>
+                'children' =>
                     [
                         [
                             'slug' => 'boxing',
                             'parent_slug' => 'sport',
-                            "childrens" => []
+                            "children" => []
                         ]
                     ]
             ]];
@@ -82,12 +82,12 @@ class TagListWithChildrenTest extends TestCase
             [
                 'slug' => 'sport',
                 'parent_slug' => null,
-                'childrens' =>
+                'children' =>
                     [
                         [
                             'slug' => 'boxing',
                             'parent_slug' => 'sport',
-                            "childrens" =>
+                            "children" =>
                                 [
                                     [
                                         'slug' => 'mike-tyson',
