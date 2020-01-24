@@ -61,6 +61,7 @@ class TagListWithChildren
                     if ($children['slug'] === $deep['parent_slug']) {
                         $children['children'] [] = $deep;
                         unset($deepers[$deep['slug']]);
+                        unset($tags[$deep['slug']]);
                     }
                 }
             }

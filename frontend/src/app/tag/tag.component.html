@@ -5,21 +5,15 @@
   <ul class='list-unstyled' style="  -webkit-column-count: 3;
     -moz-column-count: 3;
     column-count: 3;">
-  <li *ngFor="let tag of tags |filter : searchText : 'name'">
-    <a [routerLink]="['/tags', tag.slug]"> {{ tag.name }} </a>
-    <ul *ngIf="tag.children.length" style="list-style-type:none">
-      <li *ngFor="let tag of tag.children" >
-        <a [routerLink]="['/tags', tag.slug]"> {{ tag.name }} </a>
+    <ng-template #recursiveList let-tags>
+      <li *ngFor="let item of tags |filter : searchText : 'name'">
+        {{item.name}}
+        <ul *ngIf="item.children.length > 0">
+          <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: item.children }"></ng-container>
+        </ul>
       </li>
-    </ul>
-  </li>
-    </ul>
-
-<!--  <ul class='list-unstyled'>-->
-<!--    <li *ngFor="let tag of tags |filter : searchText : 'name'" class='col-xs-12 col-sm-6 col-md-4 col-lg-4'>-->
-<!--      <a [routerLink]="['/tags', tag.slug_id]"> {{ tag.name }} </a>-->
-<!--    </li>-->
-<!--  </ul>-->
-
+    </ng-template>
+    <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: tags }"></ng-container>
+  </ul>
 
 </div>
