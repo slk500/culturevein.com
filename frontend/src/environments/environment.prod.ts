@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    baseUrl: 'http://culturevein.com/'
+    baseUrl: 'http://http://51.178.48.169/'
 };
