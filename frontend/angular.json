@@ -24,10 +24,6 @@
             ],
             "styles": [
               "src/styles.css"
-            ],
-            "scripts": [
-              "node_modules/jquery/jquery.js",
-              "node_modules/select2/select2.js"
             ]
           },
           "configurations": {
