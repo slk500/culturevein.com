@@ -11,10 +11,7 @@ use Repository\Base\Database;
 
 final class TagRepository
 {
-    /**
-     * @var Database
-     */
-    private $database;
+    private Database $database;
 
     public function __construct(Database $database)
     {
@@ -98,13 +95,27 @@ final class TagRepository
 
     public function top(): array
     {
-        $query = "SELECT tag.name as tag_name, count(distinct video.video_youtube_id) AS count, tag.tag_slug_id
-                FROM tag
-                JOIN video_tag USING (tag_slug_id)
-                JOIN video USING (video_youtube_id) 
-                GROUP BY tag.name, tag.tag_slug_id
-                ORDER BY `count` DESC
-                LIMIT 10";
+        $query = "WITH RECURSIVE
+    cte_path(parent, child, level, query, tag_name)
+        AS (
+        SELECT parent_slug_id, tag_slug_id, 1, tag_slug_id, tag.name
+        FROM tag
+        UNION ALL
+        SELECT
+            t.parent_slug_id, t.tag_slug_id,  p.level + 1, p.query, tag_name
+        FROM
+            cte_path p, tag t
+        WHERE t.parent_slug_id = p.child
+    )
+SELECT
+       cte_path.query as tag_slug_id,
+       tag_name, count(distinct (video_tag.video_youtube_id)) AS count
+FROM
+    cte_path, video_tag
+WHERE video_tag.tag_slug_id = cte_path.child
+GROUP BY tag_slug_id, tag_name, query
+ORDER BY count desc
+LIMIT 10";
 
         return $this->database->fetch($query);
     }
@@ -144,26 +155,35 @@ final class TagRepository
 
     public function find_videos(string $slug): array
     {
-        $stmt = $this->database->mysqli->prepare("SELECT 
-                                        video.video_youtube_id                              AS video_slug, 
-                                        artist.name                                         AS artist_name, 
-                                        SUM(video_tag_time.stop)-SUM(video_tag_time.start)  AS tag_duration,
-                                        tag.name                                            AS tag_name,
-                                        tag.tag_slug_id                                     AS tag_slug,                            
-                                        video.duration                                      AS video_duration,
-                                        video.name                                          AS video_name
-                                        FROM video_tag
-                                        LEFT JOIN tag USING (tag_slug_id)
-                                        LEFT JOIN video_tag_time USING (video_tag_id)
-                                        LEFT JOIN video USING (video_youtube_id)
-                                        LEFT JOIN artist_video USING (video_youtube_id)
-                                        LEFT JOIN artist USING (artist_slug_id)
-                                        WHERE tag.tag_slug_id = ?
-                                        OR tag.parent_slug_id = ?             
-                                        GROUP BY video_youtube_id, tag_slug_id 
+        $stmt = $this->database->mysqli->prepare("SELECT
+                                                video.video_youtube_id                              AS video_slug,
+                                                SUM(video_tag_time.stop)-SUM(video_tag_time.start)  AS tag_duration,
+                                                tag.name                                            AS tag_name,
+                                                tag.tag_slug_id                                     AS tag_slug,
+                                                video.duration                                      AS video_duration,
+                                                video.name                                          AS video_name,
+                                                artist.name                                         AS artist_name
+                                            FROM video_tag
+                                                     LEFT JOIN tag USING (tag_slug_id)
+                                                     LEFT JOIN video_tag_time USING (video_tag_id)
+                                                     LEFT JOIN video USING (video_youtube_id)
+                                                     LEFT JOIN artist_video USING (video_youtube_id)
+                                                     LEFT JOIN artist USING (artist_slug_id)
+                                            WHERE tag.tag_slug_id = ?
+                                                 OR tag.parent_slug_id = ?
+                                                 GROUP BY video_youtube_id, tag_slug_id, artist_name
                                         ");
 
+        if (!$stmt) {
+            throw new \Exception($this->database->mysqli->error);
+        }
+
         $stmt->bind_param('ss', $slug, $slug);
+
+        if (!$stmt->execute()) {
+            throw new \Exception($stmt->error);
+        }
+
         $stmt->execute();
 
         $result = $stmt->get_result();

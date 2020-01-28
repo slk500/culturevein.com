@@ -10,10 +10,7 @@ use Repository\Base\Database;
 
 final class ArchiverRepository
 {
-    /**
-     * @var Database
-     */
-    private $database;
+    private Database $database;
 
     public function __construct(Database $database)
     {
@@ -37,18 +34,19 @@ final class ArchiverRepository
         }
     }
 
-    public function archive_video_tag_time(int $video_tag_id, ?int $user_id = null): void
+    //todo add who deleted it
+    public function archive_video_tag_time(int $video_tag_id): void
     {
         $stmt = $this->database->mysqli->prepare("
         INSERT INTO video_tag_time_history (video_tag_time_id, video_tag_id, user_id, start, stop, created_at, deleted_at)   
-        SELECT video_tag_time_id, video_tag_id, user_id, start, stop, created_at, ? 
+        SELECT video_tag_time_id, video_tag_id, user_id, start, stop, created_at, now() 
         FROM video_tag_time WHERE video_tag_time_id = ? ");
 
         if (!$stmt) {
             throw new \Exception($this->database->mysqli->error);
         }
 
-        $stmt->bind_param('ii', $user_id, $video_tag_id);
+        $stmt->bind_param('i', $video_tag_id);
         if (!$stmt->execute()) {
             throw new \Exception($stmt->error);
         }
