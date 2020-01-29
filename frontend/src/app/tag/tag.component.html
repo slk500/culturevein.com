@@ -1,12 +1,12 @@
 {{ errorMsg }}
-<div class='col-xs-12 num_of_rows'>{{ (tags |filter : searchText : 'name').length }}</div>
+<div class='col-xs-12 num_of_rows'>{{ (tags |filter : searchText).length }}</div>
 <div class="col-xs-12 white_container">
 
   <ul class='list-unstyled' style="  -webkit-column-count: 3;
     -moz-column-count: 3;
     column-count: 3;">
     <ng-template #recursiveList let-tags>
-      <li *ngFor="let tag of tags |filter : searchText : 'name'">
+      <li *ngFor="let tag of tags |filter : searchText">
         <a [routerLink]="['/tags', tag.slug]"> {{ tag.name }} </a>
         <ul *ngIf="tag.children.length > 0">
           <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: tag.children }"></ng-container>
