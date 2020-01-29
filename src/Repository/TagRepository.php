@@ -79,7 +79,7 @@ FROM
     cte_path, video_tag
 WHERE video_tag.tag_slug_id = cte_path.child
 AND level <= 2 and video_youtube_id is not null
-GROUP BY query
+GROUP BY query, tag_name
 ORDER BY count desc
 LIMIT 10";
 
