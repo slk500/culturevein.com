@@ -64,23 +64,22 @@ final class TagRepository
     {
         $query = "WITH RECURSIVE
     cte_path(parent, child, level, query, tag_name)
-        AS (
-        SELECT parent_slug_id, tag_slug_id, 1, tag_slug_id, tag.name
-        FROM tag
-        UNION ALL
-        SELECT
-            t.parent_slug_id, t.tag_slug_id,  p.level + 1, p.query, tag_name
-        FROM
-            cte_path p, tag t
-        WHERE t.parent_slug_id = p.child
+    AS (
+    SELECT parent_slug_id, tag_slug_id, 1, tag_slug_id, tag.name
+    FROM tag
+    UNION ALL
+    SELECT
+    t.parent_slug_id, t.tag_slug_id,  p.level + 1, p.query, tag_name
+    FROM
+    cte_path p, tag t
+    WHERE t.parent_slug_id = p.child
     )
-SELECT
-       cte_path.query as tag_slug_id,
-       tag_name, count(distinct (video_tag.video_youtube_id)) AS count
+SELECT cte_path.query as tag_slug_id, tag_name, count(distinct (video_tag.video_youtube_id)) AS count
 FROM
     cte_path, video_tag
 WHERE video_tag.tag_slug_id = cte_path.child
-GROUP BY tag_slug_id, tag_name, query
+AND level <= 2 and video_youtube_id is not null
+GROUP BY query
 ORDER BY count desc
 LIMIT 10";
 
