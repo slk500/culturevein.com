@@ -62,4 +62,15 @@ final class SubscribeRepository
             throw new \Exception($stmt->error);
         }
     }
+
+    public function get_number_of_subscribers(string $tag_slug_id): int
+    {
+        $stmt = $this->database->mysqli->prepare("SELECT COUNT(*) FROM subscribe_user_tag WHERE tag_slug_id = ?");
+        $stmt->bind_param("s", $tag_slug_id);
+        $stmt->execute();
+        $stmt->bind_result($number_of_subscribers);
+        $stmt->fetch();
+
+        return $number_of_subscribers;
+    }
 }

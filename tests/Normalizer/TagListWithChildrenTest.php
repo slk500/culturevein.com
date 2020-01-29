@@ -108,7 +108,7 @@ class TagListWithChildrenTest extends TestCase
     {
         $repo = new TagRepository(new Database());
 
-        $tags = $repo->find_all_with_parent();
+        $tags = $repo->find_all();
 
         (new TagListWithChildren())->normalize($tags);
     }

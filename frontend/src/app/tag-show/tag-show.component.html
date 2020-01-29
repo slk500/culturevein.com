@@ -1,5 +1,5 @@
 <div class='col-xs-12 white_container'>
-<strong>Parent Tags: </strong>
+<strong> {{ancestors.length}} Parent Tags: </strong>
     <ul class='list-unstyled'>
         <li *ngFor="let ancestor of ancestors;">
             <a [routerLink]="['/tags', ancestor.tag_slug_id]"> {{ ancestor.name }} </a>
@@ -32,13 +32,13 @@
         <span class="badge"> {{ tag?.subscribers }}</span>
     </button>
     <br>
-    <strong>Child Tags: </strong>
+    <strong> {{ descendants.length}} Child Tags: </strong>
         <ul class='list-unstyled'>
             <li *ngFor="let descendant of descendants;">
                 <a [routerLink]="['/tags', descendant.tag_slug_id]"> {{ descendant.name }} </a>
             </li>
         </ul>
-  <span *ngIf="ancestors.length == 0">none</span>
+  <span *ngIf="descendants.length == 0">none</span>
 
 </div>
 

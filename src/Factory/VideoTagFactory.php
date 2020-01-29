@@ -22,9 +22,9 @@ class VideoTagFactory
 
     public function create(VideoTagCreate $video_tag_create): ?int
     {
-        $tag_slug_id = $this->tag_repository->find_slug_id_by_name($video_tag_create->tag_name);
+        $tag = $this->tag_repository->find($video_tag_create->tag_slug_id);
 
-        if (!$tag_slug_id) {
+        if (!$tag) {
             $tag = new Tag($video_tag_create->tag_name);
             $this->tag_repository->save($tag);
         }

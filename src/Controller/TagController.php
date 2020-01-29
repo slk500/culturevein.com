@@ -26,9 +26,7 @@ class TagController extends BaseController
 
     public function list()
     {
-        $tags = $this->tag_repository->find_all_with_parent();
-
-      // return  $tags = $this->tag_repository->find_all();
+        $tags = $this->tag_repository->find_all();
 
         return (new TagListWithChildren())->normalize($tags);
     }
@@ -93,12 +91,10 @@ class TagController extends BaseController
             return $b['tags'][0]['duration'] <=> $a['tags'][0]['duration'];
         });
 
-        $final = [
+        return [
             'name' => $tag->name,
             'videos' => $result
         ];
-
-        return $final;
     }
 
     public function top_ten()
