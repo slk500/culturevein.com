@@ -268,21 +268,21 @@ export class VideoShowComponent implements OnInit {
     tagStyle(tag): string {
 
         if (!tag['video_tags_time'].length) {
-            return 'btn-default';
+            return 'label-default';
         }
 
         if (tag.is_complete) {
-            return 'btn-success';
+            return 'label-success';
         }
 
         let arr = tag.video_tags_time[0];
         if(arr) {
             if (arr.start == 0 && arr.stop == this.videoInfo.duration) {
-                return 'btn-danger'
+                return 'label-danger'
             }
         }
 
-        return 'btn-warning'
+        return 'label-warning'
     }
 }
 

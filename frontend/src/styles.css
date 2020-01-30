@@ -13,12 +13,10 @@ footer {
     text-align: center;
 }
 
-
-html, html * {
+html, html *:not(label) {
   color: #eeeeee !important;
   background-color: #292929 !important;
 }
-
 
 :visited, :visited * {
   color: rgb(211, 138, 138) !important;
@@ -28,10 +26,34 @@ html, html * {
   color: #8db2e5 !important;
 }
 
+.label-default {
+  background-color: #777 !important;
+  color: black !important;
+}
+
+.label-danger {
+  background-color: #d9534f !important;
+  color: black !important;
+}
+
+.label-warning {
+  background-color: #f0ad4e !important;
+  color: black !important;
+}
+
+.label-success {
+  background-color: #5cb85c !important;
+  color: black !important;
+}
 
 #myNavbar {
     margin-bottom: 10px;
 }
+
+.select2-search { background-color: #00f !important; }
+.select2-search input { background-color: #00f !important; }
+.select2-results { background-color: #00f !important; }
+
 
 
 .navbar-default .navbar-brand  {
