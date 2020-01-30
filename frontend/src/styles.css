@@ -13,6 +13,22 @@ footer {
     text-align: center;
 }
 
+
+html, html * {
+  color: #eeeeee !important;
+  background-color: #292929 !important;
+}
+
+
+:visited, :visited * {
+  color: rgb(211, 138, 138) !important;
+}
+
+:link, :link * {
+  color: #8db2e5 !important;
+}
+
+
 #myNavbar {
     margin-bottom: 10px;
 }
@@ -26,8 +42,12 @@ footer {
     padding-left:0px;
 }
 
+* {
+  border-color: #555555 !important;
+}
+
 .highlight {
-    background-color: yellow;
+    background-color:  green !important;
 }
 #log {
     float:right;
@@ -59,11 +79,6 @@ footer {
 .float_right {
     float:right;
 
-}
-
-/********************   TABLES   ************************/
-.grey {
-    color:grey !important;
 }
 
 /********************  SCENY I TAGI    ************************/

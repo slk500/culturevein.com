@@ -15,7 +15,10 @@ export class FilterPipe implements PipeTransform {
 
             items.forEach(function (item) {
                 if (item.name.toLowerCase().includes(searchText)) result.push(item);
-                if (filter(item.children, searchText).length) result.push(item);
+
+                if(item.children) {
+                    if (filter(item.children, searchText).length) result.push(item);
+                }
             });
 
             return result;

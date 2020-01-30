@@ -1,13 +1,19 @@
 {{ errorMsg }}
-<div class='col-xs-12 num_of_rows'>{{ (videos |filter : searchText : 'artist_name' :'video_name').length }}</div>
+<div class='col-xs-12 num_of_rows'>{{ (videos |filter : searchText).length }}</div>
 <div class="col-xs-12 white_container">
 
   <ul class='list-unstyled' style="  -webkit-column-count: 3;
     -moz-column-count: 3;
     column-count: 3;">
-    <li *ngFor="let video of videos |filter : searchText : 'artist_name' : 'video_name'">
-      <a [routerLink]="['/videos', video.video_youtube_id]"> {{ video.artist_name }} - {{ video.video_name }}  </a>
+    <li *ngFor="let video of videos |filter : searchText">
+      <a [routerLink]="['/videos', video.video_youtube_id]"
+         [innerHTML]="highlight(searchText, video.name)">
+      </a>
+
     </li>
   </ul>
 
 </div>
+
+
+

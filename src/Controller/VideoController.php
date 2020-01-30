@@ -56,9 +56,7 @@ class VideoController extends BaseController
     {
         $video_repository = $this->container->get(VideoRepository::class);
 
-        $videos = $video_repository->find_all();
-
-        return $videos;
+        return $video_repository->find_all();
     }
 
     public function show(string $youtube_id)

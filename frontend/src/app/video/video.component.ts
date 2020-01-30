@@ -22,4 +22,13 @@ export class VideoComponent implements OnInit {
         this.inputSearch.cast.subscribe(input => this.searchText = input);
     }
 
+  highlight(query, content) {
+    if(!query) {
+      return content;
+    }
+    return content.replace(new RegExp(query, "gi"), match => {
+      return '<span class="highlight">' + match + '</span>';
+    });
+  }
+
 }
