@@ -7,7 +7,9 @@
     column-count: 3;">
     <ng-template #recursiveList let-tags>
       <li *ngFor="let tag of tags |filter : searchText">
-        <a [routerLink]="['/tags', tag.slug]"> {{ tag.name }} </a>
+        <a [routerLink]="['/tags', tag.slug]"
+           [innerHTML]="highlight(searchText, tag.name)">
+        </a>
         <ul *ngIf="tag.children.length > 0">
           <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: tag.children }"></ng-container>
         </ul>
