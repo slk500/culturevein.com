@@ -17,6 +17,9 @@ return  [
     ['/^\/api\/artists\/*$/', ArtistController::class, 'list', 'GET'],
 
     ['/^\/api\/tags\/*$/', TagController::class, 'list', 'GET'],
+    ['/^\/api\/tags-simple\/*$/', TagController::class, 'list_without_relation', 'GET'],
+
+
 
     ['/^\/api\/tags-top\/*$/', TagController::class, 'top_ten', 'GET'],
     ['/^\/api\/tags-new\/*$/', TagController::class, 'newest_ten', 'GET'],

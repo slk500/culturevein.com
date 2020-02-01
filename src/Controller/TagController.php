@@ -31,6 +31,11 @@ class TagController extends BaseController
         return (new TagListWithChildren())->normalize($tags);
     }
 
+    public function list_without_relation()
+    {
+        return $this->tag_repository->find_all();
+    }
+
 
     public function show(string $slug)
     {
