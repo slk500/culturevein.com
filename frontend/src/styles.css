@@ -13,10 +13,15 @@ footer {
     text-align: center;
 }
 
-html, html *:not(label) {
+html, html * {
   color: #eeeeee !important;
   background-color: #292929 !important;
 }
+
+* {
+  border-color: #555555 !important;
+}
+
 
 :visited, :visited * {
   color: rgb(211, 138, 138) !important;
@@ -24,24 +29,42 @@ html, html *:not(label) {
 
 :link, :link * {
   color: #8db2e5 !important;
+  background: #5cb85c;
 }
 
 .label-default {
   background-color: #777 !important;
-  color: black !important;
+  color: white !important;
 }
 
 .label-danger {
   background-color: #d9534f !important;
+  color: white !important;
+}
+.label-danger a {
   color: black !important;
+  background-color: #d9534f !important;
 }
 
+
+
 .label-warning {
+  background-color: #f0ad4e !important;
+  color: white !important;
+}
+
+.label-warning a {
   background-color: #f0ad4e !important;
   color: black !important;
 }
 
+
 .label-success {
+  background-color: #5cb85c !important;
+  color: white !important;
+}
+
+.label-success a {
   background-color: #5cb85c !important;
   color: black !important;
 }
@@ -49,11 +72,6 @@ html, html *:not(label) {
 #myNavbar {
     margin-bottom: 10px;
 }
-
-.select2-search { background-color: #00f !important; }
-.select2-search input { background-color: #00f !important; }
-.select2-results { background-color: #00f !important; }
-
 
 
 .navbar-default .navbar-brand  {
@@ -64,9 +82,7 @@ html, html *:not(label) {
     padding-left:0px;
 }
 
-* {
-  border-color: #555555 !important;
-}
+
 
 .highlight {
     background-color:  green !important;
