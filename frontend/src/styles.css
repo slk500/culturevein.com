@@ -158,10 +158,14 @@ html, html * {
 .tag li > ol li{ /* Sceny poszczególnych tagów */
     float: none;
     overflow: visible;
-    background-color: white;
     border: none;
     margin: 5px 5px 5px 5px;
     list-style-type:decimal;
+}
+
+.tag li > ol li a{ /* Sceny poszczególnych tagów */
+  background-color: transparent !important;
+  color: white !important;
 }
 
 .tag ul {

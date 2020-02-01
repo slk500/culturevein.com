@@ -76,7 +76,7 @@ export class VideoShowComponent implements OnInit {
             .subscribe(data => this.videoTags = data,
                 error => this.errorMsg = error);
 
-        this._tagService.getTags()
+        this._tagService.getTagsSimple()
             .subscribe(data => {
                 this.tags = this.convertToFormat(data);
                     //this.tags = data;
@@ -136,12 +136,12 @@ export class VideoShowComponent implements OnInit {
 
     convertToFormat(data) {
 
-        data.unshift({tag_slug_id: '', tag_name: ''}); //placeholder select2
+        data.unshift({slug: '', name: ''}); //placeholder select2
 
         return data.map(tag => {
             return {
-                id: tag.tag_slug_id,
-                text: tag.tag_name
+                id: tag.slug,
+                text: tag.name
             };
         });
 

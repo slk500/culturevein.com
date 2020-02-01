@@ -21,7 +21,13 @@ export class TagService {
             .pipe(catchError(this.errorHandler))
     }
 
-    getTag(tagSlug): Observable<any> {
+  getTagsSimple(): Observable<any> {
+    return this.http.get<any>('api/tags-simple')
+      .pipe(catchError(this.errorHandler))
+  }
+
+
+  getTag(tagSlug): Observable<any> {
         return this.http.get<any>('api/tags/' + tagSlug)
             .pipe(catchError(this.errorHandler))
     }
