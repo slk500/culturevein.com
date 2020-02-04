@@ -22,7 +22,6 @@ html, html * {
   border-color: #555555 !important;
 }
 
-
 :visited, :visited * {
   color: rgb(211, 138, 138) !important;
 }
@@ -37,6 +36,11 @@ html, html * {
   color: white !important;
 }
 
+.label-default a {
+  color: black !important;
+  background-color: #777 !important;
+}
+
 .label-danger {
   background-color: #d9534f !important;
   color: white !important;
@@ -45,8 +49,6 @@ html, html * {
   color: black !important;
   background-color: #d9534f !important;
 }
-
-
 
 .label-warning {
   background-color: #f0ad4e !important;
@@ -57,7 +59,6 @@ html, html * {
   background-color: #f0ad4e !important;
   color: black !important;
 }
-
 
 .label-success {
   background-color: #5cb85c !important;
@@ -73,16 +74,17 @@ html, html * {
     margin-bottom: 10px;
 }
 
-
 .navbar-default .navbar-brand  {
     color:#CE2227;
+}
+
+.btn-danger{
+  background-color: #d9534f !important;
 }
 
 .num_of_rows {
     padding-left:0px;
 }
-
-
 
 .highlight {
     background-color:  green !important;

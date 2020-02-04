@@ -19,8 +19,6 @@ return  [
     ['/^\/api\/tags\/*$/', TagController::class, 'list', 'GET'],
     ['/^\/api\/tags-simple\/*$/', TagController::class, 'list_without_relation', 'GET'],
 
-
-
     ['/^\/api\/tags-top\/*$/', TagController::class, 'top_ten', 'GET'],
     ['/^\/api\/tags-new\/*$/', TagController::class, 'newest_ten', 'GET'],
 
@@ -49,12 +47,10 @@ return  [
 
     ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/(?<tag_slug_id>[\w-]+)\/(?<video_tag_time_id>\d+)\/*$/', VideoTagTimeController::class, 'delete', 'DELETE'],
 
-
     ['/^\/api\/subscribe\/tags\/(?<tag_slug_id>[\w-]+)\/*$/', SubscribeController::class, 'subscribe_tag', 'POST'],
-
     ['/^\/api\/subscribe\/tags\/(?<tag_slug_id>[\w-]+)\/*$/', SubscribeController::class, 'unsubscribe_tag', 'DELETE'],
-
     ['/^\/api\/subscribe\/tags\/(?<tag_slug_id>[\w-]+)\/*$/', SubscribeController::class, 'is_tag_subscribed_by_user', 'GET'],
+    ['/^\/api\/subscribe-number\/tags\/(?<tag_slug_id>[\w-]+)\/*$/', SubscribeController::class, 'get_number_of_subscribers', 'GET'],
 
     ['/^\/api\/youtube\/(?<youtube_id>[\w-]{11})\/*$/', YouTubeController::class, 'get_artist_and_title', 'GET'],
 

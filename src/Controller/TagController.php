@@ -9,6 +9,7 @@ use Controller\Base\BaseController;
 use DTO\Database\DatabaseTagVideo;
 use Normalizer\DatabaseTagVideoNormalizer;
 use Normalizer\TagListWithChildren;
+use Repository\SubscribeRepository;
 use Repository\TagRepository;
 
 class TagController extends BaseController
@@ -17,10 +18,13 @@ class TagController extends BaseController
 
     private DatabaseTagVideoNormalizer $tag_normalizer;
 
+    private SubscribeRepository $subscribe_repository;
+
     public function __construct()
     {
         $container = new Container();
         $this->tag_repository = $container->get(TagRepository::class);
+        $this->subscribe_repository = $container->get(SubscribeRepository::class);
         $this->tag_normalizer = new DatabaseTagVideoNormalizer();
     }
 
@@ -98,6 +102,7 @@ class TagController extends BaseController
 
         return [
             'name' => $tag->name,
+            'subscribers' => $this->subscribe_repository->get_subscribers_number($tag->slug_id),
             'videos' => $result
         ];
     }

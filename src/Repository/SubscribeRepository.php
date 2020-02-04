@@ -8,10 +8,7 @@ use Repository\Base\Database;
 
 final class SubscribeRepository
 {
-    /**
-     * @var Database
-     */
-    private $database;
+    private Database $database;
 
     public function __construct(Database $database)
     {
@@ -63,7 +60,7 @@ final class SubscribeRepository
         }
     }
 
-    public function get_number_of_subscribers(string $tag_slug_id): int
+    public function get_subscribers_number(string $tag_slug_id): int
     {
         $stmt = $this->database->mysqli->prepare("SELECT COUNT(*) FROM subscribe_user_tag WHERE tag_slug_id = ?");
         $stmt->bind_param("s", $tag_slug_id);
