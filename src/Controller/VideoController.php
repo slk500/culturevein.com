@@ -20,11 +20,14 @@ class VideoController extends BaseController
 
     private YouTubeService $youtube_service;
 
+    private VideoRepository $video_repository;
+
     public function __construct()
     {
         $this->container = new Container();
         $this->token_service = new TokenService();
         $this->youtube_service = new YouTubeService();
+        $this->video_repository = $this->container->get(VideoRepository::class);
     }
 
     public function create()
@@ -54,35 +57,21 @@ class VideoController extends BaseController
 
     public function list()
     {
-        $video_repository = $this->container->get(VideoRepository::class);
-
-        return $video_repository->find_all();
+        return $this->video_repository->find_all();
     }
 
     public function show(string $youtube_id)
     {
-        $video_repository = $this->container->get(VideoRepository::class);
-
-        $video = $video_repository->find($youtube_id);
-
-        return [$video];
+        return [$this->video_repository->find($youtube_id)];
     }
 
     public function highest_number_of_tags()
     {
-        $video_repository = $this->container->get(VideoRepository::class);
-
-        $videos = $video_repository->with_highest_number_of_tags();
-
-        return $videos;
+        return $this->video_repository->with_highest_number_of_tags();
     }
 
     public function newest_ten()
     {
-        $video_repository = $this->container->get(VideoRepository::class);
-
-        $videos = $video_repository->newest_ten();
-
-        return $videos;
+        return $this->video_repository->newest_ten();
     }
 }
