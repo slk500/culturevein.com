@@ -8,7 +8,7 @@ use Container;
 use Controller\Base\BaseController;
 use Repository\ArtistRepository;
 
-class ArtistController extends BaseController
+final class ArtistController
 {
     private Container $container;
 
