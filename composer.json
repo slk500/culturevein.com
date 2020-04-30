@@ -11,7 +11,6 @@
   },
   "require": {
     "php": ">=7.4",
-    "symfony/dotenv": "^3.3",
     "cocur/slugify": "^3.1",
     "firebase/php-jwt": "^5.0",
     "ext-mysqli": "*",

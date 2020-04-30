@@ -8,22 +8,17 @@ namespace Service;
 
 use Firebase\JWT\ExpiredException;
 use Firebase\JWT\JWT;
-use Symfony\Component\Dotenv\Dotenv;
 use UnexpectedValueException;
 
 final class TokenService
 {
-    /**
-     * @var string
-     */
-    private $token_secret;
+    private string $token_secret;
 
     public function __construct()
     {
-        $dotenv = new Dotenv();
-        $dotenv->load(__DIR__.'/../../.env');
+        $parameters = include(__DIR__.'/../../config/parameters.php');
 
-        $this->token_secret = getenv('TOKEN_SECRET');
+        $this->token_secret = $parameters['token_secret'];
     }
     
     public function create_token(int $user_id): string

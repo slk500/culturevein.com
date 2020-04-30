@@ -5,26 +5,21 @@ declare(strict_types=1);
 namespace Repository\Base;
 
 use mysqli;
-use Symfony\Component\Dotenv\Dotenv;
 
 final class Database
 {
-    /**
-     * @var $mysqli mysqli
-     */
-    public $mysqli;
+    private mysqli $mysqli;
 
     public function __construct()
     {
-        $dotenv = new Dotenv();
-        $dotenv->load(__DIR__.'/../../../.env');
+        $parameters = include(__DIR__.'/../../../config/parameters.php');
 
-            $dbServer = getenv('DB_SERVER');
-            $dbUser = getenv('DB_USER');
-            $dbPass = getenv('DB_PASS');
-            $dbName = getenv('DB_NAME');
-
-        $this->mysqli = new mysqli($dbServer, $dbUser, $dbPass, $dbName);
+        $this->mysqli = new mysqli(
+            $parameters['db_server'],
+            $parameters['db_user'],
+            $parameters['db_pass'],
+            $parameters['db_name']
+        );
 
         if ($this->mysqli->connect_errno) {
             echo "Failed to connect to MySQL: " . $this->mysqli->connect_error;
@@ -38,9 +33,7 @@ final class Database
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->store_result();
-        $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-        return $data;
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
 
     public function execute(string $query)

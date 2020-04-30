@@ -1,0 +1,10 @@
+<?php
+
+return [
+    'db_server' => '0.0.0.0',
+    'db_user' => 'root',
+    'db_pass' => '',
+    'db_name' => 'culture_vein',
+    'yt_api_key' => 'you_have_to_add_api_key',
+    'token_secret' => ''
+];

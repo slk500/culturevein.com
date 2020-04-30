@@ -7,14 +7,15 @@ namespace Service;
 
 use DateInterval;
 use DateTime;
-use Symfony\Component\Dotenv\Dotenv;
 
 final class YouTubeService
 {
+    private string $yt_api_key;
+
     public function __construct()
     {
-        $dotenv = new Dotenv();
-        $dotenv->load(__DIR__.'/../../.env');
+        $parameters = include(__DIR__.'/../../config/parameters.php');
+        $this->yt_api_key = $parameters['yt_api_key'];
     }
 
     public function get_duration(string $id)
@@ -22,7 +23,7 @@ final class YouTubeService
         try {
             $result = json_decode(
                 file_get_contents('https://www.googleapis.com/youtube/v3/videos' .
-                    '?part=contentDetails&id=' . $id . '&key=' . getenv('YT_API_KEY')));
+                    '?part=contentDetails&id=' . $id . '&key=' . $this->yt_api_key));
         } catch (\Exception $e){
             throw new \Exception($e->getMessage());
         }
@@ -37,7 +38,7 @@ final class YouTubeService
     public function get_artist_and_title(string $id): array
     {
         $result = json_decode(
-            file_get_contents('https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' . $id . '&key=' . getenv('YT_API_KEY')));
+            file_get_contents('https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' . $id . '&key=' . $this->yt_api_key));
 
         $artistAndTitle =  array_map('trim',
             preg_split('/-/',
