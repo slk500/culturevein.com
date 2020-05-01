@@ -8,7 +8,7 @@ use mysqli;
 
 final class Database
 {
-    private mysqli $mysqli;
+    public mysqli $mysqli;
 
     public function __construct()
     {

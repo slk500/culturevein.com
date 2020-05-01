@@ -1,3 +1,7 @@
+ The base functionaliy of this app it's my 'idée fixe' 
+ but I like try new things & fool around a little bit so 
+ my apology for being inconsistent in design.     
+
 To run project:
 1. run command in public_html 'php -S localhost:8000'
 2. run command in frontend 'ng serve' 

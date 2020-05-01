@@ -60,11 +60,14 @@ final class VideoRepository
 
     public function find_all()
     {
-        $query = "SELECT video_youtube_id, CONCAT(artist.name, ' - ', video.name) AS name
+        $query = "SELECT video_youtube_id, 
+                artist.name AS artist_name,
+                artist.artist_slug_id AS artist_slug,
+                video.name AS video_name
                 FROM video
                 LEFT JOIN artist_video USING (video_youtube_id)
                 LEFT JOIN artist USING (artist_slug_id)
-                ORDER BY name";
+                ORDER BY artist.name, video.name";
 
         return $this->database->fetch($query);
     }

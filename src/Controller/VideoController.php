@@ -11,6 +11,7 @@ use DTO\VideoCreate;
 use Repository\VideoRepository;
 use Service\TokenService;
 use Service\YouTubeService;
+use function Normalizer\video_list_normalize;
 
 class VideoController extends BaseController
 {
@@ -57,7 +58,9 @@ class VideoController extends BaseController
 
     public function list()
     {
-        return $this->video_repository->find_all();
+        $raw_videos = $this->video_repository->find_all();
+
+        return video_list_normalize($raw_videos);
     }
 
     public function show(string $youtube_id)
