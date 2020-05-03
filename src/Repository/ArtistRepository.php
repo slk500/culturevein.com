@@ -9,10 +9,7 @@ use Repository\Base\Database;
 
 final class ArtistRepository
 {
-    /**
-     * @var Database
-     */
-    private $database;
+    private Database $database;
 
     public function __construct(Database $database)
     {
@@ -35,15 +32,6 @@ final class ArtistRepository
         $stmt->fetch();
 
         return  $artist_slug_id;
-    }
-
-    public function find_all(): array
-    {
-        $query = "SELECT name FROM artist ORDER BY name";
-
-        $data = $this->database->fetch($query);
-
-        return $data;
     }
 
     public function assign_video_to_artist(string $artist_slug_id, string $video_id)
