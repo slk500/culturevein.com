@@ -1,77 +1,77 @@
 <div class='col-xs-12 white_container'>
-<strong> {{ancestors.length}} Parent Tags: </strong>
-    <ul class='list-unstyled'>
-        <li *ngFor="let ancestor of ancestors;">
-            <a [routerLink]="['/tags', ancestor.tag_slug_id]"> {{ ancestor.name }} </a>
-        </li>
-    </ul>
+  <strong> {{ancestors.length}} Parent Tags: </strong>
+  <ul class='list-unstyled'>
+    <li *ngFor="let ancestor of ancestors;">
+      <a [routerLink]="['/tags', ancestor.tag_slug_id]"> {{ ancestor.name }} </a>
+    </li>
+  </ul>
   <span *ngIf="ancestors.length == 0">none</span>
 
 
   <h1 class='text-center'>{{ tag?.name }}</h1>
 
-    <div *ngIf="_authService.loggedIn()">
-        <button *ngIf="isTagSubscribedByUser" class="btn btn-default" type="button"
-                style="display: block; margin: 0 auto;"
-                (click)='unsubscribe( tag.id )'>
-            Unsubscribe
-            <span class="badge"> {{ tag?.subscribers }}</span>
-        </button>
-
-        <button *ngIf="!isTagSubscribedByUser" class="btn btn-danger" type="button"
-                style="display: block; margin: 0 auto;"
-                (click)='subscribe( tag.id )'>
-            Subscribe
-            <span class="badge"> {{ tag?.subscribers }}</span>
-        </button>
-    </div>
-
-    <button *ngIf="!_authService.loggedIn()" routerLink="/login" class="btn btn-danger" type="button"
-            style="display: block; margin: 0 auto;">
-        Subscribe
-        <span class="badge"> {{ tag?.subscribers }}</span>
+  <div *ngIf="_authService.loggedIn()">
+    <button *ngIf="isTagSubscribedByUser" class="btn btn-default" type="button"
+            style="display: block; margin: 0 auto;"
+            (click)='unsubscribe( tag.id )'>
+      Unsubscribe
+      <span class="badge"> {{ tag?.subscribers }}</span>
     </button>
-    <br>
-    <strong> {{ descendants.length}} Child Tags: </strong>
-        <ul class='list-unstyled'>
-            <li *ngFor="let descendant of descendants;">
-                <a [routerLink]="['/tags', descendant.tag_slug_id]"> {{ descendant.name }} </a>
-            </li>
-        </ul>
+
+    <button *ngIf="!isTagSubscribedByUser" class="btn btn-danger" type="button"
+            style="display: block; margin: 0 auto;"
+            (click)='subscribe( tag.id )'>
+      Subscribe
+      <span class="badge"> {{ tag?.subscribers }}</span>
+    </button>
+  </div>
+
+  <button *ngIf="!_authService.loggedIn()" routerLink="/login" class="btn btn-danger" type="button"
+          style="display: block; margin: 0 auto;">
+    Subscribe
+    <span class="badge"> {{ tag?.subscribers }}</span>
+  </button>
+  <br>
+  <strong> {{ descendants.length}} Child Tags: </strong>
+  <ul class='list-unstyled'>
+    <li *ngFor="let descendant of descendants;">
+      <a [routerLink]="['/tags', descendant.tag_slug_id]"> {{ descendant.name }} </a>
+    </li>
+  </ul>
   <span *ngIf="descendants.length == 0">none</span>
 
 </div>
 
 <div *ngIf="tag?.videos.length" id="tags" class="col-xs-12">
-    <table class='table table-hover white_container'>
-        <thead>
-        <tr>
-            <th>no.</th>
-            <th>Title</th>
-            <th class="text-center">Child Tags</th>
-            <th class="text-center">Exposure Time</th>
-        </tr>
-        </thead>
+  <table class='table table-hover white_container'>
+    <thead>
+    <tr>
+      <th>no.</th>
+      <th>Title</th>
+      <th class="text-center">Child Tags</th>
+      <th class="text-center">Exposure Time</th>
+    </tr>
+    </thead>
 
-        <tr *ngFor="let video of tag?.videos; let i=index">
+    <tr *ngFor="let video of tag?.videos; let i=index">
 
-            <td class='text-center'> {{ i + 1 }} </td>
-            <td>
-                <a [routerLink]="['/videos', video.slug]"> {{ video.artist }} - {{ video.name }} </a>
-            </td>
-            <td>
-                  <ul class='list-unstyled'>
-                      <li *ngFor="let tag of video.tags[0].tags">
-                          <a [routerLink]="['/tags', tag.slug]"> {{ tag.name }} </a>
-                      </li>
-                  </ul>
-            </td>
-          <td class="text-center">
-            <span *ngIf="video.tags[0].duration"> {{ video.tags[0].duration | minuteSeconds }} </span>
-          </td>
-        </tr>
+      <td class='text-center'> {{ i + 1 }} </td>
+      <td>
+        <a [routerLink]="['/videos', video.slug]"> {{ video.artist }} - {{ video.name }} </a>
+      </td>
+      <td>
+        <ul class='list-unstyled'>
+          <li *ngFor="let tag of video.tags[0].tags">
+            <a [routerLink]="['/tags', tag.slug]"> {{ tag.name }} </a>
+          </li>
+        </ul>
+      </td>
+      <td class="text-center">
+        <span *ngIf="video.tags[0].duration"> {{ video.tags[0].duration | minuteSeconds }} </span>
+      </td>
+    </tr>
 
-    </table>
+  </table>
 </div>
 
 

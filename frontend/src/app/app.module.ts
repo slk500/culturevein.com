@@ -26,6 +26,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import {AuthService} from "./auth.service";
 import { ActivityComponent } from './activity/activity.component';
+import {ArtistShowComponent} from "./artist/artist-show.component";
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { ActivityComponent } from './activity/activity.component';
     RegisterComponent,
     LoginComponent,
     ActivityComponent,
+    ArtistShowComponent
   ],
   imports: [
     BrowserModule,

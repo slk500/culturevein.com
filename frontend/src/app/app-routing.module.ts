@@ -12,6 +12,7 @@ import {AddComponent} from "./add/add.component";
 import {RegisterComponent} from "./register/register.component";
 import {LoginComponent} from "./login/login.component";
 import {ActivityComponent} from "./activity/activity.component";
+import {ArtistShowComponent} from "./artist/artist-show.component";
 
 const routes: Routes = [
     { path: '', component: TopTenComponent},
@@ -19,6 +20,7 @@ const routes: Routes = [
     { path: 'videos/:youtubeId', component: VideoShowComponent},
     { path: 'tags', component: TagComponent},
     { path: 'tags/:slug', component: TagShowComponent},
+    { path: 'artists/:slug', component: ArtistShowComponent},
     { path: 'about', component: AboutComponent},
     { path: 'links', component: LinksComponent},
     { path: 'add', component: AddComponent},

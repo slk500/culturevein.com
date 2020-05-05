@@ -6,7 +6,9 @@
     -moz-column-count: 3;
     column-count: 3;">
     <li *ngFor="let artist of videos |filter : searchText">
-      {{ artist.name }}
+      <a [routerLink]="['/artists', artist.slug]"
+         [innerHTML]="highlight(searchText, artist.name)">
+      </a>
       <ul>
         <li *ngFor="let video of artist.videos" >
           <a [routerLink]="['/videos', video.youtube_id]"

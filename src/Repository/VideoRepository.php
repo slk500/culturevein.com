@@ -7,18 +7,13 @@ namespace Repository;
 use DTO\VideoCreate;
 use Model\Video;
 use Repository\Base\Database;
-use Service\YouTubeService;
 
 final class VideoRepository
 {
-    /**
-     * @var Database
-     */
-    private $database;
+    private Database $database;
 
     public function __construct(Database $database)
     {
-        $this->youtube = new YouTubeService();
         $this->database = $database;
     }
 

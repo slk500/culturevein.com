@@ -1,0 +1,42 @@
+<div class='col-xs-12 white_container'>
+  <h1 class='text-center'>{{ artist?.name }}</h1>
+
+  <strong> {{ artist?.tags.length}} Tags: </strong>
+  <ul class='list-unstyled'>
+    <li *ngFor="let tag of artist?.tags;">
+      <a [routerLink]="['/tags', tag.slug]"> {{ tag.name }} </a>
+    </li>
+  </ul>
+  <span *ngIf="artist?.tags.length == 0">none</span>
+
+</div>
+
+<div *ngIf="artist?.videos.length" id="tags" class="col-xs-12">
+  <table class='table table-hover white_container'>
+    <thead>
+    <tr>
+      <th>no.</th>
+      <th>Title</th>
+      <th class="text-center">Tags</th>
+    </tr>
+    </thead>
+
+    <tr *ngFor="let video of artist?.videos; let i=index">
+
+      <td class='text-center'> {{ i + 1 }} </td>
+      <td>
+        <a [routerLink]="['/videos', video.youtube_id]"> {{ video.name }} </a>
+      </td>
+      <td>
+        <ul class='list-unstyled'>
+          <li *ngFor="let tag of video.tags">
+            <a [routerLink]="['/tags', tag.slug]"> {{ tag.name }} </a>
+          </li>
+        </ul>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
+

@@ -14,14 +14,12 @@ use Controller\VideoTagTimeController;
 use Controller\YouTubeController;
 
 return  [
-    ['/^\/api\/artists\/*$/', ArtistController::class, 'list', 'GET'],
+    ['/^\/api\/artists\/(?<artist_slug_id>[\w-]+)\/*$/', ArtistController::class, 'show', 'GET'],
 
     ['/^\/api\/tags\/*$/', TagController::class, 'list', 'GET'],
     ['/^\/api\/tags-simple\/*$/', TagController::class, 'list_without_relation', 'GET'],
-
     ['/^\/api\/tags-top\/*$/', TagController::class, 'top_ten', 'GET'],
     ['/^\/api\/tags-new\/*$/', TagController::class, 'newest_ten', 'GET'],
-
     ['/^\/api\/tags\/(?<tag_slug_id>[\w-]+)\/*$/', TagController::class, 'show', 'GET'],
 
     ['/^\/api\/tags\/(?<tag_slug_id>[\w-]+)\/descendants\/*$/', VideoTagDescendantControllerAlias::class, 'descendants', 'GET'],
