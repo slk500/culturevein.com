@@ -15,6 +15,7 @@ use Controller\YouTubeController;
 
 return  [
     ['/^\/api\/artists\/(?<artist_slug_id>[\w-]+)\/*$/', ArtistController::class, 'show', 'GET'],
+    ['/^\/api\/artists\/*$/', ArtistController::class, 'list', 'GET'],
 
     ['/^\/api\/tags\/*$/', TagController::class, 'list', 'GET'],
     ['/^\/api\/tags-simple\/*$/', TagController::class, 'list_without_relation', 'GET'],
