@@ -22,4 +22,9 @@ final class ArtistController
     {
         return artist_show_normalize($this->artist_repository->find($artist_slug_id));
     }
+
+    public function list()
+    {
+        return $this->artist_repository->find_all();
+    }
 }

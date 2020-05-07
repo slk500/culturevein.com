@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Repository;
 
-use Cocur\Slugify\Slugify;
 use Repository\Base\Database;
 
 final class ArtistRepository
@@ -57,6 +56,11 @@ final class ArtistRepository
 
         $result = $stmt->get_result();
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
+
+    public function find_all(): array
+    {
+        return $this->database->fetch("SELECT name FROM artist ORDER BY name");
     }
 
     public function assign_video_to_artist(string $artist_slug_id, string $video_id)
