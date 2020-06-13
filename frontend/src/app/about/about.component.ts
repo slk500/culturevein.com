@@ -19,7 +19,7 @@ import { Component, OnInit } from '@angular/core';
               <li>This app use YouTube API Services - please read
                 <a href="https://www.youtube.com/t/terms"> YouTube Terms of Service (ToS) </a>
                 and
-                <a href="https://policies.google.com/privacy"> Privacy Policy link. </a> <li>
+                <a href="https://policies.google.com/privacy"> Google Privacy Policy </a> </li>
           </ol>
           <br>
           <p><strong>CONTACT</strong><br>
