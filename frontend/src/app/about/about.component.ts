@@ -15,9 +15,11 @@ import { Component, OnInit } from '@angular/core';
                   <li><span class="label label-warning">Orange</span> tag with at least one exposure time added but there are more to add</li>
                   <li><span class="label label-success">Green</span> tag with completly all exposure times added</li>
               </ul><br>
-              <li>You can follow a tag and get notifications every time someone adds
-                  it to a video. To do so, you need to be registered user.</li><br>
               <li>It's still very early experimental version of site. Not everything works ;)   </li><br>
+              <li>This app use YouTube API Services - please read
+                <a href="https://www.youtube.com/t/terms"> YouTube Terms of Service (ToS) </a>
+                and
+                <a href="https://policies.google.com/privacy"> Privacy Policy link. </a> <li>
           </ol>
           <br>
           <p><strong>CONTACT</strong><br>
