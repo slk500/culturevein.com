@@ -14,11 +14,12 @@ export class VideoService {
 
     constructor(private http: HttpClient ) { }
 
-    addVideo(artist, name, youtube_id) {
+    addVideo(artist, name, youtube_id, duration) {
         return this.http.post('api/videos', {
             artist: artist,
             name: name,
-            youtube_id: youtube_id
+            youtube_id: youtube_id,
+            duration: duration
         })
     }
 

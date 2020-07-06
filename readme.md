@@ -6,7 +6,8 @@
 To run project:
 1. run command in public_html 'php -S localhost:8000'
 2. run command in frontend 'ng serve' 
-3. import database from db dir
+3. run database docker run -p 3306:3306 -e MYSQL_DATABASE='mysqldb' -e MYSQL_ALLOW_EMPTY_PASSWORD='yes' -d mysql
+4. import database from db dir
 
 * To Do List
     * TODO Check if all YT links works

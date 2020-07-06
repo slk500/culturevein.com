@@ -38,7 +38,7 @@ abstract class BaseController
     {
         $bearer_token = getallheaders()['Authorization'] ?? null;
         if ($bearer_token) {
-            if (preg_match('/Bearer\s(\S+)/', $bearer_token, $matches)) {
+            if (preg_match('\'Bearer\s[\d|a-f]{8}-([\d|a-f]{4}-){3}[\d|a-f]{12}\'', $bearer_token, $matches)) {
                 return $matches[1];
             }
         }

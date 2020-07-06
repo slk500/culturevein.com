@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Controller;
 
 use Container;
-use Controller\Base\BaseController;
 use Repository\ArtistRepository;
 use function Normalizer\artist_show_normalize;
 

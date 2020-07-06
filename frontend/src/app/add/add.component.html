@@ -1,7 +1,5 @@
 <div class='col-xs-10 col-xs-offset-1 white_container pad'>
     <input (input)="onKey($event)" (paste)="onPaste($event)"
-
-
            placeholder='YouTube link' class='form-control'>
 </div>
 
@@ -24,6 +22,7 @@
             <ngx-y2-player
                     #video
                     [playerOptions]="playerOptions"
+                    (ready)="getTitleAndDuration()"
                     [container]="container">
             </ngx-y2-player>
         </div>

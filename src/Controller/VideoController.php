@@ -10,7 +10,6 @@ use Factory\VideoFactory;
 use DTO\VideoCreate;
 use Repository\VideoRepository;
 use Service\TokenService;
-use Service\YouTubeService;
 use function Normalizer\video_list_normalize;
 
 class VideoController extends BaseController
@@ -19,15 +18,12 @@ class VideoController extends BaseController
 
     private Container $container;
 
-    private YouTubeService $youtube_service;
-
     private VideoRepository $video_repository;
 
     public function __construct()
     {
         $this->container = new Container();
         $this->token_service = new TokenService();
-        $this->youtube_service = new YouTubeService();
         $this->video_repository = $this->container->get(VideoRepository::class);
     }
 
@@ -35,17 +31,14 @@ class VideoController extends BaseController
     {
         $data = $this->get_body();
 
-        $duration = $this->youtube_service->get_duration($data->youtube_id);
-
         $token = $this->get_bearer_token();
-
-        $user_id = $this->token_service->decode_user_id($token);
+        $user_id = $token ? $this->token_service->decode_user_id($token) : null;
 
         $video_create = new VideoCreate(
             $data->artist,
             $data->name,
             $data->youtube_id,
-            $duration,
+            $data->duration,
             $user_id
         );
 

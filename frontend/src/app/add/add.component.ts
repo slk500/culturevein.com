@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ArtistService} from "../artist.service";
 import {YouTubeService} from "../you-tube.service";
 import {VideoService} from "../services/video.service";
 import {Router} from "@angular/router";
 import {map} from "rxjs/internal/operators";
+import {NgxY2PlayerComponent} from "ngx-y2-player";
 
 @Component({
     selector: 'app-add',
@@ -11,6 +12,8 @@ import {map} from "rxjs/internal/operators";
     styleUrls: ['./add.component.css']
 })
 export class AddComponent implements OnInit {
+
+    @ViewChild('video') video: NgxY2PlayerComponent;
 
     public youtubeId = '';
 
@@ -29,6 +32,8 @@ export class AddComponent implements OnInit {
     public artist;
 
     public title = '';
+
+    public duration = 0;
 
     public errorMsg;
 
@@ -61,28 +66,30 @@ export class AddComponent implements OnInit {
         this.findYouTubeId();
 
         if (this.youtubeId) {
-
-            this._youTubeService.getArtistAndTitle(this.youtubeId).subscribe(data => {
-                    this.artist = data.artist;
-                    this.title = data.title;
-                    this.tempArtists.push(this.artist);
-                    this.tempArtists.sort();
-                    this.artists = this.tempArtists;
-                    this.selectedArtist = this.artist;
-                },
-                error => this.errorMsg = error);
-
-            this.select2Options = {
-                placeholder: 'Select an artist or type a new one',
-                tags: true
-            };
-
             this.playerOptions = {
                 videoId: this.youtubeId,
                 height: 'auto',
                 width: 'auto',
             };
         }
+    }
+
+    public getTitleAndDuration() {
+      let artistAndTitle = this.video.videoPlayer.getVideoData().title.split("-");
+      this.duration = this.video.videoPlayer.getDuration();
+
+      this.artist = artistAndTitle[0];
+      this.title = artistAndTitle[1];
+      this.tempArtists.push(this.artist);
+      this.tempArtists.sort();
+      this.artists = this.tempArtists;
+      this.selectedArtist = this.artist;
+
+      this.select2Options = {
+        placeholder: 'Select an artist or type a new one',
+        tags: true
+      };
+
     }
 
     public changed(e: any): void {
@@ -101,7 +108,7 @@ export class AddComponent implements OnInit {
 
     addVideo(){
         this._videoService.addVideo(
-            this.selectedArtist, this.title, this.youtubeId
+            this.selectedArtist, this.title, this.youtubeId, this.duration
         ).subscribe(data => {
                 this.router.navigate([`/videos/${this.youtubeId}`]);
             },
