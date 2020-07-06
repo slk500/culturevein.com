@@ -13,7 +13,7 @@ import {NgxY2PlayerComponent} from "ngx-y2-player";
 })
 export class AddComponent implements OnInit {
 
-    @ViewChild('video') video: NgxY2PlayerComponent;
+    @ViewChild('video') video;
 
     public youtubeId = '';
 
