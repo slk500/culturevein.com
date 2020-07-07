@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {VideoService} from "../services/video.service";
 import {InputService} from "../services/input.service";
+import {filter} from "rxjs/operators";
 
 @Component({
   selector: 'app-video',
@@ -21,6 +22,15 @@ export class VideoComponent implements OnInit {
                 error => this.errorMsg = error);
         this.inputSearch.cast.subscribe(input => this.searchText = input);
     }
+
+  getVideosCount(artists) {
+      return artists
+        .map(artist => artist.videos.length)
+        .reduce(function (a, b) {
+        return a + b;
+      }, 0);
+  }
+
 
   highlight(query, content) {
     if(!query) {
