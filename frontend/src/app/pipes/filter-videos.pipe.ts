@@ -6,26 +6,28 @@ import {Pipe, PipeTransform} from '@angular/core';
 })
 export class FilterVideosPipe implements PipeTransform {
 
-    transform(artists: any[], searchText: string): any[] {
-        if (!artists) return [];
-        if (!searchText) return artists;
-        const searchTextLowerCase = searchText.toLowerCase();
-
-        let result = [];
-
-            artists.forEach(function (artist) {
-                if (artist.name.toLowerCase().includes(searchTextLowerCase)) {
-                  result.push(artist);
-                } else {
-                 artist.videos = artist.videos.filter(function (video) {
-                    return video.name.toLowerCase().includes(searchTextLowerCase);
-                  });
-                  if(artist.videos.length > 0 ) result.push(artist);
-                }
-            });
-
-            return result;
+  transform(artists: any[], searchText: string): any[] {
+    if (!artists) {
+      return [];
     }
+    if (!searchText) {
+      return artists;
+    }
+    return artists
+      .map(artist => this.matchArtistVideos(artist, searchText.toLowerCase()))
+      .filter(resultArtist => resultArtist.videos.length > 0);
+  }
+
+  private matchArtistVideos(artist: any, lowerCasedSearchText: string) {
+    if (artist.name.toLowerCase().includes(lowerCasedSearchText)) {
+      return artist;
+    }
+    return {
+      ...artist,
+      videos: artist.videos.filter(video => video.name.toLowerCase().includes(lowerCasedSearchText)),
+    }
+  }
+
 }
 
 
