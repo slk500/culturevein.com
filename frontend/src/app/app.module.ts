@@ -27,6 +27,7 @@ import { LoginComponent } from './login/login.component';
 import {AuthService} from "./auth.service";
 import { ActivityComponent } from './activity/activity.component';
 import {ArtistShowComponent} from "./artist/artist-show.component";
+import {FilterVideosPipe} from "./pipes/filter-videos.pipe";
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import {ArtistShowComponent} from "./artist/artist-show.component";
     VideoShowComponent,
     MinuteSecondsPipe,
     FilterPipe,
+    FilterVideosPipe,
     AddComponent,
     RegisterComponent,
     LoginComponent,
