@@ -14,18 +14,20 @@ export class FilterTagsPipe implements PipeTransform {
     }
 
     return tags
-      .map(tag => this.matchChildren(tag, searchText.toLowerCase()))
-      .filter(resultTag => resultTag.children.length > 0);
+      .filter(tag => this.search(tag, searchText.toLowerCase()))
   }
 
-  private matchChildren(tag: any, lowerCasedSearchText: string) {
-    if (tag.name.toLowerCase().includes(lowerCasedSearchText)) {
-      return tag;
+  private search(tag, search) {
+
+    if (tag.name.toLowerCase().includes(search)) {
+      return true;
     }
-    return {
-      ...tag,
-      children: tag.children.filter(tag => tag.name.toLowerCase().includes(lowerCasedSearchText)),
+
+    if (tag.children.length > 0) {
+      return tag.children.some((child) => this.search(child, search));
     }
+
+    return false;
   }
 }
 
