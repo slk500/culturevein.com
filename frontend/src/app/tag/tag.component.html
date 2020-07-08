@@ -1,21 +1,34 @@
 {{ errorMsg }}
-<div class='col-xs-12 num_of_rows'>{{ (tags |filter : searchText).length }}</div>
+<div class='col-xs-12 num_of_rows'>{{ (tags |filterTags : searchText).length }}</div>
 <div class="col-xs-12 white_container">
 
-  <ul class='list-unstyled' style="  -webkit-column-count: 3;
+  <ul class='list-unstyled' style="
+    -webkit-column-count: 3;
     -moz-column-count: 3;
-    column-count: 3;">
-    <ng-template #recursiveList let-tags>
-      <li *ngFor="let tag of tags |filter : searchText">
-        <a [routerLink]="['/tags', tag.slug]"
-           [innerHTML]="highlight(searchText, tag.name)">
-        </a>
-        <ul *ngIf="tag.children.length > 0">
-          <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: tag.children }"></ng-container>
-        </ul>
-      </li>
-    </ng-template>
-    <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: tags }"></ng-container>
+    column-count: 3;
+">
+    <li *ngFor="let tag of tags |filterTags : searchText">
+      <a [routerLink]="['/tags', tag.slug]"
+         [innerHTML]="highlight(searchText, tag.name)">
+      </a>
+      <ul *ngIf="tag.children.length > 0">
+        <li *ngFor="let tag of tag.children">
+          <a [routerLink]="['/tags', tag.slug]"
+             [innerHTML]="highlight(searchText, tag.name)">
+          </a>
+          <ul *ngIf="tag.children.length > 0">
+            <li *ngFor="let tag of tag.children">
+              <a [routerLink]="['/tags', tag.slug]"
+                 [innerHTML]="highlight(searchText, tag.name)">
+              </a>
+              <ul *ngIf="tag.children.length > 0">
+                <li *ngFor="let tag of tag.children">
+                  <a [routerLink]="['/tags', tag.slug]"
+                     [innerHTML]="highlight(searchText, tag.name)">
+                  </a>
+              </ul>
+          </ul>
+      </ul>
+    </li>
   </ul>
-
 </div>

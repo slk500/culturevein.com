@@ -17,7 +17,7 @@ import { VideoShowComponent } from './video-show/video-show.component';
 import {MinuteSecondsPipe} from "./pipes/minute-seconds.pipe";
 import {NgxY2PlayerModule} from "ngx-y2-player";
 import {Select2Module} from "ng2-select2";
-import { FilterPipe }from './pipes/filter.pipe';
+import { FilterTagsPipe }from './pipes/filter-tags.pipe';
 import {InputService} from "./services/input.service";
 import {APIInterceptor} from "./http-interceptor";
 import {SliderModule} from 'primeng/slider';
@@ -41,7 +41,7 @@ import {FilterVideosPipe} from "./pipes/filter-videos.pipe";
     TagShowComponent,
     VideoShowComponent,
     MinuteSecondsPipe,
-    FilterPipe,
+    FilterTagsPipe,
     FilterVideosPipe,
     AddComponent,
     RegisterComponent,
