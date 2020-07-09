@@ -1,9 +1,8 @@
 <?php
 
-
 namespace Normalizer;
 
-
+//todo nice class to refactor
 class TagListWithChildren
 {
     public function normalize(array $tags): array
@@ -47,10 +46,7 @@ class TagListWithChildren
             }
         }
 
-        $tags = $this->add_nested_children($deeper, $input);
-
-
-        return $tags;
+        return $this->add_nested_children($deeper, $input);
     }
 
     public function add_nested_children(array $deepers, array $tags)

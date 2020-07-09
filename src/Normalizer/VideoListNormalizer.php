@@ -9,6 +9,7 @@ function video_list_normalize(array $videos): array
     foreach ($videos as $video) {
         $slug = $video['artist_slug'];
 
+        //overwriting!
         $result[$slug]['name'] = $video['artist_name'];
         $result[$slug]['slug'] = $slug;
 

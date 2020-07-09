@@ -8,7 +8,6 @@ use DTO\VideoTagRaw;
 
 final class VideoTagNormalizer
 {
-
     //todo to complex -> make it simple
     public function normalize(array $array): array
     {
@@ -30,10 +29,7 @@ final class VideoTagNormalizer
                 ];
 
                 $previous_tag_slug_id = $video_tag->tag_slug_id;
-
-            }
-
-            else {
+            } else {
                 $video_tag_normalize = [
                     'video_tag_id' => $video_tag->video_tag_id,
                     'video_youtube_id' => $video_tag->video_youtube_id,
@@ -54,7 +50,7 @@ final class VideoTagNormalizer
                 $previous_tag_slug_id = $video_tag->tag_slug_id;
                 $result [] = $video_tag_normalize;
             }
-            $lastKey = count($result)-1; //array_key_last -> waiting for PHP 7.3 :D
+            $lastKey = array_key_last($result);
         }
         return array_values($result); //have to do this -> angular will throw error otherwise
     }

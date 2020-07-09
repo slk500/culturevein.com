@@ -5,5 +5,5 @@ return [
     'db_user' => 'root',
     'db_pass' => '',
     'db_name' => 'culture_vein',
-    'token_secret' => ''
+    'token_secret' => 'secret'
 ];

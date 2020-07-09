@@ -17,7 +17,6 @@ final class TokenService
     public function __construct()
     {
         $parameters = include(__DIR__.'/../../config/parameters.php');
-
         $this->token_secret = $parameters['token_secret'];
     }
     

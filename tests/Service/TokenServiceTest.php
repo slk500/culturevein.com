@@ -24,10 +24,8 @@ class TokenServiceTest extends TestCase
 
     public function setUp()
     {
-        $dotenv = new Dotenv();
-        $dotenv->load(__DIR__.'/../../.env');
-
-        $this->token_secret = getenv('TOKEN_SECRET');
+        $parameters = include(__DIR__.'/../../config/parameters.php');
+        $this->token_secret = $parameters['token_secret'];
         $this->token_service = new TokenService();
     }
 

@@ -11,7 +11,6 @@ use Controller\VideoController;
 use Controller\VideoTagController;
 use Controller\VideoTagDescendantController as VideoTagDescendantControllerAlias;
 use Controller\VideoTagTimeController;
-use Controller\YouTubeController;
 
 return  [
     ['/^\/api\/artists\/(?<artist_slug_id>[\w-]+)\/*$/', ArtistController::class, 'show', 'GET'],
