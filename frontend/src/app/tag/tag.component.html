@@ -1,5 +1,5 @@
 {{ errorMsg }}
-<div class='col-xs-12 num_of_rows'>{{ (tags |filterTags : searchText).length }}</div>
+<div class='col-xs-12 num_of_rows'>{{ getTagsCount(tags |filterTags : searchText) }}</div>
 <div class="col-xs-12 white_container">
 
   <ul class='list-unstyled' style="

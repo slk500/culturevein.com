@@ -26,9 +26,7 @@ export class VideoComponent implements OnInit {
   getVideosCount(artists) {
       return artists
         .map(artist => artist.videos.length)
-        .reduce(function (a, b) {
-        return a + b;
-      }, 0);
+        .reduce((a,b) => a+b, 0)
   }
 
 

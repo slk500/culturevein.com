@@ -23,6 +23,18 @@ export class TagComponent implements OnInit {
       this.inputSearch.cast.subscribe(input => this.searchText = input);
   }
 
+  getTagsCount(tags) {
+    return tags
+      .map(tag => this.getTagCount(tag))
+      .reduce((a, b) => a + b, 0)
+  }
+
+  getTagCount(tag) {
+    return tag.children
+      .map(tag => this.getTagCount(tag))
+      .reduce((a, b) => a + b, 1)
+  }
+
   highlight(query, content) {
     if(!query) {
       return content;
