@@ -9,7 +9,7 @@ use Model\User;
 use PHPUnit\Framework\TestCase;
 use Repository\Base\Database;
 use Repository\UserRepository;
-use Service\DatabaseHelper;
+use Tests\DatabaseHelper;
 
 class UserRepositoryTest extends TestCase
 {

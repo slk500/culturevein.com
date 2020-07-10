@@ -19,7 +19,7 @@ use Repository\UserRepository;
 use Repository\VideoTagRepository;
 use PHPUnit\Framework\TestCase;
 use Repository\VideoTagTimeRepository;
-use Service\DatabaseHelper;
+use Tests\DatabaseHelper;
 use Tests\Builder\Video\VideoCreateBuilder;
 use Tests\Builder\VideoTag\VideoTagCreateBuilder;
 use Tests\Builder\VideoTagTime\VideoTagTimeCreateBuilder;

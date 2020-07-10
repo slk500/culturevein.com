@@ -15,7 +15,7 @@ use Repository\SubscribeRepository;
 use Repository\TagRepository;
 use Repository\UserRepository;
 use Repository\VideoTagRepository;
-use Service\DatabaseHelper;
+use Tests\DatabaseHelper;
 use Tests\Builder\Video\VideoCreateBuilder;
 use Tests\Builder\VideoTag\VideoTagCreateBuilder;
 

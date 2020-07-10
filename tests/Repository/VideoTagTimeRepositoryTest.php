@@ -10,7 +10,7 @@ use Repository\Base\Database;
 use Repository\TagRepository;
 use Repository\VideoTagRepository;
 use Repository\VideoTagTimeRepository;
-use Service\DatabaseHelper;
+use Tests\DatabaseHelper;
 use Tests\Builder\Video\VideoCreateBuilder;
 use Tests\Builder\VideoTag\VideoTagCreateBuilder;
 

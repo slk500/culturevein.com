@@ -16,7 +16,7 @@ use Repository\UserRepository;
 use Repository\VideoTagRepository;
 use Deleter\VideoTagDeleter;
 use PHPUnit\Framework\TestCase;
-use Service\DatabaseHelper;
+use Tests\DatabaseHelper;
 use Tests\Builder\Video\VideoCreateBuilder;
 use Tests\Builder\VideoTag\VideoTagCreateBuilder;
 

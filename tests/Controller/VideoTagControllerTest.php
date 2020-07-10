@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Repository\Base\Database;
 use Repository\TagRepository;
 use Repository\VideoTagRepository;
-use Service\DatabaseHelper;
+use Tests\DatabaseHelper;
 
 class VideoTagControllerTest extends TestCase
 {

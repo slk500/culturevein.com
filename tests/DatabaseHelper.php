@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Service;
+namespace Tests;
 
 use Console_Table;
 use Repository\Base\Database;

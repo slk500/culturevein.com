@@ -8,7 +8,7 @@ use Container;
 use PHPUnit\Framework\TestCase;
 use Repository\ArtistRepository;
 use Repository\Base\Database;
-use Service\DatabaseHelper;
+use Tests\DatabaseHelper;
 
 class ArtistRepositoryTest extends TestCase
 {

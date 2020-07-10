@@ -6,7 +6,7 @@ namespace Tests\Service;
 
 use PHPUnit\Framework\TestCase;
 use Repository\Base\Database;
-use Service\DatabaseHelper;
+use Tests\DatabaseHelper;
 
 class DatabaseHelperTest extends TestCase
 {

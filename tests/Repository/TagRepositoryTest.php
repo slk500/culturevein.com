@@ -6,7 +6,7 @@ use Model\Tag;
 use PHPUnit\Framework\TestCase;
 use Repository\Base\Database;
 use Repository\TagRepository;
-use Service\DatabaseHelper;
+use Tests\DatabaseHelper;
 
 class TagRepositoryTest extends TestCase
 {

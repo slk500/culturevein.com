@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Repository\Base\Database;
 use Repository\UserRepository;
 use Repository\VideoRepository;
-use Service\DatabaseHelper;
+use Tests\DatabaseHelper;
 use Tests\Builder\User\UserBuilder;
 use Tests\Builder\Video\VideoCreateBuilder;
 
