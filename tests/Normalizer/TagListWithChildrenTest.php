@@ -100,16 +100,4 @@ class TagListWithChildrenTest extends TestCase
 
         $this->assertEquals($expected, $result);
     }
-
-    /**
-     * @test
-     */
-    public function mario()
-    {
-        $repo = new TagRepository(new Database());
-
-        $tags = $repo->find_all();
-
-        (new TagListWithChildren())->normalize($tags);
-    }
 }

@@ -64,7 +64,7 @@ class TagListWithChildren
         }
 
         if ($deepers !== []) {
-            print_r($deepers);
+            throw new \Exception((string)$deepers);
         }
 
         return $tags;
