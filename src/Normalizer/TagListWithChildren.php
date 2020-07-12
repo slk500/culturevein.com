@@ -2,37 +2,42 @@
 
 namespace Normalizer;
 
-//todo nice class to refactor
 class TagListWithChildren
 {
     public function normalize(array $tags): array
     {
-        $input_with_children_field = $this->add_children_field($tags);
-        $input_slug_as_key = $this->set_slug_as_key($input_with_children_field);
-        $input_with_relations = $this->set_relations($input_slug_as_key);
+        $compose = function (...$funcs) {
+            return function ($data) use ($funcs) {
+                return array_reduce(
+                    $funcs,
+                    fn($carry, $func) => $func($carry),
+                    $data,
+                );
+            };
+        };
 
-        return array_values($input_with_relations);
+        $set_slug_as_key = function ($tag) {
+            $result = [];
+            $result[$tag['slug']] = $tag;
+            return $result;
+        };
+
+        $add_children_field = function ($array){
+            return array_map(fn(array $tag) => array_merge($tag, ['children' => [] ]), $array);
+        };
+
+        $normalize = $compose(
+            $set_slug_as_key,
+            $add_children_field
+        );
+
+        $normalizeTags = array_map($normalize, $tags);
+        $result = array_merge(...$normalizeTags);
+
+        return $this->set_relations($result);
     }
 
-    public function add_children_field(array $array): array
-    {
-        return array_map(function (array $item) {
-            $item['children'] = [];
-            return $item;
-        }, $array);
-    }
-
-    public function set_slug_as_key(array $input)
-    {
-        $result = [];
-        foreach ($input as $item) {
-            $result[$item['slug']] = $item;
-        }
-
-        return $result;
-    }
-
-    public function set_relations(array $input)
+    function set_relations(array $input)
     {
         $deeper = [];
         foreach ($input as $item) {
@@ -45,11 +50,10 @@ class TagListWithChildren
                 }
             }
         }
-
-        return $this->add_nested_children($deeper, $input);
+        return array_values($this->add_nested_children($deeper, $input));
     }
 
-    public function add_nested_children(array $deepers, array $tags)
+    function add_nested_children(array $deepers, array $tags)
     {
         foreach ($deepers as $deep) {
             foreach ($tags as &$tag) {

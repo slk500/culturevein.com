@@ -40,7 +40,6 @@ class TagController extends BaseController
         return $this->tag_repository->find_all();
     }
 
-
     public function show(string $slug)
     {
         $tag = $this->tag_repository->find($slug);
@@ -51,9 +50,7 @@ class TagController extends BaseController
 
         $tagVideos = $this->tag_repository->find_videos($tag->slug_id);
 
-
         $sortedTagVideos = $this->tag_normalizer->sort_by_video_slug($tagVideos, $tag);
-
 
         $result = [];
         foreach ($sortedTagVideos as $tagVideo) {
@@ -110,7 +107,6 @@ class TagController extends BaseController
     public function top_ten()
     {
         return $this->tag_repository->top();
-
     }
 
     public function newest_ten()

@@ -2,11 +2,8 @@
 
 namespace Tests\Normalizer;
 
-
 use Normalizer\TagListWithChildren;
 use PHPUnit\Framework\TestCase;
-use Repository\Base\Database;
-use Repository\TagRepository;
 
 class TagListWithChildrenTest extends TestCase
 {
@@ -27,11 +24,9 @@ class TagListWithChildrenTest extends TestCase
                 'parent_slug' => null]
         ];
 
-        $input_with_children_field = $this->normalizer->add_children_field($input);
-        $input_slug_as_key = $this->normalizer->set_slug_as_key($input_with_children_field);
-        $input_with_relations = $this->normalizer->set_relations($input_slug_as_key);
+        $result = $this->normalizer->normalize($input);
 
-        $expected = ['sport' =>
+        $expected = [
             [
                 'slug' => 'sport',
                 'parent_slug' => null,
@@ -45,14 +40,13 @@ class TagListWithChildrenTest extends TestCase
                     ]
             ]];
 
-        $this->assertEquals($expected, $input_with_relations);
+        $this->assertEquals($expected, $result);
     }
-
 
     /**
      * @test
      */
-    public function nested_parents()
+    public function add_nested_children()
     {
         $children =
             ['mike-tyson' =>
