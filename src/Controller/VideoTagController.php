@@ -9,7 +9,6 @@ use Controller\Base\BaseController;
 use Deleter\VideoTagDeleter;
 use DTO\VideoTagCreate;
 use Factory\VideoTagFactory;
-use Normalizer\VideoTagNormalizer;
 use Repository\VideoTagRepository;
 use Service\TokenService;
 
@@ -55,7 +54,7 @@ class VideoTagController extends BaseController
     {
         $video_tag_repository = $this->container->get(VideoTagRepository::class);
         $tags = $video_tag_repository->find_all_for_video($youtube_id);
-        return (new VideoTagNormalizer())->normalize($tags);
+        return video_tag_normalize($tags);
     }
 
     public function delete(string $video_youtube_id, string $tag_slug_id)

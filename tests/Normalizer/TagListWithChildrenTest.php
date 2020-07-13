@@ -2,18 +2,10 @@
 
 namespace Tests\Normalizer;
 
-use Normalizer\TagListWithChildren;
 use PHPUnit\Framework\TestCase;
 
 class TagListWithChildrenTest extends TestCase
 {
-    private TagListWithChildren $normalizer;
-
-    public function setUp()
-    {
-        $this->normalizer = new TagListWithChildren();
-    }
-
     public function testNormalize()
     {
         $input = [
@@ -24,7 +16,7 @@ class TagListWithChildrenTest extends TestCase
                 'parent_slug' => null]
         ];
 
-        $result = $this->normalizer->normalize($input);
+        $result = normalize_tag_list_with_children($input);
 
         $expected = [
             [
@@ -70,7 +62,7 @@ class TagListWithChildrenTest extends TestCase
                     ]
             ]];
 
-        $result = $this->normalizer->add_nested_children($children, $tags);
+        $result = add_nested_children($children, $tags);
 
         $expected = ['sport' =>
             [

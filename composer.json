@@ -1,6 +1,11 @@
 {
   "autoload": {
-    "files": ["src/Normalizer/VideoListNormalizer.php"],
+    "files": [
+      "src/Normalizer/VideoListNormalizer.php",
+      "src/Functional/Functions.php",
+      "src/Normalizer/TagListWithChildren.php",
+      "src/Normalizer/VideoTagNormalizer.php"
+    ],
     "psr-4": {
       "": "src/"
     }

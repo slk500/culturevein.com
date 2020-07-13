@@ -50,8 +50,6 @@ return  [
     ['/^\/api\/subscribe\/tags\/(?<tag_slug_id>[\w-]+)\/*$/', SubscribeController::class, 'is_tag_subscribed_by_user', 'GET'],
     ['/^\/api\/subscribe-number\/tags\/(?<tag_slug_id>[\w-]+)\/*$/', SubscribeController::class, 'get_number_of_subscribers', 'GET'],
 
-    ['/^\/api\/youtube\/(?<youtube_id>[\w-]{11})\/*$/', YouTubeController::class, 'get_artist_and_title', 'GET'],
-
     ['/^\/api\/users\/*$/', UserController::class, 'create', 'POST'],
     ['/^\/api\/users\/login\/*$/', UserController::class, 'login', 'POST'],
 

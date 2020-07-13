@@ -89,12 +89,7 @@ final class VideoTagRepository
         $stmt->execute();
 
         $result = $stmt->get_result();
-
-        $results = [];
-        while ($obj = mysqli_fetch_object($result, VideoTagRaw::class)){
-            $results[] = $obj;
-        }
-        return $results;
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
 
     public function find_all(): array
@@ -120,9 +115,7 @@ final class VideoTagRepository
                    LEFT JOIN user u ON vt.user_id = u.user_id
             ORDER BY created_at DESC";
 
-        $data = $this->database->fetch($query);
-
-        return $data;
+        return $this->database->fetch($query);
     }
 
     public function find(string $youtube_id, string $tag_slug_id)

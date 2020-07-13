@@ -8,7 +8,6 @@ use Container;
 use Controller\Base\BaseController;
 use DTO\Database\DatabaseTagVideo;
 use Normalizer\DatabaseTagVideoNormalizer;
-use Normalizer\TagListWithChildren;
 use Repository\SubscribeRepository;
 use Repository\TagRepository;
 
@@ -32,7 +31,7 @@ class TagController extends BaseController
     {
         $tags = $this->tag_repository->find_all();
 
-        return (new TagListWithChildren())->normalize($tags);
+        return normalize_tag_list_with_children($tags);
     }
 
     public function list_without_relation()

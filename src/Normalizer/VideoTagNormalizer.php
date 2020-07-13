@@ -1,59 +1,33 @@
 <?php
 
-declare(strict_types=1);
-
-namespace Normalizer;
-
-use DTO\VideoTagRaw;
-
-final class VideoTagNormalizer
+function video_tag_normalize(array $array)
 {
-    //todo to complex -> make it simple
-    public function normalize(array $array): array
-    {
-        $previous_tag_slug_id = '';
-        $lastKey = null;
-        $result = [];
+    return array_values(
+        array_map('join_in_video_tag_time',
+            group_by_video_tag_id($array)));
+}
 
-        /**
-         * @var $video_tag VideoTagRaw
-         */
-        foreach ($array as $key => $video_tag) {
+function join_in_video_tag_time(array $a)
+{
+    return array_reduce($a, function (array $accumulator, array $element) {
+        $accumulator['video_tag_id'] = $element['video_tag_id'];
+        $accumulator['tag_name'] = $element['tag_name'];
+        $accumulator['tag_slug_id'] = $element['tag_slug_id'];
+        $accumulator['is_complete'] = $element['is_complete'];
+        $accumulator['video_tags_time'][] =
+            [
+                'video_tag_time_id' => $element['video_tag_time_id'],
+                'start' => $element['start'],
+                'stop' => $element['stop']
+            ];
+        return $accumulator;
+    }, []);
+}
 
-            if($previous_tag_slug_id === $video_tag->tag_slug_id){
-
-                $result[$lastKey]['video_tags_time'][]=[
-                    'video_tag_time_id' => $video_tag->video_tag_time_id,
-                    'start' => $video_tag->start,
-                    'stop' => $video_tag->stop
-                ];
-
-                $previous_tag_slug_id = $video_tag->tag_slug_id;
-            } else {
-                $video_tag_normalize = [
-                    'video_tag_id' => $video_tag->video_tag_id,
-                    'video_youtube_id' => $video_tag->video_youtube_id,
-                    'tag_name' => $video_tag->tag_name,
-                    'tag_slug_id' => $video_tag->tag_slug_id,
-                    'is_complete' => $video_tag->is_complete,
-                    'video_tags_time' => []
-                ];
-
-                if($video_tag->video_tag_time_id) {
-                    $video_tag_normalize['video_tags_time'][] = [
-                        'video_tag_time_id' => $video_tag->video_tag_time_id,
-                        'start' => $video_tag->start,
-                        'stop' => $video_tag->stop
-                    ];
-                }
-
-                $previous_tag_slug_id = $video_tag->tag_slug_id;
-                $result [] = $video_tag_normalize;
-            }
-            $lastKey = array_key_last($result);
-        }
-        return array_values($result); //have to do this -> angular will throw error otherwise
-    }
-
-
+function group_by_video_tag_id(array $data)
+{
+    return array_reduce($data, function (array $accumulator, array $element) {
+        $accumulator[$element['video_tag_id']][] = $element;
+        return $accumulator;
+    }, []);
 }

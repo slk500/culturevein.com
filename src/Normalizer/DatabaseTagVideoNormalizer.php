@@ -39,5 +39,4 @@ final class DatabaseTagVideoNormalizer
         }
         return $result;
     }
-
 }
