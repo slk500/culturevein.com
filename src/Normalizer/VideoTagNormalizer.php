@@ -4,7 +4,7 @@ function video_tag_normalize(array $array)
 {
     return array_values(
         array_map('join_in_video_tag_time',
-            group_by($array)));
+            group_by($array, 'video_tag_id')));
 }
 
 function join_in_video_tag_time(array $a)
