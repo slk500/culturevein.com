@@ -60,7 +60,7 @@ class VideoListNormalizerTest extends TestCase
             ],
         ];
 
-        $result = video_list_normalize($input);
+        $result = artist_list_normalize($input);
 
         $expected = [
             [

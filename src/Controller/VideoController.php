@@ -50,7 +50,7 @@ class VideoController extends BaseController
 
     public function list()
     {
-        return video_list_normalize($this->video_repository->find_all());
+        return artist_list_normalize($this->video_repository->find_all());
     }
 
     public function show(string $youtube_id)

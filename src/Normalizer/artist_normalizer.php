@@ -1,6 +1,6 @@
 <?php
 
-function video_list_normalize(array $videos): array
+function artist_list_normalize(array $videos): array
 {
     $groupedBy = group_by($videos, 'artist_slug');
     return array_values(

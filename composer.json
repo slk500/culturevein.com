@@ -1,7 +1,7 @@
 {
   "autoload": {
     "files": [
-      "src/Normalizer/VideoListNormalizer.php",
+      "src/Normalizer/artist_normalizer.php",
       "src/Functional/Functions.php",
       "src/Normalizer/TagListWithChildren.php",
       "src/Normalizer/VideoTagNormalizer.php",
