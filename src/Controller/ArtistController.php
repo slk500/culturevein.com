@@ -6,7 +6,6 @@ namespace Controller;
 
 use Container;
 use Repository\ArtistRepository;
-use function Normalizer\artist_show_normalize;
 
 final class ArtistController
 {

@@ -8,18 +8,11 @@ namespace Model;
 
 class User
 {
-    /**
-     * @var string
-     */
-    public $email;
-    /**
-     * @var string
-     */
-    public $password;
-    /**
-     * @var string
-     */
-    public $username;
+    public string $email;
+
+    public string $password;
+
+    public string $username;
     /**
      * @var int
      */
