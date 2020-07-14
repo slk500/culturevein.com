@@ -10,7 +10,6 @@ use Factory\VideoFactory;
 use DTO\VideoCreate;
 use Repository\VideoRepository;
 use Service\TokenService;
-use function Normalizer\video_list_normalize;
 
 class VideoController extends BaseController
 {
@@ -51,9 +50,7 @@ class VideoController extends BaseController
 
     public function list()
     {
-        $raw_videos = $this->video_repository->find_all();
-
-        return video_list_normalize($raw_videos);
+        return video_list_normalize($this->video_repository->find_all());
     }
 
     public function show(string $youtube_id)

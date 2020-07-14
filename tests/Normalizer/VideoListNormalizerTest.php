@@ -2,13 +2,42 @@
 
 namespace Tests\Normalizer;
 
-
 use PHPUnit\Framework\TestCase;
-use function Normalizer\video_list_normalize;
 
 class VideoListNormalizerTest extends TestCase
 {
-    public function testNormalize()
+    /**
+     * @test
+     */
+    public function group_by()
+    {
+        $input = [
+            ['artist_slug' => 'madonna'],
+            ['artist_slug' => 'madonna'],
+            ['artist_slug' => 'bob-marley'],
+        ];
+
+        $output = group_by($input, 'artist_slug');
+
+        $expected = [
+            'madonna' =>
+                [
+                    ['artist_slug' => 'madonna'],
+                    ['artist_slug' => 'madonna'],
+                ],
+            'bob-marley' =>
+                [
+                    ['artist_slug' => 'bob-marley']
+                ]
+        ];
+
+        $this->assertEquals($expected, $output);
+    }
+
+    /**
+     * @test
+     */
+    public function normalize()
     {
         $input = [
             [

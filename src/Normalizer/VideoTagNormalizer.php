@@ -4,7 +4,7 @@ function video_tag_normalize(array $array)
 {
     return array_values(
         array_map('join_in_video_tag_time',
-            group_by_video_tag_id($array)));
+            group_by($array)));
 }
 
 function join_in_video_tag_time(array $a)
@@ -24,10 +24,10 @@ function join_in_video_tag_time(array $a)
     }, []);
 }
 
-function group_by_video_tag_id(array $data)
+function group_by(array $data, string $group_by)
 {
-    return array_reduce($data, function (array $accumulator, array $element) {
-        $accumulator[$element['video_tag_id']][] = $element;
+    return array_reduce($data, function (array $accumulator, array $element) use ($group_by) {
+        $accumulator[$element[$group_by]][] = $element;
         return $accumulator;
     }, []);
 }

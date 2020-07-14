@@ -55,7 +55,7 @@ class VideoTagNormalizerTest extends TestCase
             ]
         ];
 
-        $output = group_by_video_tag_id($input);
+        $output = group_by($input,'video_tag_id');
 
         $this->assertSame($expectedOutput, $output);
     }
