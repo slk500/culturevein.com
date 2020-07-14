@@ -2,9 +2,8 @@
 
 function artist_list_normalize(array $videos): array
 {
-    $groupedBy = group_by($videos, 'artist_slug');
-    return array_values(
-        array_map('reduce_to_videos', $groupedBy));
+        return array_map('reduce_to_videos',
+            group_by($videos, 'artist_slug'));
 }
 
 function reduce_to_videos(array $a): array
