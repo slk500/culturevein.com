@@ -4,7 +4,8 @@
       "src/Normalizer/VideoListNormalizer.php",
       "src/Functional/Functions.php",
       "src/Normalizer/TagListWithChildren.php",
-      "src/Normalizer/VideoTagNormalizer.php"
+      "src/Normalizer/VideoTagNormalizer.php",
+      "src/Normalizer/TagShowNormalizer.php"
     ],
     "psr-4": {
       "": "src/"

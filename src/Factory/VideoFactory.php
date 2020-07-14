@@ -8,7 +8,6 @@ namespace Factory;
 use Cocur\Slugify\Slugify;
 use DTO\VideoCreate;
 use Repository\ArtistRepository;
-use Repository\Base\Database;
 use Repository\VideoRepository;
 
 class VideoFactory

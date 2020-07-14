@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Service;
+namespace Tests;
 
 use PHPUnit\Framework\TestCase;
 use Repository\Base\Database;
-use Tests\DatabaseHelper;
 
 class DatabaseHelperTest extends TestCase
 {
