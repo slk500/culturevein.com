@@ -40,7 +40,6 @@ final class ArtistRepository
             video.name as video_name,
             video.release_date,
             video.video_youtube_id,
-            video.duration,
             artist.name as artist_name,
             t.name AS tag_name,
             t.tag_slug_id AS tag_slug
@@ -57,6 +56,30 @@ final class ArtistRepository
         $result = $stmt->get_result();
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
+
+    public function find_tags(string $artist_slug_id): array
+    {
+        $stmt = $this->database->mysqli->prepare("
+         SELECT
+            t.name AS name,
+            t.tag_slug_id AS slug
+        FROM video
+                 LEFT JOIN artist_video USING (video_youtube_id)
+                 LEFT JOIN video_tag vt on video.video_youtube_id = vt.video_youtube_id
+                 LEFT JOIN tag t on vt.tag_slug_id = t.tag_slug_id
+        WHERE artist_slug_id = ? 
+        AND t.name is not null
+        GROUP BY t.name, t.tag_slug_id
+        ORDER BY t.name
+        ");
+
+        $stmt->bind_param("s", $artist_slug_id);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
+
 
     public function find_all(): array
     {

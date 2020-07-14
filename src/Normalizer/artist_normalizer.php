@@ -2,8 +2,8 @@
 
 function artist_list_normalize(array $videos): array
 {
-        return array_map('reduce_to_videos',
-            group_by($videos, 'artist_slug'));
+    return array_map('reduce_to_videos',
+        group_by($videos, 'artist_slug'));
 }
 
 function reduce_to_videos(array $a): array
@@ -20,50 +20,33 @@ function reduce_to_videos(array $a): array
     }, []);
 }
 
+function reduce_to_videos_with_tags(array $a): array
+{
+    return array_reduce($a, function (array $accumulator, array $element) {
+        $accumulator['youtube_id'] = $element['video_youtube_id'];
+        $accumulator['name'] = $element['video_name'];
+
+        if($element['tag_slug'] != null) {
+            $accumulator['tags'][] =
+                [
+                    'slug' => $element['tag_slug'],
+                    'name' => $element['tag_name']
+                ];
+        }else{
+            $accumulator['tags'] = [];
+        }
+
+        return $accumulator;
+    }, []);
+}
+
 function artist_show_normalize(array $videos): array
 {
     $result = [];
-    $tags_in_videos = [];
-    $tags = [];
+    $result['name'] = reset($videos)['artist_name'];
 
-    foreach ($videos as $video) {
-        $youtube_id = $video['video_youtube_id'];
-
-        $result['name'] = $video['artist_name'];
-        $result['videos'][$youtube_id] = [
-            'youtube_id' => $youtube_id,
-            'name' => $video['video_name'],
-            'duration' => $video['duration']
-        ];
-
-        $slug = $video['tag_slug'];
-        $name = $video['tag_name'];
-        ($slug && $name) ?
-            $tags_in_videos[$youtube_id][] = [
-                'slug' => $slug,
-                'name' => $name,
-            ] : $tags_in_videos[$youtube_id][] = [];
-
-
-        $tags[$slug] = $name;
-    }
-
-    foreach ($tags as $slug => $name) {
-        $result['tags'][] = [
-            'slug' => $slug,
-            'name' => $name,
-        ];
-    }
-
-    foreach ($tags_in_videos as $youtube_id => $tag) {
-        $result['videos'][$youtube_id]['tags'] = $tag;
-    }
-
-    $result['videos'] = array_values($result['videos']);
-
-    usort($result['tags'], function ($a, $b) {
-        return $a['slug'] <=> $b['slug'];
-    });
+    $result['videos'] = array_map('reduce_to_videos_with_tags',
+        group_by($videos, 'video_youtube_id'));
 
     return $result;
 }

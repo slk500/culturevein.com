@@ -3,6 +3,7 @@
 use DTO\Database\DatabaseTagFind;
 use DTO\Database\DatabaseTagVideo;
 
+//todo refactor!
 function tag_show_normalizer(array $tag_videos, DatabaseTagFind $tag): array
 {
     $sortedTagVideos = sort_by_video_slug($tag_videos, $tag);
