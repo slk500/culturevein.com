@@ -43,10 +43,19 @@ function reduce_to_videos_with_tags(array $a): array
 function artist_show_normalize(array $videos): array
 {
     $result = [];
-    $result['name'] = reset($videos)['artist_name'];
 
+    $result['name'] = reset($videos)['artist_name'];
     $result['videos'] = array_map('reduce_to_videos_with_tags',
         group_by($videos, 'video_youtube_id'));
+    $result['tags'] = artist_get_tags($result['videos']);
 
     return $result;
+}
+
+function artist_get_tags(array $videos): array
+{
+    $tags = array_map(fn(array $array) => $array['tags'], $videos);
+    $merged = array_merge(...$tags);
+    $unique = array_unique($merged, SORT_REGULAR);
+    return array_values($unique);
 }

@@ -18,10 +18,7 @@ final class ArtistController
 
     public function show(string $artist_slug_id)
     {
-        $artist = artist_show_normalize($this->artist_repository->find($artist_slug_id));
-        $artist['tags'] = $this->artist_repository->find_tags($artist_slug_id);
-
-        return $artist;
+        return artist_show_normalize($this->artist_repository->find($artist_slug_id));
     }
 
     public function list()

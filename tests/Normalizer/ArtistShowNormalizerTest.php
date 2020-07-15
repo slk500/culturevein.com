@@ -68,9 +68,77 @@ class ArtistShowNormalizerTest extends TestCase
                                     ],
                                 ],
                         ]
+                    ],
+                'tags' => [
+                    [
+                        'slug' => 'ancient-egypt',
+                        'name' => 'Ancient Egypt',
+                    ],
+                    [
+                        'slug' => 'basketball',
+                        'name' => 'basketball',
+                    ],
+                    [
+                        'slug' => 'table-tennis-ping-pong',
+                        'name' => 'table tennis (ping pong)',
                     ]
+                ]
             ];
 
         $this->assertSame($expected, $output);
+    }
+
+    /**
+     * @test
+     */
+    public function get_tags()
+    {
+        $input =  [
+            [
+                'tags' =>
+                    [
+                        [
+                            'slug' => 'ancient-egypt',
+                            'name' => 'Ancient Egypt',
+                        ],
+                    ],
+            ],
+            [
+                'tags' =>
+                    [
+                        [
+                            'slug' => 'basketball',
+                            'name' => 'basketball',
+                        ],
+                        [
+                            'slug' => 'ancient-egypt',
+                            'name' => 'Ancient Egypt',
+                        ],
+                        [
+                            'slug' => 'table-tennis-ping-pong',
+                            'name' => 'table tennis (ping pong)',
+                        ],
+                    ],
+            ]
+        ];
+
+        $expected = [
+            [
+                'slug' => 'ancient-egypt',
+                'name' => 'Ancient Egypt',
+            ],
+            [
+                'slug' => 'basketball',
+                'name' => 'basketball',
+            ],
+            [
+                'slug' => 'table-tennis-ping-pong',
+                'name' => 'table tennis (ping pong)',
+            ],
+        ];
+
+       $output = artist_get_tags($input);
+
+       $this->assertSame($expected, $output);
     }
 }
