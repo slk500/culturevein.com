@@ -34,8 +34,7 @@ final class UserRepository
 
     public function find_statistics()
     {
-        $query =
-            "SELECT user_id, username, vt.video_tag_count, vtt.video_tag_time_count, v.video_count
+        $query = "SELECT user_id, username, vt.video_tag_count, vtt.video_tag_time_count, v.video_count
 FROM user
 LEFT JOIN
   (SELECT user_id, COUNT(user_id) AS video_tag_count

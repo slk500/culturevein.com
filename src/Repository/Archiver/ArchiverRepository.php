@@ -51,6 +51,4 @@ final class ArchiverRepository
             throw new \Exception($stmt->error);
         }
     }
-
-
 }
