@@ -91,10 +91,10 @@ class VideoTagRepositoryTest extends TestCase
 
         $video_tag = end($video_tag);
 
-        $this->assertSame('video game', $video_tag->tag_name);
-        $this->assertSame(0, $video_tag->start);
-        $this->assertSame(10, $video_tag->stop);
-        $this->assertSame($video_create->youtube_id, $video_tag->video_youtube_id);
+        $this->assertSame('video game', $video_tag['tag_name']);
+        $this->assertSame(0, $video_tag['start']);
+        $this->assertSame(10, $video_tag['stop']);
+        $this->assertSame($video_create->youtube_id, $video_tag['video_youtube_id']);
     }
 
     /**
@@ -145,7 +145,7 @@ class VideoTagRepositoryTest extends TestCase
 
         $video_tag = end($video_tag);
 
-        $this->assertSame(0, $video_tag->is_complete);
+        $this->assertSame(0, $video_tag['is_complete']);
 
         $this->video_tag_repository->set_is_complete($video_create->youtube_id, $video_tag_create->tag_slug_id, true);
 
@@ -153,6 +153,6 @@ class VideoTagRepositoryTest extends TestCase
 
         $video_tag = end($video_tag);
 
-        $this->assertSame(1, $video_tag->is_complete);
+        $this->assertSame(1, $video_tag['is_complete']);
     }
 }

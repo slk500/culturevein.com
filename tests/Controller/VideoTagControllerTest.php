@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Controller\VideoTagController;
 use Factory\VideoFactory;
 use DTO\VideoCreate;
 use Model\Tag;
@@ -13,11 +14,6 @@ use Tests\DatabaseHelper;
 
 class VideoTagControllerTest extends TestCase
 {
-    /**
-     * @var \GuzzleHttp\Client
-     */
-    private $client;
-
     /**
      * @var VideoTagRepository
      */
@@ -42,10 +38,6 @@ class VideoTagControllerTest extends TestCase
         $this->video_tag_repository = $container->get(VideoTagRepository::class);
         $this->tag_repository = $container->get(TagRepository::class);
         $this->video_factory = $container->get(VideoFactory::class);
-
-        $this->client = new GuzzleHttp\Client([
-            'base_uri' => 'http://localhost:8000',
-        ]);
     }
 
     /**
@@ -70,14 +62,9 @@ class VideoTagControllerTest extends TestCase
         );
         $this->video_factory->create($video_create);
 
-        $response = $this->client->post(
-            'api/videos/' . $youtube_id . '/tags',
-            [
-                'json' => [
-                    'tag_name' => $tag->name
-                ]
-            ]
-        );
+        $data = new stdClass();
+        $data->tag_name = $tag->name;
+        (new VideoTagController())->create($data, $youtube_id);
 
         $result = $this->video_tag_repository
             ->find_all_for_video($video_create->youtube_id);
@@ -87,7 +74,6 @@ class VideoTagControllerTest extends TestCase
         $video_tag = (end($result));
 
         $this->assertSame('video game', $tag->name);
-        $this->assertSame($video_create->youtube_id, $video_tag->video_youtube_id);
-
+        $this->assertSame($video_create->youtube_id, $video_tag['video_youtube_id']);
     }
 }

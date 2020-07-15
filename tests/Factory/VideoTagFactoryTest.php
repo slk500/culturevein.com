@@ -59,7 +59,7 @@ class VideoTagFactoryTest extends TestCase
 
         $video_tag = (end($result));
 
-        $this->assertSame('video game', $video_tag->tag_name);
-        $this->assertSame($video_create->youtube_id, $video_tag->video_youtube_id);
+        $this->assertSame('video game', $video_tag['tag_name']);
+        $this->assertSame($video_create->youtube_id, $video_tag['video_youtube_id']);
     }
 }

@@ -81,10 +81,10 @@ class VideoTagTimeControllerTest extends TestCase
 
         $video_tag_raw = (end($result));
 
-        $this->assertSame('video game', $video_tag_raw->tag_name);
-        $this->assertSame($video_create->youtube_id, $video_tag_raw->video_youtube_id);
-        $this->assertSame(0, $video_tag_raw->start);
-        $this->assertSame(10, $video_tag_raw->stop);
+        $this->assertSame('video game', $video_tag_raw['tag_name']);
+        $this->assertSame($video_create->youtube_id, $video_tag_raw['video_youtube_id']);
+        $this->assertSame(0, $video_tag_raw['start']);
+        $this->assertSame(10, $video_tag_raw['stop']);
     }
 
     /**

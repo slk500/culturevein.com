@@ -73,9 +73,9 @@ class VideoTagTimeRepositoryTest extends TestCase
 
         $video_tag = end($video_tag);
 
-        $this->assertSame('video game', $video_tag->tag_name);
-        $this->assertSame(0, $video_tag->start);
-        $this->assertSame(10, $video_tag->stop);
-        $this->assertSame($video_create->youtube_id, $video_tag->video_youtube_id);
+        $this->assertSame('video game', $video_tag['tag_name']);
+        $this->assertSame(0, $video_tag['start']);
+        $this->assertSame(10, $video_tag['stop']);
+        $this->assertSame($video_create->youtube_id, $video_tag['video_youtube_id']);
     }
 }
