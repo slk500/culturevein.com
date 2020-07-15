@@ -2,34 +2,20 @@
 
 declare(strict_types=1);
 
-
 namespace Repository;
 
-
 use Model\User;
-use Repository\Base\Database;
+use Repository\Base\Repository;
 
-final class UserRepository
+final class UserRepository extends Repository
 {
-    /**
-     * @var Database
-     */
-    private $database;
-
-    public function __construct(Database $database)
-    {
-        $this->database = $database;
-    }
-
     public function save(User $user): ?int
     {
         $stmt = $this->database->mysqli->prepare("INSERT INTO user (email, password, username) VALUES (?, ?, ?)");
         $stmt->bind_param('sss', $user->email, $user->password, $user->username);
         $stmt->execute();
 
-        $user_id = $this->database->mysqli->insert_id;
-
-        return $user_id;
+        return $this->database->mysqli->insert_id;
     }
 
     public function find_statistics()
@@ -46,9 +32,7 @@ LEFT JOIN
      (SELECT user_id, COUNT(user_id) AS video_count
       FROM video GROUP BY user_id) v USING (user_id)";
 
-        $data = $this->database->fetch($query);
-
-        return $data;
+        return $this->database->fetch($query);
     }
 
     public function find(string $email): ?User

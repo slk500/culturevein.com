@@ -7,17 +7,10 @@ namespace Repository;
 use DTO\Database\DatabaseTagFind;
 use DTO\Database\DatabaseTagVideo;
 use Model\Tag;
-use Repository\Base\Database;
+use Repository\Base\Repository;
 
-final class TagRepository
+final class TagRepository extends Repository
 {
-    private Database $database;
-
-    public function __construct(Database $database)
-    {
-        $this->database = $database;
-    }
-
     public function find_descendants_simple(string $slug)
     {
         $stmt = $this->database->mysqli->prepare(
@@ -150,7 +143,6 @@ LIMIT 10";
         }
 
         $stmt->execute();
-
         $result = $stmt->get_result();
 
         $objects = [];

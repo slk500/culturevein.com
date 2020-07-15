@@ -4,28 +4,13 @@ declare(strict_types=1);
 
 namespace Repository\History;
 
-use Repository\Base\Database;
+use Repository\Base\Repository;
 
-final class VideoTagTimeHistoryRepository
+final class VideoTagTimeHistoryRepository extends Repository
 {
-    /**
-     * @var Database
-     */
-    private $database;
-
-    public function __construct(Database $database)
-    {
-        $this->database = $database;
-    }
-
     public function find_all(): ?array
     {
-        $query = "SELECT *
-                  FROM video_tag_time_history
-         ";
-
-        $data = $this->database->fetch($query);
-
-        return $data;
+        $query = "SELECT * FROM video_tag_time_history";
+        return $this->database->fetch($query);
     }
 }

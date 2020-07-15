@@ -5,20 +5,10 @@ declare(strict_types=1);
 namespace Repository;
 
 use DTO\VideoTagCreate;
-use Repository\Base\Database;
+use Repository\Base\Repository;
 
-final class VideoTagRepository
+final class VideoTagRepository extends Repository
 {
-    /**
-     * @var Database
-     */
-    private $database;
-
-    public function __construct(Database $database)
-    {
-        $this->database = $database;
-    }
-
     public function save(VideoTagCreate $video_tag_create): ?int
     {
         $stmt = $this->database->mysqli->prepare(
@@ -89,8 +79,7 @@ final class VideoTagRepository
 
     public function find_all(): array
     {
-        $query =
-            "SELECT
+        $query = "SELECT
               vt.video_youtube_id,
               v.name   AS video_name,
               a.name AS artist_name,

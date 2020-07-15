@@ -4,17 +4,10 @@ declare(strict_types=1);
 
 namespace Repository;
 
-use Repository\Base\Database;
+use Repository\Base\Repository;
 
-final class ArtistRepository
+final class ArtistRepository extends Repository
 {
-    private Database $database;
-
-    public function __construct(Database $database)
-    {
-        $this->database = $database;
-    }
-
     public function save(string $artist_name, string $artist_slug_id)
     {
         $stmt = $this->database->mysqli->prepare("INSERT INTO artist (name, artist_slug_id) VALUES (?,?)");

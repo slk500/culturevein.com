@@ -4,17 +4,10 @@ declare(strict_types=1);
 
 namespace Repository;
 
-use Repository\Base\Database;
+use Repository\Base\Repository;
 
-final class SubscribeRepository
+final class SubscribeRepository extends Repository
 {
-    private Database $database;
-
-    public function __construct(Database $database)
-    {
-        $this->database = $database;
-    }
-
     public function is_tag_subscribed_by_user(string $tag_slug_id, int $user_id): bool
     {
         $stmt = $this->database->mysqli->prepare(

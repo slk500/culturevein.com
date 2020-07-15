@@ -6,17 +6,10 @@ declare(strict_types=1);
 namespace Repository\Archiver;
 
 
-use Repository\Base\Database;
+use Repository\Base\Repository;
 
-final class ArchiverRepository
+final class ArchiverRepository extends Repository
 {
-    private Database $database;
-
-    public function __construct(Database $database)
-    {
-        $this->database = $database;
-    }
-
     public function archive_video_tag(string $video_youtube_id, string $tag_slug_id, ?int $user_id = null): void
     {
         $stmt = $this->database->mysqli->prepare("

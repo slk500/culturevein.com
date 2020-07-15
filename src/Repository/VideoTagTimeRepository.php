@@ -4,23 +4,11 @@ declare(strict_types=1);
 
 namespace Repository;
 
-use DTO\VideoTagCreate;
 use DTO\VideoTagTimeCreate;
-use Model\VideoTag;
-use Repository\Base\Database;
+use Repository\Base\Repository;
 
-final class VideoTagTimeRepository
+final class VideoTagTimeRepository extends Repository
 {
-    /**
-     * @var Database
-     */
-    private $database;
-
-    public function __construct(Database $database)
-    {
-        $this->database = $database;
-    }
-
     public function save(VideoTagTimeCreate $video_tag_time_create): ?int
     {
         $stmt = $this->database->mysqli->prepare("INSERT INTO video_tag_time (video_tag_id, start, stop, user_id) VALUES (?, ?, ?, ?)");
