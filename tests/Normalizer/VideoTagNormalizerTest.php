@@ -86,7 +86,7 @@ class VideoTagNormalizerTest extends TestCase
                 ]
         ];
 
-        $output = join_in_video_tag_time($input);
+        $output = reduce_to_tags_with_tag_time($input);
 
         $expectedOutput =
             [
