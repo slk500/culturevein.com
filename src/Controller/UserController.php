@@ -21,16 +21,10 @@ class UserController extends BaseController
 
     public function create(\stdClass $data)
     {
-        if(!property_exists($data, 'username')) {
-            return $this->response_bad_request('You have to provide username!');
-        }
-
-        if(!property_exists($data, 'email')) {
-            return $this->response_bad_request('You have to provide email!');
-        }
-
-        if(!property_exists($data, 'password')) {
-            return $this->response_bad_request('You have to provide password!');
+        foreach (['username', 'email', 'password'] as $field){
+            if(!property_exists($data, $field)) {
+                return $this->response_bad_request("You have to provide $field");
+            }
         }
 
         if(!filter_var($data->email, FILTER_VALIDATE_EMAIL)){
