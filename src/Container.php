@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 final class Container
 {
-    private array $service_store = [];
+    private array $service_store;
 
-    private array $config = [];
+    private array $config;
 
     public function __construct()
     {
