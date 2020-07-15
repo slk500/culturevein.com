@@ -33,7 +33,7 @@ class VideoTagNormalizerTest extends TestCase
         ];
 
         $expectedOutput = [
-            1 => [
+            [
                 [
                     'video_tag_id' => 1,
                     'tag_name' => 'video game',
@@ -55,7 +55,7 @@ class VideoTagNormalizerTest extends TestCase
             ]
         ];
 
-        $output = group_by($input,'video_tag_id');
+        $output = group_by($input, 'video_tag_id');
 
         $this->assertSame($expectedOutput, $output);
     }
@@ -66,7 +66,6 @@ class VideoTagNormalizerTest extends TestCase
     public function join_in_video_tag_time()
     {
         $input = [
-            1 => [
                 [
                     'video_tag_id' => 1,
                     'tag_name' => 'video game',
@@ -85,7 +84,6 @@ class VideoTagNormalizerTest extends TestCase
                     'start' => 3,
                     'stop' => 4,
                 ]
-            ]
         ];
 
         $output = join_in_video_tag_time($input);

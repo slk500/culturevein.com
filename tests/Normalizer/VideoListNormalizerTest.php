@@ -20,12 +20,10 @@ class VideoListNormalizerTest extends TestCase
         $output = group_by($input, 'artist_slug');
 
         $expected = [
-            'madonna' =>
                 [
                     ['artist_slug' => 'madonna'],
                     ['artist_slug' => 'madonna'],
                 ],
-            'bob-marley' =>
                 [
                     ['artist_slug' => 'bob-marley']
                 ]

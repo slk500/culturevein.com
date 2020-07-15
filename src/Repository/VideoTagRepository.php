@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Repository;
 
 use DTO\VideoTagCreate;
-use DTO\VideoTagRaw;
-use Model\VideoTag;
 use Repository\Base\Database;
 
 final class VideoTagRepository
@@ -61,9 +59,6 @@ final class VideoTagRepository
         }
     }
 
-    /**
-     * @return VideoTagRaw[]
-     */
     public function find_all_for_video(string $youtubeId): array
     {
         $stmt = $this->database->mysqli->prepare("

@@ -6,7 +6,6 @@ namespace Tests\Deleter;
 
 use Container;
 use Deleter\VideoTagTimeDeleter;
-use DTO\VideoTagRaw;
 use DTO\VideoTagTimeCreate;
 use Factory\VideoFactory;
 use Factory\VideoTagFactory;
@@ -22,7 +21,6 @@ use Repository\VideoTagTimeRepository;
 use Tests\DatabaseHelper;
 use Tests\Builder\Video\VideoCreateBuilder;
 use Tests\Builder\VideoTag\VideoTagCreateBuilder;
-use Tests\Builder\VideoTagTime\VideoTagTimeCreateBuilder;
 
 class VideoTagTimeDeleterTest extends TestCase
 {
@@ -111,18 +109,16 @@ class VideoTagTimeDeleterTest extends TestCase
         $video_tags_raw = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
         $video_tag = end($video_tags_raw);
 
-        $this->assertInstanceOf(VideoTagRaw::class, $video_tag);
-        $this->assertSame($video_tag_time_create->start,$video_tag->start);
-        $this->assertSame($video_tag_time_create->stop,$video_tag->stop);
+        $this->assertSame($video_tag_time_create->start, $video_tag['start']);
+        $this->assertSame($video_tag_time_create->stop, $video_tag['stop']);
 
         $this->video_tag_time_deleter->delete(1);
 
         $video_tags_raw = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
         $video_tag = end($video_tags_raw);
 
-        $this->assertInstanceOf(VideoTagRaw::class, $video_tag);
-        $this->assertNull($video_tag->start);
-        $this->assertNull($video_tag->stop);
+        $this->assertNull($video_tag['start']);
+        $this->assertNull($video_tag['stop']);
 
         $result = $this->video_tag_time_history_repository->find_all();
 
