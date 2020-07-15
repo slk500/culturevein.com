@@ -40,6 +40,7 @@ final class Router
     {
         if ($this->match($url)) {
             $controller = new $this->controller();
+            $controller->authentication();
             $actionName = $this->action;
 
             if($this->method == 'POST'){

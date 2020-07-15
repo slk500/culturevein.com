@@ -8,19 +8,15 @@ use Container;
 use Controller\Base\BaseController;
 use Model\User;
 use Repository\UserRepository;
-use Service\TokenService;
 
 class UserController extends BaseController
 {
     private UserRepository $user_repository;
 
-    private TokenService $token_service;
-
     public function __construct()
     {
         $container = new Container();
         $this->user_repository = $container->get(UserRepository::class);
-        $this->token_service = new TokenService();
     }
 
     public function create(\stdClass $data)
@@ -54,16 +50,13 @@ class UserController extends BaseController
         );
 
         $user_id = $this->user_repository->save($user);
-
-        $token = $this->token_service->create_token($user_id);
+        $token = $this->create_token($user_id);
 
         return ['token' => $token];
     }
 
-    public function login()
+    public function login(\stdClass $data)
     {
-        $data = $this->get_body();
-
         if(!property_exists($data, 'email') ||
             !property_exists($data, 'password')){
             return $this->response_unauthorized('Wrong credentials');
@@ -79,7 +72,7 @@ class UserController extends BaseController
             return $this->response_unauthorized('Password Mismatch');
         }
 
-        $token = $this->token_service->create_token($user->user_id);
+        $token = $this->create_token($user->user_id);
 
         return ['token' => $token];
     }

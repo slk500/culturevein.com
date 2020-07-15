@@ -7,12 +7,9 @@ namespace Controller;
 use Container;
 use Controller\Base\BaseController;
 use Repository\TagRepository;
-use Service\TokenService;
 
 class VideoTagDescendantController extends BaseController
 {
-    private TokenService $token_service;
-
     private Container $container;
 
     private TagRepository $tag_repository;
@@ -20,7 +17,6 @@ class VideoTagDescendantController extends BaseController
     public function __construct()
     {
         $this->container = new Container();
-        $this->token_service = new TokenService();
         $this->tag_repository = $this->container->get(TagRepository::class);
     }
 

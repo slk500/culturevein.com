@@ -24,11 +24,11 @@ class TagController extends BaseController
 
     public function list()
     {
-        $tags = $this->tag_repository->find_all();
-
-        return normalize_tag_list_with_children($tags);
+        return normalize_tag_list_with_children(
+            $this->tag_repository->find_all());
     }
 
+    //use in select2
     public function list_without_relation()
     {
         return $this->tag_repository->find_all();

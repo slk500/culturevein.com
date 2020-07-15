@@ -79,7 +79,6 @@ export class VideoShowComponent implements OnInit {
         this._tagService.getTagsSimple()
             .subscribe(data => {
                 this.tags = this.convertToFormat(data);
-                    //this.tags = data;
                 },
                 error => this.errorMsg = error);
 

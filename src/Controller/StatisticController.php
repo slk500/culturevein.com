@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Controller;
 
 use Container;
+use Controller\Base\BaseController;
 use Repository\UserRepository;
 
-final class StatisticController
+final class StatisticController extends BaseController
 {
     private UserRepository $user_repository;
 

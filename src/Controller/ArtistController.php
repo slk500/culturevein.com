@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Controller;
 
 use Container;
+use Controller\Base\BaseController;
 use Repository\ArtistRepository;
 
-final class ArtistController
+final class ArtistController extends BaseController
 {
     private ArtistRepository $artist_repository;
 
