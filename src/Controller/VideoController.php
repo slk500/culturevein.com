@@ -26,10 +26,8 @@ class VideoController extends BaseController
         $this->video_repository = $this->container->get(VideoRepository::class);
     }
 
-    public function create()
+    public function create(\stdClass $data)
     {
-        $data = $this->get_body();
-
         $token = $this->get_bearer_token();
         $user_id = $token ? $this->token_service->decode_user_id($token) : null;
 

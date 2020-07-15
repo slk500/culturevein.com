@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Controller;
 
-
 use Container;
 use Controller\Base\BaseController;
 use Deleter\VideoTagTimeDeleter;
@@ -26,15 +25,13 @@ class VideoTagTimeController extends BaseController
         $this->container = new Container();
     }
 
-    public function create(string $youtube_id, string $tag_slug_id)
+    public function create(\stdClass $body, string $youtube_id, string $tag_slug_id)
     {
         $video = $this->container->get(VideoRepository::class)->find($youtube_id);
 
         if(!$video){
             return $this->response_not_found('Video: ' . $youtube_id . ' not found');
         }
-
-        $body = $this->get_body();
 
         $token = $this->get_bearer_token();
         $user_id = $this->token_service->decode_user_id($token);

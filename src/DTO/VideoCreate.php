@@ -16,7 +16,7 @@ class VideoCreate
 
     public $user_id = null;
 
-    public function __construct(string $artist_name, string $video_name, string $youtube_id, int $duration, ?int $user_id = null)
+    public function __construct(string $artist_name, string $video_name, string $youtube_id, ?int $duration = 0, ?int $user_id = null)
     {
         $this->artist_name = $artist_name;
         $this->video_name = $video_name;

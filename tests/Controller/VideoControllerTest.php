@@ -40,25 +40,19 @@ class VideoControllerTest extends TestCase
      */
     public function create()
     {
-        $json = [
-            'artist' => 'Burak Yeter',
-            'name' => 'Tuesday ft. Danelle Sandoval',
-            'youtube_id' => 'Y1_VsyLAGuk'
-        ];
+        $data = new stdClass();
+        $data->artist = 'Burak Yeter';
+        $data->name = 'Tuesday ft. Danelle Sandoval';
+        $data->youtube_id = 'Y1_VsyLAGuk';
+        $data->duration = 100;
 
-        $response = $this->client->post(
-            'api/videos',
-            [
-                'json' => $json
-            ]
-        );
+        $controller = new \Controller\VideoController();
+        $video_create = $controller->create($data);
 
-        $this->assertEquals(201,$response->getStatusCode());
+        $video = $this->video_repository->find($video_create->youtube_id);
 
-        $video = $this->video_repository->find($json['youtube_id']);
-
-        $this->assertSame($json['name'], $video->video_name);
-        $this->assertSame($json['youtube_id'], $video->video_youtube_id);
+        $this->assertSame($video_create->video_name, $video->video_name);
+        $this->assertSame($video_create->youtube_id, $video->video_youtube_id);
     }
 
     /**

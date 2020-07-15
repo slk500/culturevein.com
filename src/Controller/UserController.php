@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Controller;
 
-
 use Container;
 use Controller\Base\BaseController;
 use Model\User;
@@ -24,10 +23,8 @@ class UserController extends BaseController
         $this->token_service = new TokenService();
     }
 
-    public function create()
+    public function create(\stdClass $data)
     {
-        $data = $this->get_body();
-
         if(!property_exists($data, 'username')) {
             return $this->response_bad_request('You have to provide username!');
         }

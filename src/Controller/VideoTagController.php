@@ -25,16 +25,14 @@ class VideoTagController extends BaseController
     }
 
     //todo what if tag dosent exist?
-    public function create(string $youtube_id)
+    public function create(\stdClass $data, string $youtube_id)
     {
-        $body = $this->get_body();
-
         $token = $this->get_bearer_token();
         $user_id = $this->token_service->decode_user_id($token);
 
         $video_tag_create = new VideoTagCreate(
             $youtube_id,
-            $body->tag_name,
+            $data->tag_name,
             $user_id
         );
 

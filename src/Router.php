@@ -42,13 +42,20 @@ final class Router
             $controller = new $this->controller();
             $actionName = $this->action;
 
-            //todo shitfix
-            $param1 = $this->param[1] ?? null;
-            $param2 = $this->param[2] ?? null;
-            $param3 = $this->param[3] ?? null;
-
+            if($this->method == 'POST'){
+                $data = $this->get_body();
+                //todo shitfix
+                $param1 = $this->param[1] ?? null;
+                $param2 = $this->param[2] ?? null;
+                $result = $controller->$actionName($data, $param1, $param2);
+            } else {
+                //todo shitfix
+                $param1 = $this->param[1] ?? null;
+                $param2 = $this->param[2] ?? null;
+                $param3 = $this->param[3] ?? null;
+                $result = $controller->$actionName($param1, $param2, (int)$param3);
+            }
             $this->set_status_code($this->method);
-            $result = $controller->$actionName($param1, $param2, (int)$param3);
 
             echo json_encode(['data' => $result]);
         }
@@ -65,5 +72,10 @@ final class Router
                 break;
         }
     }
-}
 
+    public function get_body(): ?\stdClass
+    {
+        $body = file_get_contents('php://input');
+        return json_decode($body);
+    }
+}
