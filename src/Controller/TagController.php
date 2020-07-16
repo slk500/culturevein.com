@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Controller;
 
+use ApiProblem\ApiProblem;
 use Container;
 use Controller\Base\BaseController;
 use Repository\SubscribeRepository;
@@ -34,12 +35,15 @@ class TagController extends BaseController
         return $this->tag_repository->find_all();
     }
 
-    public function show(string $slug)
+    /**
+     * @throws ApiProblem
+     */
+    public function show(string $slug): array
     {
         $tag = $this->tag_repository->find($slug);
 
         if (!$tag) {
-            return $this->response_not_found('Tag: ' . $slug . ' not found');
+            throw new ApiProblem(ApiProblem::NOT_FOUND);
         }
 
         $tag_videos = $this->tag_repository->find_videos($tag->slug_id);

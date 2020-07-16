@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Controller;
 
+use ApiProblem\ApiProblem;
 use Container;
 use Controller\Base\BaseController;
 use Model\User;
@@ -19,21 +20,24 @@ class UserController extends BaseController
         $this->user_repository = $container->get(UserRepository::class);
     }
 
+    /**
+     * @throws ApiProblem
+     */
     public function create(\stdClass $data)
     {
-        foreach (['username', 'email', 'password'] as $field){
-            if(!property_exists($data, $field)) {
-                return $this->response_bad_request("You have to provide $field");
+        foreach (['username', 'email', 'password'] as $field) {
+            if (!property_exists($data, $field)) {
+                throw new ApiProblem(ApiProblem::ALL_FIELDS_HAVE_TO_BE_FILLED);
             }
         }
 
-        if(!filter_var($data->email, FILTER_VALIDATE_EMAIL)){
-            return $this->response_bad_request('Not a valid email!');
-        };
+        if (!filter_var($data->email, FILTER_VALIDATE_EMAIL)) {
+            throw new ApiProblem(ApiProblem::EMAIL_NOT_VALID);
+        }
 
-        if($this->user_repository->find($data->email)){
-            return $this->response_bad_request('User with provided email address already exist!');
-        };
+        if ($this->user_repository->find($data->email)) {
+            throw new ApiProblem(ApiProblem::USER_ALREADY_EXIST);
+        }
 
         $password_encrypted = password_hash($data->password, PASSWORD_BCRYPT);
 
@@ -49,21 +53,20 @@ class UserController extends BaseController
         return ['token' => $token];
     }
 
-    public function login(\stdClass $data)
+    /**
+     * @throws ApiProblem
+     */
+    public function login(\stdClass $data): array
     {
-        if(!property_exists($data, 'email') ||
-            !property_exists($data, 'password')){
-            return $this->response_unauthorized('Wrong credentials');
-        }
-
-        $user = $this->user_repository->find($data->email);
-
-        if(!$user) {
-            return $this->response_unauthorized('Wrong credentials');
+        if (!property_exists($data, 'email') ||
+            !property_exists($data, 'password') ||
+            !$user = $this->user_repository->find($data->email)
+        ) {
+            throw new ApiProblem(ApiProblem::WRONG_CREDENTIALS);
         }
 
         if (!password_verify($data->password, $user->password)) {
-            return $this->response_unauthorized('Password mismatch');
+            throw new ApiProblem(ApiProblem::PASSWORD_MISMATCH);
         }
 
         $token = $this->create_token($user->user_id);

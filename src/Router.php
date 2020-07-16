@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+//todo refactor! split responsibility
+use ApiProblem\ApiProblem;
+
 final class Router
 {
     private array $routes;
@@ -43,29 +46,33 @@ final class Router
             $controller->authentication();
             $actionName = $this->action;
 
-            if($this->method == 'POST'){
-                $data = $this->get_body();
-                //todo shitfix
-                $param1 = $this->param[1] ?? null;
-                $param2 = $this->param[2] ?? null;
-                $result = $controller->$actionName($data, $param1, $param2);
-            } else {
-                //todo shitfix
-                $param1 = $this->param[1] ?? null;
-                $param2 = $this->param[2] ?? null;
-                $param3 = $this->param[3] ?? null;
-                $result = $controller->$actionName($param1, $param2, (int)$param3);
-            }
-            $this->set_status_code($this->method);
+            try {
+                if ($this->method == 'POST') {
+                    $data = $this->get_body();
+                    //todo shitfix
+                    $param1 = $this->param[1] ?? null;
+                    $param2 = $this->param[2] ?? null;
+                    $result = $controller->$actionName($data, $param1, $param2);
+                } else {
+                    //todo shitfix
+                    $param1 = $this->param[1] ?? null;
+                    $param2 = $this->param[2] ?? null;
+                    $param3 = $this->param[3] ?? null;
+                    $result = $controller->$actionName($param1, $param2, (int)$param3);
+                }
 
-            echo json_encode(['data' => $result]);
-        }
+                $this->set_status_code($this->method);
+                echo json_encode(['data' => $result]);
+
+            } catch (ApiProblem $apiProblem){
+                    http_response_code($apiProblem->getCode());
+                    echo json_encode($apiProblem->getMessage());
+                }
+            }
     }
 
     public function set_status_code(string $method): void
     {
-        if(http_response_code()) return; //if status code is already set break, ex: response_bad_request
-
         switch ($method) {
             case 'GET':
                 http_response_code(200);

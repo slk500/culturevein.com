@@ -4,39 +4,13 @@ declare(strict_types=1);
 
 namespace Controller\Base;
 
-//todo remove
+
 use Service\TokenService;
 
+//todo remove
 abstract class BaseController
 {
     public ?int $user_id = null;
-
-    protected function response_not_found($data = null): ?array
-    {
-        http_response_code(404);
-        if ($data) {
-            return ['errors' => $data];
-        }
-        return null;
-    }
-
-    protected function response_bad_request($data = null): ?array
-    {
-        http_response_code(400);
-        if ($data) {
-            return ['errors' => $data];
-        }
-        return null;
-    }
-
-    protected function response_unauthorized($data = null): ?array
-    {
-        http_response_code(401);
-        if ($data) {
-            return ['errors' => $data];
-        }
-        return null;
-    }
 
     function get_bearer_token(): ?string
     {
