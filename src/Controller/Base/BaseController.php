@@ -11,31 +11,31 @@ abstract class BaseController
 {
     public ?int $user_id = null;
 
-    protected function response_not_found($data = null): ?string
+    protected function response_not_found($data = null): ?array
     {
         http_response_code(404);
         if ($data) {
-            return json_encode(['errors' => $data]);
+            return ['errors' => $data];
         }
-        die();
+        return null;
     }
 
-    protected function response_bad_request($data = null): string
+    protected function response_bad_request($data = null): ?array
     {
         http_response_code(400);
         if ($data) {
-            return json_encode($data);
+            return ['errors' => $data];
         }
-        die();
+        return null;
     }
 
-    protected function response_unauthorized($data = null): string
+    protected function response_unauthorized($data = null): ?array
     {
         http_response_code(401);
         if ($data) {
-            return json_encode($data);
+            return ['errors' => $data];
         }
-        die();
+        return null;
     }
 
     function get_bearer_token(): ?string

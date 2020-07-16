@@ -63,7 +63,7 @@ class UserController extends BaseController
         }
 
         if (!password_verify($data->password, $user->password)) {
-            return $this->response_unauthorized('Password Mismatch');
+            return $this->response_unauthorized('Password mismatch');
         }
 
         $token = $this->create_token($user->user_id);

@@ -64,6 +64,8 @@ final class Router
 
     public function set_status_code(string $method): void
     {
+        if(http_response_code()) return; //if status code is already set break, ex: response_bad_request
+
         switch ($method) {
             case 'GET':
                 http_response_code(200);

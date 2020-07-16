@@ -8,7 +8,6 @@ use Firebase\JWT\ExpiredException;
 use Firebase\JWT\JWT;
 use PHPUnit\Framework\TestCase;
 use Service\TokenService;
-use Symfony\Component\Dotenv\Dotenv;
 
 class TokenServiceTest extends TestCase
 {
@@ -53,10 +52,7 @@ class TokenServiceTest extends TestCase
             "exp" => time() - 100
         ];
 
-
         $token = JWT::encode($payload, $this->token_secret);
-
-        $decoded = JWT::decode($token, $this->token_secret, array('HS256'));
-
+        JWT::decode($token, $this->token_secret, array('HS256'));
     }
 }
