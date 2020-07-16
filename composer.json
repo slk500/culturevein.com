@@ -21,8 +21,7 @@
     "cocur/slugify": "^3.1",
     "firebase/php-jwt": "^5.0",
     "ext-mysqli": "*",
-    "ext-json": "*",
-    "ext-apache": "*"
+    "ext-json": "*"
   },
   "require-dev": {
     "guzzlehttp/guzzle": "^6.3",
