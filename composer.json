@@ -2,10 +2,10 @@
   "autoload": {
     "files": [
       "src/Normalizer/artist_normalizer.php",
-      "src/Functional/Functions.php",
-      "src/Normalizer/TagListWithChildren.php",
-      "src/Normalizer/VideoTagNormalizer.php",
-      "src/Normalizer/TagShowNormalizer.php"
+      "src/Functional/functions.php",
+      "src/Normalizer/tag_list_with_children_normalizer.php",
+      "src/Normalizer/video_tag_normalizer.php",
+      "src/Normalizer/tag_show_normalizer.php"
     ],
     "psr-4": {
       "": "src/"
