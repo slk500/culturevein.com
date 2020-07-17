@@ -16,15 +16,19 @@ final class ApiProblem extends \Exception
     const NOT_FOUND = ['Resource not found', 404];
 
     private static array $titles = [
+        self::USER_ALREADY_EXIST,
+        self::EMAIL_NOT_VALID,
+        self::ALL_FIELDS_HAVE_TO_BE_FILLED,
         self::WRONG_CREDENTIALS,
-        self::PASSWORD_MISMATCH
+        self::PASSWORD_MISMATCH,
+        self::NOT_FOUND
     ];
 
     public array $title;
 
     public function __construct(array $title, \Exception $previous = null)
     {
-        if (array_search($title, self::$titles)) {
+        if (!array_search($title[0], array_column(self::$titles, 0))) {
             throw new \InvalidArgumentException("No title: $title[0]");
         }
 

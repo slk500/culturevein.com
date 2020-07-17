@@ -18,8 +18,7 @@ if($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$routes = include __DIR__ . '/../config/routes.php';
-$router = new Router($routes);
+$router = new Router(include __DIR__ . '/../config/routes.php');
 
 $url = $_SERVER['REQUEST_URI'];
 
