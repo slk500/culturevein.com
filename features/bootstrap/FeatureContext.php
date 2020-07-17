@@ -1,22 +1,16 @@
 <?php
 
 use Behat\Behat\Context\Context;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
-use Behat\MinkExtension\Context\RawMinkContext;
 use DTO\VideoTagTimeCreate;
 use Factory\VideoFactory;
 use Factory\VideoTagFactory;
 use Model\Tag;
-use Model\TagDescendant;
 use Repository\Base\Database;
-use Repository\TagDescendantRepository;
 use Repository\TagRepository;
 use Repository\VideoTagTimeRepository;
-use Service\DatabaseHelper;
 use Tests\Builder\Video\VideoCreateBuilder;
 use Tests\Builder\VideoTag\VideoTagCreateBuilder;
-use Tests\Builder\VideoTagTime\VideoTagTimeCreateBuilder;
+use Tests\DatabaseHelper;
 
 class FeatureContext implements Context
 {
@@ -53,7 +47,6 @@ class FeatureContext implements Context
     {
         $container = new Container();
         $this->tag_repository = $container->get(TagRepository::class);
-        $this->tag_descendant_repository = $container->get(TagDescendantRepository::class);
         $this->video_factory = $container->get(VideoFactory::class);
         $this->video_tag_factory = $container->get(VideoTagFactory::class);
         $this->video_tag_time_repository = $container->get(VideoTagTimeRepository::class);
@@ -100,19 +93,6 @@ class FeatureContext implements Context
             ->build();
 
         $this->video_tag_factory->create($video_tag_create);
-    }
-
-    /**
-     * @Given /^"([^"]*)" is descendant of "([^"]*)"$/
-     */
-    public function isdescendantOf($descendant, $ancestor)
-    {
-        $tag_descendant = new TagDescendant(
-            $descendant,
-            $ancestor
-        );
-
-        $this->tag_descendant_repository->save($tag_descendant);
     }
 
     /**
