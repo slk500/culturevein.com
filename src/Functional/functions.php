@@ -14,7 +14,10 @@ function add_children_field(array $tag)
     return array_merge($tag, ['children' => []]);
 }
 
-function identity ($value) { return $value; };
+function identity($value)
+{
+    return $value;
+}
 
 function compose(...$functions)
 {
@@ -27,4 +30,27 @@ function compose(...$functions)
         },
         'identity'
     );
+}
+
+function find_token(string $token): ?string
+{
+   $result = explode("Bearer ",$token);
+   return $result[1] ?? null;
+}
+
+function find_authorization_header(): ?string
+{
+    return get_all_headers()['Authorization'] ?? null;
+}
+
+//function exist only in apache not nginx
+function get_all_headers()
+{
+    $headers = array();
+    foreach ($_SERVER as $name => $value) {
+        if (substr($name, 0, 5) == 'HTTP_') {
+            $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+        }
+    }
+    return $headers;
 }

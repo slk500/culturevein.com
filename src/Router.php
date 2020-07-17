@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-//todo refactor! split responsibility
+//todo refactor! split responsibility on router & dispatcher
 use ApiProblem\ApiProblem;
+use Controller\Base\BaseController;
 
 final class Router
 {
@@ -42,8 +43,16 @@ final class Router
     public function dispatch(string $url)
     {
         if ($this->match($url)) {
+            /**
+             * @var $controller BaseController
+             */
             $controller = new $this->controller();
-            $controller->authentication();
+
+            $authorization_header = find_authorization_header();
+            $token = $authorization_header ? find_token($authorization_header) : null;
+
+            if ($token) $controller->authentication($token);
+
             $actionName = $this->action;
 
             try {
