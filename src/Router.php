@@ -64,11 +64,14 @@ final class Router
                 $this->set_status_code($this->method);
                 echo json_encode(['data' => $result]);
 
-            } catch (ApiProblem $apiProblem){
-                    http_response_code($apiProblem->getCode());
-                    echo json_encode($apiProblem->getMessage());
-                }
+            } catch (ApiProblem $apiProblem) {
+                http_response_code($apiProblem->getCode());
+                echo json_encode($apiProblem->getMessage());
+            } catch (\Throwable $throwable) {
+                http_response_code(500);
+                echo json_encode($throwable->getMessage());
             }
+        }
     }
 
     public function set_status_code(string $method): void
@@ -85,7 +88,6 @@ final class Router
 
     public function get_body(): ?\stdClass
     {
-        $body = file_get_contents('php://input');
-        return json_decode($body);
+        return json_decode(file_get_contents('php://input'));
     }
 }
