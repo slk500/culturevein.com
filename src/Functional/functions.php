@@ -44,6 +44,7 @@ function find_authorization_header(): ?string
 }
 
 //function exist only in apache not nginx
+//todo no need to foreach and take all headers, take only autohorization
 function get_all_headers()
 {
     $headers = array();

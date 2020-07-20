@@ -12,11 +12,7 @@ final class Router
 
     private array $param;
 
-    private string $controller;
-
-    private string $action;
-
-    private string $method;
+    private string $controller, $action, $method;
 
     public function __construct(array $routes)
     {

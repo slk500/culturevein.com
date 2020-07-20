@@ -9,7 +9,7 @@ use Controller\TagController;
 use Controller\UserController;
 use Controller\VideoController;
 use Controller\VideoTagController;
-use Controller\VideoTagDescendantController as VideoTagDescendantControllerAlias;
+use Controller\VideoTagDescendantController;
 use Controller\VideoTagTimeController;
 
 return  [
@@ -22,8 +22,8 @@ return  [
     ['/^\/api\/tags-new\/*$/', TagController::class, 'newest_ten', 'GET'],
     ['/^\/api\/tags\/(?<tag_slug_id>[\w-]+)\/*$/', TagController::class, 'show', 'GET'],
 
-    ['/^\/api\/tags\/(?<tag_slug_id>[\w-]+)\/descendants\/*$/', VideoTagDescendantControllerAlias::class, 'descendants', 'GET'],
-    ['/^\/api\/tags\/(?<tag_slug_id>[\w-]+)\/ancestors\/*$/', VideoTagDescendantControllerAlias::class, 'ancestors', 'GET'],
+    ['/^\/api\/tags\/(?<tag_slug_id>[\w-]+)\/descendants\/*$/', VideoTagDescendantController::class, 'descendants', 'GET'],
+    ['/^\/api\/tags\/(?<tag_slug_id>[\w-]+)\/ancestors\/*$/', VideoTagDescendantController::class, 'ancestors', 'GET'],
 
     ['/^\/api\/videos\/*$/', VideoController::class, 'create', 'POST'],
     ['/^\/api\/videos\/*$/', VideoController::class, 'list', 'GET'],
