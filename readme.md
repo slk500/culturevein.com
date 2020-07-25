@@ -10,13 +10,15 @@ To run project:
 4. import database from db dir
 
 * To Do List
+    * Add new tag time, if already exist and is red - delete before add new
+    * "Argument 1 passed to Controller\\VideoTagController::update() must be an instance of stdClass, string given, called in \/var\/www\/src\/Router.php on line 70"
     * TODO Check if all YT links works
     * TODO script to download all music videos from precise tag, cut only the tag scenes, glue them in one video  
     * TODO Mailing
         * TODO notification of tags subscription
         * TODO notification of changes to your tags 
         * TODO notifications of changes to video that you added
-        * TODO Tags subscription   
+        * TODO tags subscription   
         
 * Naming:
   * PHP

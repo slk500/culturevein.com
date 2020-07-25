@@ -31,6 +31,9 @@ final class Database
     {
         $stmt = $this->mysqli->prepare($query);
         $stmt->execute();
+        if (!$stmt->execute()) {
+            throw new \Exception($stmt->error);
+        }
         $result = $stmt->get_result();
         $stmt->store_result();
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
