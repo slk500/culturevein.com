@@ -18,13 +18,10 @@ if($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$router = new Router(include __DIR__ . '/../config/routes.php');
+$match = match(include __DIR__ . '/../config/routes.php', $_SERVER['REQUEST_URI']);
 
-$url = $_SERVER['REQUEST_URI'];
-
-if (!$router->match($url)){
+if (!$match){
     http_response_code(404);
 }
 
-$router->dispatch($url);
-
+dispatch($match);
