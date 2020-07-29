@@ -22,7 +22,7 @@ function match(array $routes, string $url): ?array
     return null;
 }
 
-function dispatch(array $match)
+function dispatch(array $match): void
 {
     /**
      * @var $controller BaseController
