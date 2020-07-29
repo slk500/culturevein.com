@@ -68,7 +68,7 @@ class FeatureContext implements Context
     {
         $tag = new Tag($tag_name);
 
-        $this->tag_repository->save($tag);
+        $this->tag_repository->add($tag);
     }
 
     /**
@@ -106,6 +106,6 @@ class FeatureContext implements Context
             $stop
         );
 
-        $this->video_tag_time_repository->save($video_tag_create);
+        $this->video_tag_time_repository->add($video_tag_create);
     }
 }

@@ -40,7 +40,7 @@ class VideoRepositoryTest extends TestCase
         $video_create = (new VideoCreateBuilder())
             ->build();
 
-        $this->video_repository->save($video_create);
+        $this->video_repository->add($video_create);
 
         $video = $this->video_repository->find($video_create->youtube_id);
 
@@ -55,13 +55,13 @@ class VideoRepositoryTest extends TestCase
     public function create_video_with_user_id()
     {
         $user = (new UserBuilder())->build();
-        $this->user_repository->save($user);
+        $this->user_repository->add($user);
 
         $video_create = (new VideoCreateBuilder())
             ->user_id(1)
             ->build();
 
-        $this->video_repository->save($video_create);
+        $this->video_repository->add($video_create);
 
         $video = $this->video_repository->find($video_create->youtube_id);
 

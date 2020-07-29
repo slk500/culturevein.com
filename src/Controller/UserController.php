@@ -47,7 +47,7 @@ class UserController extends BaseController
             $data->username
         );
 
-        $user_id = $this->user_repository->save($user);
+        $user_id = $this->user_repository->add($user);
         $token = $this->create_token($user_id);
 
         return ['token' => $token];

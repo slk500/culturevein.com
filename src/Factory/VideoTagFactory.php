@@ -26,9 +26,9 @@ class VideoTagFactory
 
         if (!$tag) {
             $tag = new Tag($video_tag_create->tag_name);
-            $this->tag_repository->save($tag);
+            $this->tag_repository->add($tag);
         }
 
-        return $this->video_tag_repository->save($video_tag_create);
+        return $this->video_tag_repository->add($video_tag_create);
     }
 }

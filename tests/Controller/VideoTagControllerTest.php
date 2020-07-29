@@ -47,7 +47,7 @@ class VideoTagControllerTest extends TestCase
     public function create_video_tag()
     {
         $tag = new Tag('video game');
-        $this->tag_repository->save($tag);
+        $this->tag_repository->add($tag);
 
         $artist_name = 'Burak Yeter';
         $video_name = 'Tuesday ft. Danelle Sandoval';

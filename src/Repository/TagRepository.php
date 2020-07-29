@@ -42,20 +42,18 @@ final class TagRepository extends Repository
 
     public function find_all(): ?array
     {
-        $query = "SELECT 
+        return $this->database->fetch("SELECT 
                   tag.name AS name, 
                   tag.tag_slug_id AS slug,
                   tag.parent_slug_id AS parent_slug
                   FROM tag
-                  ORDER BY name";
-
-        return $this->database->fetch($query);
+                  ORDER BY name");
     }
 
 
     public function top(): array
     {
-        $query = "WITH RECURSIVE
+        return $this->database->fetch("WITH RECURSIVE
     cte_path(parent, child, level, query, tag_name)
     AS (
     SELECT parent_slug_id, tag_slug_id, 1, tag_slug_id, tag.name
@@ -74,14 +72,12 @@ WHERE video_tag.tag_slug_id = cte_path.child
 AND level <= 2 and video_youtube_id is not null
 GROUP BY query, tag_name
 ORDER BY count desc
-LIMIT 10";
-
-        return $this->database->fetch($query);
+LIMIT 10");
     }
 
     public function newest_ten(): array
     {
-        $query = "SELECT 
+        return $this->database->fetch("SELECT 
                 video.video_youtube_id, 
                 tag.name AS tag_name, 
                 artist.name AS artist_name, 
@@ -94,9 +90,7 @@ LIMIT 10";
                 LEFT JOIN artist_video USING (video_youtube_id)
                 LEFT JOIN artist USING (artist_slug_id) 
                 ORDER BY tag.created_at DESC
-                LIMIT 10";
-
-        return $this->database->fetch($query);
+                LIMIT 10");
     }
 
     public function find(string $slug): ?DatabaseTagFind
@@ -153,7 +147,7 @@ LIMIT 10";
         return $objects;
     }
 
-    public function save(Tag $tag): void
+    public function add(Tag $tag): void
     {
         $stmt = $this->database->mysqli->prepare("INSERT INTO tag (name, tag_slug_id) VALUES (?, ?)");
         $stmt->bind_param("ss", $tag->name, $tag->slug_id);

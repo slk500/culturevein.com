@@ -87,10 +87,10 @@ class VideoTagTimeDeleterTest extends TestCase
     public function ARCHIVE_AND_DELETE_video_tag_time()
     {
         $user = new User('slawomir.grochowski@gmail.com','password', 'slk500');
-        $this->user_repository->save($user);
+        $this->user_repository->add($user);
 
         $tag = new Tag('video game');
-        $this->tag_repository->save($tag);
+        $this->tag_repository->add($tag);
 
         $video_create = (new VideoCreateBuilder())->build();
         $this->video_factory->create($video_create);
@@ -104,7 +104,7 @@ class VideoTagTimeDeleterTest extends TestCase
             10
         );
 
-        $this->video_tag_time_repository->save($video_tag_time_create);
+        $this->video_tag_time_repository->add($video_tag_time_create);
 
         $video_tags_raw = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
         $video_tag = end($video_tags_raw);

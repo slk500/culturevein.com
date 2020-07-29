@@ -79,10 +79,10 @@ class VideoTagDeleterTest extends TestCase
     public function ARCHIVE_AND_DELETE_video_tag()
     {
         $user = new User('slawomir.grochowski@gmail.com','password', 'slk500');
-        $this->user_repository->save($user);
+        $this->user_repository->add($user);
 
         $tag = new Tag('video game');
-        $this->tag_repository->save($tag);
+        $this->tag_repository->add($tag);
 
         $video_create = (new VideoCreateBuilder())->build();
         $this->video_factory->create($video_create);

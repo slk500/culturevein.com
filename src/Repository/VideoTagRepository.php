@@ -9,7 +9,7 @@ use Repository\Base\Repository;
 
 final class VideoTagRepository extends Repository
 {
-    public function save(VideoTagCreate $video_tag_create): ?int
+    public function add(VideoTagCreate $video_tag_create): ?int
     {
         $stmt = $this->database->mysqli->prepare(
             "INSERT INTO video_tag (video_youtube_id, tag_slug_id, user_id) VALUES (?, ?, ?)"
@@ -32,7 +32,7 @@ final class VideoTagRepository extends Repository
         return $stmt->insert_id;
     }
 
-    public function delete(string $video_youtube_id, string $tag_slug_id): void
+    public function remove(string $video_youtube_id, string $tag_slug_id): void
     {
         $stmt = $this->database->mysqli->prepare(
             "DELETE FROM video_tag WHERE video_youtube_id = ? AND tag_slug_id = ?"
@@ -79,7 +79,7 @@ final class VideoTagRepository extends Repository
 
     public function find_all(): array
     {
-        $query = "SELECT
+        return $this->database->fetch("SELECT
               vt.video_youtube_id,
               v.name   AS video_name,
               a.name AS artist_name,
@@ -97,9 +97,7 @@ final class VideoTagRepository extends Repository
                    LEFT JOIN artist_video USING (video_youtube_id)
                    LEFT JOIN artist a USING (artist_slug_id)
                    LEFT JOIN user u ON vt.user_id = u.user_id
-            ORDER BY created_at DESC";
-
-        return $this->database->fetch($query);
+            ORDER BY created_at DESC");
     }
 
     public function find(string $youtube_id, string $tag_slug_id)

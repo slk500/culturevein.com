@@ -31,7 +31,7 @@ class ArtistRepositoryTest extends TestCase
      */
     public function create_and_find()
     {
-        $this->artist_repository->save('Kazik Staszewski', 'kazik-staszewski');
+        $this->artist_repository->add('Kazik Staszewski', 'kazik-staszewski');
 
         $artist_slug_id = $this->artist_repository->find_slug_id_by_name('Kazik Staszewski');
 

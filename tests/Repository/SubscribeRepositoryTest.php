@@ -66,16 +66,16 @@ class SubscribeRepositoryTest extends TestCase
     {
         $user = new User('slawomir.grochowski@gmail.com', 'password', 'slk');
 
-        $this->user_repository->save($user);
+        $this->user_repository->add($user);
 
         $video_create = (new VideoCreateBuilder())->build();
         $this->video_factory->create($video_create);
 
         $tag = new Tag('video game');
-        $this->tag_repository->save($tag);
+        $this->tag_repository->add($tag);
 
         $video_tag_create = (new VideoTagCreateBuilder())->build();
-        $this->video_tag_repository->save($video_tag_create);
+        $this->video_tag_repository->add($video_tag_create);
 
         $result = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
 
@@ -95,16 +95,16 @@ class SubscribeRepositoryTest extends TestCase
     {
         $user = new User('slawomir.grochowski@gmail.com', 'password', 'slk');
 
-        $this->user_repository->save($user);
+        $this->user_repository->add($user);
 
         $video_create = (new VideoCreateBuilder())->build();
         $this->video_factory->create($video_create);
 
         $tag = new Tag('video game');
-        $this->tag_repository->save($tag);
+        $this->tag_repository->add($tag);
 
         $video_tag_create = (new VideoTagCreateBuilder())->build();
-        $this->video_tag_repository->save($video_tag_create);
+        $this->video_tag_repository->add($video_tag_create);
 
         $result = $this->video_tag_repository->find_all_for_video($video_create->youtube_id);
 

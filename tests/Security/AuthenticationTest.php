@@ -51,7 +51,7 @@ class AuthenticationTest extends TestCase
             'mario'
         );
 
-        $this->user_repository->save($userData);
+        $this->user_repository->add($userData);
 
         $user = $this->user_repository->find('mario@o2.pl');
 

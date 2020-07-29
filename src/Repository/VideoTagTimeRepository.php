@@ -9,7 +9,7 @@ use Repository\Base\Repository;
 
 final class VideoTagTimeRepository extends Repository
 {
-    public function save(VideoTagTimeCreate $video_tag_time_create): ?int
+    public function add(VideoTagTimeCreate $video_tag_time_create): ?int
     {
         $stmt = $this->database->mysqli->prepare("INSERT INTO video_tag_time (video_tag_id, start, stop, user_id) VALUES (?, ?, ?, ?)");
 
@@ -31,7 +31,7 @@ final class VideoTagTimeRepository extends Repository
         return $stmt->insert_id;
     }
 
-    public function delete(int $video_tag_time_id): void
+    public function remove(int $video_tag_time_id): void
     {
         $stmt = $this->database->mysqli->prepare("DELETE FROM video_tag_time WHERE video_tag_time_id = ?");
 

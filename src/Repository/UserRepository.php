@@ -9,7 +9,7 @@ use Repository\Base\Repository;
 
 final class UserRepository extends Repository
 {
-    public function save(User $user): ?int
+    public function add(User $user): ?int
     {
         $stmt = $this->database->mysqli->prepare("INSERT INTO user (email, password, username) VALUES (?, ?, ?)");
         $stmt->bind_param('sss', $user->email, $user->password, $user->username);

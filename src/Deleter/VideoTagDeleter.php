@@ -25,7 +25,7 @@ final class VideoTagDeleter
     {
         $this->archiver_repository->archive_video_tag($video_youtube_id, $tag_slug_id, $user_id);
 
-        $this->video_tag_repository->delete($video_youtube_id, $tag_slug_id);
+        $this->video_tag_repository->remove($video_youtube_id, $tag_slug_id);
     }
 }
 

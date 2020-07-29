@@ -21,7 +21,7 @@ final class SubscribeRepository extends Repository
         return  (bool) $result;
     }
 
-    public function subscribe_tag(string $tag_slug_id, int $user_id)
+    public function subscribe_tag(string $tag_slug_id, int $user_id): void
     {
         $stmt = $this->database->mysqli->prepare("
                 INSERT INTO subscribe_user_tag (tag_slug_id, user_id) VALUES (?, ?)");
@@ -37,7 +37,7 @@ final class SubscribeRepository extends Repository
         }
     }
 
-    public function unsubscribe_tag(string $tag_slug_id, int $user_id)
+    public function unsubscribe_tag(string $tag_slug_id, int $user_id): void
     {
         $stmt = $this->database->mysqli->prepare("
                 DELETE FROM subscribe_user_tag WHERE tag_slug_id = ? AND user_id = ? ");

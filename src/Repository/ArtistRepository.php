@@ -8,14 +8,14 @@ use Repository\Base\Repository;
 
 final class ArtistRepository extends Repository
 {
-    public function save(string $artist_name, string $artist_slug_id)
+    public function add(string $artist_name, string $artist_slug_id): void
     {
         $stmt = $this->database->mysqli->prepare("INSERT INTO artist (name, artist_slug_id) VALUES (?,?)");
         $stmt->bind_param("ss", $artist_name, $artist_slug_id);
         $stmt->execute();
     }
 
-    public function find_slug_id_by_name(string $artist_name)
+    public function find_slug_id_by_name(string $artist_name): ?int
     {
         $stmt = $this->database->mysqli->prepare("SELECT artist_slug_id FROM artist WHERE name = ?");
         $stmt->bind_param("s", $artist_name);

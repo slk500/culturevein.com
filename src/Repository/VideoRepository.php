@@ -10,7 +10,7 @@ use Repository\Base\Repository;
 
 final class VideoRepository extends Repository
 {
-    public function save(VideoCreate $video_create): void
+    public function add(VideoCreate $video_create): void
     {
         $stmt = $this->database->mysqli->prepare("INSERT INTO video (video_youtube_id, name, duration, user_id) VALUES (?,?,?,?)");
         if (!$stmt) {
@@ -26,7 +26,7 @@ final class VideoRepository extends Repository
 
     public function find(string $video_youtube_id): ?Video
     {
-        $stmt = $this->database->mysqli->prepare( "
+        $stmt = $this->database->mysqli->prepare("
             SELECT 
             video.name as video_name, 
             video.release_date, 
@@ -46,23 +46,21 @@ final class VideoRepository extends Repository
         return mysqli_fetch_object($result, Video::class);
     }
 
-    public function find_all()
+    public function find_all(): ?array
     {
-        $query = "SELECT video_youtube_id, 
+        return $this->database->fetch("SELECT video_youtube_id, 
                 artist.name AS artist_name,
                 artist.artist_slug_id AS artist_slug,
                 video.name AS video_name
                 FROM video
                 LEFT JOIN artist_video USING (video_youtube_id)
                 LEFT JOIN artist USING (artist_slug_id)
-                ORDER BY artist.name, video.name";
-
-        return $this->database->fetch($query);
+                ORDER BY artist.name, video.name");
     }
 
     public function with_highest_number_of_tags()
     {
-        $query = "SELECT 
+        return $this->database->fetch("SELECT 
                artist.name AS artist_name, 
                video.name AS video_name,  
                count(tag.tag_slug_id) AS count,
@@ -75,14 +73,12 @@ final class VideoRepository extends Repository
               GROUP BY video.video_youtube_id, artist.name
               ORDER BY count DESC
               LIMIT 10
-              ";
-
-        return  $this->database->fetch($query);
+              ");
     }
 
     public function newest_ten()
     {
-        $query = "SELECT 
+        return $this->database->fetch("SELECT 
                 video.video_youtube_id,
                 artist.name AS artist_name, 
                 video.name AS video_name
@@ -90,8 +86,6 @@ final class VideoRepository extends Repository
                 LEFT JOIN artist_video USING (video_youtube_id)
                 LEFT JOIN artist USING (artist_slug_id)
                 ORDER BY video.created_at DESC
-                LIMIT 10";
-
-        return $this->database->fetch($query);
+                LIMIT 10");
     }
 }

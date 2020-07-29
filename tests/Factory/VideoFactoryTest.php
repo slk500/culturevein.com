@@ -49,7 +49,7 @@ class VideoFactoryTest extends TestCase
     public function create_and_find()
     {
         $user = (new UserBuilder())->build();
-        $this->user_repository->save($user);
+        $this->user_repository->add($user);
 
         $video_create = (new VideoCreateBuilder())
             ->user_id(1)

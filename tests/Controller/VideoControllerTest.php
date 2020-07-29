@@ -62,7 +62,7 @@ class VideoControllerTest extends TestCase
     public function show()
     {
         $video_create = (new VideoCreateBuilder())->build();
-        $this->video_repository->save($video_create);
+        $this->video_repository->add($video_create);
 
         $response = $this->client->get(
             'api/videos/Y1_VsyLAGuk',

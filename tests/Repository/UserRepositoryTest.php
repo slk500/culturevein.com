@@ -36,7 +36,7 @@ class UserRepositoryTest extends TestCase
 
         $user = new User($email, 'password','slk500');
 
-        $user_id = $this->user_repository->save($user);
+        $user_id = $this->user_repository->add($user);
 
         $user = $this->user_repository->find($email);
 
@@ -55,7 +55,7 @@ class UserRepositoryTest extends TestCase
 
         $user = new User($email, 'password','slk500');
 
-        $this->user_repository->save($user);
+        $this->user_repository->add($user);
 
         $user = $this->user_repository->find('other@email.com');
 
