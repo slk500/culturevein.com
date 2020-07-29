@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Controller;
 
 use ApiProblem\ApiProblem;
-use Container;
 use Controller\Base\BaseController;
 use Repository\SubscribeRepository;
 use Repository\TagRepository;
@@ -18,9 +17,8 @@ class TagController extends BaseController
 
     public function __construct()
     {
-        $container = new Container();
-        $this->tag_repository = $container->get(TagRepository::class);
-        $this->subscribe_repository = $container->get(SubscribeRepository::class);
+        $this->tag_repository = new TagRepository();
+        $this->subscribe_repository = new SubscribeRepository();
     }
 
     public function list()

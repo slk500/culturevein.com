@@ -13,7 +13,7 @@ final class TagRepository extends Repository
 {
     public function find_descendants_simple(string $slug)
     {
-        $stmt = $this->database->mysqli->prepare(
+        $stmt = $this->mysqli->prepare(
             "SELECT tag_slug_id, name FROM tag 
                     WHERE parent_slug_id = ?;"
         );
@@ -27,7 +27,7 @@ final class TagRepository extends Repository
 
     public function find_ancestors(string $slug)
     {
-        $stmt = $this->database->mysqli->prepare(
+        $stmt = $this->mysqli->prepare(
             "SELECT tag.tag_slug_id, tag.name FROM tag
                     LEFT JOIN tag tag2 ON tag.tag_slug_id = tag2.parent_slug_id 
                     WHERE tag2.tag_slug_id = ? ;"
@@ -42,7 +42,7 @@ final class TagRepository extends Repository
 
     public function find_all(): ?array
     {
-        return $this->database->fetch("SELECT 
+        return $this->fetch("SELECT 
                   tag.name AS name, 
                   tag.tag_slug_id AS slug,
                   tag.parent_slug_id AS parent_slug
@@ -53,7 +53,7 @@ final class TagRepository extends Repository
 
     public function top(): array
     {
-        return $this->database->fetch("WITH RECURSIVE
+        return $this->fetch("WITH RECURSIVE
     cte_path(parent, child, level, query, tag_name)
     AS (
     SELECT parent_slug_id, tag_slug_id, 1, tag_slug_id, tag.name
@@ -77,7 +77,7 @@ LIMIT 10");
 
     public function newest_ten(): array
     {
-        return $this->database->fetch("SELECT 
+        return $this->fetch("SELECT 
                 video.video_youtube_id, 
                 tag.name AS tag_name, 
                 artist.name AS artist_name, 
@@ -95,7 +95,7 @@ LIMIT 10");
 
     public function find(string $slug): ?DatabaseTagFind
     {
-        $stmt = $this->database->mysqli->prepare("SELECT name, tag_slug_id as slug_id FROM tag WHERE tag.tag_slug_id = ?");
+        $stmt = $this->mysqli->prepare("SELECT name, tag_slug_id as slug_id FROM tag WHERE tag.tag_slug_id = ?");
 
         $stmt->bind_param('s', $slug);
         $stmt->execute();
@@ -106,7 +106,7 @@ LIMIT 10");
 
     public function find_videos(string $slug): array
     {
-        $stmt = $this->database->mysqli->prepare("
+        $stmt = $this->mysqli->prepare("
     SELECT
     video.video_youtube_id                              AS video_slug,
     SUM(video_tag_time.stop)-SUM(video_tag_time.start)  AS tag_duration,
@@ -149,7 +149,7 @@ LIMIT 10");
 
     public function add(Tag $tag): void
     {
-        $stmt = $this->database->mysqli->prepare("INSERT INTO tag (name, tag_slug_id) VALUES (?, ?)");
+        $stmt = $this->mysqli->prepare("INSERT INTO tag (name, tag_slug_id) VALUES (?, ?)");
         $stmt->bind_param("ss", $tag->name, $tag->slug_id);
         $stmt->execute();
     }
