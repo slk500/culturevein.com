@@ -9,12 +9,9 @@ use Controller\Base\BaseController;
 use Factory\VideoFactory;
 use DTO\VideoCreate;
 use Repository\VideoRepository;
-use Service\TokenService;
 
 class VideoController extends BaseController
 {
-    private TokenService $token_service;
-
     private Container $container;
 
     private VideoRepository $video_repository;

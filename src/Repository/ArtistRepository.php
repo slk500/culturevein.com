@@ -15,7 +15,7 @@ final class ArtistRepository extends Repository
         $stmt->execute();
     }
 
-    public function find_slug_id_by_name(string $artist_name): ?int
+    public function find_slug_id_by_name(string $artist_name): ?string
     {
         $stmt = $this->database->mysqli->prepare("SELECT artist_slug_id FROM artist WHERE name = ?");
         $stmt->bind_param("s", $artist_name);

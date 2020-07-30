@@ -10,7 +10,6 @@ use Deleter\VideoTagDeleter;
 use DTO\VideoTagCreate;
 use Factory\VideoTagFactory;
 use Repository\VideoTagRepository;
-use Service\TokenService;
 
 class VideoTagController extends BaseController
 {
