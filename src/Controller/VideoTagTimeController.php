@@ -44,7 +44,7 @@ class VideoTagTimeController extends BaseController
         );
 
         $this->container->get(VideoTagTimeRepository::class)
-            ->save($video_tag_create);
+            ->add($video_tag_create);
 
         return $body;
     }
