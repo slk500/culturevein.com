@@ -59,7 +59,7 @@ class TagController extends BaseController
 
     public function top_ten()
     {
-        return $this->tag_repository->top();
+        return $this->tag_repository->count_tag_in_videos();
     }
 
     public function newest_ten()

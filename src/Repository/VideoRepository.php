@@ -33,7 +33,8 @@ final class VideoRepository extends Repository
             video.video_youtube_id, 
             video.duration,
             video.user_id,
-            artist.name as artist_name
+            artist.name as artist_name,            
+            artist.artist_slug_id as artist_slug
             FROM video
             LEFT JOIN artist_video USING (video_youtube_id)
             LEFT JOIN artist USING (artist_slug_id)

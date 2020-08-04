@@ -51,7 +51,7 @@ final class TagRepository extends Repository
     }
 
 
-    public function top(): array
+    public function count_tag_in_videos(): array
     {
         return $this->database->fetch("WITH RECURSIVE
     cte_path(parent, child, level, query, tag_name)
