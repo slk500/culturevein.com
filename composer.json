@@ -7,7 +7,7 @@
       "src/Normalizer/tag_list_with_children_normalizer.php",
       "src/Normalizer/video_tag_normalizer.php",
       "src/Normalizer/tag_show_normalizer.php",
-      "src/Controller/artist.php"
+      "src/Controller/artist_controller.php"
     ],
     "psr-4": {
       "": "src/"
