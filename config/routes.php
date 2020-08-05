@@ -5,18 +5,19 @@ declare(strict_types=1);
 return  [
     ['/^\/api\/artists\/*$/', 'artist_list', 'GET'],
     ['/^\/api\/artists\/(?<artist_slug_id>[\w-]+)\/*$/', 'artist_show', 'GET'],
-    ['/^\/api\/users\/statistics\/*$/', 'statistic_users', 'GET'],
-    ['/^\/api\/tags\/*$/', 'tag_list', 'GET'],
 
-//    ['/^\/api\/tags-simple\/*$/', TagController::class, 'list_without_relation', 'GET'],
-//    ['/^\/api\/tags-top\/*$/', TagController::class, 'top_ten', 'GET'],
-//    ['/^\/api\/tags-new\/*$/', TagController::class, 'newest_ten', 'GET'],
-//    ['/^\/api\/tags\/(?<tag_slug_id>[\w-]+)\/*$/', TagController::class, 'show', 'GET'],
-//
-//    ['/^\/api\/tags\/(?<tag_slug_id>[\w-]+)\/descendants\/*$/', VideoTagDescendantController::class, 'descendants', 'GET'],
-//    ['/^\/api\/tags\/(?<tag_slug_id>[\w-]+)\/ancestors\/*$/', VideoTagDescendantController::class, 'ancestors', 'GET'],
-//
-//    ['/^\/api\/videos\/*$/', VideoController::class, 'create', 'POST'],
+    ['/^\/api\/users\/statistics\/*$/', 'statistic_users', 'GET'],
+
+    ['/^\/api\/tags\/*$/', 'tag_list', 'GET'],
+    ['/^\/api\/tags-simple\/*$/', 'tag_list_without_relation', 'GET'],
+    ['/^\/api\/tags-top\/*$/', 'tag_in_videos', 'GET'],
+    ['/^\/api\/tags-new\/*$/', 'tag_new', 'GET'],
+    ['/^\/api\/tags\/(?<tag_slug_id>[\w-]+)\/*$/', 'tag_show', 'GET'],
+
+    ['/^\/api\/tags\/(?<tag_slug_id>[\w-]+)\/descendants\/*$/', 'tag_descendants', 'GET'],
+    ['/^\/api\/tags\/(?<tag_slug_id>[\w-]+)\/ancestors\/*$/', 'tag_ancestors', 'GET'],
+
+    ['/^\/api\/videos\/*$/', 'video_create', 'POST'],
     ['/^\/api\/videos\/*$/', 'video_list', 'GET'],
 //    ['/^\/api\/videos-tags\/*$/', VideoTagController::class, 'list', 'GET'],
 //    ['/^\/api\/videos-tags-top\/*$/', VideoController::class, 'highest_number_of_tags', 'GET'],

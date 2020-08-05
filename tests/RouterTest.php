@@ -30,10 +30,10 @@ class RouterTest extends TestCase
     public function dispatch()
     {
         $match = [
-            'function' => 'artist_show',
+            'function' => 'tag_show',
             'method'=> 'GET',
             'param' => [
-                'artist_slug_id' => 'eminem',
+                'tag_slug_id' => 'police',
             ]
         ];
 

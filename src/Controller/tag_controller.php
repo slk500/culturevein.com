@@ -6,13 +6,13 @@ use ApiProblem\ApiProblem;
 use Repository\SubscribeRepository;
 use Repository\TagRepository;
 
-function tag_list(TagRepository $tag_repository)
+function tag_list(TagRepository $tag_repository): array
 {
-    return normalize_tag_list_with_children($tag_repository->find_all());
+    return normalize_tag_list_with_relation($tag_repository->find_all());
 }
 
 //use in select2
-function list_without_relation(TagRepository $tag_repository)
+function tag_list_without_relation(TagRepository $tag_repository): array
 {
     return $tag_repository->find_all();
 }
@@ -20,9 +20,9 @@ function list_without_relation(TagRepository $tag_repository)
 /**
  * @throws ApiProblem
  */
-function tag_show(TagRepository $tag_repository, SubscribeRepository $subscribe_repository, string $slug): array
+function tag_show(TagRepository $tag_repository, SubscribeRepository $subscribe_repository, string $tag_slug_id): array
 {
-    $tag = $tag_repository->find($slug);
+    $tag = $tag_repository->find($tag_slug_id);
 
     if (!$tag) {
         throw new ApiProblem(ApiProblem::NOT_FOUND);
@@ -39,12 +39,22 @@ function tag_show(TagRepository $tag_repository, SubscribeRepository $subscribe_
     ];
 }
 
-function top_ten(TagRepository $tag_repository)
+function tag_in_videos(TagRepository $tag_repository): array
 {
     return $tag_repository->count_tag_in_videos();
 }
 
-function newest_ten(TagRepository $tag_repository)
+function tag_new(TagRepository $tag_repository): array
 {
     return $tag_repository->newest_ten();
+}
+
+function tag_descendants(TagRepository $tag_repository, string $tag_slug_id)
+{
+    return $tag_repository->find_descendants($tag_slug_id);
+}
+
+function tag_ancestors(TagRepository $tag_repository, string $tag_slug_id)
+{
+    return $tag_repository->find_ancestors($tag_slug_id);
 }

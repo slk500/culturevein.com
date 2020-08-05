@@ -16,7 +16,7 @@ class TagListWithChildrenTest extends TestCase
                 'parent_slug' => null]
         ];
 
-        $result = normalize_tag_list_with_children($input);
+        $result = normalize_tag_list_with_relation($input);
 
         $expected = [
             [

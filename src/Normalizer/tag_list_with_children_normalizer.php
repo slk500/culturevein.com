@@ -1,6 +1,6 @@
 <?php
 
-function normalize_tag_list_with_children(array $tags): array
+function normalize_tag_list_with_relation(array $tags): array
 {
     $normalize = compose(
         'add_children_field',

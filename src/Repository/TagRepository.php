@@ -11,7 +11,7 @@ use Repository\Base\Repository;
 
 final class TagRepository extends Repository
 {
-    public function find_descendants_simple(string $slug)
+    public function find_descendants(string $slug)
     {
         $stmt = $this->database->mysqli->prepare(
             "SELECT tag_slug_id, name FROM tag 

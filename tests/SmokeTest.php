@@ -26,6 +26,7 @@ class SmokeTest extends TestCase
         $response = $this->client->request('GET', $url);
 
         $this->assertEquals(200, $response->getStatusCode());
+        $this->assertNotEmpty($response->getBody()->getContents());
     }
 
     public function urlProvider()
@@ -33,5 +34,8 @@ class SmokeTest extends TestCase
         yield ['/api/tags'];
         yield ['/api/videos'];
         yield ['/api/users/statistics'];
+        yield ['/api/tags-top'];
+        yield ['/api/tags-new'];
+        yield ['/api/tags/police'];
     }
 }
