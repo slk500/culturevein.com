@@ -20,7 +20,7 @@ function list_without_relation(TagRepository $tag_repository)
 /**
  * @throws ApiProblem
  */
-function show(TagRepository $tag_repository, SubscribeRepository $subscribe_repository, string $slug): array
+function tag_show(TagRepository $tag_repository, SubscribeRepository $subscribe_repository, string $slug): array
 {
     $tag = $tag_repository->find($slug);
 

@@ -7,7 +7,15 @@
       "src/Normalizer/tag_list_with_children_normalizer.php",
       "src/Normalizer/video_tag_normalizer.php",
       "src/Normalizer/tag_show_normalizer.php",
-      "src/Controller/artist_controller.php"
+      "src/Controller/artist_controller.php",
+      "src/Controller/statistic_controller.php",
+      "src/Controller/subscribe_controller.php",
+      "src/Controller/tag_controller.php",
+      "src/Controller/user_controller.php",
+      "src/Controller/video_controller.php",
+      "src/Controller/video_tag_controller.php",
+      "src/Controller/video_tag_descendant_controller.php",
+      "src/Controller/video_tag_time_controller.php"
     ],
     "psr-4": {
       "": "src/"

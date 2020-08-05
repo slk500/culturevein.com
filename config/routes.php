@@ -2,19 +2,11 @@
 
 declare(strict_types=1);
 
-use Controller\SubscribeController;
-use Controller\TagController;
-use Controller\UserController;
-use Controller\VideoController;
-use Controller\VideoTagController;
-use Controller\VideoTagDescendantController;
-use Controller\VideoTagTimeController;
-
 return  [
     ['/^\/api\/artists\/*$/', 'artist_list', 'GET'],
-    ['/^\/api\/artists\/(?<artist_slug_id>[\w-]+)\/*$/', 'artist_show', 'GET']
-
-//    ['/^\/api\/tags\/*$/', TagController::class, 'list', 'GET'],
+    ['/^\/api\/artists\/(?<artist_slug_id>[\w-]+)\/*$/', 'artist_show', 'GET'],
+    ['/^\/api\/users\/statistics\/*$/', 'statistic_users', 'GET'],
+    ['/^\/api\/tags\/*$/', 'tag_list', 'GET']
 //    ['/^\/api\/tags-simple\/*$/', TagController::class, 'list_without_relation', 'GET'],
 //    ['/^\/api\/tags-top\/*$/', TagController::class, 'top_ten', 'GET'],
 //    ['/^\/api\/tags-new\/*$/', TagController::class, 'newest_ten', 'GET'],
@@ -51,6 +43,5 @@ return  [
 //    ['/^\/api\/users\/*$/', UserController::class, 'create', 'POST'],
 //    ['/^\/api\/users\/login\/*$/', UserController::class, 'login', 'POST'],
 //
-//    ['/^\/api\/users\/statistics\/*$/', StatisticController::class, 'user', 'GET']
 ];
 
