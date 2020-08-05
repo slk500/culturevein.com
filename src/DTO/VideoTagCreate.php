@@ -19,7 +19,7 @@ class VideoTagCreate
 
     public function __construct(string $video_youtube_id, string $tag_name, ?int $user_id = null)
     {
-        $trim_tag_name =  trim($tag_name);
+        $trim_tag_name = trim($tag_name);
 
         if (empty($trim_tag_name)){
             throw new \Exception('Tag name is empty!');

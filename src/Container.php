@@ -23,4 +23,3 @@ final class Container
         return new $name(...array_map(fn (string $dependency) => $this->get($dependency), $this->config[$name]));
     }
 }
-

@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace Service;
-
 
 use Firebase\JWT\ExpiredException;
 use Firebase\JWT\JWT;

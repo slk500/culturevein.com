@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace Deleter;
 
-
-use Model\VideoTag;
 use Repository\Archiver\ArchiverRepository;
-use Repository\VideoTagRepository;
 use Repository\VideoTagTimeRepository;
 
 final class VideoTagTimeDeleter
@@ -15,7 +12,6 @@ final class VideoTagTimeDeleter
     private $video_tag_time_repository;
 
     private $archiver_repository;
-
 
     public function __construct(VideoTagTimeRepository $video_tag_time_repository, ArchiverRepository $archiver_repository)
     {
@@ -32,4 +28,3 @@ final class VideoTagTimeDeleter
         //todo delete video_tag if deleted video_tag_time was last in DB
     }
 }
-

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Deleter;
 
 
-use Model\VideoTag;
 use Repository\Archiver\ArchiverRepository;
 use Repository\VideoTagRepository;
 

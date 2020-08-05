@@ -3,8 +3,6 @@
 declare(strict_types=1);
 
 use ApiProblem\ApiProblem;
-use Controller\Base\BaseController;
-use Repository\ArtistRepository;
 
 function match(array $routes, string $url, string $method): ?array
 {

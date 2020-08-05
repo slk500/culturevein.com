@@ -6,7 +6,8 @@ return  [
     ['/^\/api\/artists\/*$/', 'artist_list', 'GET'],
     ['/^\/api\/artists\/(?<artist_slug_id>[\w-]+)\/*$/', 'artist_show', 'GET'],
     ['/^\/api\/users\/statistics\/*$/', 'statistic_users', 'GET'],
-    ['/^\/api\/tags\/*$/', 'tag_list', 'GET']
+    ['/^\/api\/tags\/*$/', 'tag_list', 'GET'],
+
 //    ['/^\/api\/tags-simple\/*$/', TagController::class, 'list_without_relation', 'GET'],
 //    ['/^\/api\/tags-top\/*$/', TagController::class, 'top_ten', 'GET'],
 //    ['/^\/api\/tags-new\/*$/', TagController::class, 'newest_ten', 'GET'],
@@ -16,7 +17,7 @@ return  [
 //    ['/^\/api\/tags\/(?<tag_slug_id>[\w-]+)\/ancestors\/*$/', VideoTagDescendantController::class, 'ancestors', 'GET'],
 //
 //    ['/^\/api\/videos\/*$/', VideoController::class, 'create', 'POST'],
-//    ['/^\/api\/videos\/*$/', VideoController::class, 'list', 'GET'],
+    ['/^\/api\/videos\/*$/', 'video_list', 'GET'],
 //    ['/^\/api\/videos-tags\/*$/', VideoTagController::class, 'list', 'GET'],
 //    ['/^\/api\/videos-tags-top\/*$/', VideoController::class, 'highest_number_of_tags', 'GET'],
 //    ['/^\/api\/videos-new\/*$/', VideoController::class, 'newest_ten', 'GET'],
