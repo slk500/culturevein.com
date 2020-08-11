@@ -44,6 +44,6 @@ return  [
 //
 //    ['/^\/api\/users\/*$/', UserController::class, 'create', 'POST'],
 //    ['/^\/api\/users\/login\/*$/', UserController::class, 'login', 'POST'],
-//
+
 ];
 

@@ -36,23 +36,33 @@ class VideoControllerTest extends TestCase
 
     /**
      * @test
-     * @covers VideoController::create()
+     * @covers video_create()
      */
     public function create()
     {
         $data = new stdClass();
-        $data->artist = 'Burak Yeter';
-        $data->name = 'Tuesday ft. Danelle Sandoval';
+        $data->artist_name = 'Burak Yeter';
+        $data->video_name = 'Tuesday ft. Danelle Sandoval';
         $data->youtube_id = 'Y1_VsyLAGuk';
         $data->duration = 100;
 
-        $controller = new \Controller\VideoController();
-        $video_create = $controller->create($data);
+        $response = $this->client->post(
+            'api/videos',       [
+                'json' => [
+                    'artist_name' => $data->artist_name,
+                    'video_name' => $data->video_name,
+                    'youtube_id' => $data->youtube_id,
+                    'duratio' => $data->duration
+                ]
+            ]
+        );
 
-        $video = $this->video_repository->find($video_create->youtube_id);
+        $x = $response->getBody()->getContents();
 
-        $this->assertSame($video_create->video_name, $video->video_name);
-        $this->assertSame($video_create->youtube_id, $video->video_youtube_id);
+        $video = $this->video_repository->find($data->youtube_id);
+
+        $this->assertSame($data->video_name, $video->video_name);
+        $this->assertSame($data->youtube_id, $video->video_youtube_id);
     }
 
     /**

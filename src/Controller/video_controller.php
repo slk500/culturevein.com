@@ -6,18 +6,9 @@ use DTO\VideoCreate;
 use Factory\VideoFactory;
 use Repository\VideoRepository;
 
-function video_create(VideoFactory $video_factory, \stdClass $data, ?int $user_id)
+function video_create(VideoFactory $video_factory, VideoCreate $video_create)
 {
-    $video_create = new VideoCreate(
-        $data->artist,
-        $data->name,
-        $data->youtube_id,
-        $data->duration,
-        $user_id
-    );
-
     $video_factory->create($video_create);
-
     return $video_create;
 }
 
