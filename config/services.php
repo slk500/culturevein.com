@@ -18,6 +18,7 @@ use Repository\VideoRepository;
 use Repository\VideoTagRepository;
 use Repository\VideoTagTimeRepository;
 
+//todo remove - make autowire
 return [
         ArchiverRepository::class => [Database::class],
         ArtistRepository::class => [Database::class],
