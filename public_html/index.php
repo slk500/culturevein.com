@@ -22,8 +22,4 @@ $match = match(include __DIR__ . '/../config/routes.php',
     $_SERVER['REQUEST_URI'],
     $_SERVER['REQUEST_METHOD']);
 
-if (!$match) {
-    http_response_code(404);
-}
-
-dispatch($match);
+$match ? dispatch($match) : http_response_code(404);

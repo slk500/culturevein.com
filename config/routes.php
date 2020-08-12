@@ -19,11 +19,12 @@ return  [
 
     ['/^\/api\/videos\/*$/', 'video_create', 'POST'],
     ['/^\/api\/videos\/*$/', 'video_list', 'GET'],
+
 //    ['/^\/api\/videos-tags\/*$/', VideoTagController::class, 'list', 'GET'],
-//    ['/^\/api\/videos-tags-top\/*$/', VideoController::class, 'highest_number_of_tags', 'GET'],
-//    ['/^\/api\/videos-new\/*$/', VideoController::class, 'newest_ten', 'GET'],
-//
-//    ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/*$/', VideoController::class, 'show', 'GET'],
+    ['/^\/api\/videos-list-count-tags\/*$/', 'video_list_count_tags', 'GET'],
+    ['/^\/api\/videos-list-new\/*$/', 'video_list_new', 'GET'],
+
+    ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/*$/', 'video_show', 'GET'],
 //
 //    ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/*$/', VideoTagController::class, 'list_for_video', 'GET'],
 //
