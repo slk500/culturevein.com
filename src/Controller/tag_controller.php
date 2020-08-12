@@ -11,10 +11,9 @@ function tag_list(TagRepository $tag_repository): array
     return normalize_tag_list_with_relation($tag_repository->find_all());
 }
 
-//use in select2
 function tag_list_without_relation(TagRepository $tag_repository): array
 {
-    return $tag_repository->find_all();
+    return $tag_repository->find_all(); //use in select2
 }
 
 /**
