@@ -20,7 +20,7 @@ return  [
     ['/^\/api\/videos\/*$/', 'video_create', 'POST'],
     ['/^\/api\/videos\/*$/', 'video_list', 'GET'],
 
-//    ['/^\/api\/videos-tags\/*$/', VideoTagController::class, 'list', 'GET'],
+    ['/^\/api\/videos-tags\/*$/', 'video_tag_list', 'GET'],
     ['/^\/api\/videos-list-count-tags\/*$/', 'video_list_count_tags', 'GET'],
     ['/^\/api\/videos-list-new\/*$/', 'video_list_new', 'GET'],
 

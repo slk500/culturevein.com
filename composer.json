@@ -13,8 +13,8 @@
       "src/Controller/tag_controller.php",
       "src/Controller/user_controller.php",
       "src/Controller/video_controller.php",
-      "src/Controller/video_tag_controller.php",
-      "src/Controller/video_tag_time_controller.php"
+      "src/Controller/tag_video_controller.php",
+      "src/Controller/tag_video_time_controller.php"
     ],
     "psr-4": {
       "": "src/"

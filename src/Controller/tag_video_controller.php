@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Controller;
-
 use Deleter\VideoTagDeleter;
 use DTO\VideoTagCreate;
 use Factory\VideoTagFactory;
