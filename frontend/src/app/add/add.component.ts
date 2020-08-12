@@ -78,8 +78,8 @@ export class AddComponent implements OnInit {
       let artistAndTitle = this.video.videoPlayer.getVideoData().title.split("-");
       this.duration = this.video.videoPlayer.getDuration();
 
-      this.artist = artistAndTitle[0];
-      this.title = artistAndTitle[1];
+      this.artist = artistAndTitle[0].trim();
+      this.title = artistAndTitle[1].trim();
       this.tempArtists.push(this.artist);
       this.tempArtists.sort();
       this.artists = this.tempArtists;

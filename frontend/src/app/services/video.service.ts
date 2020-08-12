@@ -16,8 +16,8 @@ export class VideoService {
 
     addVideo(artist, name, youtube_id, duration) {
         return this.http.post('api/videos', {
-            artist: artist,
-            name: name,
+            artist_name: artist,
+            video_name: name,
             youtube_id: youtube_id,
             duration: duration
         })
