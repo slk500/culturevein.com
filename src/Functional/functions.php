@@ -14,11 +14,6 @@ function add_children_field(array $tag)
     return array_merge($tag, ['children' => []]);
 }
 
-function identity($value)
-{
-    return $value;
-}
-
 function compose(...$functions)
 {
     return array_reduce(
@@ -28,7 +23,7 @@ function compose(...$functions)
                 return $function($chain($input));
             };
         },
-        'identity'
+        fn($value) => $value
     );
 }
 
