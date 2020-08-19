@@ -1,6 +1,6 @@
 <?php
 
-function video_tag_normalize(array $array)
+function tag_video_normalize(array $array)
 {
     return array_map('reduce_to_tags_with_tag_time',
                 group_by($array, 'video_tag_id'));

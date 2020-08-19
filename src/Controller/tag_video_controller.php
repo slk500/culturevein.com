@@ -27,7 +27,7 @@ function tag_video_list(VideoTagRepository $video_tag_repository)
 
 function tag_video_list_for_video(VideoTagRepository $video_tag_repository, string $youtube_id)
 {
-    return video_tag_normalize($video_tag_repository->find_all_for_video($youtube_id));
+    return tag_video_normalize($video_tag_repository->find_all_for_video($youtube_id));
 }
 
 function tag_video_delete(VideoTagDeleter $video_tag_deleter, string $video_youtube_id,

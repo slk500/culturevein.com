@@ -25,9 +25,9 @@ return  [
     ['/^\/api\/videos-list-new\/*$/', 'video_list_new', 'GET'],
 
     ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/*$/', 'video_show', 'GET'],
-//
-//    ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/*$/', VideoTagController::class, 'list_for_video', 'GET'],
-//
+
+    ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/*$/', 'tag_video_list_for_video', 'GET'],
+
 //    ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/(?<tag_slug_id>[\w-]+)*$/', VideoTagController::class, 'delete', 'DELETE'],
 //
 //    ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/(?<tag_slug_id>[\w-]+)*$/', VideoTagController::class, 'update', 'PATCH'],

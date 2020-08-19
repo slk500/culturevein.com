@@ -136,7 +136,6 @@ LIMIT 10");
             throw new \Exception($stmt->error);
         }
 
-        $stmt->execute();
         $result = $stmt->get_result();
 
         $objects = [];
