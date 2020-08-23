@@ -56,7 +56,7 @@ function dispatch(array $match): void
         if (array_key_exists($parameter['name'], $match['param'])) {
             return $match['param'][$parameter['name']];
         }
-        if ($parameter['type'] === VideoCreate::class) {
+        if ($parameter['type'] === VideoCreate::class) { //todo hardcoded!
 
             $reflect = new ReflectionClass(VideoCreate::class);
             $props = $reflect->getProperties();
@@ -78,6 +78,7 @@ function dispatch(array $match): void
 
             return $request_data;
         }
+
         return $container->get($parameter['type']);
     }, $parameters);
 

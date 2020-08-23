@@ -9,7 +9,7 @@
     </div>
 
     <div id="DIV_scene_tag" class="white_container">
-        <h4><a [routerLink]="['/artists', videoInfo?.artist_slug]">{{ videoInfo?.artist_name}}</a> - {{ videoInfo?.video_name }}</h4>
+        <h4><a [routerLink]="['/artists', videoInfo?.artist_slug]" *ngIf="videoInfo">{{ videoInfo?.artist_name}}</a> - {{ videoInfo?.video_name }}</h4>
 
         <div id="DIV_tag">
             <ul class="tag">

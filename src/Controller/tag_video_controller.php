@@ -30,10 +30,10 @@ function tag_video_list_for_video(VideoTagRepository $video_tag_repository, stri
     return tag_video_normalize($video_tag_repository->find_all_for_video($youtube_id));
 }
 
-function tag_video_delete(VideoTagDeleter $video_tag_deleter, string $video_youtube_id,
+function tag_video_delete(VideoTagDeleter $video_tag_deleter, string $youtube_id,
                           string $tag_slug_id, ?int $user_id)
 {
-    $video_tag_deleter->delete($video_youtube_id, $tag_slug_id, $user_id);
+    $video_tag_deleter->delete($youtube_id, $tag_slug_id, $user_id);
 }
 
 function tag_video_update(VideoTagRepository $video_tag_repository, \stdClass $data, string $video_youtube_id, string $tag_slug_id)

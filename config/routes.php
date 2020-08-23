@@ -28,7 +28,7 @@ return  [
 
     ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/*$/', 'tag_video_list_for_video', 'GET'],
 
-//    ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/(?<tag_slug_id>[\w-]+)*$/', VideoTagController::class, 'delete', 'DELETE'],
+    ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/(?<tag_slug_id>[\w-]+)*$/', 'tag_video_delete', 'DELETE'],
 //
 //    ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/(?<tag_slug_id>[\w-]+)*$/', VideoTagController::class, 'update', 'PATCH'],
 //
