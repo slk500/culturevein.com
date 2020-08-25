@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use ApiProblem\ApiProblem;
+use DTO\RequestData;
 use DTO\VideoCreate;
 use Service\TokenService;
 
@@ -48,39 +49,8 @@ function dispatch(array $match): void
         ];
     }, $reflection_function->getParameters());
 
-    $container = new Container();
-
     try {
-
-    $arguments = array_map(function ($parameter) use ($match, $container) {
-        if (array_key_exists($parameter['name'], $match['param'])) {
-            return $match['param'][$parameter['name']];
-        }
-        if ($parameter['type'] === VideoCreate::class) { //todo hardcoded!
-
-            $reflect = new ReflectionClass(VideoCreate::class);
-            $props = $reflect->getProperties();
-
-            $properties = array_map(fn(ReflectionProperty $property) => $property->getName(), $props);
-
-            foreach ($properties as $property) {
-                if ($property === 'user_id') continue;
-                if (!property_exists($match['body'], $property)) throw new ApiProblem( //throws invalid argument exception - todo fix
-                    ["There was a validation error. Missing field: $property", 422]
-                );
-            }
-
-            $request_data = recast(VideoCreate::class, $match['body']);
-
-            if (in_array('user_id', $properties)) {
-                $request_data->user_id = auth();
-            }
-
-            return $request_data;
-        }
-
-        return $container->get($parameter['type']);
-    }, $parameters);
+    $arguments = autowire_arguments($parameters, $match, new Container());
 
         $result = call_user_func_array($match['function'], $arguments);
         set_status_code($match['method']);
@@ -93,6 +63,47 @@ function dispatch(array $match): void
         http_response_code(500);
         echo json_encode($throwable->getMessage());
     }
+}
+
+function autowire_arguments(array $parameters, array $match, Container $container)
+{
+   return array_map(function ($parameter) use ($match, $container) {
+
+       //scalar types
+        if (array_key_exists($parameter['name'], $match['param'])) {
+            return $match['param'][$parameter['name']];
+        }
+
+        //requestData
+        if ($parameter['type'] === RequestData::class) {
+            return autowire_request_data($match);
+        }
+
+        //service from container
+        return $container->get($parameter['type']);
+    }, $parameters);
+}
+
+function autowire_request_data(array $match)
+{
+    $reflect = new ReflectionClass(VideoCreate::class);
+    $props = $reflect->getProperties();
+
+    $properties = array_map(fn(ReflectionProperty $property) => $property->getName(), $props);
+
+    foreach ($properties as $property) {
+        if ($property === 'user_id') continue;
+        if (!property_exists($match['body'], $property)) throw new ApiProblem( //throws invalid argument exception - todo fix
+            ["There was a validation error. Missing field: $property", 422]
+        );
+    }
+
+    $request_data = recast(VideoCreate::class, $match['body']);
+
+    if (in_array('user_id', $properties)) {
+        $request_data->user_id = auth();
+    }
+    return $request_data;
 }
 
 
