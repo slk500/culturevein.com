@@ -67,7 +67,7 @@ function autowire_arguments(array $parameters, array $match, Container $containe
 
         //requestData
         if ($parameter['type'] === RequestData::class) {
-            return autowire_request_data($match);
+            return autowire_request_data($match['body']);
         }
 
         //service from container
@@ -75,7 +75,7 @@ function autowire_arguments(array $parameters, array $match, Container $containe
     }, $parameters);
 }
 
-function autowire_request_data(array $match)
+function autowire_request_data(\stdClass $body)
 {
     $reflect = new ReflectionClass(VideoCreate::class);
     $props = $reflect->getProperties();
@@ -84,12 +84,12 @@ function autowire_request_data(array $match)
 
     foreach ($properties as $property) {
         if ($property === 'user_id') continue;
-        if (!property_exists($match['body'], $property)) throw new ApiProblem( //throws invalid argument exception - todo fix
+        if (!property_exists($body, $property)) throw new ApiProblem( //throws invalid argument exception - todo fix
             ["There was a validation error. Missing field: $property", 422]
         );
     }
 
-    $request_data = recast(VideoCreate::class, $match['body']);
+    $request_data = recast(VideoCreate::class, $body);
 
     if (in_array('user_id', $properties)) {
         $request_data->user_id = auth();
