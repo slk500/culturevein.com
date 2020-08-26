@@ -36,7 +36,12 @@ function tag_video_delete(VideoTagDeleter $video_tag_deleter, string $youtube_id
     $video_tag_deleter->delete($youtube_id, $tag_slug_id, $user_id);
 }
 
-function tag_video_update(VideoTagRepository $video_tag_repository, \stdClass $data, string $video_youtube_id, string $tag_slug_id)
+function tag_video_completed(VideoTagRepository $video_tag_repository, string $youtube_id, string $tag_slug_id)
 {
-    $video_tag_repository->set_is_complete($video_youtube_id, $tag_slug_id, $data->is_complete);
+    $video_tag_repository->set_completed($youtube_id, $tag_slug_id);
+}
+
+function tag_video_uncompleted(VideoTagRepository $video_tag_repository, string $youtube_id, string $tag_slug_id)
+{
+    $video_tag_repository->set_uncompleted($youtube_id, $tag_slug_id);
 }

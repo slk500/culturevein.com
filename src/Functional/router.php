@@ -70,6 +70,11 @@ function autowire_arguments(array $parameters, array $match, Container $containe
             return autowire_request_data($match['body']);
         }
 
+        if ($parameter['type'] === 'string' || $parameter['type'] === 'int'){
+            throw new Exception(
+                "Could not autowire argument: {$parameter['type']} \${$parameter['name']}");
+        }
+
         //service from container
         return $container->get($parameter['type']);
     }, $parameters);

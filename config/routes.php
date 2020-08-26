@@ -29,9 +29,10 @@ return  [
     ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/*$/', 'tag_video_list_for_video', 'GET'],
 
     ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/(?<tag_slug_id>[\w-]+)*$/', 'tag_video_delete', 'DELETE'],
-//
-//    ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/(?<tag_slug_id>[\w-]+)*$/', VideoTagController::class, 'update', 'PATCH'],
-//
+
+    ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/(?<tag_slug_id>[\w-]+)\/completed\/*$/', 'tag_video_completed', 'PATCH'],
+    ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/(?<tag_slug_id>[\w-]+)\/uncompleted\/*$/', 'tag_video_uncompleted', 'PATCH'],
+
 //    ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/*$/', VideoTagController::class, 'create', 'POST'],
 //
 //    ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/(?<tag_slug_id>[\w-]+)\/*$/', VideoTagTimeController::class, 'create', 'POST'],

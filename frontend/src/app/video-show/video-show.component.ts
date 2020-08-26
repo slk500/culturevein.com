@@ -163,7 +163,7 @@ export class VideoShowComponent implements OnInit {
     }
 
     setVideoTagAsCompleted(video_youtube_id: string, tag_slug_id: string) {
-        this._tagService.setIsComplete(video_youtube_id, tag_slug_id, true)
+        this._tagService.setCompleted(video_youtube_id, tag_slug_id)
             .subscribe((data: any) => {
                 this._tagService.getVideoTagsForVideo(this.youtubeId)
                     .subscribe(data => {
@@ -175,7 +175,7 @@ export class VideoShowComponent implements OnInit {
     }
 
     setVideoTagAsUncompleted(video_youtube_id: string, tag_slug_id: string) {
-        this._tagService.setIsComplete(video_youtube_id, tag_slug_id, false)
+        this._tagService.setUncompleted(video_youtube_id, tag_slug_id)
             .subscribe((data: any) => {
                 this._tagService.getVideoTagsForVideo(this.youtubeId)
                     .subscribe(data => {

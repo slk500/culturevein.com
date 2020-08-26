@@ -76,10 +76,12 @@ export class TagService {
     })
   }
 
-  setIsComplete(youtubeId: string, tagSlugId: string, isComplete: boolean) {
-    return this.http.patch<any>('api/videos/' + youtubeId + '/tags/' + tagSlugId, {
-      is_complete: isComplete
-    })
+  setCompleted(youtubeId: string, tagSlugId: string) {
+    return this.http.patch<any>('api/videos/' + youtubeId + '/tags/' + tagSlugId + '/completed' , { });
+  }
+
+  setUncompleted(youtubeId: string, tagSlugId: string) {
+    return this.http.patch<any>('api/videos/' + youtubeId + '/tags/' + tagSlugId + '/uncompleted' , { });
   }
 
   deleteVideoTag(youtubeId: string, tagSlugId: string): Observable<Itag> {
