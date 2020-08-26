@@ -50,3 +50,16 @@ function get_all_headers()
     }
     return $headers;
 }
+
+function recast($className, stdClass $object)
+{
+    if (!class_exists($className))
+        throw new InvalidArgumentException(sprintf('Inexistant class %s.', $className));
+
+    $new = new $className();
+    foreach ($object as $property => $value) {
+        $new->$property = $value;
+    }
+
+    return $new;
+}

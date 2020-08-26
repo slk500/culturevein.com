@@ -7,16 +7,14 @@ use DTO\RequestData;
 use DTO\VideoCreate;
 use Service\TokenService;
 
-function match(array $routes, string $url, string $method): ?array
+function match(array $routes, string $url, string $http_method): ?array
 {
     foreach ($routes as $route) {
-        if (preg_match($route[0], $url, $matches) &&
-            ($route[2] === $method || $method == 'OPTIONS')) {
-
+        if (preg_match($route[0], $url, $matches) && ($route[2] === $http_method)) {
             return [
-                'function' => $route[1],
-                'method' => $route[2],
-                'param' => $matches,
+                'function_name' => $route[1],
+                'http_method' => $route[2],
+                'named_arguments' => $matches,
                 'body' => get_body()
             ];
         }
@@ -24,36 +22,16 @@ function match(array $routes, string $url, string $method): ?array
     return null;
 }
 
-function recast($className, stdClass $object)
-{
-    if (!class_exists($className))
-        throw new InvalidArgumentException(sprintf('Inexistant class %s.', $className));
-
-    $new = new $className();
-    foreach ($object as $property => $value) {
-        $new->$property = $value;
-    }
-
-    return $new;
-}
-
 //todo refactor!
 function dispatch(array $match): void
 {
-    $reflection_function = new ReflectionFunction($match['function']);
-
-    $parameters = array_map(function (ReflectionParameter $reflection_parameter) {
-        return [
-            'name' => $reflection_parameter->getName(),
-            'type' => ($reflection_parameter->getType())->getName(),
-        ];
-    }, $reflection_function->getParameters());
+    $parameters = read_parameters_from_function($match['function_name']);
 
     try {
     $arguments = autowire_arguments($parameters, $match, new Container());
 
-        $result = call_user_func_array($match['function'], $arguments);
-        set_status_code($match['method']);
+        $result = call_user_func_array($match['function_name'], $arguments);
+        set_status_code($match['http_method']);
         echo json_encode(['data' => $result]);
 
     } catch (ApiProblem $apiProblem) {
@@ -65,13 +43,23 @@ function dispatch(array $match): void
     }
 }
 
+function read_parameters_from_function(string $function_name): array
+{
+    return array_map(function (ReflectionParameter $reflection_parameter) {
+        return [
+            'name' => $reflection_parameter->getName(),
+            'type' => ($reflection_parameter->getType())->getName(),
+        ];
+    }, (new ReflectionFunction($function_name))->getParameters());
+}
+
 function autowire_arguments(array $parameters, array $match, Container $container)
 {
    return array_map(function ($parameter) use ($match, $container) {
 
        //scalar types
-        if (array_key_exists($parameter['name'], $match['param'])) {
-            return $match['param'][$parameter['name']];
+        if (array_key_exists($parameter['name'], $match['named_arguments'])) {
+            return $match['named_arguments'][$parameter['name']];
         }
 
         //requestData
@@ -119,9 +107,9 @@ function auth(): ?int
     return (new TokenService())->decode_user_id($token);
 }
 
-function set_status_code(string $method): void
+function set_status_code(string $http_method): void
 {
-    switch ($method) {
+    switch ($http_method) {
         case 'GET':
             http_response_code(200);
             break;
