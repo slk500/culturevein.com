@@ -3,6 +3,8 @@
 namespace Tests\Functional;
 
 use Deleter\VideoTagDeleter;
+use DTO\VideoCreate;
+use Factory\VideoFactory;
 use PHPUnit\Framework\TestCase;
 
 class FunctionsTest extends TestCase
@@ -79,5 +81,36 @@ class FunctionsTest extends TestCase
         $this->assertEquals('youtube_id_value', $arguments[1]);
         $this->assertEquals('police', $arguments[2]);
         $this->assertEquals(1, $arguments[3]);
+    }
+
+    public function test_autowire_arguments_request_data()
+    {
+        $parameters = [
+                [
+                    'name' => 'video_factory',
+                    'type' => 'Factory\VideoFactory',
+                ],
+                [
+                    'name' => 'video_create',
+                    'type' => 'DTO\VideoCreate',
+                ]
+            ];
+
+        $body = new \stdClass();
+        $body->artist_name = 'artist name value';
+        $body->video_name = 'video name value';
+        $body->youtube_id = '12345678911';
+        $body->duration = 100;
+
+        $match = [
+            'function_name' => 'video_create',
+            'http_method' => 'POST',
+            'named_arguments' => [],
+            'body' => $body
+        ];
+
+        $arguments = autowire_arguments($parameters, $match, new \Container());
+        $this->assertInstanceOf(VideoFactory::class, $arguments[0]);
+        $this->assertInstanceOf(VideoCreate::class, $arguments[1]);
     }
 }

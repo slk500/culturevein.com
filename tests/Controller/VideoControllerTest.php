@@ -35,10 +35,9 @@ class VideoControllerTest extends TestCase
     }
 
     /**
-     * @test
      * @covers video_create()
      */
-    public function create()
+    public function test_video_create()
     {
         $data = new stdClass();
         $data->artist_name = 'Burak Yeter';

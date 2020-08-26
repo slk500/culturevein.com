@@ -62,11 +62,11 @@ function autowire_arguments(array $parameters, array $match, Container $containe
             return $match['named_arguments'][$parameter['name']];
         }
         if ($parameter['name'] === 'user_id') {
-            return auth();
+            return find_logged_user_id();
         }
 
         //requestData
-        if ($parameter['type'] === RequestData::class) {
+        if (is_a($parameter['type'], RequestData::class, true)){
             return autowire_request_data($match['body']);
         }
 
@@ -92,13 +92,13 @@ function autowire_request_data(\stdClass $body)
     $request_data = recast(VideoCreate::class, $body);
 
     if (in_array('user_id', $properties)) {
-        $request_data->user_id = auth();
+        $request_data->user_id = find_logged_user_id();
     }
     return $request_data;
 }
 
 
-function auth(): ?int
+function find_logged_user_id(): ?int
 {
     $authorization_header = find_authorization_header();
     $token = $authorization_header ? find_token($authorization_header) : null;
