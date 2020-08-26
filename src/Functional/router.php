@@ -22,13 +22,12 @@ function match(array $routes, string $url, string $http_method): ?array
     return null;
 }
 
-//todo refactor!
 function dispatch(array $match): void
 {
     $parameters = read_parameters_from_function($match['function_name']);
 
     try {
-    $arguments = autowire_arguments($parameters, $match, new Container());
+        $arguments = autowire_arguments($parameters, $match, new Container());
 
         $result = call_user_func_array($match['function_name'], $arguments);
         set_status_code($match['http_method']);
@@ -53,13 +52,17 @@ function read_parameters_from_function(string $function_name): array
     }, (new ReflectionFunction($function_name))->getParameters());
 }
 
-function autowire_arguments(array $parameters, array $match, Container $container)
+//it's done in one go -> should be split into 3 functions to increase readability
+function autowire_arguments(array $parameters, array $match, Container $container): array
 {
-   return array_map(function ($parameter) use ($match, $container) {
+    return array_map(function ($parameter) use ($match, $container) {
 
-       //scalar types
+        //scalar types
         if (array_key_exists($parameter['name'], $match['named_arguments'])) {
             return $match['named_arguments'][$parameter['name']];
+        }
+        if ($parameter['name'] === 'user_id') {
+            return auth();
         }
 
         //requestData
@@ -100,7 +103,7 @@ function auth(): ?int
     $authorization_header = find_authorization_header();
     $token = $authorization_header ? find_token($authorization_header) : null;
 
-    if (!$token){
+    if (!$token) {
         return null;
     }
 

@@ -2,6 +2,7 @@
 
 namespace Tests\Functional;
 
+use Deleter\VideoTagDeleter;
 use PHPUnit\Framework\TestCase;
 
 class FunctionsTest extends TestCase
@@ -60,5 +61,23 @@ class FunctionsTest extends TestCase
                 'type' => 'int',
             ]
         ];
+
+        $match = [
+            'function_name' => 'tag_video_delete',
+            'http_method' => 'GET',
+            'named_arguments' => [
+                'tag_slug_id' => 'police',
+                'youtube_id' => 'youtube_id_value',
+                'user_id' => 1
+            ],
+            'body' => ''
+        ];
+
+        $arguments = autowire_arguments($parameters, $match, new \Container());
+
+        $this->assertInstanceOf(VideoTagDeleter::class, $arguments[0]);
+        $this->assertEquals('youtube_id_value', $arguments[1]);
+        $this->assertEquals('police', $arguments[2]);
+        $this->assertEquals(1, $arguments[3]);
     }
 }
