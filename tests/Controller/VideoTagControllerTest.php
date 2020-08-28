@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Controller\VideoTagController;
 use Factory\VideoFactory;
-use DTO\VideoCreate;
+use DTO\RequestVideoCreate;
 use Model\Tag;
 use PHPUnit\Framework\TestCase;
 use Repository\Base\Database;
@@ -54,7 +54,7 @@ class VideoTagControllerTest extends TestCase
         $duration = 10;
         $youtube_id = 'Y1_VsyLAGuk';
 
-        $video_create = new VideoCreate(
+        $video_create = new RequestVideoCreate(
             $artist_name,
             $video_name,
             $youtube_id,

@@ -11,8 +11,7 @@ function match(array $routes, string $url, string $http_method): ?array
     foreach ($routes as $route) {
         if (preg_match($route[0], $url, $matches) && ($route[2] === $http_method)) {
 
-            $filtered_path_arguments = array_filter($matches, fn($key) =>
-                !is_int($key),ARRAY_FILTER_USE_KEY);
+            $filtered_path_arguments = array_filter($matches, fn($key) => !is_int($key), ARRAY_FILTER_USE_KEY);
 
             return [
                 'function_name' => $route[1],
@@ -34,7 +33,7 @@ function dispatch(array $match): void
 
         $result = call_user_func_array($match['function_name'], $arguments);
         set_status_code($match['http_method']);
-        if($result) echo json_encode(['data' => $result]);
+        if ($result) echo json_encode(['data' => $result]);
 
     } catch (ApiProblem $apiProblem) {
         http_response_code($apiProblem->getCode());
@@ -62,19 +61,26 @@ function autowire_arguments(array $parameters, array $match, Container $containe
 
         //scalar types
         if (array_key_exists($parameter['name'], $match['path_arguments'])) {
-            if($parameter['type'] == 'int') return intval($match['path_arguments'][$parameter['name']]);
+            if ($parameter['type'] == 'int') return intval($match['path_arguments'][$parameter['name']]);
             return $match['path_arguments'][$parameter['name']];
         }
+
+        if ($match['body_arguments']) {
+            if (array_key_exists($parameter['name'], $match['body_arguments'])) {
+                return $match['body_arguments'][$parameter['name']];
+            }
+        }
+
         if ($parameter['name'] === 'user_id') {
             return find_logged_user_id();
         }
 
         //requestData
-        if (is_a($parameter['type'], RequestData::class, true)){
+        if (is_a($parameter['type'], RequestData::class, true)) {
             return autowire_request_data($match['body_arguments'], $match['path_arguments'], $parameter['type']);
         }
 
-        if ($parameter['type'] === 'string' || $parameter['type'] === 'int'){
+        if ($parameter['type'] === 'string' || $parameter['type'] === 'int') {
             throw new Exception(
                 "Could not autowire argument: {$parameter['type']} \${$parameter['name']}");
         }
@@ -128,6 +134,9 @@ function set_status_code(string $http_method): void
             break;
         case 'POST':
             http_response_code(201);
+            break;
+        case 'DELETE':
+            http_response_code(204);
             break;
     }
 }

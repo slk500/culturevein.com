@@ -6,7 +6,7 @@ namespace Factory;
 
 
 use Cocur\Slugify\Slugify;
-use DTO\VideoCreate;
+use DTO\RequestVideoCreate;
 use Repository\ArtistRepository;
 use Repository\VideoRepository;
 
@@ -23,7 +23,7 @@ class VideoFactory
     }
 
     //todo add transaction
-    public function create(VideoCreate $video_create): void
+    public function create(RequestVideoCreate $video_create): void
     {
         $this->video_repository->add($video_create);
 

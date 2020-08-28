@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Repository;
 
-use DTO\VideoCreate;
+use DTO\RequestVideoCreate;
 use Model\Video;
 use Repository\Base\Repository;
 
 final class VideoRepository extends Repository
 {
-    public function add(VideoCreate $video_create): void
+    public function add(RequestVideoCreate $video_create): void
     {
         $stmt = $this->database->mysqli->prepare("INSERT INTO video (video_youtube_id, name, duration, user_id) VALUES (?,?,?,?)");
         if (!$stmt) {

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-use DTO\VideoCreate;
+use DTO\RequestVideoCreate;
 use Factory\VideoFactory;
 use Repository\VideoRepository;
 
-function video_create(VideoFactory $video_factory, VideoCreate $video_create): void
+function video_create(VideoFactory $video_factory, RequestVideoCreate $video_create): void
 {
     $video_factory->create($video_create);
 }

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Factory\VideoFactory;
-use DTO\VideoCreate;
+use DTO\RequestVideoCreate;
 use Factory\TagVideoFactory;
 use Model\Tag;
 use PHPUnit\Framework\TestCase;

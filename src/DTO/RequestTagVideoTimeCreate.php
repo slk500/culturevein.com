@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace DTO;
 
 
-class TagVideoTimeCreate implements RequestData
+class RequestTagVideoTimeCreate implements RequestData
 {
     public int $start;
 

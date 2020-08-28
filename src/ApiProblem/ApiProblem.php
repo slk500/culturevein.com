@@ -29,7 +29,7 @@ final class ApiProblem extends \Exception
     public function __construct(array $title, \Exception $previous = null)
     {
         if (!array_search($title[0], array_column(self::$titles, 0))) {
-            throw new \InvalidArgumentException("No title: $title[0]");
+            throw new \InvalidArgumentException("$title[0]");
         }
 
         $this->title = $title;

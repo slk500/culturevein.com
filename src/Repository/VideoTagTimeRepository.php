@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Repository;
 
-use DTO\TagVideoTimeCreate;
+use DTO\RequestTagVideoTimeCreate;
 use Repository\Base\Repository;
 
 final class VideoTagTimeRepository extends Repository
 {
-    public function add(TagVideoTimeCreate $video_tag_time_create): ?int
+    public function add(RequestTagVideoTimeCreate $video_tag_time_create): ?int
     {
         $stmt = $this->database->mysqli->prepare("INSERT INTO video_tag_time (video_tag_id, start, stop, user_id) VALUES (?, ?, ?, ?)");
 

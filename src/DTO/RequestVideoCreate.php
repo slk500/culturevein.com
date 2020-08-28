@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DTO;
 
-class VideoCreate implements RequestData
+class RequestVideoCreate implements RequestData
 {
     public string $artist_name;
 

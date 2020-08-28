@@ -6,7 +6,7 @@ declare(strict_types=1);
 namespace Tests\Builder\VideoTagTime;
 
 
-use DTO\TagVideoTimeCreate;
+use DTO\RequestTagVideoTimeCreate;
 
 class VideoTagTimeBuilder
 {
@@ -18,7 +18,7 @@ class VideoTagTimeBuilder
 
     public $user_id;
 
-    public function build(): TagVideoTimeCreate
+    public function build(): RequestTagVideoTimeCreate
     {
         return new VideoTagCreate(
             $this->youtube_id,

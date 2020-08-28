@@ -6,7 +6,7 @@ namespace Tests\Deleter;
 
 use Container;
 use Deleter\VideoTagTimeDeleter;
-use DTO\TagVideoTimeCreate;
+use DTO\RequestTagVideoTimeCreate;
 use Factory\VideoFactory;
 use Factory\TagVideoFactory;
 use Model\Tag;
@@ -98,7 +98,7 @@ class VideoTagTimeDeleterTest extends TestCase
         $video_tag_create = (new VideoTagCreateBuilder())->build();
         $this->video_tag_factory->create($video_tag_create);
 
-        $video_tag_time_create = new TagVideoTimeCreate(
+        $video_tag_time_create = new RequestTagVideoTimeCreate(
             1,
             0,
             10

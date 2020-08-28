@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Builder\Video;
 
 
-use DTO\VideoCreate;
+use DTO\RequestVideoCreate;
 
 class VideoCreateBuilder
 {
@@ -19,9 +19,9 @@ class VideoCreateBuilder
 
     private $duration = 10;
 
-    public function build(): VideoCreate
+    public function build(): RequestVideoCreate
     {
-        return new VideoCreate(
+        return new RequestVideoCreate(
             $this->artist_name,
             $this->video_name,
             $this->youtube_id,

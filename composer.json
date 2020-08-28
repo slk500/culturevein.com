@@ -9,7 +9,7 @@
       "src/Normalizer/tag_show_normalizer.php",
       "src/Controller/artist_controller.php",
       "src/Controller/statistic_controller.php",
-      "src/Controller/subscribe_controller.php",
+      "src/Controller/tag_subscribe_controller.php",
       "src/Controller/tag_controller.php",
       "src/Controller/user_controller.php",
       "src/Controller/video_controller.php",

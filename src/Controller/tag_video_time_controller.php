@@ -3,13 +3,13 @@
 declare(strict_types=1);
 
 use Deleter\VideoTagTimeDeleter;
-use DTO\TagVideoTimeCreate;
+use DTO\RequestTagVideoTimeCreate;
 use Repository\VideoTagRepository;
 use Repository\VideoTagTimeRepository;
 
 function tag_video_time_create(VideoTagRepository $video_tag_repository,
                                VideoTagTimeRepository $video_tag_time_repository,
-                               TagVideoTimeCreate $tag_video_time_create): void
+                               RequestTagVideoTimeCreate $tag_video_time_create): void
 {
     //shitfix
     $tag_video_time_create->video_tag_id = $video_tag_repository->find(

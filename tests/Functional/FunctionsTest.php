@@ -3,7 +3,7 @@
 namespace Tests\Functional;
 
 use Deleter\VideoTagDeleter;
-use DTO\VideoCreate;
+use DTO\RequestVideoCreate;
 use Factory\VideoFactory;
 use PHPUnit\Framework\TestCase;
 
@@ -92,7 +92,7 @@ class FunctionsTest extends TestCase
                 ],
                 [
                     'name' => 'video_create',
-                    'type' => 'DTO\VideoCreate',
+                    'type' => 'DTO\RequestVideoCreate',
                 ]
             ];
 
@@ -111,6 +111,6 @@ class FunctionsTest extends TestCase
 
         $arguments = autowire_arguments($parameters, $match, new \Container());
         $this->assertInstanceOf(VideoFactory::class, $arguments[0]);
-        $this->assertInstanceOf(VideoCreate::class, $arguments[1]);
+        $this->assertInstanceOf(RequestVideoCreate::class, $arguments[1]);
     }
 }
