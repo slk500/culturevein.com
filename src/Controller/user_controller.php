@@ -9,7 +9,7 @@ use Repository\UserRepository;
 /**
  * @throws ApiProblem
  */
-function create(UserRepository $user_repository, \stdClass $data)
+function user_create(UserRepository $user_repository, \stdClass $data)
 {
     foreach (['username', 'email', 'password'] as $field) {
         if (!property_exists($data, $field)) {
@@ -42,7 +42,7 @@ function create(UserRepository $user_repository, \stdClass $data)
 /**
  * @throws ApiProblem
  */
-function login(UserRepository $user_repository, \stdClass $data): array
+function user_login(UserRepository $user_repository, \stdClass $data): array
 {
     if (!property_exists($data, 'email') ||
         !property_exists($data, 'password') ||

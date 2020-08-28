@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Repository;
 
-use DTO\VideoTagCreate;
 use Repository\Base\Repository;
+use ValueObject\TagVideo;
 
 final class VideoTagRepository extends Repository
 {
-    public function add(VideoTagCreate $video_tag_create): ?int
+    public function add(TagVideo $video_tag_create): ?int
     {
         $stmt = $this->database->mysqli->prepare(
             "INSERT INTO video_tag (video_youtube_id, tag_slug_id, user_id) VALUES (?, ?, ?)"
@@ -20,7 +20,7 @@ final class VideoTagRepository extends Repository
         }
 
         $stmt->bind_param("ssi",
-            $video_tag_create->video_youtube_id,
+            $video_tag_create->youtube_id,
              $video_tag_create->tag_slug_id,
                     $video_tag_create->user_id
         );

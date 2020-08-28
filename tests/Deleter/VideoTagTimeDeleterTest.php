@@ -8,7 +8,7 @@ use Container;
 use Deleter\VideoTagTimeDeleter;
 use DTO\VideoTagTimeCreate;
 use Factory\VideoFactory;
-use Factory\VideoTagFactory;
+use Factory\TagVideoFactory;
 use Model\Tag;
 use Model\User;
 use Repository\Base\Database;
@@ -60,7 +60,7 @@ class VideoTagTimeDeleterTest extends TestCase
     private $video_factory;
 
     /**
-     * @var VideoTagFactory
+     * @var TagVideoFactory
      */
     private $video_tag_factory;
 
@@ -77,7 +77,7 @@ class VideoTagTimeDeleterTest extends TestCase
         $this->user_repository = $container->get(UserRepository::class);
         $this->tag_repository = $container->get(TagRepository::class);
         $this->video_factory = $container->get(VideoFactory::class);
-        $this->video_tag_factory = $container->get(VideoTagFactory::class);
+        $this->video_tag_factory = $container->get(TagVideoFactory::class);
     }
 
     /**

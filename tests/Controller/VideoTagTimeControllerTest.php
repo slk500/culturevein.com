@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Factory\VideoFactory;
 use DTO\VideoCreate;
-use Factory\VideoTagFactory;
+use Factory\TagVideoFactory;
 use Model\Tag;
 use PHPUnit\Framework\TestCase;
 use Repository\Base\Database;
@@ -32,7 +32,7 @@ class VideoTagTimeControllerTest extends TestCase
     private $video_factory;
 
     /**
-     * @var VideoTagFactory
+     * @var TagVideoFactory
      */
     private $video_tag_factory;
 
@@ -43,7 +43,7 @@ class VideoTagTimeControllerTest extends TestCase
             ->truncate_all_tables();
 
         $this->video_tag_repository = $container->get(VideoTagRepository::class);
-        $this->video_tag_factory = $container->get(VideoTagFactory::class);
+        $this->video_tag_factory = $container->get(TagVideoFactory::class);
         $this->video_factory = $container->get(VideoFactory::class);
 
 

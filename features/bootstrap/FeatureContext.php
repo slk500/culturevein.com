@@ -3,7 +3,7 @@
 use Behat\Behat\Context\Context;
 use DTO\VideoTagTimeCreate;
 use Factory\VideoFactory;
-use Factory\VideoTagFactory;
+use Factory\TagVideoFactory;
 use Model\Tag;
 use Repository\Base\Database;
 use Repository\TagRepository;
@@ -35,7 +35,7 @@ class FeatureContext implements Context
     private $tag_descendant_repository;
 
     /**
-     * @var VideoTagFactory
+     * @var TagVideoFactory
      */
     private $video_tag_factory;
     /**
@@ -48,7 +48,7 @@ class FeatureContext implements Context
         $container = new Container();
         $this->tag_repository = $container->get(TagRepository::class);
         $this->video_factory = $container->get(VideoFactory::class);
-        $this->video_tag_factory = $container->get(VideoTagFactory::class);
+        $this->video_tag_factory = $container->get(TagVideoFactory::class);
         $this->video_tag_time_repository = $container->get(VideoTagTimeRepository::class);
         $this->database_helper = (new DatabaseHelper(new Database));
     }

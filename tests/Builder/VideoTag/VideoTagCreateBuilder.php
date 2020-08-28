@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Tests\Builder\VideoTag;
 
-use DTO\VideoTagCreate;
+use DTO\RequestTagVideo;
 
 class VideoTagCreateBuilder
 {
     private $youtube_id = 'Y1_VsyLAGuk';
     private $tag_name = 'video game';
 
-    public function build(): VideoTagCreate
+    public function build(): RequestTagVideo
     {
-        return new VideoTagCreate(
+        return new RequestTagVideo(
             $this->youtube_id,
             $this->tag_name
         );

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use DTO\VideoTagTimeCreate;
 use Factory\VideoFactory;
-use Factory\VideoTagFactory;
+use Factory\TagVideoFactory;
 use Model\Tag;
 use Model\User;
 use PHPUnit\Framework\TestCase;

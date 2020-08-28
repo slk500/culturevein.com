@@ -3,20 +3,14 @@
 declare(strict_types=1);
 
 use Deleter\VideoTagDeleter;
-use DTO\VideoTagCreate;
-use Factory\VideoTagFactory;
+use DTO\RequestTagVideo;
+use Factory\TagVideoFactory;
 use Repository\VideoTagRepository;
+use ValueObject\TagVideo;
 
-//todo what if tag dosent exist?
-function tag_video_create(VideoTagFactory $video_tag_factory, \stdClass $data, string $youtube_id, ?int $user_id)
+function tag_video_create(TagVideoFactory $video_tag_factory, RequestTagVideo $video_tag_create)
 {
-    $video_tag_create = new VideoTagCreate(
-        $youtube_id,
-        $data->tag_name,
-        $user_id
-    );
-
-    $video_tag_factory->create($video_tag_create);
+    $video_tag_factory->create(new TagVideo($video_tag_create));
     return $video_tag_create;
 }
 

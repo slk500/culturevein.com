@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Factory;
 
 use Container;
-use Factory\VideoTagFactory;
+use Factory\TagVideoFactory;
 use Factory\VideoFactory;
 use PHPUnit\Framework\TestCase;
 use Repository\Base\Database;
@@ -28,7 +28,7 @@ class VideoTagFactoryTest extends TestCase
     private $video_factory;
 
     /**
-     * @var VideoTagFactory
+     * @var TagVideoFactory
      */
     private $video_tag_factory;
 
@@ -40,7 +40,7 @@ class VideoTagFactoryTest extends TestCase
 
         $this->video_tag_repository = $container->get(VideoTagRepository::class);
         $this->video_factory = $container->get(VideoFactory::class);
-        $this->video_tag_factory = $container->get(VideoTagFactory::class);
+        $this->video_tag_factory = $container->get(TagVideoFactory::class);
     }
 
     /**

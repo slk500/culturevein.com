@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Deleter\VideoTagDeleter;
 use Deleter\VideoTagTimeDeleter;
 use Factory\VideoFactory;
-use Factory\VideoTagFactory;
+use Factory\TagVideoFactory;
 use Repository\Archiver\ArchiverRepository;
 use Repository\ArtistRepository;
 use Repository\Base\Database;
@@ -29,7 +29,7 @@ return [
         VideoFactory::class => [VideoRepository::class, ArtistRepository::class],
         VideoRepository::class => [Database::class],
         VideoTagDeleter::class => [VideoTagRepository::class, ArchiverRepository::class],
-        VideoTagFactory::class => [TagRepository::class, VideoTagRepository::class],
+        TagVideoFactory::class => [TagRepository::class, VideoTagRepository::class],
         VideoTagHistoryRepository::class => [Database::class],
         VideoTagRepository::class => [Database::class],
         VideoTagTimeDeleter::class => [VideoTagTimeRepository::class, ArchiverRepository::class],

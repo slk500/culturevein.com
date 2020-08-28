@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Factory;
 
-use DTO\VideoTagCreate;
+use Cocur\Slugify\Slugify;
+use DTO\RequestTagVideo;
 use Model\Tag;
 use Repository\TagRepository;
 use Repository\VideoTagRepository;
+use ValueObject\TagVideo;
 
-class VideoTagFactory
+class TagVideoFactory
 {
     private $video_tag_repository;
     private $tag_repository;
@@ -20,7 +22,7 @@ class VideoTagFactory
         $this->video_tag_repository = $video_tag_repository;
     }
 
-    public function create(VideoTagCreate $video_tag_create): ?int
+    public function create(TagVideo $video_tag_create): ?int
     {
         $tag = $this->tag_repository->find($video_tag_create->tag_slug_id);
 

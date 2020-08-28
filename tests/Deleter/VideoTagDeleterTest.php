@@ -6,7 +6,7 @@ namespace Tests\Deleter;
 
 use Container;
 use Factory\VideoFactory;
-use Factory\VideoTagFactory;
+use Factory\TagVideoFactory;
 use Model\Tag;
 use Model\User;
 use Repository\Base\Database;
@@ -53,7 +53,7 @@ class VideoTagDeleterTest extends TestCase
     private $video_factory;
 
     /**
-     * @var VideoTagFactory
+     * @var TagVideoFactory
      */
     private $video_tag_factory;
 
@@ -69,7 +69,7 @@ class VideoTagDeleterTest extends TestCase
         $this->user_repository = $container->get(UserRepository::class);
         $this->tag_repository = $container->get(TagRepository::class);
         $this->video_factory = $container->get(VideoFactory::class);
-        $this->video_tag_factory = $container->get(VideoTagFactory::class);
+        $this->video_tag_factory = $container->get(TagVideoFactory::class);
     }
 
     /**
