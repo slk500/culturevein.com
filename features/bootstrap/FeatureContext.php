@@ -1,7 +1,7 @@
 <?php
 
 use Behat\Behat\Context\Context;
-use DTO\VideoTagTimeCreate;
+use DTO\TagVideoTimeCreate;
 use Factory\VideoFactory;
 use Factory\TagVideoFactory;
 use Model\Tag;
@@ -100,7 +100,7 @@ class FeatureContext implements Context
      */
     public function thisVideoHaveVideoTagTimeWithTimeStartAndStop(string $tag_name, int $start, int $stop)
     {
-        $video_tag_create = new VideoTagTimeCreate(
+        $video_tag_create = new TagVideoTimeCreate(
             1,
             $start,
             $stop

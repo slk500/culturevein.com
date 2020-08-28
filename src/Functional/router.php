@@ -34,7 +34,7 @@ function dispatch(array $match): void
 
         $result = call_user_func_array($match['function_name'], $arguments);
         set_status_code($match['http_method']);
-        echo json_encode(['data' => $result]);
+        if($result) echo json_encode(['data' => $result]);
 
     } catch (ApiProblem $apiProblem) {
         http_response_code($apiProblem->getCode());
@@ -62,6 +62,7 @@ function autowire_arguments(array $parameters, array $match, Container $containe
 
         //scalar types
         if (array_key_exists($parameter['name'], $match['path_arguments'])) {
+            if($parameter['type'] == 'int') return intval($match['path_arguments'][$parameter['name']]);
             return $match['path_arguments'][$parameter['name']];
         }
         if ($parameter['name'] === 'user_id') {

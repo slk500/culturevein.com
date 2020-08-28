@@ -2,42 +2,23 @@
 
 declare(strict_types=1);
 
-use ApiProblem\ApiProblem;
 use Deleter\VideoTagTimeDeleter;
-use DTO\VideoTagTimeCreate;
-use Repository\VideoRepository;
+use DTO\TagVideoTimeCreate;
 use Repository\VideoTagRepository;
 use Repository\VideoTagTimeRepository;
 
-/**
- * @throws ApiProblem
- */
-function tag_video_time_create(VideoRepository $video_repository, VideoTagRepository $video_tag_repository,
+function tag_video_time_create(VideoTagRepository $video_tag_repository,
                                VideoTagTimeRepository $video_tag_time_repository,
-                               \stdClass $body, string $youtube_id, string $tag_slug_id, ?int $user_id)
+                               TagVideoTimeCreate $tag_video_time_create): void
 {
-    $video = $video_repository->find($youtube_id);
+    //shitfix
+    $tag_video_time_create->video_tag_id = $video_tag_repository->find(
+        $tag_video_time_create->youtube_id, $tag_video_time_create->tag_slug_id);
 
-    if (!$video) {
-        throw new ApiProblem(ApiProblem::NOT_FOUND);
-    }
-
-    $video_tag_id = $video_tag_repository->find($youtube_id, $tag_slug_id);
-
-    $video_tag_create = new VideoTagTimeCreate(
-        $video_tag_id,
-        $body->start,
-        $body->stop,
-        $user_id
-    );
-
-    $video_tag_time_repository->add($video_tag_create);
-
-    return $body;
+    $video_tag_time_repository->add($tag_video_time_create);
 }
 
-function tag_video_time_delete(VideoTagTimeDeleter $video_tag_timeDeleter, string $youtube_id,
-                               string $tag_slug_id, int $video_tag_time_id, ?int $user_id)
+function tag_video_time_delete(VideoTagTimeDeleter $video_tag_time_deleter, int $video_tag_time_id, ?int $user_id): void
 {
-    $video_tag_timeDeleter->delete($video_tag_time_id, $user_id);
+    $video_tag_time_deleter->delete($video_tag_time_id, $user_id);
 }

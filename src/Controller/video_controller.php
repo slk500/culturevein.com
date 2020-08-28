@@ -6,10 +6,9 @@ use DTO\VideoCreate;
 use Factory\VideoFactory;
 use Repository\VideoRepository;
 
-function video_create(VideoFactory $video_factory, VideoCreate $video_create)
+function video_create(VideoFactory $video_factory, VideoCreate $video_create): void
 {
     $video_factory->create($video_create);
-    return $video_create;
 }
 
 function video_list(VideoRepository $video_repository)

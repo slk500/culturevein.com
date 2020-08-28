@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use DTO\VideoTagTimeCreate;
+use DTO\TagVideoTimeCreate;
 use Factory\VideoFactory;
 use Factory\TagVideoFactory;
 use Model\Tag;
@@ -79,7 +79,7 @@ class VideoTagRepositoryTest extends TestCase
         $video_tag_create = (new VideoTagCreateBuilder())->build();
         $this->video_tag_repository->add($video_tag_create);
 
-        $video_tag_time_create = new VideoTagTimeCreate(
+        $video_tag_time_create = new TagVideoTimeCreate(
             1,
             0,
             10
