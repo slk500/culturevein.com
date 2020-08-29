@@ -6,9 +6,11 @@ use DTO\RequestVideoCreate;
 use Factory\VideoFactory;
 use Repository\VideoRepository;
 
-function video_create(VideoFactory $video_factory, RequestVideoCreate $video_create): void
+//todo should be return null - but idk how to redirect in angular base on status code
+function video_create(VideoFactory $video_factory, RequestVideoCreate $video_create): RequestVideoCreate
 {
     $video_factory->create($video_create);
+    return $video_create;
 }
 
 function video_list(VideoRepository $video_repository)

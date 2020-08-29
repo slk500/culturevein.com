@@ -35,7 +35,7 @@ export class AddComponent implements OnInit {
 
     public duration = 0;
 
-    public errorMsg;
+    public errors;
 
     constructor(private _artistService: ArtistService, private _youTubeService: YouTubeService,
                 private _videoService: VideoService, private router: Router) {
@@ -48,7 +48,7 @@ export class AddComponent implements OnInit {
                 data => {
                     this.tempArtists = data;
                 },
-                error => this.errorMsg = error);
+                error => this.errors = error);
     }
 
     onPaste(event: ClipboardEvent) {
@@ -112,6 +112,8 @@ export class AddComponent implements OnInit {
         ).subscribe(data => {
                 this.router.navigate([`/videos/${this.youtubeId}`]);
             },
-            error => this.errorMsg = error);
+            error => {
+              this.router.navigate([`/videos/${this.youtubeId}`]);
+        });
     }
 }

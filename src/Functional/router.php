@@ -40,7 +40,7 @@ function dispatch(array $match): void
         echo json_encode($apiProblem->getMessage());
     } catch (\Throwable $throwable) {
         http_response_code(500);
-        echo json_encode($throwable->getMessage());
+        echo json_encode( $throwable->getMessage());
     }
 }
 
