@@ -221,7 +221,8 @@ export class VideoShowComponent implements OnInit {
 
     addVideoTagTime(start: number, stop: number) {
 
-        this._tagService.addVideoTagTime(this.videoInfo.video_youtube_id, this.selectedTagSlugId, start, stop).subscribe((data: any) => {
+        this._tagService.addVideoTagTime(this.videoInfo.video_youtube_id, this.selectedTagSlugId, start, stop)
+          .subscribe((data: any) => {
             this._tagService.getVideoTagsForVideo(this.youtubeId)
                 .subscribe(data => {
                         this.videoTags = data;
