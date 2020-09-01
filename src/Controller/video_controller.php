@@ -6,11 +6,9 @@ use DTO\RequestVideoCreate;
 use Factory\VideoFactory;
 use Repository\VideoRepository;
 
-//todo should return void - change on frontend
-function video_create(VideoFactory $video_factory, RequestVideoCreate $video_create): RequestVideoCreate
+function video_create(VideoFactory $video_factory, RequestVideoCreate $video_create): void
 {
     $video_factory->create($video_create);
-    return $video_create;
 }
 
 function video_list(VideoRepository $video_repository)
@@ -32,5 +30,3 @@ function video_show(VideoRepository $video_repository, string $youtube_id)
 {
     return [$video_repository->find($youtube_id)];
 }
-
-

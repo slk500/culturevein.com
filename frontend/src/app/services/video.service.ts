@@ -20,7 +20,7 @@ export class VideoService {
             video_name: name,
             youtube_id: youtube_id,
             duration: duration
-        })
+        }, {observe: 'response'});
     }
 
     getVideos() : Observable<Ivideo[]> {

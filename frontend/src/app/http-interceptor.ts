@@ -26,7 +26,10 @@ export class APIInterceptor  implements HttpInterceptor {
         return next.handle(apiReq).pipe(
           map(resp => {
             if (resp instanceof HttpResponse) {
-              return  resp.clone({ body: resp.body.data });
+              if(resp.body != null) {
+                return resp.clone({body: resp.body.data});
+              }
+              return resp.clone({body: resp.body});
             }
           })
         );
