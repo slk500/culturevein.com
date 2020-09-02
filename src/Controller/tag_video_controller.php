@@ -8,11 +8,11 @@ use Factory\TagVideoFactory;
 use Repository\VideoTagRepository;
 use ValueObject\TagVideo;
 
-//todo should return void - change on frontend
-function tag_video_create(TagVideoFactory $video_tag_factory, RequestTagVideo $video_tag_create): RequestTagVideo
+function tag_video_create(TagVideoFactory $video_tag_factory, RequestTagVideo $video_tag_create): TagVideo
 {
-    $video_tag_factory->create(new TagVideo($video_tag_create));
-    return $video_tag_create;
+    $tag_video = new TagVideo($video_tag_create);
+    $video_tag_factory->create($tag_video);
+    return $tag_video;
 }
 
 function tag_video_list(VideoTagRepository $video_tag_repository)
