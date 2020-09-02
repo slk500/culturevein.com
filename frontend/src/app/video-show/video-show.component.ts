@@ -190,24 +190,15 @@ export class VideoShowComponent implements OnInit {
         this._tagService.addVideoTag(this.videoInfo.video_youtube_id, this.selectedTagName)
             .subscribe((data: any) => {
 
-            //shitfix
-            this.temp = data.tag_slug_id;
+              let newTag = Object.assign([], this.tags);
+              newTag.unshift({id: data.tag_slug_id, text: data.tag_name});
+              this.tags = newTag;
 
             this._tagService.getVideoTagsForVideo(this.youtubeId)
                 .subscribe(data => {
                         this.videoTags = data;
                         this.isVideoTagExist = true;
                         this.tagWasAddedText = true;
-                    },
-                    error => this.errorMsg = error);
-
-            //refresh tags in select because we don't know tag_slug_id
-            this._tagService.getTags()
-                .subscribe(data => {
-                        this.tags = this.convertToFormat(data);
-
-                        //shitfix
-                        this.startValue = this.temp;
                     },
                     error => this.errorMsg = error);
         });
