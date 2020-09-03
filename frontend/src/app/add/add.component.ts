@@ -5,6 +5,7 @@ import {VideoService} from "../services/video.service";
 import {Router} from "@angular/router";
 import {map} from "rxjs/internal/operators";
 import {NgxY2PlayerComponent} from "ngx-y2-player";
+import {InputService} from "../services/input.service";
 
 @Component({
     selector: 'app-add',
@@ -37,8 +38,10 @@ export class AddComponent implements OnInit {
 
     public errors;
 
+    public searchText;
+
     constructor(private _artistService: ArtistService, private _youTubeService: YouTubeService,
-                private _videoService: VideoService, private router: Router) {
+                private _videoService: VideoService, private router: Router, private inputSearch: InputService) {
     }
 
     ngOnInit() {
@@ -49,6 +52,8 @@ export class AddComponent implements OnInit {
                     this.tempArtists = data;
                 },
                 error => this.errors = error);
+
+      this.inputSearch.cast.subscribe(input => this.searchText = input);
     }
 
     onPaste(event: ClipboardEvent) {
