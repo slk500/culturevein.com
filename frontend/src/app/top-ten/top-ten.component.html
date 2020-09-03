@@ -1,3 +1,9 @@
+<div *ngIf="searchText">
+<app-tag></app-tag>
+<app-video></app-video>
+</div>
+
+<div *ngIf="!searchText">
 <div class='col-md-6 col-lg-6 '>
     <table class='table table-hover white_container'>
         <caption><strong>TAGS WITH HIGHEST NUMBER OF VIDEOS</strong></caption>
@@ -51,7 +57,6 @@
 </table>
 </div>
 
-
 <div class='col-md-6 col-lg-6 '>
     <table class='table table-hover white_container'>
         <caption><strong>NEW VIDEOS</strong></caption>
@@ -67,4 +72,5 @@
 
         </tr>
     </table>
+</div>
 </div>

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {VideoService} from "../services/video.service";
 import {InputService} from "../services/input.service";
-import {filter} from "rxjs/operators";
 
 @Component({
   selector: 'app-video',

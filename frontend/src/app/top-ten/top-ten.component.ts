@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {TagService} from "../services/tag.service";
 import {VideoService} from "../services/video.service";
-import {Router} from "@angular/router";
+import {InputService} from "../services/input.service";
 
 @Component({
   selector: 'app-top-ten',
@@ -20,7 +20,9 @@ export class TopTenComponent implements OnInit {
 
     public errorMsg;
 
-    constructor(private _tagService: TagService, private _videoService: VideoService, private router: Router) {}
+    public searchText;
+
+    constructor(private _tagService: TagService, private _videoService: VideoService, private inputSearch: InputService) {}
 
     ngOnInit() {
         this._tagService.getTagsNew()
@@ -38,9 +40,7 @@ export class TopTenComponent implements OnInit {
         this._videoService.getVideosLastAdded()
             .subscribe(data => this.videosLastAdded = data,
                 error => this.errorMsg = error);
-    }
 
-    onSelect(tag){
-        this.router.navigate(['/tags', tag.slug]);
+      this.inputSearch.cast.subscribe(input => this.searchText = input);
     }
 }
