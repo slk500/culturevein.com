@@ -33,7 +33,9 @@ function dispatch(array $match): void
 
         $result = call_user_func_array($match['function_name'], $arguments);
         set_status_code($match['http_method']);
-        if ($result) echo json_encode(['data' => $result]);
+        if (null !== $result) {
+            echo json_encode(['data' => $result]);
+        }
 
     } catch (ApiProblem $apiProblem) {
         http_response_code($apiProblem->getCode());

@@ -5,7 +5,7 @@
       <a [routerLink]="['/tags', ancestor.tag_slug_id]"> {{ ancestor.name }} </a>
     </li>
   </ul>
-  <span *ngIf="ancestors.length == 0">none</span>
+  <span *ngIf="ancestors?.length == 0">none</span>
 
 
   <h1 class='text-center'>{{ tag?.name }}</h1>
@@ -32,17 +32,17 @@
     <span class="badge"> {{ tag?.subscribers }}</span>
   </button>
   <br>
-  <strong> {{ descendants.length}} Child Tags: </strong>
+  <strong> {{ descendants?.length}} Child Tags: </strong>
   <ul class='list-unstyled'>
     <li *ngFor="let descendant of descendants;">
       <a [routerLink]="['/tags', descendant.tag_slug_id]"> {{ descendant.name }} </a>
     </li>
   </ul>
-  <span *ngIf="descendants.length == 0">none</span>
+  <span *ngIf="descendants?.length == 0">none</span>
 
 </div>
 
-<div *ngIf="tag?.videos?.length" id="tags" class="col-xs-12">
+<div *ngIf="tag?.videos.length > 0" id="tags" class="col-xs-12">
   <table class='table table-hover white_container'>
     <thead>
     <tr>
