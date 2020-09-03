@@ -15,8 +15,8 @@ use Repository\SubscribeRepository;
 use Repository\TagRepository;
 use Repository\UserRepository;
 use Repository\VideoRepository;
-use Repository\VideoTagRepository;
-use Repository\VideoTagTimeRepository;
+use Repository\TagVideoRepository;
+use Repository\TagVideoTimeRepository;
 
 //todo remove - make autowire
 return [
@@ -28,11 +28,11 @@ return [
         UserRepository::class => [Database::class],
         VideoFactory::class => [VideoRepository::class, ArtistRepository::class],
         VideoRepository::class => [Database::class],
-        VideoTagDeleter::class => [VideoTagRepository::class, ArchiverRepository::class],
-        TagVideoFactory::class => [TagRepository::class, VideoTagRepository::class],
+        VideoTagDeleter::class => [TagVideoRepository::class, ArchiverRepository::class],
+        TagVideoFactory::class => [TagRepository::class, TagVideoRepository::class],
         VideoTagHistoryRepository::class => [Database::class],
-        VideoTagRepository::class => [Database::class],
-        VideoTagTimeDeleter::class => [VideoTagTimeRepository::class, ArchiverRepository::class],
+        TagVideoRepository::class => [Database::class],
+        VideoTagTimeDeleter::class => [TagVideoTimeRepository::class, ArchiverRepository::class],
         VideoTagTimeHistoryRepository::class => [Database::class],
-        VideoTagTimeRepository::class => [Database::class]
+        TagVideoTimeRepository::class => [Database::class]
 ];

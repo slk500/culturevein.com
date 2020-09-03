@@ -7,7 +7,7 @@ namespace Repository;
 use DTO\RequestTagVideoTimeCreate;
 use Repository\Base\Repository;
 
-final class VideoTagTimeRepository extends Repository
+final class TagVideoTimeRepository extends Repository
 {
     public function add(RequestTagVideoTimeCreate $video_tag_time_create): ?int
     {

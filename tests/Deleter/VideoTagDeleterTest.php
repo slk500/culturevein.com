@@ -13,7 +13,7 @@ use Repository\Base\Database;
 use Repository\History\VideoTagHistoryRepository;
 use Repository\TagRepository;
 use Repository\UserRepository;
-use Repository\VideoTagRepository;
+use Repository\TagVideoRepository;
 use Deleter\VideoTagDeleter;
 use PHPUnit\Framework\TestCase;
 use Tests\DatabaseHelper;
@@ -23,7 +23,7 @@ use Tests\Builder\VideoTag\VideoTagCreateBuilder;
 class VideoTagDeleterTest extends TestCase
 {
     /**
-     * @var VideoTagRepository
+     * @var TagVideoRepository
      */
     private $video_tag_repository;
 
@@ -63,7 +63,7 @@ class VideoTagDeleterTest extends TestCase
         (new DatabaseHelper($container->get(Database::class)))
             ->truncate_all_tables();
 
-        $this->video_tag_repository = $container->get(VideoTagRepository::class);
+        $this->video_tag_repository = $container->get(TagVideoRepository::class);
         $this->video_tag_deleter = $container->get(VideoTagDeleter::class);
         $this->video_tag_history_repository = $container->get(VideoTagHistoryRepository::class);
         $this->user_repository = $container->get(UserRepository::class);

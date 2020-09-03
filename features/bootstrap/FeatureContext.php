@@ -7,7 +7,7 @@ use Factory\TagVideoFactory;
 use Model\Tag;
 use Repository\Base\Database;
 use Repository\TagRepository;
-use Repository\VideoTagTimeRepository;
+use Repository\TagVideoTimeRepository;
 use Tests\Builder\Video\VideoCreateBuilder;
 use Tests\Builder\VideoTag\VideoTagCreateBuilder;
 use Tests\DatabaseHelper;
@@ -39,7 +39,7 @@ class FeatureContext implements Context
      */
     private $video_tag_factory;
     /**
-     * @var VideoTagTimeRepository
+     * @var TagVideoTimeRepository
      */
     private $video_tag_time_repository;
 
@@ -49,7 +49,7 @@ class FeatureContext implements Context
         $this->tag_repository = $container->get(TagRepository::class);
         $this->video_factory = $container->get(VideoFactory::class);
         $this->video_tag_factory = $container->get(TagVideoFactory::class);
-        $this->video_tag_time_repository = $container->get(VideoTagTimeRepository::class);
+        $this->video_tag_time_repository = $container->get(TagVideoTimeRepository::class);
         $this->database_helper = (new DatabaseHelper(new Database));
     }
 

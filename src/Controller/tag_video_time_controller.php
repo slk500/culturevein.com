@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 use Deleter\VideoTagTimeDeleter;
 use DTO\RequestTagVideoTimeCreate;
-use Repository\VideoTagRepository;
-use Repository\VideoTagTimeRepository;
+use Repository\TagVideoRepository;
+use Repository\TagVideoTimeRepository;
 
 //todo should return void - change on frontend
-function tag_video_time_create(VideoTagRepository $video_tag_repository,
-                               VideoTagTimeRepository $video_tag_time_repository,
+function tag_video_time_create(TagVideoRepository $video_tag_repository,
+                               TagVideoTimeRepository $video_tag_time_repository,
                                RequestTagVideoTimeCreate $tag_video_time_create)
 {
     //todo should be new object

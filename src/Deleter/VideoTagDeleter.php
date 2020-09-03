@@ -6,7 +6,7 @@ namespace Deleter;
 
 
 use Repository\Archiver\ArchiverRepository;
-use Repository\VideoTagRepository;
+use Repository\TagVideoRepository;
 
 final class VideoTagDeleter
 {
@@ -14,7 +14,7 @@ final class VideoTagDeleter
 
     private $archiver_repository;
 
-    public function __construct(VideoTagRepository $video_tag_repository, ArchiverRepository $archiver_repository)
+    public function __construct(TagVideoRepository $video_tag_repository, ArchiverRepository $archiver_repository)
     {
         $this->video_tag_repository = $video_tag_repository;
         $this->archiver_repository = $archiver_repository;

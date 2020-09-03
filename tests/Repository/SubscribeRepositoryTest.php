@@ -14,7 +14,7 @@ use Repository\Base\Database;
 use Repository\SubscribeRepository;
 use Repository\TagRepository;
 use Repository\UserRepository;
-use Repository\VideoTagRepository;
+use Repository\TagVideoRepository;
 use Tests\DatabaseHelper;
 use Tests\Builder\Video\VideoCreateBuilder;
 use Tests\Builder\VideoTag\VideoTagCreateBuilder;
@@ -27,7 +27,7 @@ class SubscribeRepositoryTest extends TestCase
     private $subscribe_repository;
 
     /**
-     * @var VideoTagRepository
+     * @var TagVideoRepository
      */
     private $video_tag_repository;
 
@@ -53,7 +53,7 @@ class SubscribeRepositoryTest extends TestCase
             ->truncate_all_tables();
 
         $this->subscribe_repository = $container->get(SubscribeRepository::class);
-        $this->video_tag_repository = $container->get(VideoTagRepository::class);
+        $this->video_tag_repository = $container->get(TagVideoRepository::class);
         $this->user_repository = $container->get(UserRepository::class);
         $this->video_factory = $container->get(VideoFactory::class);
         $this->tag_repository = $container->get(TagRepository::class);

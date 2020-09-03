@@ -8,7 +8,7 @@ use Cocur\Slugify\Slugify;
 use DTO\RequestTagVideo;
 use Model\Tag;
 use Repository\TagRepository;
-use Repository\VideoTagRepository;
+use Repository\TagVideoRepository;
 use ValueObject\TagVideo;
 
 class TagVideoFactory
@@ -16,7 +16,7 @@ class TagVideoFactory
     private $video_tag_repository;
     private $tag_repository;
 
-    public function __construct(TagRepository $tag_repository, VideoTagRepository $video_tag_repository)
+    public function __construct(TagRepository $tag_repository, TagVideoRepository $video_tag_repository)
     {
         $this->tag_repository = $tag_repository;
         $this->video_tag_repository = $video_tag_repository;

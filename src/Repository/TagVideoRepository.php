@@ -7,7 +7,7 @@ namespace Repository;
 use Repository\Base\Repository;
 use ValueObject\TagVideo;
 
-final class VideoTagRepository extends Repository
+final class TagVideoRepository extends Repository
 {
     public function add(TagVideo $video_tag_create): ?int
     {

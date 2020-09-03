@@ -9,13 +9,13 @@ use Model\Tag;
 use PHPUnit\Framework\TestCase;
 use Repository\Base\Database;
 use Repository\TagRepository;
-use Repository\VideoTagRepository;
+use Repository\TagVideoRepository;
 use Tests\DatabaseHelper;
 
 class VideoTagControllerTest extends TestCase
 {
     /**
-     * @var VideoTagRepository
+     * @var TagVideoRepository
      */
     private $video_tag_repository;
 
@@ -35,7 +35,7 @@ class VideoTagControllerTest extends TestCase
         (new DatabaseHelper($container->get(Database::class)))
             ->truncate_all_tables();
 
-        $this->video_tag_repository = $container->get(VideoTagRepository::class);
+        $this->video_tag_repository = $container->get(TagVideoRepository::class);
         $this->tag_repository = $container->get(TagRepository::class);
         $this->video_factory = $container->get(VideoFactory::class);
     }

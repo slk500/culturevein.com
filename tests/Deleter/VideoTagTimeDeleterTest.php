@@ -15,9 +15,9 @@ use Repository\Base\Database;
 use Repository\History\VideoTagTimeHistoryRepository;
 use Repository\TagRepository;
 use Repository\UserRepository;
-use Repository\VideoTagRepository;
+use Repository\TagVideoRepository;
 use PHPUnit\Framework\TestCase;
-use Repository\VideoTagTimeRepository;
+use Repository\TagVideoTimeRepository;
 use Tests\DatabaseHelper;
 use Tests\Builder\Video\VideoCreateBuilder;
 use Tests\Builder\VideoTag\VideoTagCreateBuilder;
@@ -25,12 +25,12 @@ use Tests\Builder\VideoTag\VideoTagCreateBuilder;
 class VideoTagTimeDeleterTest extends TestCase
 {
     /**
-     * @var VideoTagRepository
+     * @var TagVideoRepository
      */
     private $video_tag_repository;
 
     /**
-     * @var VideoTagTimeRepository
+     * @var TagVideoTimeRepository
      */
     private $video_tag_time_repository;
 
@@ -70,8 +70,8 @@ class VideoTagTimeDeleterTest extends TestCase
         (new DatabaseHelper($container->get(Database::class)))
             ->truncate_all_tables();
 
-        $this->video_tag_repository = $container->get(VideoTagRepository::class);
-        $this->video_tag_time_repository = $container->get(VideoTagTimeRepository::class);
+        $this->video_tag_repository = $container->get(TagVideoRepository::class);
+        $this->video_tag_time_repository = $container->get(TagVideoTimeRepository::class);
         $this->video_tag_time_deleter = $container->get(VideoTagTimeDeleter::class);
         $this->video_tag_time_history_repository= $container->get(VideoTagTimeHistoryRepository::class);
         $this->user_repository = $container->get(UserRepository::class);

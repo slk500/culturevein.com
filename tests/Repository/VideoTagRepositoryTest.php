@@ -11,8 +11,8 @@ use PHPUnit\Framework\TestCase;
 use Repository\Base\Database;
 use Repository\TagRepository;
 use Repository\UserRepository;
-use Repository\VideoTagRepository;
-use Repository\VideoTagTimeRepository;
+use Repository\TagVideoRepository;
+use Repository\TagVideoTimeRepository;
 use Tests\DatabaseHelper;
 use Tests\Builder\Video\VideoCreateBuilder;
 use Tests\Builder\VideoTag\VideoTagCreateBuilder;
@@ -21,7 +21,7 @@ use Tests\Builder\VideoTagTime\VideoTagTimeCreateBuilder;
 class VideoTagRepositoryTest extends TestCase
 {
     /**
-     * @var VideoTagRepository
+     * @var TagVideoRepository
      */
     private $video_tag_repository;
 
@@ -41,7 +41,7 @@ class VideoTagRepositoryTest extends TestCase
     private $video_factory;
 
     /**
-     * @var VideoTagTimeRepository
+     * @var TagVideoTimeRepository
      */
     private $video_tag_time_repository;
 
@@ -53,16 +53,16 @@ class VideoTagRepositoryTest extends TestCase
         (new DatabaseHelper($container->get(Database::class)))
             ->truncate_all_tables();
 
-        $this->video_tag_repository = $container->get(VideoTagRepository::class);
+        $this->video_tag_repository = $container->get(TagVideoRepository::class);
         $this->user_repository = $container->get(UserRepository::class);
         $this->video_factory = $container->get(VideoFactory::class);
         $this->tag_repository = $container->get(TagRepository::class);
-        $this->video_tag_time_repository = $container->get(VideoTagTimeRepository::class);
+        $this->video_tag_time_repository = $container->get(TagVideoTimeRepository::class);
     }
 
     /**
      * @test
-     * @covers \Repository\VideoTagRepository::add()
+     * @covers \Repository\TagVideoRepository::add()
      */
     public function create_video_tag()
     {
@@ -99,7 +99,7 @@ class VideoTagRepositoryTest extends TestCase
 
     /**
      * @test
-     * @covers \Repository\VideoTagRepository::remove()
+     * @covers \Repository\TagVideoRepository::remove()
      */
     public function DELETE_video_tag()
     {

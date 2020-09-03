@@ -8,8 +8,8 @@ use Model\Tag;
 use PHPUnit\Framework\TestCase;
 use Repository\Base\Database;
 use Repository\TagRepository;
-use Repository\VideoTagRepository;
-use Repository\VideoTagTimeRepository;
+use Repository\TagVideoRepository;
+use Repository\TagVideoTimeRepository;
 use Tests\DatabaseHelper;
 use Tests\Builder\Video\VideoCreateBuilder;
 use Tests\Builder\VideoTag\VideoTagCreateBuilder;
@@ -17,12 +17,12 @@ use Tests\Builder\VideoTag\VideoTagCreateBuilder;
 class VideoTagTimeRepositoryTest extends TestCase
 {
     /**
-     * @var VideoTagRepository
+     * @var TagVideoRepository
      */
     private $video_tag_repository;
 
     /**
-     * @var VideoTagTimeRepository
+     * @var TagVideoTimeRepository
      */
     private $video_tag_time_repository;
 
@@ -44,15 +44,15 @@ class VideoTagTimeRepositoryTest extends TestCase
         (new DatabaseHelper($container->get(Database::class)))
             ->truncate_all_tables();
 
-        $this->video_tag_repository = $container->get(VideoTagRepository::class);
+        $this->video_tag_repository = $container->get(TagVideoRepository::class);
         $this->video_factory = $container->get(VideoFactory::class);
         $this->tag_repository = $container->get(TagRepository::class);
-        $this->video_tag_time_repository = $container->get(VideoTagTimeRepository::class);
+        $this->video_tag_time_repository = $container->get(TagVideoTimeRepository::class);
     }
 
     /**
      * @test
-     * @covers \Repository\VideoTagTimeRepository::add()
+     * @covers \Repository\TagVideoTimeRepository::add()
      */
     public function save()
     {
