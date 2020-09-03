@@ -1,8 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import {VideoService} from "../services/video.service";
+import {InputService} from "../services/input.service";
 
 @Component({
   selector: 'app-about',
   template: `
+    <div *ngIf="searchText">
+      <app-tag></app-tag>
+      <app-video></app-video>
+    </div>
+
+    <div *ngIf="!searchText">
       <div class='col-xs-10 col-xs-offset-1 white_container'>
           <p>Tagging means describing the content with relevant keywords</p>
           <ol id='lista'>
@@ -35,17 +43,20 @@ import { Component, OnInit } from '@angular/core';
 
           </p>
       </div>
-
+    </div>
   `,
   styles: ['#lista {\n' +
   'padding-left:20px;\n' +
   '}']
 })
 export class AboutComponent implements OnInit {
+  
+  public searchText;
 
-  constructor() { }
+  constructor(private inputSearch: InputService) { }
 
   ngOnInit() {
+    this.inputSearch.cast.subscribe(input => this.searchText = input);
   }
 
 }
