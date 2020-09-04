@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {VideoService} from "../services/video.service";
 import {InputService} from "../services/input.service";
 
 @Component({
@@ -12,7 +11,8 @@ import {InputService} from "../services/input.service";
 
     <div *ngIf="!searchText">
       <div class='col-xs-10 col-xs-offset-1 white_container'>
-          <p>Tagging means describing the content with relevant keywords</p>
+          <p>Tagging means describing the content with relevant keywords. <br>
+            The tag may be an action, a scene, a person, a word or phrase, an object, a gesture, or a cliché or trope.</p>
           <ol id='lista'>
               <li>On this site you can search through music videos which have been embedded from YouTube</li><br>
               <li>You can add a new music video or tag without registration</li><br>
