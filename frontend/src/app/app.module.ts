@@ -27,6 +27,7 @@ import {AuthService} from "./auth.service";
 import { ActivityComponent } from './activity/activity.component';
 import {ArtistShowComponent} from "./artist-show/artist-show.component";
 import {FilterVideosPipe} from "./pipes/filter-videos.pipe";
+import {VideoEditComponent} from "./video-edit/video-edit.component";
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import {FilterVideosPipe} from "./pipes/filter-videos.pipe";
     RegisterComponent,
     LoginComponent,
     ActivityComponent,
-    ArtistShowComponent
+    ArtistShowComponent,
+    VideoEditComponent
   ],
   imports: [
     BrowserModule,

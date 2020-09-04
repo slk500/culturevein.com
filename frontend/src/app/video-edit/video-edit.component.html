@@ -1,0 +1,92 @@
+<div class="col-xs-12">
+
+    <div #container>
+        <ngx-y2-player
+                #video
+                [playerOptions]="playerOptions"
+                [container]="container">
+        </ngx-y2-player>
+    </div>
+
+    <div id="DIV_scene_tag" class="white_container">
+        <h4><a [routerLink]="['/artists', videoInfo?.artist_slug]" *ngIf="videoInfo">{{ videoInfo?.artist_name}}</a> - {{ videoInfo?.video_name }}</h4>
+
+        <div id="DIV_tag">
+            <ul class="tag">
+                <li *ngFor="let tag of videoTags"
+                    [ngClass]="tagStyle(tag)">
+
+                    <a [routerLink]="['/tags', tag.tag_slug_id]" style="color:white">{{ tag.tag_name }} </a>
+                    <span *ngIf="!tag.video_tags_time.length"
+                          (click)="deleteVideoTag(videoInfo.video_youtube_id, tag.tag_slug_id)"
+                          class="glyphicon glyphicon-remove-circle button" style="cursor:pointer"></span>
+
+                    <ol *ngIf="tag.video_tags_time">
+                        <li *ngFor="let video_tag_time of tag.video_tags_time">
+                            <a (click)="playPart(video_tag_time.start, video_tag_time.stop)" style="cursor:pointer">{{
+                                video_tag_time.start |minuteSeconds }} - {{ video_tag_time.stop |minuteSeconds }} </a>
+                            <span (click)="deleteVideoTagTime(videoInfo.video_youtube_id, tag.tag_slug_id, video_tag_time.video_tag_time_id)"
+                                  class="glyphicon glyphicon-remove-circle button" style="cursor:pointer"></span>
+                        </li>
+                    </ol>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <select2
+                    [cssImport]=true [data]="tags" [options]="select2Options"
+                    [width]="'50%'" (valueChanged)="changed($event)">
+            </select2>
+        </div>
+        <br>
+
+        <div *ngIf="isSelect2ChangedValue == true">
+
+            <div *ngIf="isVideoTagExist == false">
+                <button type='button' class='btn btn-primary center-block'
+                        (click)="addVideoTag()">Add TAG
+                </button>
+            </div>
+
+            <div *ngIf="isVideoTagExist == true">
+
+                <div>
+                    <div> Start {{ timeRange[0] | minuteSeconds }} End {{ timeRange[1] | minuteSeconds }}</div>
+                    <p-slider [(ngModel)]="timeRange" [range]="true" [max]="videoInfo?.duration"></p-slider>
+                    <br>
+                    <button type='button' class='btn btn-primary center-block'
+                            (click)="playPart(timeRange[0],timeRange[1])"> Test
+                    </button>
+                    <br>
+
+                    <div *ngIf="isVideoTagTimeExistForSelectedVideoTag" >
+                    <div *ngIf="isTagComplete == false">
+                        <button type='button' class='btn btn-primary center-block'
+                                (click)="setVideoTagAsCompleted(videoInfo.video_youtube_id, selectedTagSlugId)">Mark Tag
+                            As Completed
+                        </button>
+                        <br>
+                    </div>
+
+                    <div *ngIf="isTagComplete">
+                        <button type='button' class='btn btn-primary center-block'
+                                (click)="setVideoTagAsUncompleted(videoInfo.video_youtube_id, selectedTagSlugId)">Mark Tag
+                            As Uncompleted
+                        </button>
+                        <br>
+                    </div>
+                </div>
+
+                <div>
+                    <button type='button' class='btn btn-primary center-block'
+                            (click)="addVideoTagTime(timeRange[0],timeRange[1])">Add TAG Time
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <p *ngIf="tagWasAddedText">Great! Tag was added</p>
+    </div>
+
+</div>
+</div>
