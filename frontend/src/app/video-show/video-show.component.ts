@@ -50,7 +50,7 @@ export class VideoShowComponent implements OnInit {
 
     public isTagComplete: boolean;
 
-    public isEditMode: boolean;
+    public isEditMode;
 
     constructor(private route: ActivatedRoute, private router: Router,
                 private _videoService: VideoService,
@@ -72,7 +72,10 @@ export class VideoShowComponent implements OnInit {
                 error => this.errorMsg = error);
 
         this._tagService.getVideoTagsForVideo(this.youtubeId)
-            .subscribe(data => this.videoTags = data,
+            .subscribe(data => {
+              this.videoTags = data;
+              this.isEditMode = (this.videoTags.length === 0);
+              },
                 error => this.errorMsg = error);
 
         this._tagService.getTagsSimple()
