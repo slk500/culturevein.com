@@ -2,101 +2,15 @@
     background-color: #474b51;
 }
 
-html {
-    position: relative;
-    min-height: 100%;
-}
-body {
-    /* Margin bottom by footer height */
-    margin-bottom: 60px;
-}
-footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    /* Set the fixed height of the footer here */
-    height: 20px;
-    background-color: #e7e7e7;
-    text-align: center;
-    background: white;
-}
-
 #myNavbar {
     margin-bottom: 10px;
 }
-
 
 .navbar-default .navbar-brand  {
     color:#CE2227;
 }
 
-body {
-    background: #ededed
-}
-
-.num_of_rows {
-    padding-left:0px;
-}
-
-.highlight {
-    background-color: yellow;
-}
-#log {
-    float:right;
-    margin-bottom: 0;
-}
-.hide {
-    display: none;
-}
-.show {
-    display: block;
-}
-/********************   DODAJ   ************************/
-
-.white_container {
-    -webkit-box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.1);
-    box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.1);
-    background: white;
-    border-radius: 10px;
-    margin-bottom:15px;
-    padding-top:15px;
-    padding-bottom:15px;
-}
-.footer {
-    -webkit-box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.1);
-    box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.1);
-    background: white;
-    padding-left:15px;
-}
-
-
-
-.float_right {
-    float:right;
-
-}
-
-/********************   TABLES   ************************/
-.grey {
-    color:grey !important;
-}
-
-
-/*#BUTTON_delete {*/
-/*background: rgba(246,250,252,1) url('img/delete_icon.png') no-repeat;*/
-/*border: rgba(213,217,233,1) solid 1px;*/
-/*border-radius: 25px;*/
-/*height: 16px;*/
-/*width: 16px;*/
-/*}*/
-
-
 /********************  SCENY I TAGI    ************************/
-#DIV_scene_tag {
-    margin-top: 3%;
-    padding: 1em;
-}
-
 #DIV_tag {
     overflow: auto;
     padding-bottom: 1em;
@@ -136,9 +50,13 @@ body {
     list-style-type:decimal;
 }
 
+.tag li > ol li a{ /* Sceny poszczególnych tagów */
+  background-color: transparent !important;
+  color: white !important;
+}
+
 .tag ul {
     margin-left:0px;
-
 }
 
 

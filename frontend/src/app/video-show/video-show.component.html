@@ -10,7 +10,7 @@
 
   <h4><a [routerLink]="['/artists', videoInfo?.artist_slug]" *ngIf="videoInfo">{{ videoInfo?.artist_name}}</a> - {{ videoInfo?.video_name }}</h4>
 
-  <h4><a style="cursor:pointer" (click)="isEditMode = !isEditMode">{{ isEditMode == true ? 'Exit Edit' : 'Edit Tags' }}</a></h4>
+  <a style="cursor:pointer" (click)="isEditMode = !isEditMode">{{ isEditMode == true ? 'EXIT EDIT' : 'EDIT TAGS' }}</a>
 
   <div *ngIf="!isEditMode" id="DIV_scene_tag" class="white_container">
     <div id="DIV_tag">
@@ -30,6 +30,8 @@
       </ul>
     </div>
   </div>
+
+
   <div *ngIf="isEditMode" id="DIV_scene_tag" class="white_container">
         <div id="DIV_tag">
             <ul class="tag">
