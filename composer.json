@@ -14,7 +14,8 @@
       "src/Controller/user_controller.php",
       "src/Controller/video_controller.php",
       "src/Controller/tag_video_controller.php",
-      "src/Controller/tag_video_time_controller.php"
+      "src/Controller/tag_video_time_controller.php",
+      "src/Functional/autowire.php"
     ],
     "psr-4": {
       "": "src/"

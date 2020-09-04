@@ -50,7 +50,7 @@ import {InputService} from "../services/input.service";
   '}']
 })
 export class AboutComponent implements OnInit {
-  
+
   public searchText;
 
   constructor(private inputSearch: InputService) { }

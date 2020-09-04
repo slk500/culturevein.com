@@ -35,7 +35,7 @@ LEFT JOIN
         return $this->database->fetch($query);
     }
 
-    public function find(string $email): ?User
+    public function find(string $email): ?\stdClass
     {
         $stmt = $this->database->mysqli->prepare("
         SELECT *
@@ -49,15 +49,13 @@ LEFT JOIN
         $result = $stmt->get_result();
         $user_data = mysqli_fetch_object($result);
 
-        $user = null;
-        if ($user_data) {
-            $user = new User(
-                $user_data->email,
-                $user_data->password,
-                $user_data->username
-            );
-            $user->user_id = $user_data->user_id;
+        if(null === $user_data){
+            return null;
         }
+
+        $user = new \stdClass();
+        $user->user_id = $user_data->user_id;
+        $user->password = $user_data->password;
 
         return $user;
     }
