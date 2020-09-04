@@ -6,7 +6,7 @@ import {NgxY2PlayerComponent} from "ngx-y2-player";
 import {Ivideo} from "../interfaces/video";
 
 @Component({
-    selector: 'app-video-show',
+    selector: 'app-video-edit',
     templateUrl: './video-edit.component.html',
     styleUrls: ['./video-edit.component.css']
 })
