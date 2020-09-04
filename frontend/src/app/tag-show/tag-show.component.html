@@ -67,7 +67,7 @@
         </ul>
       </td>
       <td class="text-center">
-        <span *ngIf="video.tags[0].duration"> {{ video.tags[0].duration | minuteSeconds }} </span>
+        <span *ngIf="video.tags[0].duration"> {{ video.tags[0].duration * 1000 | date:'mm:ss' }} </span>
       </td>
     </tr>
 

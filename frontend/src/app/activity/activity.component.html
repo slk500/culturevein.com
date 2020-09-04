@@ -43,7 +43,7 @@
             <td><a [routerLink]="['/videos', videoTag.video_youtube_id]"> {{ videoTag.artist_name }}
                 - {{ videoTag.video_name }}  </a></td>
             <td><a [routerLink]="['/tags', videoTag.tag_slug_id]"> {{ videoTag.tag_name }} </a></td>
-            <td> <span *ngIf="videoTag.start">{{ videoTag.start | minuteSeconds }} - {{ videoTag.stop | minuteSeconds }} </span> </td>
+            <td> <span *ngIf="videoTag.start">{{ videoTag.start * 1000 | date:'mm:ss' }} - {{ videoTag.stop * 1000 | date:'mm:ss' }} </span> </td>
             <td>{{ videoTag.username }}</td>
             <td>{{ videoTag.created_at}}</td>
         </tr>

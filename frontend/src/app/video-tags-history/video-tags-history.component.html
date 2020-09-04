@@ -12,7 +12,7 @@
     <tr *ngFor="let videoTag of videoTagsHistory; let i=index">
       <td class='text-center'> {{ i + 1 }} </td>
       <td><a [routerLink]="['/tags', videoTag.tag_slug_id]"> {{ videoTag.tag_name }} </a></td>
-      <td> <span *ngIf="videoTag.start">{{ videoTag.start | minuteSeconds }} - {{ videoTag.stop | minuteSeconds }} </span> </td>
+      <td> <span *ngIf="null != videoTag.start">{{ videoTag.start * 1000 | date:'mm:ss' }} - {{ videoTag.stop * 1000 | date:'mm:ss' }} </span> </td>
       <td>{{ videoTag.username }}</td>
       <td>{{ videoTag.created_at}}</td>
     </tr>

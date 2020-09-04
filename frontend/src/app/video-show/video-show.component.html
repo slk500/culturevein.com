@@ -22,7 +22,7 @@
           <ol *ngIf="tag.video_tags_time">
             <li *ngFor="let video_tag_time of tag.video_tags_time">
               <a (click)="playPart(video_tag_time.start, video_tag_time.stop)" style="cursor:pointer">{{
-                video_tag_time.start |minuteSeconds }} - {{ video_tag_time.stop |minuteSeconds }} </a>
+                video_tag_time.start * 1000 | date:'mm:ss' }} - {{ video_tag_time.stop * 1000 | date:'mm:ss' }} </a>
             </li>
           </ol>
         </li>
@@ -43,7 +43,7 @@
                     <ol *ngIf="tag.video_tags_time">
                         <li *ngFor="let video_tag_time of tag.video_tags_time">
                             <a (click)="playPart(video_tag_time.start, video_tag_time.stop)" style="cursor:pointer">{{
-                                video_tag_time.start |minuteSeconds }} - {{ video_tag_time.stop |minuteSeconds }} </a>
+                                video_tag_time.start * 1000 | date:'mm:ss' }} - {{ video_tag_time.stop * 1000 | date:'mm:ss' }} </a>
                             <span (click)="deleteVideoTagTime(videoInfo.video_youtube_id, tag.tag_slug_id, video_tag_time.video_tag_time_id)"
                                   class="glyphicon glyphicon-remove-circle button" style="cursor:pointer"></span>
                         </li>
@@ -70,7 +70,7 @@
             <div *ngIf="isVideoTagExist == true">
 
                 <div>
-                    <div> Start {{ timeRange[0] | minuteSeconds }} End {{ timeRange[1] | minuteSeconds }}</div>
+                    <div> Start {{ timeRange[0] * 1000 | date:'mm:ss' }} End {{ timeRange[1] * 1000 | date:'mm:ss' }}</div>
                     <p-slider [(ngModel)]="timeRange" [range]="true" [max]="videoInfo?.duration"></p-slider>
                     <br>
                     <button type='button' class='btn btn-primary center-block'
