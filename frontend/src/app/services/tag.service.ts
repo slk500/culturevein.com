@@ -62,8 +62,12 @@ export class TagService {
       .pipe(catchError(this.errorHandler))
   }
 
-  addVideoTag(youtubeId, name) {
+  getVideoTagsHistoryForVideo(youtubeId): Observable<any[]> {
+    return this.http.get<any[]>('api/videos/' + youtubeId + '/tags-history')
+      .pipe(catchError(this.errorHandler));
+  }
 
+  addVideoTag(youtubeId, name) {
     return this.http.post<IVideoTag>('api/videos/' + youtubeId + '/tags', {
       tag_name: name,
     })

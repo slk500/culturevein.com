@@ -77,11 +77,35 @@ final class TagVideoRepository extends Repository
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
 
-    public function find_all(): array
+    public function find_all_history_for_video(string $youtubeId): array
+    {
+        $stmt = $this->database->mysqli->prepare("SELECT
+              tag.name AS tag_name,
+              tag.tag_slug_id AS tag_slug_id,
+              start,
+              stop,
+              u.username,
+              IFNULL(vtt.created_at, vt.created_at) as created_at
+            FROM video_tag vt
+                   LEFT JOIN video_tag_time vtt using (video_tag_id)
+                   LEFT JOIN tag USING (tag_slug_id)
+                   LEFT JOIN video v USING (video_youtube_id)
+                   LEFT JOIN user u ON vt.user_id = u.user_id
+                   WHERE v.video_youtube_id = ?
+            ORDER BY created_at DESC");
+
+        $stmt->bind_param("s", $youtubeId);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
+
+    public function find_all_history(): array
     {
         return $this->database->fetch("SELECT
               vt.video_youtube_id,
-              v.name   AS video_name,
+              v.name AS video_name,
               a.name AS artist_name,
               tag.name AS tag_name,
               tag.tag_slug_id AS tag_slug_id,

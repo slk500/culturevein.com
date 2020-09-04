@@ -27,6 +27,7 @@ import { ActivityComponent } from './activity/activity.component';
 import {ArtistShowComponent} from "./artist-show/artist-show.component";
 import {FilterVideosPipe} from "./pipes/filter-videos.pipe";
 import {VideoShowComponent} from "./video-show/video-show.component";
+import { VideoTagsHistoryComponent } from './video-tags-history/video-tags-history.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import {VideoShowComponent} from "./video-show/video-show.component";
     LoginComponent,
     ActivityComponent,
     ArtistShowComponent,
-    VideoShowComponent
+    VideoShowComponent,
+    VideoTagsHistoryComponent
   ],
   imports: [
     BrowserModule,

@@ -24,6 +24,7 @@ return  [
 
     ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/*$/', 'video_show', 'GET'],
     ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/*$/', 'tag_video_list_for_video', 'GET'],
+    ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags-history\/*$/', 'tag_video_history_for_video', 'GET'],
     ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/(?<tag_slug_id>[\w-]+)*$/', 'tag_video_delete', 'DELETE'],
     ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/(?<tag_slug_id>[\w-]+)\/completed\/*$/', 'tag_video_completed', 'PATCH'],
     ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/tags\/(?<tag_slug_id>[\w-]+)\/uncompleted\/*$/', 'tag_video_uncompleted', 'PATCH'],

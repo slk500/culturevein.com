@@ -1,0 +1,20 @@
+<div class='col-xs-12 '>
+  <table class='table table-hover white_container'>
+    <thead>
+    <tr>
+      <th></th>
+      <th>Tag</th>
+      <th>Time</th>
+      <th>User</th>
+      <th>Created At</th>
+    </tr>
+    </thead>
+    <tr *ngFor="let videoTag of videoTagsHistory; let i=index">
+      <td class='text-center'> {{ i + 1 }} </td>
+      <td><a [routerLink]="['/tags', videoTag.tag_slug_id]"> {{ videoTag.tag_name }} </a></td>
+      <td> <span *ngIf="videoTag.start">{{ videoTag.start | minuteSeconds }} - {{ videoTag.stop | minuteSeconds }} </span> </td>
+      <td>{{ videoTag.username }}</td>
+      <td>{{ videoTag.created_at}}</td>
+    </tr>
+  </table>
+</div>

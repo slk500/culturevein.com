@@ -30,7 +30,6 @@
     </div>
   </div>
 
-
   <div *ngIf="isEditMode" id="DIV_scene_tag" class="white_container">
         <div id="DIV_tag">
             <ul class="tag">
@@ -110,5 +109,6 @@
 
 </div>
 
-
+  <a style="cursor:pointer" (click)="isHistoryOpen = !isHistoryOpen">{{ isHistoryOpen == false ? 'SHOW HISTORY' : 'CLOSE HISTORY' }}</a>
+  <app-video-tags-history *ngIf="isHistoryOpen" [youtubeId]="youtubeId"></app-video-tags-history>
 </div>

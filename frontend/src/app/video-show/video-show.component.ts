@@ -52,6 +52,8 @@ export class VideoShowComponent implements OnInit {
 
     public isEditMode;
 
+    public isHistoryOpen = false;
+
     constructor(private route: ActivatedRoute, private router: Router,
                 private _videoService: VideoService,
                 private _tagService: TagService) {
