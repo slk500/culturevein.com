@@ -12,13 +12,11 @@ import {RegisterComponent} from "./user-register/register.component";
 import {LoginComponent} from "./user-login/login.component";
 import {ActivityComponent} from "./activity/activity.component";
 import {ArtistShowComponent} from "./artist-show/artist-show.component";
-import {VideoEditComponent} from "./video-edit/video-edit.component";
 
 const routes: Routes = [
     { path: '', component: TopTenComponent},
     { path: 'videos', component: VideoComponent},
     { path: 'videos/:youtubeId', component: VideoShowComponent},
-    { path: 'videos/:youtubeId/edit', component: VideoEditComponent},
     { path: 'tags', component: TagComponent},
     { path: 'tags/:slug', component: TagShowComponent},
     { path: 'artists/:slug', component: ArtistShowComponent},

@@ -12,7 +12,6 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { TopTenComponent } from './home-top-ten/top-ten.component';
 import { AboutComponent } from './about/about.component';
 import { TagShowComponent } from './tag-show/tag-show.component';
-import { VideoShowComponent } from './video-show/video-show.component';
 import {MinuteSecondsPipe} from "./pipes/minute-seconds.pipe";
 import {NgxY2PlayerModule} from "ngx-y2-player";
 import {Select2Module} from "ng2-select2";
@@ -27,7 +26,7 @@ import {AuthService} from "./auth.service";
 import { ActivityComponent } from './activity/activity.component';
 import {ArtistShowComponent} from "./artist-show/artist-show.component";
 import {FilterVideosPipe} from "./pipes/filter-videos.pipe";
-import {VideoEditComponent} from "./video-edit/video-edit.component";
+import {VideoShowComponent} from "./video-show/video-show.component";
 
 @NgModule({
   declarations: [
@@ -38,7 +37,6 @@ import {VideoEditComponent} from "./video-edit/video-edit.component";
     TopTenComponent,
     AboutComponent,
     TagShowComponent,
-    VideoShowComponent,
     MinuteSecondsPipe,
     FilterTagsPipe,
     FilterVideosPipe,
@@ -47,7 +45,7 @@ import {VideoEditComponent} from "./video-edit/video-edit.component";
     LoginComponent,
     ActivityComponent,
     ArtistShowComponent,
-    VideoEditComponent
+    VideoShowComponent
   ],
   imports: [
     BrowserModule,
