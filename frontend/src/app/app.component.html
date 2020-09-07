@@ -1,4 +1,4 @@
-<nav class='navbar navbar-default center white_container'>
+<nav class='navbar navbar-dark center' style="padding-top: 20px">
     <div class='container-fluid'>
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -6,7 +6,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a routerLink="/" class='navbar-brand left'>Culture Vein</a>
+            <a routerLink="/" class='navbar-brand left' style="color: #d9534f">Culture Vein</a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class='nav nav-pills nav-justified'>
@@ -20,12 +20,13 @@
         </div>
     </div>
 
-    <div class='container'>
+    <div class='container' style="padding-bottom: 20px">
         <div class="input-group">
-			<span class="input-group-addon">
+			<span class="input-group-addon" style="background-color: #292929; color: white;">
         <i class="glyphicon glyphicon-search"></i>
     </span>
-            <input (input)="updateValue($event)" class="form-control input-lg" id='search_input'>
+            <input (input)="updateValue($event)" class="form-control input-lg"
+                   id='search_input'>
         </div>
     </div>
 </nav>

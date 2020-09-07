@@ -1,33 +1,38 @@
 <div class="col-xs-12">
 
-    <div #container>
-        <ngx-y2-player
-                #video
-                [playerOptions]="playerOptions"
-                [container]="container">
-        </ngx-y2-player>
-    </div>
+<!--    <div #container>-->
+<!--        <ngx-y2-player-->
+<!--                #video-->
+<!--                [playerOptions]="playerOptions"-->
+<!--                [container]="container">-->
+<!--        </ngx-y2-player>-->
+<!--    </div>-->
 
   <h4><a [routerLink]="['/artists', videoInfo?.artist_slug]" *ngIf="videoInfo">{{ videoInfo?.artist_name}}</a> - {{ videoInfo?.video_name }}</h4>
   <a style="cursor:pointer" (click)="isEditMode = !isEditMode">{{ isEditMode == true ? 'EXIT EDIT' : 'EDIT TAGS' }}</a>
 
-  <div *ngIf="!isEditMode" id="DIV_scene_tag" class="white_container">
-    <div id="DIV_tag">
-      <ul class="tag">
-        <li *ngFor="let tag of videoTags"
-            [ngClass]="tagStyle(tag)">
+  <div *ngIf="!isEditMode">
 
-          <a [routerLink]="['/tags', tag.tag_slug_id]" style="color:white">{{ tag.tag_name }} </a>
+    <ul style="list-style: none;">
+
+        <li *ngFor="let tag of videoTags">
+
+          <a [routerLink]="['/tags', tag.tag_slug_id]"
+             style="background-color: #5cb85c; color: black; padding: 2px;"
+          >{{ tag.tag_name }} </a>
 
           <ol *ngIf="tag.video_tags_time">
-            <li *ngFor="let video_tag_time of tag.video_tags_time">
+            <li *ngFor="let video_tag_time of tag.video_tags_time"
+                style="float:left; margin: 0 10px;">
               <a (click)="playPart(video_tag_time.start, video_tag_time.stop)" style="cursor:pointer">{{
-                video_tag_time.start * 1000 | date:'mm:ss' }} - {{ video_tag_time.stop * 1000 | date:'mm:ss' }} </a>
+                video_tag_time.start * 1000 | date:'m:ss' }} - {{ video_tag_time.stop * 1000 | date:'m:ss' }} </a>
             </li>
+            <br style="clear: both;" />
           </ol>
         </li>
-      </ul>
-    </div>
+    </ul>
+
+
   </div>
 
   <div *ngIf="isEditMode" id="DIV_scene_tag" class="white_container">
