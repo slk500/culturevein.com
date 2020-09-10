@@ -4,6 +4,10 @@ body {
   color: white;
 }
 
+.logo {
+  color: #d9534f!important;
+}
+
 caption {
   color: white;
 }
@@ -18,6 +22,7 @@ caption {
 
 .highlight {
     background-color:  green;
+    color:  white;
 }
 
 .nav>li>a:focus, .nav>li>a:hover {
@@ -27,6 +32,10 @@ caption {
 
 a {
   color: #8db2e5;
+}
+
+a:hover {
+  color: #d9534f;
 }
 
 .form-control {
