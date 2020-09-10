@@ -25,7 +25,7 @@ caption {
   background-color: transparent !important;
 }
 
-:link, :link * {
+a {
   color: #8db2e5;
 }
 

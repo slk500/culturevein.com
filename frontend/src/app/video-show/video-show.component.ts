@@ -261,7 +261,7 @@ export class VideoShowComponent implements OnInit {
         }
     }
 
-    tagStyle(tag): string {
+    tagColor(tag): string {
 
         if (!tag['video_tags_time'].length) {
             return 'label-default';
