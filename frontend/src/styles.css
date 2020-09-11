@@ -38,6 +38,10 @@ a:hover {
   color: #d9534f;
 }
 
+.active {
+  color: #d9534f!important;
+}
+
 .form-control {
   background-color: #292929;
   color: white
