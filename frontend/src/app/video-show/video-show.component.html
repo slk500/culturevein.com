@@ -24,7 +24,7 @@
               (click)="deleteVideoTag(videoInfo.video_youtube_id, tag.tag_slug_id)"
               class="glyphicon glyphicon-remove-circle button clickable"></span>
 
-        <ol *ngIf="tag.video_tags_time">
+        <ol *ngIf="tag.video_tags_time" style="display: inline-block;">
           <li *ngFor="let video_tag_time of tag.video_tags_time"
               class="tag-time">
             <a (click)="playPart(video_tag_time.start, video_tag_time.stop)" class="clickable">{{
