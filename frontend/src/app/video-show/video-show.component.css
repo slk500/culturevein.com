@@ -12,6 +12,10 @@ ul.style-none {
   margin: 0 15px;
 }
 
+ul ol{
+  margin-left: -25px;
+}
+
 .clickable {
   cursor:pointer;
 }

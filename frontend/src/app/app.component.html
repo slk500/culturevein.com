@@ -11,11 +11,11 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class='nav nav-pills nav-justified'>
                 <li><a routerLink="/tags" routerLinkActive="active">TAGS</a></li>
-                <li><a routerLink="/videos" routerLinkActive="active">VIDEOS</a></li>
-                <li><a routerLink="/add" routerLinkActive="active">ADD</a></li>
+                <li><a routerLink="/videos" routerLinkActive="active">MUSIC VIDEOS</a></li>
+                <li><a routerLink="/add" routerLinkActive="active">ADD MUSIC VIDEO</a></li>
                 <li><a routerLink="/about" routerLinkActive="active">ABOUT</a></li>
-                <li><a style="cursor:pointer" *ngIf="_authService.loggedIn()" (click)="_authService.logoutUser()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-                <li><a routerLink="/login" *ngIf="!_authService.loggedIn()"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                <li><a style="cursor:pointer" *ngIf="_authService.loggedIn()" (click)="_authService.logoutUser()"><span class="glyphicon glyphicon-log-out"></span> LOGOUT</a></li>
+                <li><a routerLink="/login" *ngIf="!_authService.loggedIn()"><span class="glyphicon glyphicon-log-in"></span> LOGIN</a></li>
             </ul>
         </div>
     </div>
