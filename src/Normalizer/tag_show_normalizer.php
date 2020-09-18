@@ -18,9 +18,9 @@ function tag_show_normalizer(array $tag_videos, DatabaseTagFind $tag): array
          * @var DatabaseTagVideo
          */
         $first = $tagVideo['ancestors'][0] ?? $tagVideo['descendants'][0];
-
-        $ancestorsTime = array_reduce($tagVideo['ancestors'], fn($carry, $tagVideo) => $carry + $tagVideo->tag_duration, null);
-        $descendantsTime = array_reduce($tagVideo['descendants'], fn($carry, $tagVideo) => $carry + $tagVideo->tag_duration, null);
+        //todo check if it work?
+        $ancestorsTime = array_reduce($tagVideo['ancestors'], fn(int $carry, $tagVideo) => $carry + $tagVideo->tag_duration, 0);
+        $descendantsTime = array_reduce($tagVideo['descendants'], fn(int $carry, $tagVideo) => $carry + $tagVideo->tag_duration, 0);
         $totalTime = $ancestorsTime + $descendantsTime;
 
         $totalTimeTag = ($totalTime > $first->video_duration) ? $first->video_duration : $totalTime;

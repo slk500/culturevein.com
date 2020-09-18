@@ -39,12 +39,16 @@
     </ul>
 
   <div *ngIf="isEditMode">
-    <div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
       <select2
         [cssImport]=true [data]="tags" [options]="select2Options"
-        [width]="'50%'" (valueChanged)="changed($event)">
+        [width]="'100%'"
+        (valueChanged)="changed($event)">
       </select2>
     </div>
+    </div>
+
     <br>
 
     <div *ngIf="isSelect2ChangedValue == true">
