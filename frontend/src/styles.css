@@ -79,3 +79,6 @@ a:hover {
   background-color: green!important;
 }
 
+.navbar .navbar-toggle .icon-bar {
+  background-color: #d9534f!important;
+}
