@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'db_server' => '0.0.0.0',
-    'db_user' => 'root',
-    'db_pass' => '',
-    'db_name' => 'culture_vein',
+    'db_server' => 'culturevein_database',
+    'db_user' => 'test',
+    'db_pass' => 'test',
+    'db_name' => 'test',
     'token_secret' => 'secret'
 ];
