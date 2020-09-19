@@ -14,6 +14,14 @@ services:
             context: ./docker/php
         volumes:
             - ./:/code
+    angular:
+        container_name: culturevein_angular
+        build:
+            context: ./docker/angular
+        volumes:
+            - ./frontend/:/app
+        ports:
+            - '4201:4200'
     database:
         image: mysql
         container_name: culturevein_database
