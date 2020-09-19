@@ -1,9 +1,0 @@
-<?php
-
-return [
-    'db_server' => 'culturevein_database',
-    'db_user' => 'test',
-    'db_pass' => 'test',
-    'db_name' => 'test',
-    'token_secret' => 'secret'
-];
