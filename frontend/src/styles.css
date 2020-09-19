@@ -82,3 +82,11 @@ a:hover {
 .navbar .navbar-toggle .icon-bar {
   background-color: #d9534f!important;
 }
+
+@media (min-width: 768px) {
+  .navbar-nav.navbar-center {
+    position: absolute;
+    left: 50%;
+    transform: translatex(-50%);
+  }
+}
