@@ -1,14 +1,17 @@
- Please visit site https://culturevein.com
-The base functionaliy of this app it's my 'idée fixe' but I like try new things & fool around a little bit so 
-my apology for being inconsistent in design.     
+Please visit site https://culturevein.com
+
+The site is a community-annotated library of music videos on YouTube, tagged by subject matter.
+
+
+Tagging means describing the content with relevant keywords.
+The tag may be an action, a scene, a person, a word or phrase, an object, a gesture, or a cliché or trope.
 
 Right know as a part of experiment I'm trying to remove OOP objects on use only functions.
 
 To run project:
-1. run command in public_html 'php -S localhost:8000'
-2. run command in frontend 'ng serve' 
-3. run database docker run -p 3306:3306 -e MYSQL_DATABASE='mysqldb' -e MYSQL_ALLOW_EMPTY_PASSWORD='yes' -d mysql
-4. import database from db dir
+1. docker-compose up
+2. composer install
+3. npm install
 
 * To Do List
     * Add new tag time, if already exist and is red - delete before add new
