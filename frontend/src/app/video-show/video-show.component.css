@@ -15,3 +15,7 @@ ul.style-none {
 .clickable {
   cursor:pointer;
 }
+
+ol {
+  padding-inline-start: 10px;
+}
