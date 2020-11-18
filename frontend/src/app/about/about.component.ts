@@ -15,7 +15,6 @@ import {InputService} from "../services/input.service";
           <p>Tagging means describing the content with relevant keywords. <br>
             The tag may be an action, a scene, a person, a word or phrase, an object, a gesture, or a cliché or trope.</p>
           <ol id='lista'>
-              <li>On this site you can search through music videos which have been embedded from YouTube</li><br>
               <li>You can add a new music video or tag without registration</li><br>
               <ul>
                   Tags are divided into 4 groups/colors:
@@ -24,11 +23,6 @@ import {InputService} from "../services/input.service";
                   <li><span class="label label-warning">Orange</span> tag with at least one exposure time added but there are more to add</li>
                   <li><span class="label label-success">Green</span> tag with completly all exposure times added</li>
               </ul><br>
-              <li>It's still very early experimental version of site. Not everything works ;)   </li><br>
-              <li>This app use YouTube API Services - please read
-                <a href="https://www.youtube.com/t/terms"> YouTube Terms of Service (ToS) </a>
-                and
-                <a href="https://policies.google.com/privacy"> Google Privacy Policy </a> </li>
           </ol>
           <br>
           <p><strong>CONTACT</strong><br>
