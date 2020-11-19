@@ -15,14 +15,16 @@ import {InputService} from "../services/input.service";
           <p>Tagging means describing the content with relevant keywords. <br>
             The tag may be an action, a scene, a person, a word or phrase, an object, a gesture, or a cliché or trope.</p>
           <ol id='lista'>
-              <li>You can add a new music video or tag without registration</li><br>
+              <li>You can add a new music video or tag without registration.</li><br>
               <ul>
                   Tags are divided into 4 groups/colors:
                   <li><span class="label label-default">Grey</span> tag without exposure time </li>
                   <li><span class="label label-danger">Red</span> tag with exposure time equal to duration of the video. Tag can describe whole video - like lyric video</li>
                   <li><span class="label label-warning">Orange</span> tag with at least one exposure time added but there are more to add</li>
                   <li><span class="label label-success">Green</span> tag with completly all exposure times added</li>
-              </ul><br>
+              </ul> <br>
+            <li> Project is open source - you are welcome to add new features & improvements
+              <a href="https://github.com/slk500/culturevein.com">GitHub Repository</a>.</li><br>
           </ol>
           <br>
           <p><strong>CONTACT</strong><br>

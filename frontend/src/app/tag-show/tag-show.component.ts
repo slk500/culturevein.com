@@ -3,6 +3,7 @@ import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {TagService} from "../services/tag.service";
 import {AuthService} from "../auth.service";
 import {SubscribeService} from "../services/subscribe.service";
+import {Meta, Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-tag-show',
@@ -27,7 +28,9 @@ export class TagShowComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router,
               private _tagService: TagService, public _authService: AuthService,
-              private _subscribeService: SubscribeService) {
+              private _subscribeService: SubscribeService, private titleService: Title,
+              private metaService: Meta)
+  {
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
@@ -38,7 +41,11 @@ export class TagShowComponent implements OnInit {
     });
 
       this._tagService.getTag(this.tagSlug)
-          .subscribe(data => this.tag = data,
+          .subscribe(data => {
+            this.tag = data;
+            this.titleService.setTitle(data.name + ' in music video');
+            this.metaService.updateTag({ name: 'description', content: data.name + ' in music video'});
+            },
               error => this.errorMsg = error);
 
       this._tagService.getDescendants(this.tagSlug)

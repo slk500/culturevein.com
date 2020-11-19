@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {Router} from "@angular/router";
 import {InputService} from "./services/input.service";
 import {AuthService} from "./auth.service";
+import {Meta, Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-root',
@@ -11,17 +12,20 @@ import {AuthService} from "./auth.service";
 export class AppComponent {
   title = 'app';
 
-    public href: string = "";
+  constructor(private router: Router, private inputService: InputService, public _authService: AuthService,
+              private titleService: Title, private metaService: Meta)
+  {
+    this.titleService.setTitle('CultureVein - music video database');
+    this.metaService.updateTag({ name: 'description', content: 'in music video, music video database'});
+  }
 
-    constructor(private router: Router, private inputService: InputService, public _authService: AuthService) {}
+  updateValue(e) {
+    let inputText = e.target.value;
+    this.passInputText(inputText);
+  }
 
-    updateValue(e){
-        let inputText = e.target.value;
-        this.passInputText(inputText);
-    }
-
-    passInputText(inputText: string){
-        this.inputService.search(inputText);
-    }
+  passInputText(inputText: string) {
+    this.inputService.search(inputText);
+  }
 }
 
