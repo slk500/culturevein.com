@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../auth.service";
 import {Router} from "@angular/router";
+import {SeoService} from "../seo.service";
 
 class LoginUserData implements ILoginUserData {
     email: string;
@@ -19,9 +20,11 @@ export class LoginComponent implements OnInit {
 
   public errors;
 
-  constructor(private _auth: AuthService, private _route: Router) { }
+  constructor(private _auth: AuthService, private _route: Router, private seoService: SeoService) { }
 
   ngOnInit() {
+    this.seoService.setTitle('Login | CultureVein');
+    this.seoService.setMetaRobotsNoIndexNoFollow();
   }
 
   loginUser(){

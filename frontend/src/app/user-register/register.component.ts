@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../auth.service";
 import {Router} from "@angular/router";
+import {SeoService} from "../seo.service";
 
 class RegisterUserData implements IRegisterUserData {
     email: string;
@@ -20,9 +21,11 @@ export class RegisterComponent implements OnInit {
 
   public errors;
 
-  constructor(private _auth: AuthService, private _route: Router) { }
+  constructor(private _auth: AuthService, private _route: Router, private seoService: SeoService) { }
 
   ngOnInit() {
+    this.seoService.setTitle('Register | CultureVein');
+    this.seoService.setMetaRobotsNoIndexNoFollow();
   }
 
   registerUser(){

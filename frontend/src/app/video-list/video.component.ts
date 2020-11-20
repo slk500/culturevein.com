@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {VideoService} from "../services/video.service";
 import {InputService} from "../services/input.service";
+import {SeoService} from "../seo.service";
 
 @Component({
   selector: 'app-video',
@@ -13,10 +14,13 @@ export class VideoComponent implements OnInit {
     public errorMsg;
     public searchText;
 
-    constructor(private _videoService: VideoService, private inputSearch: InputService) {}
+    constructor(private _videoService: VideoService, private inputSearch: InputService, private seoService: SeoService) {}
 
     ngOnInit() {
-        this._videoService.getVideos()
+      this.seoService.setTitle('Artists - Music Video Database | CultureVein');
+      this.seoService.setMetaDescription('Artists - Music Video Database tagged by subject matter');
+
+      this._videoService.getVideos()
             .subscribe(data => this.videos = data,
                 error => this.errorMsg = error);
         this.inputSearch.cast.subscribe(input => this.searchText = input);

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
-import {AuthService} from "../auth.service";
 import {SubscribeService} from "../services/subscribe.service";
 import {ArtistService} from "../services/artist.service";
+import {SeoService} from "../seo.service";
 
 @Component({
   selector: 'app-artist-show',
@@ -18,19 +18,23 @@ export class ArtistShowComponent implements OnInit {
   public errorMsg;
 
   constructor(private route: ActivatedRoute, private router: Router,
-              private _artistService: ArtistService, public _authService: AuthService,
+              private _artistService: ArtistService, private seoService: SeoService,
               private _subscribeService: SubscribeService) {
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
   ngOnInit() {
-
     this.route.paramMap.subscribe((params : ParamMap) => {
         this.artistSlug = params.get('slug');
     });
 
       this._artistService.getArtist(this.artistSlug)
-        .subscribe(data => this.artist = data,
+        .subscribe(data => {
+          this.artist = data;
+            this.seoService.setTitle(data.name + ' music videos');
+            this.seoService.setMetaDescription(
+              data.name + ' music videos tags: '+ data.tags.map(str => str.name).join());
+          },
           error => this.errorMsg = error);
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {InputService} from "../services/input.service";
+import {SeoService} from "../seo.service";
 
 @Component({
   selector: 'app-about',
@@ -11,9 +12,9 @@ import {InputService} from "../services/input.service";
 
     <div *ngIf="!searchText">
       <div class='col-xs-10 col-xs-offset-1 white_container'>
-        <p>The site is a community-annotated library of music videos on YouTube, tagged by subject matter.</p> <br>
+        <p>The site is a community annotated music video database on YouTube, tagged by subject matter.</p> <br>
           <p>Tagging means describing the content with relevant keywords. <br>
-            The tag may be an action, a scene, a person, a word or phrase, an object, a gesture, or a cliché or trope.</p>
+            The tag may be an action, a scene, a person, a word or phrase, an object, a gesture, or a cliche or trope.</p>
           <ol id='lista'>
               <li>You can add a new music video or tag without registration.</li><br>
               <ul>
@@ -50,10 +51,14 @@ export class AboutComponent implements OnInit {
 
   public searchText;
 
-  constructor(private inputSearch: InputService) { }
+  constructor(private inputSearch: InputService, private seoService: SeoService) {
+  }
 
   ngOnInit() {
     this.inputSearch.cast.subscribe(input => this.searchText = input);
+    this.seoService.setTitle('About | CultureVein')
+    this.seoService.setMetaDescription('A community annotated music video database on YouTube, tagged by subject matter - ' +
+      'it can be a person, object, word or phrase, scene, gesture, cliche, trope.')
   }
 
 }

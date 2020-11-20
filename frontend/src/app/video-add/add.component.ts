@@ -6,6 +6,7 @@ import {Router} from "@angular/router";
 import {map} from "rxjs/internal/operators";
 import {NgxY2PlayerComponent} from "ngx-y2-player";
 import {InputService} from "../services/input.service";
+import {SeoService} from "../seo.service";
 
 @Component({
     selector: 'app-add',
@@ -41,10 +42,14 @@ export class AddComponent implements OnInit {
     public searchText;
 
     constructor(private _artistService: ArtistService, private _youTubeService: YouTubeService,
-                private _videoService: VideoService, private router: Router, private inputSearch: InputService) {
+                private _videoService: VideoService, private router: Router, private inputSearch: InputService,
+                private seoService: SeoService) {
     }
 
     ngOnInit() {
+      this.seoService.setTitle('Add Music Video | CultureVein');
+      this.seoService.setMetaRobotsNoIndexNoFollow();
+
         this._artistService.getArtists().
         pipe(map(arr => arr.map(el => el.name)),)
             .subscribe(

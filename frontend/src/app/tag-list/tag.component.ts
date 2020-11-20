@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TagService} from "../services/tag.service";
 import {InputService} from "../services/input.service";
+import {SeoService} from "../seo.service";
 
 
 @Component({
@@ -14,11 +15,13 @@ export class TagComponent implements OnInit {
   public errorMsg;
   public searchText;
 
-  constructor(private _tagService: TagService, private inputSearch: InputService) {}
+  constructor(private _tagService: TagService, private inputSearch: InputService, private seoService: SeoService) {}
 
   ngOnInit() {
+    this.seoService.setTitle('Tags in music videos | CultureVein');
+    this.seoService.setMetaDescription('Music videos with Arnold Schwarzenegger,Brad Pitt,Charlie Sheen,John Deep,Keanu Reeves, Leonardo DiCaprio,Pamela Anderson,Robin Williams,Sylvester Stallone')
     this._tagService.getTags()
-        .subscribe(data => this.tags = data,
+        .subscribe(data => {this.tags = data;},
             error => this.errorMsg = error);
       this.inputSearch.cast.subscribe(input => this.searchText = input);
   }

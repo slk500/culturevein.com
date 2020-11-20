@@ -4,6 +4,7 @@ import {VideoService} from "../services/video.service";
 import {TagService} from "../services/tag.service";
 import {NgxY2PlayerComponent} from "ngx-y2-player";
 import {Ivideo} from "../interfaces/video";
+import {SeoService} from "../seo.service";
 
 @Component({
     selector: 'app-video-show',
@@ -56,7 +57,7 @@ export class VideoShowComponent implements OnInit {
 
     constructor(private route: ActivatedRoute, private router: Router,
                 private _videoService: VideoService,
-                private _tagService: TagService) {
+                private _tagService: TagService, private seoService: SeoService) {
         this.Math = Math;
     }
 
@@ -70,12 +71,17 @@ export class VideoShowComponent implements OnInit {
                     this.videoInfo = data[0];
                     this.timeRange[1] = data[0].duration;
                     this.timeRange[0] = 0;
+                    this.seoService.setTitle(data[0].artist_name + ' - ' + data[0].video_name + ' tagged by subject matter');
                 },
                 error => this.errorMsg = error);
 
         this._tagService.getVideoTagsForVideo(this.youtubeId)
             .subscribe(data => {
               this.videoTags = data;
+              this.seoService.setMetaDescription(
+                  this.seoService.getTitle() + ' ' + data.map(str => str.tag_name).join()
+                );
+              console.log(data);
               this.isEditMode = (this.videoTags.length === 0);
               },
                 error => this.errorMsg = error);

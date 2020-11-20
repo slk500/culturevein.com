@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {InputService} from "./services/input.service";
 import {AuthService} from "./auth.service";
 import {Meta, Title} from "@angular/platform-browser";
+import {SeoService} from "./seo.service";
 
 @Component({
   selector: 'app-root',
@@ -13,10 +14,13 @@ export class AppComponent {
   title = 'app';
 
   constructor(private router: Router, private inputService: InputService, public _authService: AuthService,
-              private titleService: Title, private metaService: Meta)
-  {
-    this.titleService.setTitle('CultureVein - music video database');
-    this.metaService.updateTag({ name: 'description', content: 'in music video, music video database'});
+              private seoService: SeoService)
+  {}
+
+  ngOnInit() {
+    this.seoService.setTitle('Music Video Database Tagged By Subject Matter | CultureVein');
+    this.seoService.setMetaDescription('A community annotated music video database on YouTube, tagged by subject matter - ' +
+      'it can be a person, object, word or phrase, scene, gesture, cliche, trope.');
   }
 
   updateValue(e) {

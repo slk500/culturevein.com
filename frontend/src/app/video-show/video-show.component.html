@@ -8,8 +8,8 @@
           </ngx-y2-player>
       </div>
 
-  <h4><a [routerLink]="['/artists', videoInfo?.artist_slug]" *ngIf="videoInfo">{{ videoInfo?.artist_name}}</a>
-    - {{ videoInfo?.video_name }}</h4>
+  <h1><a [routerLink]="['/artists', videoInfo?.artist_slug]" *ngIf="videoInfo">{{ videoInfo?.artist_name}}</a>
+    - {{ videoInfo?.video_name }}</h1>
   <a style="cursor:pointer" (click)="isEditMode = !isEditMode">{{ isEditMode == true ? 'EXIT EDIT' : 'EDIT TAGS' }}</a>
 <br><br>
     <ul class="style-none">
