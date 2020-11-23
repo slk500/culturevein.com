@@ -89,11 +89,15 @@ export class AddComponent implements OnInit {
       this.duration = this.video.videoPlayer.getDuration();
 
       this.artist = artistAndTitle[0].trim();
-      this.title = artistAndTitle[1].trim();
       this.tempArtists.push(this.artist);
       this.tempArtists.sort();
       this.artists = this.tempArtists;
       this.selectedArtist = this.artist;
+
+      if(artistAndTitle[1]) {
+        this.title = artistAndTitle[1].trim();
+      }
+
 
       this.select2Options = {
         placeholder: 'Select an artist or type a new one',
