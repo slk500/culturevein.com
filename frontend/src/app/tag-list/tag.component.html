@@ -2,11 +2,7 @@
 <div class='col-xs-12 num_of_rows'>{{ getTagsCount(tags |filterTags : searchText) }} <strong>TAGS</strong></div>
 <div class="col-xs-12 white_container">
 
-  <ul class='list-unstyled' style="
-    -webkit-column-count: 3;
-    -moz-column-count: 3;
-    column-count: 3;
-">
+  <ul class='list-unstyled'>
     <li *ngFor="let tag of tags |filterTags : searchText">
       <a [routerLink]="['/tags', tag.slug]"
          [innerHTML]="highlight(searchText, tag.name)">

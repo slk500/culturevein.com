@@ -90,3 +90,25 @@ a:hover {
     transform: translatex(-50%);
   }
 }
+
+.list-unstyled {
+  -webkit-column-count: 1;
+  -moz-column-count: 1;
+  column-count: 1;
+}
+
+@media only screen and (min-width: 400px) {
+  .list-unstyled {
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-count: 2;
+  }
+}
+
+@media only screen and (min-width: 700px) {
+  .list-unstyled {
+    -webkit-column-count: 3;
+    -moz-column-count: 3;
+    column-count: 3;
+  }
+}
