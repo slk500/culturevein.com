@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$match = match(include __DIR__ . '/../config/routes.php',
+$match = find(include __DIR__ . '/../config/routes.php',
     $_SERVER['REQUEST_URI'],
     $_SERVER['REQUEST_METHOD']);
 

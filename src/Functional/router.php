@@ -5,7 +5,7 @@ declare(strict_types=1);
 use ApiProblem\ApiProblem;
 use Service\TokenService;
 
-function match(array $routes, string $url, string $http_method): ?array
+function find(array $routes, string $url, string $http_method): ?array
 {
     foreach ($routes as $route) {
         if (preg_match($route[0], $url, $matches) && ($route[2] === $http_method)) {
