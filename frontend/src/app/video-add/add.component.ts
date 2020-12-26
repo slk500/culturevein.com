@@ -84,6 +84,12 @@ export class AddComponent implements OnInit {
         }
     }
 
+    public removeRedundantText(rawTitle: string)
+    {
+      let textToRemove= '(Official Music Video)';
+      return rawTitle.replace(textToRemove,'')
+    }
+
     public getTitleAndDuration() {
       let artistAndTitle = this.video.videoPlayer.getVideoData().title.split("-");
       this.duration = this.video.videoPlayer.getDuration();
@@ -95,9 +101,9 @@ export class AddComponent implements OnInit {
       this.selectedArtist = this.artist;
 
       if(artistAndTitle[1]) {
-        this.title = artistAndTitle[1].trim();
+        let title = this.removeRedundantText(artistAndTitle[1]);
+        this.title = title.trim();
       }
-
 
       this.select2Options = {
         placeholder: 'Select an artist or type a new one',
