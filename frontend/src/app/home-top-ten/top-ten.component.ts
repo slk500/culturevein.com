@@ -28,7 +28,7 @@ export class TopTenComponent implements OnInit {
 
     ngOnInit() {
       this.seoService.setTitle('Music Video Database Tagged By Subject Matter | CultureVein');
-      this.seoService.setMetaDescription('A community annotated music video database on YouTube, tagged by subject matter - ' +
+      this.seoService.setMetaDescription('A community annotated music video database tagged by subject matter - ' +
         'it can be a person, object, word or phrase, scene, gesture, cliche, trope.');
 
         this._tagService.getTagsNew()

@@ -19,4 +19,8 @@ class Video
     public $release_date;
 
     public $duration;
+
+    public $country;
+
+    public $genre;
 }

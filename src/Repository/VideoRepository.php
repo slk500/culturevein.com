@@ -33,6 +33,8 @@ final class VideoRepository extends Repository
             video.video_youtube_id, 
             video.duration,
             video.user_id,
+            video.country,
+            video.genre,
             artist.name as artist_name,            
             artist.artist_slug_id as artist_slug
             FROM video

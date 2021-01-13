@@ -10,7 +10,7 @@
 
   <h1><a [routerLink]="['/artists', videoInfo?.artist_slug]" *ngIf="videoInfo">{{ videoInfo?.artist_name}}</a>
     - {{ videoInfo?.video_name }}</h1>
-  <a style="cursor:pointer" (click)="isEditMode = !isEditMode">{{ isEditMode == true ? 'EXIT EDIT' : 'EDIT TAGS' }}</a>
+  <a style="cursor:pointer" (click)="isEditMode = !isEditMode">{{ isEditMode == true ? 'EXIT EDIT' : 'EDIT' }}</a>
 <br><br>
     <ul class="style-none">
 
@@ -100,7 +100,11 @@
     </div>
 
   </div>
-
+  <p>
+    <span> Country of production: </span>
+    <br>
+    <span> Genre: </span>
+  </p>
   <a class="clickable"
      (click)="isHistoryOpen = !isHistoryOpen">{{ isHistoryOpen == false ? 'SHOW HISTORY' : 'CLOSE HISTORY' }}</a>
   <app-video-tags-history *ngIf="isHistoryOpen" [youtubeId]="youtubeId"></app-video-tags-history>

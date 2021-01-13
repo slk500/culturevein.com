@@ -40,7 +40,7 @@ function tag_show(TagRepository $tag_repository, SubscribeRepository $subscribe_
 
 function tag_in_videos(TagRepository $tag_repository): array
 {
-    return $tag_repository->count_tag_in_videos();
+    return $tag_repository->count_videos_in_tag();
 }
 
 function tag_new(TagRepository $tag_repository): array

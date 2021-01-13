@@ -11,8 +11,8 @@ import {SeoService} from "../seo.service";
     </div>
 
     <div *ngIf="!searchText">
-      <div class='col-xs-10 col-xs-offset-1 white_container'>
-        <p>The site is a community annotated music video database on YouTube, tagged by subject matter.</p> <br>
+      <div class='col-xs-10 col-xs-offset-1'>
+        <p>This site is a community annotated music video database tagged by subject matter.</p> <br>
           <p>Tagging means describing the content with relevant keywords. <br>
             The tag may be an action, a scene, a person, a word or phrase, an object, a gesture, or a cliche or trope.</p>
           <ol id='lista'>
@@ -57,7 +57,7 @@ export class AboutComponent implements OnInit {
   ngOnInit() {
     this.inputSearch.cast.subscribe(input => this.searchText = input);
     this.seoService.setTitle('About | CultureVein')
-    this.seoService.setMetaDescription('A community annotated music video database on YouTube, tagged by subject matter - ' +
+    this.seoService.setMetaDescription('A community annotated music video database tagged by subject matter - ' +
       'it can be a person, object, word or phrase, scene, gesture, cliche, trope.')
   }
 

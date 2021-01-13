@@ -51,7 +51,7 @@ final class TagRepository extends Repository
     }
 
 
-    public function count_tag_in_videos(): array
+    public function count_videos_in_tag(): array
     {
         return $this->database->fetch("WITH RECURSIVE
     cte_path(parent, child, level, query, tag_name)
@@ -104,7 +104,7 @@ LIMIT 10");
         return mysqli_fetch_object($result, DatabaseTagFind::class);
     }
 
-    public function find_videos(string $slug): array
+    public function find_videos(string $tag_slug): array
     {
         $stmt = $this->database->mysqli->prepare("
     SELECT
@@ -130,7 +130,7 @@ LIMIT 10");
             throw new \Exception($this->database->mysqli->error);
         }
 
-        $stmt->bind_param('ss', $slug, $slug);
+        $stmt->bind_param('ss', $tag_slug, $tag_slug);
 
         if (!$stmt->execute()) {
             throw new \Exception($stmt->error);
