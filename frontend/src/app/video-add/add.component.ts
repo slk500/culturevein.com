@@ -86,8 +86,9 @@ export class AddComponent implements OnInit {
 
     public removeRedundantText(rawTitle: string)
     {
-      rawTitle = rawTitle.replace(rawTitle,'(Official Music Video)');
-      return rawTitle.replace(rawTitle, '(Official Video)');
+      rawTitle.replace(/\(Official Music Video\)/ig, '')
+      rawTitle.replace(/\(Official Video\)/ig, '')
+      return rawTitle.replace(/\(Official Lyric Video\)/ig, '')
     }
 
     public getTitleAndDuration() {
