@@ -35,7 +35,7 @@ export class TopTenComponent implements OnInit {
             .subscribe(data => this.tagsNew = data,
                 error => this.errorMsg = error);
 
-        this._tagService.getTagsTop()
+        this._tagService.findAllOrderByNumberOfVideos()
             .subscribe(data => this.tagsTop = data,
                 error => this.errorMsg = error);
 

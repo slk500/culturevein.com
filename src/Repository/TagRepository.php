@@ -43,15 +43,15 @@ final class TagRepository extends Repository
     public function find_all(): ?array
     {
         return $this->database->fetch("SELECT 
-                  tag.name AS name, 
-                  tag.tag_slug_id AS slug,
+                  tag.name AS tag_name, 
+                  tag.tag_slug_id AS tag_slug_id,
                   tag.parent_slug_id AS parent_slug
                   FROM tag
-                  ORDER BY name");
+                  ORDER BY tag_name");
     }
 
 
-    public function count_videos_in_tag(): array
+    public function find_all_order_by_numer_of_videos(): array
     {
         return $this->database->fetch("WITH RECURSIVE
     cte_path(parent, child, level, query, tag_name)
@@ -72,7 +72,7 @@ WHERE video_tag.tag_slug_id = cte_path.child
 AND level <= 2 and video_youtube_id is not null
 GROUP BY query, tag_name
 ORDER BY count desc
-LIMIT 10");
+");
     }
 
     public function newest_ten(): array

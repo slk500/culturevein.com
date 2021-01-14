@@ -20,9 +20,9 @@ function set_relations(array $input)
         if ($parent = $item['parent_slug']) {
             if (array_key_exists($parent, $input)) {
                 $input[$parent]['children'][] = $item;
-                unset($input[$item['slug']]);
+                unset($input[$item['tag_slug_id']]);
             } else {
-                $deeper[$item['slug']] = $item;
+                $deeper[$item['tag_slug_id']] = $item;
             }
         }
     }
@@ -34,10 +34,10 @@ function add_nested_children(array $deepers, array $tags)
     foreach ($deepers as $deep) {
         foreach ($tags as &$tag) {
             foreach ($tag['children'] as &$children) {
-                if ($children['slug'] === $deep['parent_slug']) {
+                if ($children['tag_slug_id'] === $deep['parent_slug']) {
                     $children['children'] [] = $deep;
-                    unset($deepers[$deep['slug']]);
-                    unset($tags[$deep['slug']]);
+                    unset($deepers[$deep['tag_slug_id']]);
+                    unset($tags[$deep['tag_slug_id']]);
                 }
             }
         }

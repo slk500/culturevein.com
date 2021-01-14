@@ -47,7 +47,7 @@ export class TagService {
       .pipe(catchError(this.errorHandler))
   }
 
-  getTagsTop(): Observable<ITagTop[]> {
+  findAllOrderByNumberOfVideos(): Observable<ITagTop[]> {
     return this.http.get<ITagTop[]>('api/tags-top')
       .pipe(catchError(this.errorHandler))
   }

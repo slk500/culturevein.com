@@ -6,23 +6,6 @@
 <div *ngIf="!searchText">
 <div class='col-md-6 col-lg-6 '>
     <table class='table'>
-        <caption><strong>TAGS WITH HIGHEST NUMBER OF VIDEOS</strong></caption>
-        <thead>
-        <tr>
-            <th> </th> <th>Tag</th> <th>no. of videos</th>
-        </tr>
-        </thead>
-        <tr *ngFor="let tag of tagsTop; let i=index">
-
-            <td class='text-center'> {{ i+1 }} </td>
-            <td><a [routerLink]="['/tags', tag.tag_slug_id]"> {{ tag.tag_name }} </a></td>
-            <td>{{ tag.count }}</td>
-        </tr>
-    </table>
-</div>
-
-<div class='col-md-6 col-lg-6 '>
-    <table class='table'>
         <caption><strong>VIDEOS WITH HIGHEST NUMBER OF TAGS</strong></caption>
         <thead>
         <tr>

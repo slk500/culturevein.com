@@ -40,7 +40,8 @@ function tag_show(TagRepository $tag_repository, SubscribeRepository $subscribe_
 
 function tag_in_videos(TagRepository $tag_repository): array
 {
-    return $tag_repository->count_videos_in_tag();
+    $tags =  $tag_repository->find_all_order_by_numer_of_videos();
+    return array_map(fn (array $item) => array_merge($item, ['children' => []]), $tags);
 }
 
 function tag_new(TagRepository $tag_repository): array

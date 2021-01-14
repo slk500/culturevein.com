@@ -5,7 +5,7 @@ declare(strict_types=1);
 function set_slug_as_key($tag)
 {
     $result = [];
-    $result[$tag['slug']] = $tag;
+    $result[$tag['tag_slug_id']] = $tag;
     return $result;
 }
 

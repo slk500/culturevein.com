@@ -1,26 +1,31 @@
 {{ errorMsg }}
-<div class='col-xs-12'>{{ getTagsCount(tags |filterTags : searchText) }} <strong>TAGS</strong></div>
+<div class='col-xs-12'><strong>sort   </strong>
+  <a [routerLink]="" (click)="getTags()">in alphabetical order with relations</a>,
+  <a [routerLink]="" (click)="findAllByNumberOfVideos()">by number of videos</a>
+</div>
+<br><br>
+<div class='col-xs-12'>{{ getTagsCount(tags |filterTags : searchText) }} <strong>TAGS</strong> </div>
 <div class="col-xs-12">
-
   <ul class='list-break-to-columns list-unstyled'>
     <li *ngFor="let tag of tags |filterTags : searchText">
-      <a [routerLink]="['/tags', tag.slug]"
-         [innerHTML]="highlight(searchText, tag.name)">
+      <span *ngIf="tag.count"> {{ tag.count}} </span>
+      <a [routerLink]="['/tags', tag.tag_slug_id]"
+         [innerHTML]="highlight(searchText, tag.tag_name)">
       </a>
-      <ul *ngIf="tag.children.length > 0">
+      <ul *ngIf="tag.children?.length > 0">
         <li *ngFor="let tag of tag.children">
-          <a [routerLink]="['/tags', tag.slug]"
-             [innerHTML]="highlight(searchText, tag.name)">
+          <a [routerLink]="['/tags', tag.tag_slug_id]"
+             [innerHTML]="highlight(searchText, tag.tag_name)">
           </a>
-          <ul *ngIf="tag.children.length > 0">
+          <ul *ngIf="tag.children?.length > 0">
             <li *ngFor="let tag of tag.children">
-              <a [routerLink]="['/tags', tag.slug]"
-                 [innerHTML]="highlight(searchText, tag.name)">
+              <a [routerLink]="['/tags', tag.tag_slug_id]"
+                 [innerHTML]="highlight(searchText, tag.tag_name)">
               </a>
-              <ul *ngIf="tag.children.length > 0">
+              <ul *ngIf="tag.children?.length > 0">
                 <li *ngFor="let tag of tag.children">
-                  <a [routerLink]="['/tags', tag.slug]"
-                     [innerHTML]="highlight(searchText, tag.name)">
+                  <a [routerLink]="['/tags', tag.tag_slug_id]"
+                     [innerHTML]="highlight(searchText, tag.tag_name)">
                   </a>
               </ul>
           </ul>

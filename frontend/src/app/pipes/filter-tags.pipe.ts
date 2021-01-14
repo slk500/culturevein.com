@@ -19,7 +19,7 @@ export class FilterTagsPipe implements PipeTransform {
 
   private search(tag, search) {
 
-    if (tag.name.toLowerCase().includes(search)) {
+    if (tag.tag_name.toLowerCase().includes(search)) {
       return true;
     }
 

@@ -15,7 +15,7 @@ export class TagComponent implements OnInit {
   public errorMsg;
   public searchText;
 
-  constructor(private _tagService: TagService, private inputSearch: InputService, private seoService: SeoService) {}
+  constructor(public _tagService: TagService, private inputSearch: InputService, private seoService: SeoService) {}
 
   ngOnInit() {
     this.seoService.setTitle('Tags in music videos | CultureVein');
@@ -24,6 +24,18 @@ export class TagComponent implements OnInit {
         .subscribe(data => {this.tags = data;},
             error => this.errorMsg = error);
       this.inputSearch.cast.subscribe(input => this.searchText = input);
+  }
+
+  getTags() {
+    this._tagService.getTags()
+        .subscribe(data => {this.tags = data;},
+            error => this.errorMsg = error);
+  }
+
+  findAllByNumberOfVideos() {
+    this._tagService.findAllOrderByNumberOfVideos()
+        .subscribe(data => {this.tags = data;},
+            error => this.errorMsg = error);
   }
 
   getTagsCount(tags) {

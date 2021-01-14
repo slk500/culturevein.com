@@ -1,5 +1,5 @@
 export interface ITagTop {
-    tag_name: string,
-    count: number,
-    tag_slug_id: string,
+  count: number,
+  tag_name: string,
+  tag_slug_id: string
 }
