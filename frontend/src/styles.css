@@ -16,6 +16,10 @@ caption {
   border-color: #555!important;
 }
 
+.num_of_rows {
+    padding-left:0;
+}
+
 .highlight {
     background-color:  green;
     color:  white;
