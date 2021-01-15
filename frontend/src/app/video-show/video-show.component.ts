@@ -146,12 +146,12 @@ export class VideoShowComponent implements OnInit {
 
     convertToFormat(data) {
 
-        data.unshift({slug: '', name: ''}); //placeholder select2
+        data.unshift({tag_slug_id: '', tag_name: ''}); //placeholder select2
 
         return data.map(tag => {
             return {
-                id: tag.slug,
-                text: tag.name
+                id: tag.tag_slug_id,
+                text: tag.tag_name
             };
         });
 
