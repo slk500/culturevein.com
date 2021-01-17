@@ -14,6 +14,8 @@ export class TagComponent implements OnInit {
   public tags = [];
   public errorMsg;
   public searchText;
+  public isRelations : boolean = true;
+  public isNumberOfVideos : boolean = false;
 
   constructor(public _tagService: TagService, private inputSearch: InputService, private seoService: SeoService) {}
 
@@ -27,10 +29,16 @@ export class TagComponent implements OnInit {
   }
 
   getTags() {
-    this._tagService.getTags()
-        .subscribe(data => {this.tags = data;},
-            error => this.errorMsg = error);
-  }
+
+    if(!this.isRelations) this.findAllByNumberOfVideos()
+    else {
+      this._tagService.getTags()
+        .subscribe(data => {
+            this.tags = data;
+          },
+          error => this.errorMsg = error);
+      }
+    }
 
   findAllByNumberOfVideos() {
     this._tagService.findAllOrderByNumberOfVideos()

@@ -1,29 +1,38 @@
 {{ errorMsg }}
-<div class='col-xs-12'><strong>sort   </strong>
-  <a [routerLink]="" (click)="getTags()">in alphabetical order with relations</a>,
-  <a [routerLink]="" (click)="findAllByNumberOfVideos()">by number of videos</a>
+<div class='col-xs-12'>
+  <div class="checkboxes">
+    <label>
+      <input type="checkbox" [(ngModel)]="isRelations" (change)="getTags()"> relations
+    </label> <br>
+    <label>
+      <input type="checkbox" [(ngModel)]="isNumberOfVideos" (change)="getTags()"> number of videos
+    </label>
+  </div>
 </div>
-<br><br>
+
 <div class='col-xs-12 num_of_rows'>{{ getTagsCount(tags |filterTags : searchText) }} <strong>TAGS</strong></div>
 <div class="col-xs-12">
   <ul class='list-break-to-columns list-unstyled'>
     <li *ngFor="let tag of tags |filterTags : searchText">
-      <span *ngIf="tag.count"> {{ tag.count}} </span>
+      <span *ngIf="isNumberOfVideos"> {{ tag.count}} </span>
       <a [routerLink]="['/tags', tag.tag_slug_id]"
          [innerHTML]="highlight(searchText, tag.tag_name)">
       </a>
       <ul *ngIf="tag.children?.length > 0">
         <li *ngFor="let tag of tag.children">
+          <span *ngIf="isNumberOfVideos"> {{ tag.count}} </span>
           <a [routerLink]="['/tags', tag.tag_slug_id]"
              [innerHTML]="highlight(searchText, tag.tag_name)">
           </a>
           <ul *ngIf="tag.children?.length > 0">
             <li *ngFor="let tag of tag.children">
+              <span *ngIf="isNumberOfVideos"> {{ tag.count}} </span>
               <a [routerLink]="['/tags', tag.tag_slug_id]"
                  [innerHTML]="highlight(searchText, tag.tag_name)">
               </a>
               <ul *ngIf="tag.children?.length > 0">
                 <li *ngFor="let tag of tag.children">
+                  <span *ngIf="isNumberOfVideos"> {{ tag.count}} </span>
                   <a [routerLink]="['/tags', tag.tag_slug_id]"
                      [innerHTML]="highlight(searchText, tag.tag_name)">
                   </a>

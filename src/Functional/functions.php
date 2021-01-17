@@ -14,6 +14,11 @@ function add_children_field(array $tag)
     return array_merge($tag, ['children' => []]);
 }
 
+function add_count_field(array $tag)
+{
+    return array_merge($tag, ['count' => 0]);
+}
+
 function compose(...$functions)
 {
     return array_reduce(

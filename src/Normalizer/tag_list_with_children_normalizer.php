@@ -3,17 +3,16 @@
 function normalize_tag_list_with_relation(array $tags): array
 {
     $normalize = compose(
+        'add_count_field',
         'add_children_field',
         'set_slug_as_key',
     );
 
     $normalizeTags = array_map($normalize, $tags);
-    $result = array_merge(...$normalizeTags);
-
-    return set_relations($result);
+    return array_merge(...$normalizeTags);
 }
 
-function set_relations(array $input)
+function set_relations(array $input): array
 {
     $deeper = [];
     foreach ($input as $item) {
@@ -29,7 +28,7 @@ function set_relations(array $input)
     return array_values(add_nested_children($deeper, $input));
 }
 
-function add_nested_children(array $deepers, array $tags)
+function add_nested_children(array $deepers, array $tags): array
 {
     foreach ($deepers as $deep) {
         foreach ($tags as &$tag) {

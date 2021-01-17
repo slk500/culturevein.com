@@ -8,7 +8,13 @@ use Repository\TagRepository;
 
 function tag_list(TagRepository $tag_repository): array
 {
-    return normalize_tag_list_with_relation($tag_repository->find_all());
+    $tags = normalize_tag_list_with_relation($tag_repository->find_all());
+
+    foreach ($tag_repository->find_all_order_by_numer_of_videos() as $tag_count) {
+        $tags[$tag_count['tag_slug_id']]['count'] = $tag_count['count'];
+    }
+
+    return set_relations($tags);
 }
 
 function tag_list_without_relation(TagRepository $tag_repository): array
