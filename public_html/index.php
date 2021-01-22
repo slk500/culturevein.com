@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 ini_set('display_startup_errors', '1');
 ini_set('display_errors', '1');
-error_reporting(-1);
+error_reporting(E_ALL);
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, PATCH, POST, PUT, DELETE, OPTIONS");
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$match = find(include __DIR__ . '/../config/routes.php',
+$match = find_route(include __DIR__ . '/../config/routes.php',
     $_SERVER['REQUEST_URI'],
     $_SERVER['REQUEST_METHOD']);
 

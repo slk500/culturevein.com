@@ -5,7 +5,7 @@ declare(strict_types=1);
 use ApiProblem\ApiProblem;
 use Service\TokenService;
 
-function find(array $routes, string $url, string $http_method): ?array
+function find_route(array $routes, string $url, string $http_method): ?array
 {
     foreach ($routes as $route) {
         if (preg_match($route[0], $url, $matches) && ($route[2] === $http_method)) {
@@ -59,17 +59,11 @@ function find_logged_user_id(): ?int
 
 function set_status_code(string $http_method): void
 {
-    switch ($http_method) {
-        case 'GET':
-            http_response_code(200);
-            break;
-        case 'POST':
-            http_response_code(201);
-            break;
-        case 'DELETE':
-            http_response_code(204);
-            break;
-    }
+    match ($http_method) {
+        'GET' => http_response_code(200),
+        'POST' => http_response_code(201),
+        'DELETE' => http_response_code(204)
+    };
 }
 
 //todo replace it with just parameters?

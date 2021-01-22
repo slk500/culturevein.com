@@ -2,23 +2,6 @@
 
 declare(strict_types=1);
 
-function set_slug_as_key($tag)
-{
-    $result = [];
-    $result[$tag['tag_slug_id']] = $tag;
-    return $result;
-}
-
-function add_children_field(array $tag)
-{
-    return array_merge($tag, ['children' => []]);
-}
-
-function add_count_field(array $tag)
-{
-    return array_merge($tag, ['count' => 0]);
-}
-
 function compose(...$functions)
 {
     return array_reduce(

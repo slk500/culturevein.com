@@ -6,15 +6,28 @@ use ApiProblem\ApiProblem;
 use Repository\SubscribeRepository;
 use Repository\TagRepository;
 
-function tag_list(TagRepository $tag_repository): array
+function tag_list(TagRepository $tag_repository)
 {
-    $tags = normalize_tag_list_with_relation($tag_repository->find_all());
+    $tags = $tag_repository->find_all();
+    $tags = array_map(fn($tag) => array_merge($tag, ['children' => []]), $tags);
 
-    foreach ($tag_repository->find_all_order_by_numer_of_videos() as $tag_count) {
-        $tags[$tag_count['tag_slug_id']]['count'] = $tag_count['count'];
+    $map = [];
+    foreach ($tags as $i => $tag) {
+        $map[$tag['tag_slug_id']] = &$tags[$i];
     }
 
-    return set_relations($tags);
+    foreach ($tag_repository->find_all_order_by_numer_of_videos() as $tag_count) {
+        $map[$tag_count['tag_slug_id']]['count'] = $tag_count['count'];
+    }
+
+    return set_relations($tags, $map);
+}
+
+function tag_in_videos(TagRepository $tag_repository)
+{
+    $tags = $tag_repository->find_all_order_by_numer_of_videos();
+
+    return array_map(fn(array $item) => array_merge($item, ['children' => []]), $tags);
 }
 
 function tag_list_without_relation(TagRepository $tag_repository): array
@@ -44,12 +57,6 @@ function tag_show(TagRepository $tag_repository, SubscribeRepository $subscribe_
     ];
 }
 
-function tag_in_videos(TagRepository $tag_repository): array
-{
-    $tags =  $tag_repository->find_all_order_by_numer_of_videos();
-    return array_map(fn (array $item) => array_merge($item, ['children' => []]), $tags);
-}
-
 function tag_new(TagRepository $tag_repository): array
 {
     return $tag_repository->newest_ten();
@@ -64,3 +71,4 @@ function tag_ancestors(TagRepository $tag_repository, string $tag_slug_id)
 {
     return $tag_repository->find_ancestors($tag_slug_id);
 }
+

@@ -6,10 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 class ArtistShowNormalizerTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function artist_show_normalize()
+    public function test_artist_show_normalize()
     {
         $input = [
             [
@@ -88,10 +85,7 @@ class ArtistShowNormalizerTest extends TestCase
         $this->assertSame($expected, $output);
     }
 
-    /**
-     * @test
-     */
-    public function get_tags()
+    public function test_get_tags()
     {
         $input =  [
             [

@@ -6,10 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 class VideoListNormalizerTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function group_by()
+    public function test_group_by()
     {
         $input = [
             ['artist_slug' => 'madonna'],
@@ -32,10 +29,7 @@ class VideoListNormalizerTest extends TestCase
         $this->assertEquals($expected, $output);
     }
 
-    /**
-     * @test
-     */
-    public function normalize()
+    public function test_normalize()
     {
         $input = [
             [

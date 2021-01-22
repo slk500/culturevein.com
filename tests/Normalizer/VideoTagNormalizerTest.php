@@ -6,10 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 class VideoTagNormalizerTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function group_by_video_tag_id()
+    public function test_group_by_video_tag_id()
     {
         $input = [
             [
@@ -60,10 +57,7 @@ class VideoTagNormalizerTest extends TestCase
         $this->assertSame($expectedOutput, $output);
     }
 
-    /**
-     * @test
-     */
-    public function join_in_video_tag_time()
+    public function test_join_in_video_tag_time()
     {
         $input = [
                 [
@@ -110,6 +104,4 @@ class VideoTagNormalizerTest extends TestCase
 
         $this->assertSame($expectedOutput, $output);
     }
-
-
 }

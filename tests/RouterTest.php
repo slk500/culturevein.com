@@ -11,7 +11,7 @@ class RouterTest extends TestCase
      */
     public function first_test()
     {
-        $match = match(include __DIR__ . '/../config/routes.php', '/api/artists', 'GET');
+        $match = find_route(include __DIR__ . '/../config/routes.php', '/api/artists', 'GET');
         $this->assertNotEmpty($match);
     }
 
@@ -20,7 +20,7 @@ class RouterTest extends TestCase
      */
     public function first_two()
     {
-        $match = match(include __DIR__ . '/../config/routes.php', '/api/artists/j-lo', 'GET');
+        $match = find_route(include __DIR__ . '/../config/routes.php', '/api/artists/j-lo', 'GET');
         $this->assertNotEmpty($match);
     }
 
