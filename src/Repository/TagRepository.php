@@ -51,27 +51,31 @@ final class TagRepository extends Repository
     }
 
 
-    public function find_all_order_by_numer_of_videos(): array
+    public function find_all_with_number_of_videos(): array
     {
-        return $this->database->fetch("WITH RECURSIVE
+        return $this->database->fetch("
+SELECT tag.tag_slug_id, name as tag_name, parent_slug_id as parent_slug, count
+FROM tag
+LEFT JOIN (WITH RECURSIVE
     cte_path(parent, child, level, query, tag_name)
-    AS (
-    SELECT parent_slug_id, tag_slug_id, 1, tag_slug_id, tag.name
-    FROM tag
-    UNION ALL
-    SELECT
-    t.parent_slug_id, t.tag_slug_id,  p.level + 1, p.query, tag_name
-    FROM
-    cte_path p, tag t
-    WHERE t.parent_slug_id = p.child
+        AS (
+        SELECT parent_slug_id, tag_slug_id, 1, tag_slug_id, tag.name
+        FROM tag
+        UNION ALL
+        SELECT
+            t.parent_slug_id, t.tag_slug_id,  p.level + 1, p.query, tag_name
+        FROM
+            cte_path p, tag t
+        WHERE t.parent_slug_id = p.child
     )
-SELECT cte_path.query as tag_slug_id, tag_name, count(distinct (video_tag.video_youtube_id)) AS count
+SELECT cte_path.query as tag_slug_id, tag_name,
+       count(distinct (video_tag.video_youtube_id)) AS count
 FROM
     cte_path, video_tag
 WHERE video_tag.tag_slug_id = cte_path.child
-AND level <= 2 and video_youtube_id is not null
+  AND level <= 2 and video_youtube_id is not null
 GROUP BY query, tag_name
-ORDER BY count desc
+ORDER BY tag_name desc) tree ON tree.tag_slug_id = tag.tag_slug_id
 ");
     }
 

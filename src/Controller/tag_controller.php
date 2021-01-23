@@ -8,26 +8,7 @@ use Repository\TagRepository;
 
 function tag_list(TagRepository $tag_repository)
 {
-    $tags = $tag_repository->find_all();
-    $tags = array_map(fn($tag) => array_merge($tag, ['children' => []]), $tags);
-
-    $map = [];
-    foreach ($tags as $i => $tag) {
-        $map[$tag['tag_slug_id']] = &$tags[$i];
-    }
-
-    foreach ($tag_repository->find_all_order_by_numer_of_videos() as $tag_count) {
-        $map[$tag_count['tag_slug_id']]['count'] = $tag_count['count'];
-    }
-
-    return set_relations($tags, $map);
-}
-
-function tag_in_videos(TagRepository $tag_repository)
-{
-    $tags = $tag_repository->find_all_order_by_numer_of_videos();
-
-    return array_map(fn(array $item) => array_merge($item, ['children' => []]), $tags);
+    return set_relations($tag_repository->find_all_with_number_of_videos());
 }
 
 function tag_list_without_relation(TagRepository $tag_repository): array

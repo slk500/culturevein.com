@@ -14,36 +14,54 @@ export class TagComponent implements OnInit {
   public tags = [];
   public errorMsg;
   public searchText;
-  public isRelations : boolean = true;
-  public isNumberOfVideos : boolean = false;
+  public isRelations: boolean = true;
+  public isNumberOfVideos: boolean = false;
+  public isSortByNumberOfVideos: boolean = false;
 
-  constructor(public _tagService: TagService, private inputSearch: InputService, private seoService: SeoService) {}
+  constructor(public _tagService: TagService, private inputSearch: InputService, private seoService: SeoService) {
+  }
 
   ngOnInit() {
     this.seoService.setTitle('Tags in music videos | CultureVein');
     this.seoService.setMetaDescription('Music videos with Arnold Schwarzenegger,Brad Pitt,Charlie Sheen,John Deep,Keanu Reeves, Leonardo DiCaprio,Pamela Anderson,Robin Williams,Sylvester Stallone')
     this._tagService.getTags()
-        .subscribe(data => {this.tags = data;},
-            error => this.errorMsg = error);
-      this.inputSearch.cast.subscribe(input => this.searchText = input);
+      .subscribe(data => {
+          this.tags = data;
+        },
+        error => this.errorMsg = error);
+    this.inputSearch.cast.subscribe(input => this.searchText = input);
+  }
+
+  flatten(data) {
+    const result = [];
+    recursive(data);
+    return result;
+
+    function recursive(data) {
+      data.forEach(member => {
+        result.push
+        (
+          {
+            'tag_name': member.tag_name,
+            'tag_slug_id': member.tag_slug_id,
+            'count': member.count,
+            'children': []
+          }
+        );
+        recursive(member.children);
+      });
+    }
   }
 
   getTags() {
-
-    if(!this.isRelations) this.findAllByNumberOfVideos()
-    else {
-      this._tagService.getTags()
-        .subscribe(data => {
-            this.tags = data;
-          },
-          error => this.errorMsg = error);
-      }
-    }
-
-  findAllByNumberOfVideos() {
-    this._tagService.findAllOrderByNumberOfVideos()
-        .subscribe(data => {this.tags = data;},
-            error => this.errorMsg = error);
+    this._tagService.getTags()
+      .subscribe(data => {
+          this.tags = (this.isRelations == true) ?
+            data :
+            this.flatten(data)
+              .sort((a, b) => a.tag_name.localeCompare(b.tag_name));
+        },
+        error => this.errorMsg = error);
   }
 
   getTagsCount(tags) {
@@ -59,11 +77,19 @@ export class TagComponent implements OnInit {
   }
 
   highlight(query, content) {
-    if(!query) {
+    if (!query) {
       return content;
     }
     return content.replace(new RegExp(query, "gi"), match => {
       return '<span class="highlight">' + match + '</span>';
     });
+  }
+
+  sortByNumberOfVideos() {
+    if(this.isSortByNumberOfVideos == true) {
+      this.tags.sort((a, b) => b.count - a.count);
+    }else{
+      this.getTags();
+    }
   }
 }

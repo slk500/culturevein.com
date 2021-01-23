@@ -8,7 +8,6 @@ return  [
 
     ['/^\/api\/tags\/*$/', 'tag_list', 'GET'],
     ['/^\/api\/tags-simple\/*$/', 'tag_list_without_relation', 'GET'],
-    ['/^\/api\/tags-top\/*$/', 'tag_in_videos', 'GET'],
     ['/^\/api\/tags-new\/*$/', 'tag_new', 'GET'],
     ['/^\/api\/tags\/(?<tag_slug_id>[\w-]+)\/*$/', 'tag_show', 'GET'],
 
@@ -19,7 +18,6 @@ return  [
     ['/^\/api\/videos\/*$/', 'video_list', 'GET'],
 
     ['/^\/api\/videos-tags\/*$/', 'tag_video_list', 'GET'],
-    ['/^\/api\/videos-list-count-tags\/*$/', 'video_list_count_tags', 'GET'],
     ['/^\/api\/videos-list-new\/*$/', 'video_list_new', 'GET'],
 
     ['/^\/api\/videos\/(?<youtube_id>[\w-]{11})\/*$/', 'video_show', 'GET'],
