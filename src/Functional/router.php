@@ -62,7 +62,7 @@ function set_status_code(string $http_method): void
     match ($http_method) {
         'GET' => http_response_code(200),
         'POST' => http_response_code(201),
-        'DELETE' => http_response_code(204)
+        'DELETE', 'PATCH' => http_response_code(204)
     };
 }
 
