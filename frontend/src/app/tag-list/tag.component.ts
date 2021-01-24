@@ -12,6 +12,7 @@ import {SeoService} from "../seo.service";
 export class TagComponent implements OnInit {
 
   public tags = [];
+  public tagsSortedByName = [];
   public errorMsg;
   public searchText;
   public isRelations: boolean = true;
@@ -85,10 +86,21 @@ export class TagComponent implements OnInit {
     });
   }
 
+  sortNodesAndChildren(nodes) {
+    nodes.sort((a, b) => b.count - a.count)
+    nodes.forEach(function (node) {
+      if (node.children.length > 0) {
+        this.sortNodesAndChildren(node.children);
+      }
+    }, this);
+
+    return nodes;
+  }
+
   sortByNumberOfVideos() {
-    if(this.isSortByNumberOfVideos == true) {
-      this.tags.sort((a, b) => b.count - a.count);
-    }else{
+    if (this.isSortByNumberOfVideos == true) {
+        this.tags = this.sortNodesAndChildren(this.tags);
+    } else {
       this.getTags();
     }
   }
