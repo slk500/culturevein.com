@@ -84,11 +84,12 @@ export class AddComponent implements OnInit {
         }
     }
 
+    //todo regexp to improve
     public removeRedundantText(rawTitle: string)
     {
-      rawTitle.replace(/\(Official Music Video\)/ig, '')
-      rawTitle.replace(/\(Official Video\)/ig, '')
-      return rawTitle.replace(/\(Official Lyric Video\)/ig, '')
+      rawTitle = rawTitle.replace(/ *\(Official Music Video\) */ig, "");
+      rawTitle = rawTitle.replace(/ *\(Official Video\) */ig, "");
+      return rawTitle.replace(/ *\(Official Lyric Video\) */ig, "");
     }
 
     public getTitleAndDuration() {
