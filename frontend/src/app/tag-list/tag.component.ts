@@ -95,11 +95,11 @@ export class TagComponent implements OnInit {
     });
   }
 
-  sortNodesAndChildren(nodes, sortyByNumerOfVideos : boolean) {
-    nodes = sortyByNumerOfVideos ? this.sortByNumberOfVideos(nodes) : this.sortByName(nodes);
+  sortNodesAndChildren(nodes, isSortByNumberOfVideos : boolean) {
+    nodes = isSortByNumberOfVideos ? this.sortByNumberOfVideos(nodes) : this.sortByName(nodes);
     nodes.forEach(function (node) {
       if (node.children.length > 0) {
-        this.sortNodesAndChildren(node.children);
+        this.sortNodesAndChildren(node.children, isSortByNumberOfVideos);
       }
     }, this);
 
