@@ -16,7 +16,7 @@ export class TagComponent implements OnInit {
   public errorMsg;
   public searchText;
   public isRelations: boolean = true;
-  public isNumberOfVideos: boolean = false;
+  public showNumberOfVideos: boolean = false;
   public isSortByNumberOfVideos: boolean = false;
 
   constructor(public _tagService: TagService, private inputSearch: InputService, private seoService: SeoService) {
@@ -28,6 +28,7 @@ export class TagComponent implements OnInit {
     this._tagService.getTags()
       .subscribe(data => {
           this.tags = data;
+          this.tagsSortedByName = data;
         },
         error => this.errorMsg = error);
     this.inputSearch.cast.subscribe(input => this.searchText = input);
@@ -54,15 +55,23 @@ export class TagComponent implements OnInit {
     }
   }
 
+  sortByName(tags) {
+    return tags.sort((a, b) => a.tag_name.localeCompare(b.tag_name))
+  }
+  sortByNumberOfVideos(tags) {
+    return tags.sort((a, b) => b.count - a.count)
+  }
+
   getTags() {
-    this._tagService.getTags()
-      .subscribe(data => {
-          this.tags = (this.isRelations == true) ?
-            data :
-            this.flatten(data)
-              .sort((a, b) => a.tag_name.localeCompare(b.tag_name));
-        },
-        error => this.errorMsg = error);
+    if (this.isRelations == false) {
+      let flattenTags = this.flatten(this.tagsSortedByName);
+      this.tags = this.isSortByNumberOfVideos ?
+        this.sortByNumberOfVideos(flattenTags) : this.sortByName(flattenTags);
+    }else if (this.isRelations == true) {
+      this.tags = this.sortNodesAndChildren(this.tagsSortedByName, this.isSortByNumberOfVideos);
+    } else {
+      this.tags = this.tagsSortedByName;
+    }
   }
 
   getTagsCount(tags) {
@@ -86,8 +95,8 @@ export class TagComponent implements OnInit {
     });
   }
 
-  sortNodesAndChildren(nodes) {
-    nodes.sort((a, b) => b.count - a.count)
+  sortNodesAndChildren(nodes, sortyByNumerOfVideos : boolean) {
+    nodes = sortyByNumerOfVideos ? this.sortByNumberOfVideos(nodes) : this.sortByName(nodes);
     nodes.forEach(function (node) {
       if (node.children.length > 0) {
         this.sortNodesAndChildren(node.children);
@@ -95,13 +104,5 @@ export class TagComponent implements OnInit {
     }, this);
 
     return nodes;
-  }
-
-  sortByNumberOfVideos() {
-    if (this.isSortByNumberOfVideos == true) {
-        this.tags = this.sortNodesAndChildren(this.tags);
-    } else {
-      this.getTags();
-    }
   }
 }
