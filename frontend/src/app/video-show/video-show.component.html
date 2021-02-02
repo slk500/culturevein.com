@@ -12,6 +12,7 @@
     - {{ videoInfo?.video_name }}</h1>
   <a style="cursor:pointer" (click)="isEditMode = !isEditMode">{{ isEditMode == true ? 'EXIT EDIT' : 'EDIT' }}</a>
 <br><br>
+  <span *ngIf="errorMsg && isEditMode" class="text-center"> {{errorMsg}} </span>
     <ul class="style-none">
 
       <li *ngFor="let tag of videoTags">

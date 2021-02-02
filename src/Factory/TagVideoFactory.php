@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Factory;
 
-use Cocur\Slugify\Slugify;
-use DTO\RequestTagVideo;
 use Model\Tag;
 use Repository\TagRepository;
 use Repository\TagVideoRepository;

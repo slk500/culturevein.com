@@ -20,7 +20,7 @@ final class VideoTagDeleter
         $this->archiver_repository = $archiver_repository;
     }
 
-    public function delete(string $video_youtube_id, string $tag_slug_id, ?int $user_id = null)
+    public function delete(string $video_youtube_id, string $tag_slug_id, int $user_id)
     {
         $this->archiver_repository->archive_video_tag($video_youtube_id, $tag_slug_id, $user_id);
 

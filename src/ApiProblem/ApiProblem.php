@@ -13,6 +13,8 @@ final class ApiProblem extends \Exception
     const WRONG_CREDENTIALS = ['Wrong credentials', 401];
     const PASSWORD_MISMATCH = ['Password mismatch', 401];
 
+    const USER_NOT_LOGGED_IN = ['User have to be logged in to take that action', 403];
+
     const NOT_FOUND = ['Resource not found', 404];
 
     private static array $titles = [
@@ -21,7 +23,8 @@ final class ApiProblem extends \Exception
         self::ALL_FIELDS_HAVE_TO_BE_FILLED,
         self::WRONG_CREDENTIALS,
         self::PASSWORD_MISMATCH,
-        self::NOT_FOUND
+        self::NOT_FOUND,
+        self::USER_NOT_LOGGED_IN
     ];
 
     public array $title;

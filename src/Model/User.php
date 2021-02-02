@@ -23,7 +23,7 @@ class User
         $email = filter_var($user_create->email, FILTER_SANITIZE_EMAIL);
         if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
             throw new \Exception('Not valid email');
-        };
+        }
 
         $password_encrypted = password_hash($user_create->password, PASSWORD_BCRYPT);
 

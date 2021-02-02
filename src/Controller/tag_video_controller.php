@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use ApiProblem\ApiProblem;
 use Deleter\VideoTagDeleter;
 use DTO\RequestTagVideo;
 use Factory\TagVideoFactory;
@@ -33,6 +34,10 @@ function tag_video_history_for_video(TagVideoRepository $video_tag_repository, s
 function tag_video_delete(VideoTagDeleter $video_tag_deleter, string $youtube_id,
                           string $tag_slug_id, ?int $user_id)
 {
+    if(!$user_id){
+        throw new ApiProblem(ApiProblem::USER_NOT_LOGGED_IN);
+    }
+
     $video_tag_deleter->delete($youtube_id, $tag_slug_id, $user_id);
 }
 

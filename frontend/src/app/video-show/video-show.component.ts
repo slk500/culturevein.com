@@ -5,6 +5,7 @@ import {TagService} from "../services/tag.service";
 import {NgxY2PlayerComponent} from "ngx-y2-player";
 import {Ivideo} from "../interfaces/video";
 import {SeoService} from "../seo.service";
+import {AuthService} from "../auth.service";
 
 @Component({
     selector: 'app-video-show',
@@ -55,9 +56,12 @@ export class VideoShowComponent implements OnInit {
 
     public isHistoryOpen = false;
 
+    public authService: AuthService;
+
     constructor(private route: ActivatedRoute, private router: Router,
                 private _videoService: VideoService,
-                private _tagService: TagService, private seoService: SeoService) {
+                private _tagService: TagService, private seoService: SeoService,
+                private _authService: AuthService) {
         this.Math = Math;
     }
 
@@ -81,7 +85,6 @@ export class VideoShowComponent implements OnInit {
               this.seoService.setMetaDescription(
                   this.seoService.getTitle() + ' ' + data.map(str => str.tag_name).join()
                 );
-              console.log(data);
               this.isEditMode = (this.videoTags.length === 0);
               },
                 error => this.errorMsg = error);
@@ -105,7 +108,12 @@ export class VideoShowComponent implements OnInit {
         };
     }
 
-    public deleteVideoTag(youtube_id: string, tag_slug_id: string) {
+    public deleteVideoTag(youtube_id: string, tag_slug_id: string): void {
+
+      if (!this._authService.loggedIn()) {
+          this.errorMsg = 'You have to be logged in to delete a tag.'
+          return null;
+      }
 
         this._tagService.deleteVideoTag(youtube_id, tag_slug_id)
             .subscribe((data: any) => {
@@ -119,6 +127,12 @@ export class VideoShowComponent implements OnInit {
     }
 
     public deleteVideoTagTime(video_youtube_id: string, tag_slug_id: string, video_tag_time_id: number) {
+
+      if (!this._authService.loggedIn()) {
+        this.errorMsg = 'You have to be logged in to delete a tag time.'
+        return null;
+      }
+
         this._tagService.deleteVideoTagTime(video_youtube_id, tag_slug_id, video_tag_time_id)
             .subscribe((data: any) => {
                 this._tagService.getVideoTagsForVideo(this.youtubeId)
