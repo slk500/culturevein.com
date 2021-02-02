@@ -101,11 +101,11 @@
     </div>
 
   </div>
-  <p>
-    <span> Country of production: </span>
-    <br>
-    <span> Genre: </span>
-  </p>
+<!-- TO DO <p>-->
+<!--    <span> Country of production: </span>-->
+<!--    <br>-->
+<!--    <span> Genre: </span>-->
+<!--  </p>-->
   <a class="clickable"
      (click)="isHistoryOpen = !isHistoryOpen">{{ isHistoryOpen == false ? 'SHOW HISTORY' : 'CLOSE HISTORY' }}</a>
   <app-video-tags-history *ngIf="isHistoryOpen" [youtubeId]="youtubeId"></app-video-tags-history>
