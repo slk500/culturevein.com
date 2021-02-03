@@ -1,7 +1,7 @@
 <div class='col-xs-12'>
   <h1 class='text-center'>{{ artist?.name }}</h1>
 
-  <strong> {{ artist?.tags.length}} Tags: </strong>
+  <strong> {{ artist?.tags.length}} tags: </strong>
   <ul class='list-unstyled'>
     <li *ngFor="let tag of artist?.tags;">
       <a [routerLink]="['/tags', tag.slug]"> {{ tag.name }} </a>
@@ -16,8 +16,8 @@
     <thead>
     <tr>
       <th>no.</th>
-      <th>Title</th>
-      <th class="text-center">Tags</th>
+      <th>title</th>
+      <th class="text-center">tags</th>
     </tr>
     </thead>
 
