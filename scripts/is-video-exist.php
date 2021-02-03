@@ -18,13 +18,25 @@ function isVideoExist(array $video)
     $youtubeId = $video['video_youtube_id'];
     $name = $video['name'];
 
-    $video_url =
-        @file_get_contents(
+    @file_get_contents(
             "https://www.youtube.com/oembed?format=json&url=http://www.youtube.com/watch?v=$youtubeId"
-        );
+    );
 
-    if (!$video_url) {
-        echo $youtubeId . ' ' . $name . PHP_EOL;
+    $code = getHttpCode($http_response_header);
+
+    if ($code == 404) {
+        echo $code . ' ' . $youtubeId . ' ' . $name . PHP_EOL;
     }
+}
+
+function getHttpCode($http_response_header)
+{
+    if(is_array($http_response_header))
+    {
+        $parts=explode(' ',$http_response_header[0]);
+        if(count($parts)>1) //HTTP/1.0 <code> <text>
+            return intval($parts[1]); //Get code
+    }
+    return 0;
 }
 
