@@ -24,6 +24,10 @@ import {SeoService} from "../seo.service";
                   <li><span class="label label-warning">Orange</span> tag with at least one exposure time added but there are more to add</li>
                   <li><span class="label label-success">Green</span> tag with completly all exposure times added</li>
               </ul> <br>
+            <li>This app use YouTube API Services - please read
+              <a href="https://www.youtube.com/t/terms"> YouTube Terms of Service (ToS) </a>
+              and
+              <a href="https://policies.google.com/privacy"> Google Privacy Policy </a> </li> <br>
             <li> Project is open source - you are welcome to add new features & improvements
               <a href="https://github.com/slk500/culturevein.com">GitHub Repository</a>.</li><br>
           </ol>
