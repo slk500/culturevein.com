@@ -127,7 +127,7 @@ ORDER BY tag_name desc) tree ON tree.tag_slug_id = tag.tag_slug_id
          LEFT JOIN artist USING (artist_slug_id)
     WHERE tag.tag_slug_id = ?
      OR tag.parent_slug_id = ?
-     GROUP BY video_youtube_id, tag_slug_id, artist_name
+     GROUP BY video_youtube_id, tag_slug_id, artist_name ORDER BY tag_duration DESC
                                         ");
 
         if (!$stmt) {

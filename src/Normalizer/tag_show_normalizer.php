@@ -55,23 +55,6 @@ function tag_show_normalizer(array $tag_videos, DatabaseTagFind $tag): array
     return $result;
 }
 
-function normalize(DatabaseTagVideo $object)
-{
-    return [
-        'slug' => $object->video_slug,
-        'name' => $object->video_name,
-        'duration' => $object->video_duration,
-        'artist' => $object->artist_name,
-        'tags' => [
-            [
-                'slug' => $object->tag_slug,
-                'name' => $object->tag_name,
-                'duration' => $object->tag_duration
-            ]
-        ]
-    ];
-}
-
 function sort_by_video_slug(array $videos, DatabaseTagFind $tag): array
 {
     $result = [];

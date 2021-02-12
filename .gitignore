@@ -3,3 +3,4 @@
 /.git
 /var
 /config/parameters.php
+/scripts/oauth.php
