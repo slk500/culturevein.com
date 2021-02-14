@@ -18,7 +18,7 @@ $tags = $playlist_repository->find_not_created();
 
 foreach ($tags as $tag) {
 
-    $response = $client->create_playlist($tag['tag_slug_id'], $tag['name']);
+    $response = $client->create_playlist($tag['name'], $tag['tag_slug_id']);
 
     if ($response->getStatusCode() != 200) die;
 
