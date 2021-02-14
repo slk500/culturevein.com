@@ -16,18 +16,18 @@ $playlist_repository = new PlaylistRepository($database);
 
 $tags = $playlist_repository->find_not_created();
 
-foreach ($tags as $key => $value) {
+foreach ($tags as $tag) {
 
-    $response = $client->create_playlist($tags['tag_slug_id'], $tags['name']);
+    $response = $client->create_playlist($tag['tag_slug_id'], $tag['name']);
 
     if ($response->getStatusCode() != 200) die;
 
     $body = json_decode($response->getBody()->getContents());
     $playlist_id = $body->id;
-    $playlist_repository->create_playlist($playlist_id, $tags['tag_slug_id']);
+    $playlist_repository->create_playlist($playlist_id, $tag['tag_slug_id']);
     echo $playlist_id . PHP_EOL;
 
-    foreach ($tag_repository->find_videos($tags['tag_slug_id']) as $video) {
+    foreach ($tag_repository->find_videos($tag['tag_slug_id']) as $video) {
         $response = $client->add_video(
             $playlist_id,
             $video->video_slug
