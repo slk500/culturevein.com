@@ -14,27 +14,28 @@ $database = new Database();
 $tag_repository = new TagRepository($database);
 $playlist_repository = new PlaylistRepository($database);
 
-$tag_name = '';
-$tag_slug = '';
+$tags = $playlist_repository->find_not_created();
 
-$response = $client->create_playlist($tag_name, $tag_slug);
+foreach ($tags as $key => $value) {
 
-if ($response->getStatusCode() != 200) die;
+    $response = $client->create_playlist($tags['tag_slug_id'], $tags['name']);
 
-$body = json_decode($response->getBody()->getContents());
-$playlist_id = $body->id;
-$playlist_repository->create_playlist($playlist_id, $tag_slug);
-echo $playlist_id . PHP_EOL;
-
-foreach ($tag_repository->find_videos($tag_slug) as $video) {
-    $response = $client->add_video(
-        $playlist_id,
-        $video->video_slug
-    );
-
-    echo $response->getStatusCode() . PHP_EOL;
     if ($response->getStatusCode() != 200) die;
-    $playlist_repository
-        ->add_video_to_playlist($playlist_id, $video->video_slug);
-}
 
+    $body = json_decode($response->getBody()->getContents());
+    $playlist_id = $body->id;
+    $playlist_repository->create_playlist($playlist_id, $tags['tag_slug_id']);
+    echo $playlist_id . PHP_EOL;
+
+    foreach ($tag_repository->find_videos($tags['tag_slug_id']) as $video) {
+        $response = $client->add_video(
+            $playlist_id,
+            $video->video_slug
+        );
+
+        echo $response->getStatusCode() . PHP_EOL;
+        if ($response->getStatusCode() != 200) die;
+        $playlist_repository
+            ->add_video_to_playlist($playlist_id, $video->video_slug);
+    }
+}
