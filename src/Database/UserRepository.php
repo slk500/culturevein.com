@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Repository;
+namespace Database;
 
 use Model\User;
-use Repository\Base\Repository;
+use Database\Base\Repository;
 
 final class UserRepository extends Repository
 {

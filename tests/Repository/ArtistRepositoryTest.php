@@ -6,8 +6,8 @@ namespace Tests\Repository;
 
 use Container;
 use PHPUnit\Framework\TestCase;
-use Repository\ArtistRepository;
-use Repository\Base\Database;
+use Database\ArtistRepository;
+use Database\Base\Database;
 use Tests\DatabaseHelper;
 
 class ArtistRepositoryTest extends TestCase

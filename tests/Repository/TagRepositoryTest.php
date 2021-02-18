@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 use Model\Tag;
 use PHPUnit\Framework\TestCase;
-use Repository\Base\Database;
-use Repository\TagRepository;
+use Database\Base\Database;
+use Database\TagRepository;
 use Tests\DatabaseHelper;
 
 class TagRepositoryTest extends TestCase

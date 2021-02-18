@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Repository;
+namespace Database;
 
-use Repository\Base\Repository;
+use Database\Base\Repository;
 use ValueObject\TagVideo;
 
 final class TagVideoRepository extends Repository

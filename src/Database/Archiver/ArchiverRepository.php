@@ -3,10 +3,10 @@
 declare(strict_types=1);
 
 
-namespace Repository\Archiver;
+namespace Database\Archiver;
 
 
-use Repository\Base\Repository;
+use Database\Base\Repository;
 
 final class ArchiverRepository extends Repository
 {

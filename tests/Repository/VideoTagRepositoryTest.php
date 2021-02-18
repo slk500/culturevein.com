@@ -8,11 +8,11 @@ use Factory\TagVideoFactory;
 use Model\Tag;
 use Model\User;
 use PHPUnit\Framework\TestCase;
-use Repository\Base\Database;
-use Repository\TagRepository;
-use Repository\UserRepository;
-use Repository\TagVideoRepository;
-use Repository\TagVideoTimeRepository;
+use Database\Base\Database;
+use Database\TagRepository;
+use Database\UserRepository;
+use Database\TagVideoRepository;
+use Database\TagVideoTimeRepository;
 use Tests\DatabaseHelper;
 use Tests\Builder\Video\VideoCreateBuilder;
 use Tests\Builder\VideoTag\VideoTagCreateBuilder;
@@ -62,7 +62,7 @@ class VideoTagRepositoryTest extends TestCase
 
     /**
      * @test
-     * @covers \Repository\TagVideoRepository::add()
+     * @covers \Database\TagVideoRepository::add()
      */
     public function create_video_tag()
     {
@@ -99,7 +99,7 @@ class VideoTagRepositoryTest extends TestCase
 
     /**
      * @test
-     * @covers \Repository\TagVideoRepository::remove()
+     * @covers \Database\TagVideoRepository::remove()
      */
     public function DELETE_video_tag()
     {

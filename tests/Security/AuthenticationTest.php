@@ -7,8 +7,8 @@ namespace Tests\Security;
 use Container;
 use Model\User;
 use PHPUnit\Framework\TestCase;
-use Repository\Base\Database;
-use Repository\UserRepository;
+use Database\Base\Database;
+use Database\UserRepository;
 use Tests\DatabaseHelper;
 
 class AuthenticationTest extends TestCase

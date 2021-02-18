@@ -4,8 +4,8 @@ namespace Tests;
 
 use Container;
 use PHPUnit\Framework\TestCase;
-use Repository\Base\Database;
-use Repository\VideoRepository;
+use Database\Base\Database;
+use Database\VideoRepository;
 
 class ContainerTest extends TestCase
 {

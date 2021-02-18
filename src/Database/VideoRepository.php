@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Repository;
+namespace Database;
 
 use DTO\RequestVideoCreate;
 use Model\Video;
-use Repository\Base\Repository;
+use Database\Base\Repository;
 
 final class VideoRepository extends Repository
 {

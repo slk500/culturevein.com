@@ -1,10 +1,9 @@
 <?php
 
+namespace Database\Base;
 
-namespace Repository\Base;
 
-
-abstract class Repository
+abstract class Command
 {
     protected Database $database;
 

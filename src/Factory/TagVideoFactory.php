@@ -4,20 +4,27 @@ declare(strict_types=1);
 
 namespace Factory;
 
+use Database\TagCommand;
+use Database\TagVideoCommand;
 use Model\Tag;
-use Repository\TagRepository;
-use Repository\TagVideoRepository;
+use Database\TagRepository;
 use ValueObject\TagVideo;
 
 class TagVideoFactory
 {
-    private $video_tag_repository;
-    private $tag_repository;
+    private TagRepository $tag_repository;
 
-    public function __construct(TagRepository $tag_repository, TagVideoRepository $video_tag_repository)
+    private TagCommand $tag_command;
+
+    private TagVideoCommand $tag_video_command;
+
+    public function __construct(TagRepository $tag_repository, TagCommand $tag_command,
+                                TagVideoCommand $tag_video_command
+    )
     {
         $this->tag_repository = $tag_repository;
-        $this->video_tag_repository = $video_tag_repository;
+        $this->tag_command = $tag_command;
+        $this->tag_video_command = $tag_video_command;
     }
 
     public function create(TagVideo $video_tag_create): ?int
@@ -26,9 +33,9 @@ class TagVideoFactory
 
         if (!$tag) {
             $tag = new Tag($video_tag_create->tag_name);
-            $this->tag_repository->add($tag);
+            $this->tag_command->add($tag);
         }
 
-        return $this->video_tag_repository->add($video_tag_create);
+        return $this->tag_video_command->add($video_tag_create);
     }
 }

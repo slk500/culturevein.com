@@ -7,9 +7,9 @@ use Factory\VideoFactory;
 use DTO\RequestVideoCreate;
 use Model\Tag;
 use PHPUnit\Framework\TestCase;
-use Repository\Base\Database;
-use Repository\TagRepository;
-use Repository\TagVideoRepository;
+use Database\Base\Database;
+use Database\TagRepository;
+use Database\TagVideoRepository;
 use Tests\DatabaseHelper;
 
 class VideoTagControllerTest extends TestCase

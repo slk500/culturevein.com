@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 use Deleter\VideoTagTimeDeleter;
 use DTO\RequestTagVideoTimeCreate;
-use Repository\TagVideoRepository;
-use Repository\TagVideoTimeRepository;
+use Database\TagVideoRepository;
+use Database\TagVideoTimeRepository;
 
 function tag_video_time_create(TagVideoRepository $video_tag_repository,
                                TagVideoTimeRepository $video_tag_time_repository,

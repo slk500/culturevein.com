@@ -1,6 +1,6 @@
 <?php
 
-use Repository\Base\Repository;
+use Database\Base\Repository;
 
 require_once '../vendor/autoload.php';
 

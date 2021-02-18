@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests;
 
 use Console_Table;
-use Repository\Base\Database;
+use Database\Base\Database;
 
 final class DatabaseHelper
 {

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Deleter;
 
-use Repository\Archiver\ArchiverRepository;
-use Repository\TagVideoTimeRepository;
+use Database\Archiver\ArchiverRepository;
+use Database\TagVideoTimeRepository;
 
 final class VideoTagTimeDeleter
 {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Repository\History;
+namespace Database\History;
 
-use Repository\Base\Repository;
+use Database\Base\Repository;
 
 final class VideoTagHistoryRepository extends Repository
 {

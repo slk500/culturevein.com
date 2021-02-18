@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Repository;
+namespace Database;
 
 use DTO\RequestTagVideoTimeCreate;
-use Repository\Base\Repository;
+use Database\Base\Repository;
 
 final class TagVideoTimeRepository extends Repository
 {

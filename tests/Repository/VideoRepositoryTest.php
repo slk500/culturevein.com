@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use Repository\Base\Database;
-use Repository\UserRepository;
-use Repository\VideoRepository;
+use Database\Base\Database;
+use Database\UserRepository;
+use Database\VideoRepository;
 use Tests\DatabaseHelper;
 use Tests\Builder\User\UserBuilder;
 use Tests\Builder\Video\VideoCreateBuilder;

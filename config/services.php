@@ -2,21 +2,23 @@
 
 declare(strict_types=1);
 
+use Database\TagCommand;
+use Database\TagVideoCommand;
 use Deleter\VideoTagDeleter;
 use Deleter\VideoTagTimeDeleter;
 use Factory\VideoFactory;
 use Factory\TagVideoFactory;
-use Repository\Archiver\ArchiverRepository;
-use Repository\ArtistRepository;
-use Repository\Base\Database;
-use Repository\History\VideoTagHistoryRepository;
-use Repository\History\VideoTagTimeHistoryRepository;
-use Repository\SubscribeRepository;
-use Repository\TagRepository;
-use Repository\UserRepository;
-use Repository\VideoRepository;
-use Repository\TagVideoRepository;
-use Repository\TagVideoTimeRepository;
+use Database\Archiver\ArchiverRepository;
+use Database\ArtistRepository;
+use Database\Base\Database;
+use Database\History\VideoTagHistoryRepository;
+use Database\History\VideoTagTimeHistoryRepository;
+use Database\SubscribeRepository;
+use Database\TagRepository;
+use Database\UserRepository;
+use Database\VideoRepository;
+use Database\TagVideoRepository;
+use Database\TagVideoTimeRepository;
 
 //todo remove - make autowire
 return [
@@ -28,11 +30,13 @@ return [
         UserRepository::class => [Database::class],
         VideoFactory::class => [VideoRepository::class, ArtistRepository::class],
         VideoRepository::class => [Database::class],
-        VideoTagDeleter::class => [TagVideoRepository::class, ArchiverRepository::class],
-        TagVideoFactory::class => [TagRepository::class, TagVideoRepository::class],
+        VideoTagDeleter::class => [TagVideoCommand::class, ArchiverRepository::class],
+        TagVideoFactory::class => [TagRepository::class, TagCommand::class, TagVideoCommand::class],
         VideoTagHistoryRepository::class => [Database::class],
         TagVideoRepository::class => [Database::class],
         VideoTagTimeDeleter::class => [TagVideoTimeRepository::class, ArchiverRepository::class],
         VideoTagTimeHistoryRepository::class => [Database::class],
-        TagVideoTimeRepository::class => [Database::class]
+        TagVideoTimeRepository::class => [Database::class],
+        TagCommand::class => [Database::class],
+        TagVideoCommand::class => [Database::class]
 ];

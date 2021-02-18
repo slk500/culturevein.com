@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Repository\UserRepository;
+use Database\UserRepository;
 
 function statistic_users(UserRepository $user_repository)
 {

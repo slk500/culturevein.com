@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Repository\SubscribeRepository;
+use Database\SubscribeRepository;
 
 //todo inconsistent in design
 function is_tag_subscribed_by_user(SubscribeRepository $subscribe_repository, string $tag_slug_id, int $user_id): bool

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Repository\ArtistRepository;
+use Database\ArtistRepository;
 
 function artist_list(ArtistRepository $artist_repository)
 {

@@ -3,12 +3,19 @@
 declare(strict_types=1);
 
 use ApiProblem\ApiProblem;
-use Repository\SubscribeRepository;
-use Repository\TagRepository;
+use Database\SubscribeRepository;
+use Database\TagRepository;
 
 function tag_list(TagRepository $tag_repository)
 {
-    return set_relations($tag_repository->find_all_with_number_of_videos());
+    clearstatcache();
+    if (filesize(__DIR__ . '/../../cache/cache.txt') == 0) {
+        $result = set_relations($tag_repository->find_all_with_number_of_videos());
+        file_put_contents(__DIR__ . '/../../cache/cache.txt', serialize($result));
+        return $result;
+    }
+
+    return unserialize(file_get_contents(__DIR__ . '/../../cache/cache.txt'));
 }
 
 function tag_list_without_relation(TagRepository $tag_repository): array

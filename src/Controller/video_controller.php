@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use DTO\RequestVideoCreate;
 use Factory\VideoFactory;
-use Repository\VideoRepository;
+use Database\VideoRepository;
 
 function video_create(VideoFactory $video_factory, RequestVideoCreate $video_create): void
 {

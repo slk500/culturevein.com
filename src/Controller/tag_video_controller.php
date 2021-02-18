@@ -6,7 +6,7 @@ use ApiProblem\ApiProblem;
 use Deleter\VideoTagDeleter;
 use DTO\RequestTagVideo;
 use Factory\TagVideoFactory;
-use Repository\TagVideoRepository;
+use Database\TagVideoRepository;
 use ValueObject\TagVideo;
 
 function tag_video_create(TagVideoFactory $video_tag_factory, RequestTagVideo $video_tag_create): TagVideo

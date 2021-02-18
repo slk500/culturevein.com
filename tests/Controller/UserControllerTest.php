@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use GuzzleHttp\Client;
 use PHPUnit\Framework\TestCase;
-use Repository\Base\Database;
+use Database\Base\Database;
 use Tests\DatabaseHelper;
 
 class UserControllerTest extends TestCase

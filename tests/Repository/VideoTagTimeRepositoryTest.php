@@ -6,10 +6,10 @@ use DTO\RequestTagVideoTimeCreate;
 use Factory\VideoFactory;
 use Model\Tag;
 use PHPUnit\Framework\TestCase;
-use Repository\Base\Database;
-use Repository\TagRepository;
-use Repository\TagVideoRepository;
-use Repository\TagVideoTimeRepository;
+use Database\Base\Database;
+use Database\TagRepository;
+use Database\TagVideoRepository;
+use Database\TagVideoTimeRepository;
 use Tests\DatabaseHelper;
 use Tests\Builder\Video\VideoCreateBuilder;
 use Tests\Builder\VideoTag\VideoTagCreateBuilder;
@@ -52,7 +52,7 @@ class VideoTagTimeRepositoryTest extends TestCase
 
     /**
      * @test
-     * @covers \Repository\TagVideoTimeRepository::add()
+     * @covers \Database\TagVideoTimeRepository::add()
      */
     public function save()
     {

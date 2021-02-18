@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Repository;
+namespace Database;
 
-use Repository\Base\Repository;
+use Database\Base\Repository;
 
 final class ArtistRepository extends Repository
 {

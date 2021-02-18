@@ -5,7 +5,7 @@ declare(strict_types=1);
 use ApiProblem\ApiProblem;
 use DTO\RequestUserCreate;
 use Model\User;
-use Repository\UserRepository;
+use Database\UserRepository;
 use Service\TokenService;
 
 /**

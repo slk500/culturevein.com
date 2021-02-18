@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Repository;
+namespace Database;
 
 use DTO\Database\DatabaseTagFind;
 use DTO\Database\DatabaseTagVideo;
-use Model\Tag;
-use Repository\Base\Repository;
+use Database\Base\Repository;
 
 final class TagRepository extends Repository
 {
@@ -149,11 +148,5 @@ ORDER BY tag_name desc) tree ON tree.tag_slug_id = tag.tag_slug_id
 
         return $objects;
     }
-
-    public function add(Tag $tag): void
-    {
-        $stmt = $this->database->mysqli->prepare("INSERT INTO tag (name, tag_slug_id) VALUES (?, ?)");
-        $stmt->bind_param("ss", $tag->name, $tag->slug_id);
-        $stmt->execute();
-    }
 }
+

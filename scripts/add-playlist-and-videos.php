@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Repository\Base\Database;
-use Repository\TagRepository;
+use Database\Base\Database;
+use Database\TagRepository;
 
 require_once '../vendor/autoload.php';
 require_once 'MyClient.php';
