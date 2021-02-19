@@ -53,7 +53,7 @@ final class TagRepository extends Repository
     public function find_all_with_number_of_videos(): array
     {
         return $this->database->fetch("
-SELECT tag.tag_slug_id, name as tag_name, parent_slug_id as parent_slug, count
+SELECT tag.tag_slug_id, name as tag_name, parent_slug_id as parent_slug, count, created_at
 FROM tag
 LEFT JOIN (WITH RECURSIVE
     cte_path(parent, child, level, query, tag_name)

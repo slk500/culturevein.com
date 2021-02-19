@@ -5,7 +5,10 @@
       <input type="checkbox" [(ngModel)]="isRelations" (change)="getTags()"> relations
     </label> <br>
     <label>
-      <input type="checkbox" [(ngModel)]="showNumberOfVideos"> number of videos
+      <input type="checkbox" [(ngModel)]="showNumberOfVideos"> show number of videos
+    </label> <br>
+    <label>
+      <input type="checkbox" [(ngModel)]="showCreatedAt"> show created at
     </label> <br>
     <label>
       <input type="checkbox" [(ngModel)]="isSortByNumberOfVideos"
@@ -19,6 +22,7 @@
   <ul class='list-break-to-columns list-unstyled'>
     <li *ngFor="let tag of tags |filterTags : searchText">
       <span *ngIf="showNumberOfVideos"> {{ tag.count}} </span>
+      <span *ngIf="showCreatedAt"> {{ tag.created_at| date:'short' }} </span>
       <a [routerLink]="['/tags', tag.tag_slug_id]"
          [innerHTML]="highlight(searchText, tag.tag_name)">
       </a>

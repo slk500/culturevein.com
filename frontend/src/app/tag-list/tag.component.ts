@@ -17,6 +17,7 @@ export class TagComponent implements OnInit {
   public searchText;
   public isRelations: boolean = true;
   public showNumberOfVideos: boolean = false;
+  public showCreatedAt: boolean = false;
   public isSortByNumberOfVideos: boolean = false;
 
   constructor(public _tagService: TagService, private inputSearch: InputService, private seoService: SeoService) {
