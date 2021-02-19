@@ -29,18 +29,21 @@
       <ul *ngIf="tag.children?.length > 0">
         <li *ngFor="let tag of tag.children">
           <span *ngIf="showNumberOfVideos"> {{ tag.count}} </span>
+          <span *ngIf="showCreatedAt"> {{ tag.created_at| date:'short' }} </span>
           <a [routerLink]="['/tags', tag.tag_slug_id]"
              [innerHTML]="highlight(searchText, tag.tag_name)">
           </a>
           <ul *ngIf="tag.children?.length > 0">
             <li *ngFor="let tag of tag.children">
               <span *ngIf="showNumberOfVideos"> {{ tag.count}} </span>
+              <span *ngIf="showCreatedAt"> {{ tag.created_at| date:'short' }} </span>
               <a [routerLink]="['/tags', tag.tag_slug_id]"
                  [innerHTML]="highlight(searchText, tag.tag_name)">
               </a>
               <ul *ngIf="tag.children?.length > 0">
                 <li *ngFor="let tag of tag.children">
                   <span *ngIf="showNumberOfVideos"> {{ tag.count}} </span>
+                  <span *ngIf="showCreatedAt"> {{ tag.created_at| date:'short' }} </span>
                   <a [routerLink]="['/tags', tag.tag_slug_id]"
                      [innerHTML]="highlight(searchText, tag.tag_name)">
                   </a>

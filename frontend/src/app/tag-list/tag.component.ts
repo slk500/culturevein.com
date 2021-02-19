@@ -48,6 +48,7 @@ export class TagComponent implements OnInit {
             'tag_name': member.tag_name,
             'tag_slug_id': member.tag_slug_id,
             'count': member.count,
+            'created_at': member.created_at,
             'children': []
           }
         );
