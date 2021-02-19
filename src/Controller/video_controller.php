@@ -17,11 +17,13 @@ function video_list(VideoRepository $video_repository)
     clearstatcache();
     if (filesize(__DIR__ . '/../../cache/video_list.txt') == 0) {
         $result = artist_list_normalize($video_repository->find_all());
-        file_put_contents(__DIR__ . '/../../cache/video_list.txt', serialize($result));
+        file_put_contents(__DIR__ . '/../../cache/video_list.txt',
+            json_encode($result)
+        );
         return $result;
     }
 
-    return unserialize(file_get_contents(__DIR__ . '/../../cache/video_list.txt'));
+    echo file_get_contents(__DIR__ . '/../../cache/video_list.txt');
 }
 
 function video_list_new(VideoRepository $video_repository)

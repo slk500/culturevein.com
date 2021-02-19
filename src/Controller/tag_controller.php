@@ -11,11 +11,13 @@ function tag_list(TagRepository $tag_repository)
     clearstatcache();
     if (filesize(__DIR__ . '/../../cache/cache.txt') == 0) {
         $result = set_relations($tag_repository->find_all_with_number_of_videos());
-        file_put_contents(__DIR__ . '/../../cache/cache.txt', serialize($result));
+        file_put_contents(__DIR__ . '/../../cache/cache.txt',
+            json_encode(['data' => $result])
+        );
         return $result;
     }
 
-    return unserialize(file_get_contents(__DIR__ . '/../../cache/cache.txt'));
+    echo file_get_contents(__DIR__ . '/../../cache/cache.txt');
 }
 
 function tag_list_without_relation(TagRepository $tag_repository): array
