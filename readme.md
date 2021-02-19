@@ -6,7 +6,7 @@ The site is a community-annotated library of music videos on YouTube, tagged by 
 Tagging means describing the content with relevant keywords.
 The tag may be an action, a scene, a person, a word or phrase, an object, a gesture, or a cliché or trope.
 
-Right know as a part of experiment I'm trying to remove OOP objects on use only functions.
+Right now as a part of experiment I'm trying to remove OOP objects & use only functions.
 
 To run project:
 1. docker-compose up
