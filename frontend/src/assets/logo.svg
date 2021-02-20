@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 25.2.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Warstwa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 167 144" style="enable-background:new 0 0 167 144;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;}
+	.st1{fill:none;stroke:#0060FF;stroke-width:2;}
+	.st2{fill:#F2F2F2;}
+	.st3{font-family:'Poppins-Bold';}
+	.st4{font-size:15px;}
+	.st5{fill:#0060FF;}
+</style>
+<g transform="translate(-447 -20.537)">
+	<g transform="translate(485 55)">
+		<g transform="matrix(1, 0, 0, 1, -38, -34.46)">
+			<g transform="translate(38 35)">
+				<path class="st0" d="M7,0h63c3.9,0,7,3.1,7,7l0,0v14c0,3.9-3.1,7-7,7H0l0,0V7C0,3.1,3.1,0,7,0z"/>
+				<path class="st1" d="M7,1h63c3.3,0,6,2.7,6,6v14c0,3.3-2.7,6-6,6H2c-0.6,0-1-0.4-1-1V7C1,3.7,3.7,1,7,1z"/>
+			</g>
+		</g>
+		<text transform="matrix(1 0 0 1 11 19.537)" class="st2 st3 st4">culture</text>
+	</g>
+	<g transform="translate(485 81.083)">
+		<g transform="matrix(1, 0, 0, 1, -38, -60.55)">
+			<g transform="translate(38 61)">
+				<path class="st5" d="M0,0h49c3.9,0,7,3.1,7,7l0,0v14c0,3.9-3.1,7-7,7H7c-3.9,0-7-3.1-7-7V0L0,0z"/>
+				<path class="st1" d="M2,1h47c3.3,0,6,2.7,6,6v14c0,3.3-2.7,6-6,6H7c-3.3,0-6-2.7-6-6V2C1,1.4,1.4,1,2,1z"/>
+			</g>
+		</g>
+		<text transform="matrix(1 0 0 1 11 19.454)" class="st2 st3 st4">vein</text>
+	</g>
+</g>
+</svg>
