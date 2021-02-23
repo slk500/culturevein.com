@@ -9,13 +9,13 @@ use Database\TagRepository;
 function tag_list(TagRepository $tag_repository)
 {
     clearstatcache();
-    if (filesize(__DIR__ . '/../../cache/cache.txt') == 0) {
-        cache_set(__DIR__ . '/../../cache/cache.txt',
+    if (filesize(__DIR__ . '/../../cache/cache.php') == 0) {
+        cache_set(__DIR__ . '/../../cache/cache.php',
             set_relations($tag_repository->find_all_with_number_of_videos())
         );
     }
 
-    return cache_get(__DIR__ . '/../../cache/cache.txt');
+    return cache_get(__DIR__ . '/../../cache/cache.php');
 }
 
 function tag_list_without_relation(TagRepository $tag_repository): array
