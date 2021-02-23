@@ -2,6 +2,23 @@
 
 declare(strict_types=1);
 
+function cache_set(string $filename, array $value): void
+{
+    file_put_contents(
+        $filename,
+        '<?php $val = ' . var_export($value, true) . ';',
+        LOCK_EX);
+}
+
+/**
+ * @return array|false
+ */
+function cache_get(string $filename)
+{
+    @include "$filename";
+    return $val ?? false;
+}
+
 function compose(...$functions)
 {
     return array_reduce(
