@@ -1,41 +1,48 @@
 <div *ngIf="searchText">
-<app-tag></app-tag>
-<app-video></app-video>
+  <app-tag></app-tag>
+  <app-video></app-video>
 </div>
 
 <div *ngIf="!searchText">
-<div class='col-md-6 col-lg-6 '>
-    <table class='table'>
+  <div class="row">
+    <div class='col-6'>
+      <table class='table'>
         <caption><strong>NEW TAGS</strong></caption>
         <thead>
         <tr>
-            <th> </th> <th>Tag</th> <th>Title</th>
+          <th></th>
+          <th>Tag</th>
+          <th>Title</th>
         </tr>
         </thead>
         <tr *ngFor="let tag of tagsNew; let i=index">
 
-        <td class='text-center'> {{ i+1 }} </td>
-        <td><a [routerLink]="['/tags', tag.tag_slug_id]"> {{ tag.tag_name }} </a></td>
-        <td><a [routerLink]="['/videos', tag.video_youtube_id]"> {{ tag.artist_name }} - {{ tag.video_name }}  </a></td>
+          <td class='text-center'> {{ i + 1 }} </td>
+          <td><a [routerLink]="['/tags', tag.tag_slug_id]"> {{ tag.tag_name }} </a></td>
+          <td><a [routerLink]="['/videos', tag.video_youtube_id]"> {{ tag.artist_name }} - {{ tag.video_name }}  </a>
+          </td>
 
         </tr>
-</table>
-</div>
+      </table>
+    </div>
 
-<div class='col-md-6 col-lg-6 '>
-    <table class='table'>
+    <div class='col-6'>
+      <table class='table'>
         <caption><strong>NEW VIDEOS</strong></caption>
         <thead>
         <tr>
-            <th> </th> <th>Title</th>
+          <th></th>
+          <th>Title</th>
         </tr>
         </thead>
         <tr *ngFor="let video of videosLastAdded; let i=index">
 
-            <td class='text-center'> {{ i+1 }} </td>
-            <td><a [routerLink]="['/videos', video.video_youtube_id]"> {{ video.artist_name }} - {{ video.video_name }}  </a></td>
+          <td class='text-center'> {{ i + 1 }} </td>
+          <td><a [routerLink]="['/videos', video.video_youtube_id]"> {{ video.artist_name }}
+            - {{ video.video_name }}  </a></td>
 
         </tr>
-    </table>
-</div>
+      </table>
+    </div>
+  </div>
 </div>

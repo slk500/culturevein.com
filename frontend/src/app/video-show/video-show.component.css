@@ -2,11 +2,6 @@ ul.style-none {
   list-style: none;
 }
 
-.tag-name-in-list {
-  color: black;
-  padding: 1px;
-}
-
 .tag-time {
   float:left;
   margin: 0 15px;

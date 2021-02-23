@@ -1,38 +1,48 @@
-<nav class="navbar navbar-dark" role="navigation">
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-  </div>
-  <div class="navbar-collapse collapse">
-    <a class="navbar-brand" href="#">
-      <img routerLink="/" src="assets/logo.svg" alt="logo" style="width: 200px; height: 200px">
-    </a>
-    <ul class="nav navbar-nav navbar-center">
-      <li><a routerLink="/tags" routerLinkActive="active">TAGS</a></li>
-      <li><a routerLink="/videos" routerLinkActive="active">MUSIC VIDEOS</a></li>
-      <li><a routerLink="/add" routerLinkActive="active">ADD MUSIC VIDEO</a></li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a routerLink="/about" routerLinkActive="active">ABOUT</a></li>
-      <li><a style="cursor:pointer" *ngIf="_authService.loggedIn()" (click)="_authService.logoutUser()"><span
-        class="glyphicon glyphicon-log-out"></span> LOGOUT</a></li>
-      <li><a routerLink="/login" *ngIf="!_authService.loggedIn()"><span class="glyphicon glyphicon-log-in"></span> LOGIN</a>
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <a class="navbar-brand" href="#">
+    <img src="assets/logo.svg" alt="" width="100" height="100" class="d-inline-block align-top">
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/tags" routerLinkActive="active">TAGS</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/videos" routerLinkActive="active">MUSIC VIDEOS</a>
+      </li>
+      <li>
+        <form class="form-inline my-2 my-lg-0">
+          <input (input)="updateValue($event)" class="form-control mr-sm-2" id='search_input'
+                 type="search" placeholder="Search" aria-label="Search"
+          style="width: 500px"
+          >
+        </form>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/add" routerLinkActive="active">ADD MUSIC VIDEO</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/about" routerLinkActive="active">ABOUT</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" style="cursor:pointer" *ngIf="_authService.loggedIn()" (click)="_authService.logoutUser()"><span
+        class="glyphicon glyphicon-log-out"></span> LOGOUT</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/login" *ngIf="!_authService.loggedIn()"><span class="glyphicon glyphicon-log-in"></span> LOGIN</a>
+      </li>
+
     </ul>
-  </div>
-  <div class='container' style="padding-bottom: 20px">
-    <div class="input-group">
-    			<span class="input-group-addon" style="background-color: #292929; color: white;">
-            <i class="glyphicon glyphicon-search"></i>
-        </span>
-      <input (input)="updateValue($event)" class="form-control input-lg"
-             id='search_input'>
-    </div>
   </div>
 </nav>
+
 
 <div class="container">
   <div class="row">
