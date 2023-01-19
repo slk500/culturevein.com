@@ -1,4 +1,4 @@
-<div class='col-xs-12'>
+<div class='col-12'>
   <h1 class='text-center'>{{ artist?.name }}</h1>
 
   <strong> {{ artist?.tags.length}} tags: </strong>
@@ -11,7 +11,8 @@
 
 </div>
 
-<div *ngIf="artist?.videos.length" id="tags" class="col-xs-12">
+<div *ngIf="artist?.videos.length" id="tags">
+  <div class="table-responsive-md">
   <table class='table'>
     <thead>
     <tr>
@@ -36,6 +37,7 @@
       </td>
     </tr>
   </table>
+  </div>
 </div>
 
 

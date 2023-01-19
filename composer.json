@@ -1,4 +1,5 @@
 {
+  "name": "slk500/culturevein.com",
   "autoload": {
     "files": [
       "src/Normalizer/artist_normalizer.php",
@@ -18,12 +19,14 @@
       "src/Functional/autowire.php"
     ],
     "psr-4": {
-      "": "src/"
+      "": "src/",
+      "Benchmarks\\": "benchmarks/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Tests\\": "tests/"
+      "Tests\\": "tests/",
+      "Benchmarks\\": "benchmarks/"
     }
   },
   "require": {
@@ -36,7 +39,7 @@
   "require-dev": {
     "guzzlehttp/guzzle": "^6.3",
     "pear/console_table": "^1.3",
-    "phpunit/phpunit": "^7.2",
+    "phpunit/phpunit": "^9.0",
     "behat/mink-extension": "^2.3",
     "behat/mink-goutte-driver": "^1.2"
   }

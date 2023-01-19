@@ -29,7 +29,7 @@ class VideoFactory
 
         $artist_slug_id = $this->artist_repository->find_slug_id_by_name($video_create->artist_name);
 
-        if(!$artist_slug_id){
+        if (!$artist_slug_id){
             $artist_slug_id = (new Slugify())->slugify($video_create->artist_name);
             $this->artist_repository->add(
                 $video_create->artist_name,

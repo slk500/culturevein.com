@@ -11,7 +11,7 @@ import {SeoService} from "../seo.service";
     </div>
 
     <div *ngIf="!searchText">
-      <div class='col-xs-10 col-xs-offset-1'>
+      <div class='col-12'>
         <p>This site is a community annotated music video database tagged by subject matter.</p> <br>
           <p>Tagging means describing the content with relevant keywords. <br>
             The tag may be an action, a scene, a person, a word or phrase, an object, a gesture, or a cliche or trope.</p>

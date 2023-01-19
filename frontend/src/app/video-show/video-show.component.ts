@@ -284,21 +284,21 @@ export class VideoShowComponent implements OnInit {
     tagColor(tag): string {
 
         if (!tag['video_tags_time'].length) {
-            return 'label-default';
+            return 'badge bg-secondary';
         }
 
         if (tag.is_complete) {
-            return 'label-success';
+            return 'badge bg-success';
         }
 
         let arr = tag.video_tags_time[0];
         if(arr) {
             if (arr.start == 0 && arr.stop == this.videoInfo.duration) {
-                return 'label-danger'
+                return 'badge bg-danger'
             }
         }
 
-        return 'label-warning'
+        return 'badge bg-warning'
     }
 }
 

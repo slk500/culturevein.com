@@ -3,10 +3,10 @@
 declare(strict_types=1);
 
 return  [
+    ['/^\/api\/tags\/*$/', 'tag_list', 'GET'],
     ['/^\/api\/artists\/*$/', 'artist_list', 'GET'],
     ['/^\/api\/artists\/(?<artist_slug_id>[\w-]+)\/*$/', 'artist_show', 'GET'],
 
-    ['/^\/api\/tags\/*$/', 'tag_list', 'GET'],
     ['/^\/api\/tags-simple\/*$/', 'tag_list_without_relation', 'GET'],
     ['/^\/api\/tags-new\/*$/', 'tag_new', 'GET'],
     ['/^\/api\/tags\/(?<tag_slug_id>[\w-]+)\/*$/', 'tag_show', 'GET'],

@@ -1,7 +1,12 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
+
+
+
 body {
   margin-bottom: 60px;
   background-color: #10141C;
   color: white;
+  font-family:  "Poppinsn";
 }
 
 .table, caption {
@@ -28,6 +33,7 @@ caption {
 
 a {
   color: #8db2e5;
+  text-decoration: none;
 }
 
 a:hover {

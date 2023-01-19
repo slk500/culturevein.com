@@ -8,7 +8,7 @@ use Database\VideoRepository;
 
 function video_create(VideoFactory $video_factory, RequestVideoCreate $video_create): void
 {
-    file_put_contents(__DIR__ . '/../../cache/video_list.txt', null);
+    file_put_contents(__DIR__ . '/../../cache/video_list.txt', null); // clear cache for video_list
     $video_factory->create($video_create);
 }
 

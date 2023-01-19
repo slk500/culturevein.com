@@ -6,7 +6,6 @@ return  [
     ['/^\/api\/artists\/*$/', 'artist_list', 'GET'],
     ['/^\/api\/artists\/(?<artist_slug_id>[\w-]+)\/*$/', 'artist_show', 'GET'],
 
-    ['/^\/api\/tags\/*$/', 'tag_list', 'GET'],
     ['/^\/api\/tags-simple\/*$/', 'tag_list_without_relation', 'GET'],
     ['/^\/api\/tags-new\/*$/', 'tag_new', 'GET'],
     ['/^\/api\/tags\/(?<tag_slug_id>[\w-]+)\/*$/', 'tag_show', 'GET'],
@@ -38,5 +37,6 @@ return  [
 
     ['/^\/api\/users\/*$/', 'user_create', 'POST'],
     ['/^\/api\/users\/login\/*$/', 'user_login', 'POST'],
+    ['/^\/api\/tags\/*$/', 'tag_list', 'GET'],
 ];
 

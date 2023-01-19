@@ -17,7 +17,7 @@ function compose(...$functions)
 
 function find_token(string $token): ?string
 {
-   $result = explode("Bearer ",$token);
+   $result = explode("Bearer ", $token);
    return $result[1] ?? null;
 }
 

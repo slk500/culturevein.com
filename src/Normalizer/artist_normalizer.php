@@ -26,13 +26,13 @@ function reduce_to_videos_with_tags(array $a): array
         $accumulator['youtube_id'] = $element['video_youtube_id'];
         $accumulator['name'] = $element['video_name'];
 
-        if($element['tag_slug'] != null) {
+        if ($element['tag_slug'] != null) {
             $accumulator['tags'][] =
                 [
                     'slug' => $element['tag_slug'],
                     'name' => $element['tag_name']
                 ];
-        }else{
+        } else {
             $accumulator['tags'] = [];
         }
 
