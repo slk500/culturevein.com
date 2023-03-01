@@ -8,6 +8,9 @@ use Database\TagRepository;
 
 function tag_list(TagRepository $tag_repository)
 {
+
+    return set_relations($tag_repository->find_all_with_number_of_videos());
+
     clearstatcache();
     if (filesize(__DIR__ . '/../../cache/cache.php') == 0) {
         cache_set(__DIR__ . '/../../cache/cache.php',
@@ -18,9 +21,9 @@ function tag_list(TagRepository $tag_repository)
     return cache_get(__DIR__ . '/../../cache/cache.php');
 }
 
-function tag_list_without_relation(TagRepository $tag_repository): array
+function tag_list_for_select2(TagRepository $tag_repository): array
 {
-    return $tag_repository->find_all(); //use in select2
+    return $tag_repository->find_all_for_select2();
 }
 
 /**
@@ -40,6 +43,8 @@ function tag_show(TagRepository $tag_repository, SubscribeRepository $subscribe_
 
     return [
         'name' => $tag->name,
+        'parent' => $tag_repository->find_parent($tag->slug_id),
+        'children' => $tag_repository->find_children($tag->slug_id),
         'subscribers' => $subscribe_repository->get_subscribers_number($tag->slug_id),
         'videos' => $result
     ];
@@ -52,11 +57,11 @@ function tag_new(TagRepository $tag_repository): array
 
 function tag_descendants(TagRepository $tag_repository, string $tag_slug_id)
 {
-    return $tag_repository->find_descendants($tag_slug_id);
+    return $tag_repository->find_children($tag_slug_id);
 }
 
 function tag_ancestors(TagRepository $tag_repository, string $tag_slug_id)
 {
-    return $tag_repository->find_ancestors($tag_slug_id);
+    return $tag_repository->find_parent($tag_slug_id);
 }
 

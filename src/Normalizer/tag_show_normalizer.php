@@ -36,22 +36,16 @@ function tag_show_normalizer(array $tag_videos, DatabaseTagFind $tag): array
         $result [] = [
             'slug' => $first->video_slug,
             'name' => $first->video_name,
-            'duration' => $first->video_duration,
+            'duration' => $totalTimeTag,
             'artist' => $first->artist_name,
-            'tags' => [
-                [
-                    'slug' => $tag->slug_id,
-                    'name' => $tag->name,
-                    'duration' => $totalTimeTag,
-                    'tags' => $descendants
-                ]
-            ]
+            'tags' => $descendants
         ];
     }
 
     usort($result, function ($a, $b) {
-        return $b['tags'][0]['duration'] <=> $a['tags'][0]['duration'];
+        return $b['duration'] <=> $a['duration'];
     });
+
     return $result;
 }
 

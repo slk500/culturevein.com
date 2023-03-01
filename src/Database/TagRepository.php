@@ -10,10 +10,12 @@ use Database\Base\Repository;
 
 final class TagRepository extends Repository
 {
-    public function find_descendants(string $slug)
+    public function find_children(string $slug)
     {
         $stmt = $this->database->mysqli->prepare(
-            "SELECT tag_slug_id, name FROM tag 
+            "SELECT 
+                    tag_slug_id AS slug, 
+                    name FROM tag 
                     WHERE parent_slug_id = ?;"
         );
 
@@ -24,10 +26,10 @@ final class TagRepository extends Repository
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
 
-    public function find_ancestors(string $slug)
+    public function find_parent(string $slug)
     {
         $stmt = $this->database->mysqli->prepare(
-            "SELECT tag.tag_slug_id, tag.name FROM tag
+            "SELECT tag.tag_slug_id AS slug, tag.name FROM tag
                     LEFT JOIN tag tag2 ON tag.tag_slug_id = tag2.parent_slug_id 
                     WHERE tag2.tag_slug_id = ? ;"
         );
@@ -39,7 +41,7 @@ final class TagRepository extends Repository
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
 
-    public function find_all(): ?array
+    public function find_all_for_select2(): ?array
     {
         return $this->database->fetch("SELECT 
                   tag.name AS tag_name, 
@@ -53,7 +55,11 @@ final class TagRepository extends Repository
     public function find_all_with_number_of_videos(): array
     {
         return $this->database->fetch("
-SELECT tag.tag_slug_id, name as tag_name, parent_slug_id as parent_slug, count, created_at
+SELECT tag.tag_slug_id, name as tag_name,
+       LOWER(name) as tag_name_lowercase, 
+       parent_slug_id as parent_slug,
+       count, 
+       created_at
 FROM tag
 LEFT JOIN (WITH RECURSIVE
     cte_path(parent, child, level, query, tag_name)
@@ -75,6 +81,7 @@ WHERE video_tag.tag_slug_id = cte_path.child
   AND level <= 2 and video_youtube_id is not null
 GROUP BY query, tag_name
 ORDER BY tag_name desc) tree ON tree.tag_slug_id = tag.tag_slug_id
+-- limit 2
 ");
     }
 
@@ -98,7 +105,8 @@ ORDER BY tag_name desc) tree ON tree.tag_slug_id = tag.tag_slug_id
 
     public function find(string $slug): ?DatabaseTagFind
     {
-        $stmt = $this->database->mysqli->prepare("SELECT name, tag_slug_id as slug_id FROM tag WHERE tag.tag_slug_id = ?");
+        $stmt = $this->database->mysqli->prepare("
+            SELECT name, tag_slug_id as slug_id FROM tag WHERE tag.tag_slug_id = ?");
 
         $stmt->bind_param('s', $slug);
         $stmt->execute();

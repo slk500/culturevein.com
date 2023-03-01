@@ -14,6 +14,8 @@ function video_create(VideoFactory $video_factory, RequestVideoCreate $video_cre
 
 function video_list(VideoRepository $video_repository)
 {
+
+    return $result = artist_list_normalize($video_repository->find_all());
     clearstatcache();
     if (filesize(__DIR__ . '/../../cache/video_list.txt') == 0) {
         $result = artist_list_normalize($video_repository->find_all());

@@ -7,12 +7,9 @@ return  [
     ['/^\/api\/artists\/(?<artist_slug_id>[\w-]+)\/*$/', 'artist_show', 'GET'],
 
     ['/^\/api\/tags\/*$/', 'tag_list', 'GET'],
-    ['/^\/api\/tags-simple\/*$/', 'tag_list_without_relation', 'GET'],
+    ['/^\/api\/tags-simple\/*$/', 'tag_list_for_select2', 'GET'],
     ['/^\/api\/tags-new\/*$/', 'tag_new', 'GET'],
     ['/^\/api\/tags\/(?<tag_slug_id>[\w-]+)\/*$/', 'tag_show', 'GET'],
-
-    ['/^\/api\/tags\/(?<tag_slug_id>[\w-]+)\/descendants\/*$/', 'tag_descendants', 'GET'],
-    ['/^\/api\/tags\/(?<tag_slug_id>[\w-]+)\/ancestors\/*$/', 'tag_ancestors', 'GET'],
 
     ['/^\/api\/videos\/*$/', 'video_create', 'POST'],
     ['/^\/api\/videos\/*$/', 'video_list', 'GET'],

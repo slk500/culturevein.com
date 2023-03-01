@@ -33,8 +33,8 @@ final class VideoRepository extends Repository
             video.video_youtube_id, 
             video.duration,
             video.user_id,
-            video.country,
-            video.genre,
+           -- video.country, 
+           -- video.genre,
             artist.name as artist_name,            
             artist.artist_slug_id as artist_slug
             FROM video
@@ -58,7 +58,7 @@ final class VideoRepository extends Repository
                 FROM video
                 LEFT JOIN artist_video USING (video_youtube_id)
                 LEFT JOIN artist USING (artist_slug_id)
-                ORDER BY artist.name, video.name");
+                ORDER BY artist.name, video.name -- limit 2");
     }
 
     public function with_highest_number_of_tags()
