@@ -45,6 +45,7 @@ function tag_show(TagRepository $tag_repository, SubscribeRepository $subscribe_
         'name' => $tag->name,
         'parent' => $tag_repository->find_parent($tag->slug_id),
         'children' => $tag_repository->find_children($tag->slug_id),
+        'next_and_prev' => $tag_repository->find_next_and_prev($tag_slug_id),
         'subscribers' => $subscribe_repository->get_subscribers_number($tag->slug_id),
         'videos' => $result
     ];

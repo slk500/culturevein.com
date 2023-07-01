@@ -6,10 +6,11 @@ use DTO\RequestVideoCreate;
 use Factory\VideoFactory;
 use Database\VideoRepository;
 
-function video_create(VideoFactory $video_factory, RequestVideoCreate $video_create): void
+function video_create(VideoFactory $video_factory, RequestVideoCreate $video_create): array
 {
     file_put_contents(__DIR__ . '/../../cache/video_list.txt', null);
     $video_factory->create($video_create);
+    return  ["created"]; // temporary hack -> cljs ajax needs data for status 201, otherwise throws error
 }
 
 function video_list(VideoRepository $video_repository)

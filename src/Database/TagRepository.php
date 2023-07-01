@@ -10,6 +10,32 @@ use Database\Base\Repository;
 
 final class TagRepository extends Repository
 {
+    public function find_next_and_prev(string $slug)
+    {
+        $stmt = $this->database->mysqli->prepare(
+            "SELECT tag.tag_slug_id AS slug, tag.name,
+        CASE
+        WHEN tag.tag_slug_id < ? THEN 'prev'
+        ELSE 'next'
+    END AS direction
+                  FROM tag
+                  LEFT JOIN tag AS parent_tag ON tag.parent_slug_id = parent_tag.tag_slug_id
+    WHERE (parent_tag.tag_slug_id IS NULL OR parent_tag.tag_slug_id = (
+    SELECT parent_slug_id FROM tag WHERE tag_slug_id = ?
+    ))
+    AND tag.tag_slug_id IN (
+                      (SELECT tag_slug_id FROM tag WHERE tag_slug_id < ? AND (parent_slug_id IS NULL OR parent_slug_id = (SELECT parent_slug_id FROM tag WHERE tag_slug_id = ?)) ORDER BY tag_slug_id DESC LIMIT 1),
+                      (SELECT tag_slug_id FROM tag WHERE tag_slug_id > ? AND (parent_slug_id IS NULL OR parent_slug_id = (SELECT parent_slug_id FROM tag WHERE tag_slug_id = ?)) ORDER BY tag_slug_id ASC LIMIT 1)
+    );"
+        );
+
+        $stmt->bind_param('ssssss', $slug, $slug, $slug, $slug, $slug, $slug);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
+
     public function find_children(string $slug)
     {
         $stmt = $this->database->mysqli->prepare(
