@@ -16,6 +16,8 @@ class Video
 
     public $artist_name;
 
+    public $artist_slug;
+
     public $release_date;
 
     public $duration;

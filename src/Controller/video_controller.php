@@ -8,22 +8,20 @@ use Database\VideoRepository;
 
 function video_create(VideoFactory $video_factory, RequestVideoCreate $video_create): void
 {
-    file_put_contents(__DIR__ . '/../../cache/video_list.txt', null);
+    file_put_contents(__DIR__ . '/../../cache/video_list.php', null);
     $video_factory->create($video_create);
 }
 
 function video_list(VideoRepository $video_repository)
 {
     clearstatcache();
-    if (filesize(__DIR__ . '/../../cache/video_list.txt') == 0) {
-        $result = artist_list_normalize($video_repository->find_all());
-        file_put_contents(__DIR__ . '/../../cache/video_list.txt',
-            json_encode($result)
+    if (filesize(__DIR__ . '/../../cache/video_list.php') == 0) {
+        cache_set(__DIR__ . '/../../cache/video_list.php',
+            artist_list_normalize($video_repository->find_all())
         );
-        return $result;
     }
 
-    echo file_get_contents(__DIR__ . '/../../cache/video_list.txt');
+    return cache_get(__DIR__ . '/../../cache/video_list.php');
 }
 
 function video_list_new(VideoRepository $video_repository)
